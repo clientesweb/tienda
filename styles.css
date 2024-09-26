@@ -49,7 +49,7 @@ html, body {
 }
 
 .logo img {
-    max-width: 60px; /* Reducido para un logo más pequeño */
+    max-width: 70px; /* Reducido para un logo más pequeño */
     height: auto;
     transition: all 0.3s ease;
 }

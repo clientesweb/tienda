@@ -3,73 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jewelry Unlimited</title>
+    <title>Jewelry Unlimited: Joyería Fina, Anillos de Compromiso, Diamantes | Jewelry Unlimited</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1><a href="/">Jewelry Unlimited</a></h1>
-            <nav>
-                <ul>
-                    <li><a href="#">New Arrivals</a></li>
-                    <li><a href="#">Engagement</a></li>
-                    <li><a href="#">Wedding</a></li>
-                    <li><a href="#">Fine Jewelry</a></li>
-                </ul>
-            </nav>
-            <div class="icons">
-                <a href="#" aria-label="Buscar"><i class="fas fa-search"></i></a>
-                <a href="#" aria-label="Carrito de compras"><i class="fas fa-shopping-cart"></i></a>
-                <button id="menu-toggle" aria-label="Abrir menú">
-                    <i class="fas fa-bars"></i>
-                </button>
+        <div class="top-bar">
+            <div class="container">
+                <p>Envío GRATIS en pedidos superiores a $150 | Devoluciones GRATIS</p>
+            </div>
+        </div>
+        <div class="main-header">
+            <div class="container">
+                <div class="logo">
+                    <a href="/">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/files/JU_Logo_200x.png" alt="Jewelry Unlimited Logo">
+                    </a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#">Nuevo</a></li>
+                        <li><a href="#">Compromiso</a></li>
+                        <li><a href="#">Boda</a></li>
+                        <li><a href="#">Joyería Fina</a></li>
+                        <li><a href="#">Diamantes</a></li>
+                        <li><a href="#">Educación</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="#" class="search-icon"><i class="fas fa-search"></i></a>
+                    <a href="#" class="account-icon"><i class="far fa-user"></i></a>
+                    <a href="#" class="cart-icon"><i class="fas fa-shopping-bag"></i></a>
+                    <button class="mobile-menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container">
-                <h2>Descubre Joyería Exquisita</h2>
-                <p>Encuentra la pieza perfecta para celebrar los momentos especiales de la vida</p>
-                <a href="#" class="btn">Comprar Ahora</a>
+        <section class="hero-slider">
+            <div class="slide">
+                <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/files/JU_Homepage_Banner_1_2880x.jpg" alt="Jewelry Unlimited Hero Image">
+                <div class="slide-content">
+                    <h2>Joyería Fina</h2>
+                    <p>Descubre nuestra colección de joyería fina</p>
+                    <a href="#" class="btn">Comprar Ahora</a>
+                </div>
             </div>
         </section>
 
-        <section class="featured-collections">
+        <section class="featured-categories">
             <div class="container">
-                <h2>Colecciones Destacadas</h2>
-                <div class="collections-grid">
-                    <div class="collection-card">
-                        <img src="/placeholder.svg?height=300&width=400" alt="Colección 1">
-                        <h3>Colección 1</h3>
-                        <p>Descubre nuestra impresionante colección de joyería fina.</p>
-                        <a href="#" class="btn">Ver Colección</a>
+                <div class="category-grid">
+                    <div class="category-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/files/JU_Homepage_Category_1_720x.jpg" alt="Anillos de Compromiso">
+                        <h3>Anillos de Compromiso</h3>
+                        <a href="#" class="btn">Comprar Ahora</a>
                     </div>
-                    <div class="collection-card">
-                        <img src="/placeholder.svg?height=300&width=400" alt="Colección 2">
-                        <h3>Colección 2</h3>
-                        <p>Explora nuestras piezas únicas y elegantes.</p>
-                        <a href="#" class="btn">Ver Colección</a>
+                    <div class="category-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/files/JU_Homepage_Category_2_720x.jpg" alt="Anillos de Boda">
+                        <h3>Anillos de Boda</h3>
+                        <a href="#" class="btn">Comprar Ahora</a>
                     </div>
-                    <div class="collection-card">
-                        <img src="/placeholder.svg?height=300&width=400" alt="Colección 3">
-                        <h3>Colección 3</h3>
-                        <p>Joyas que capturan momentos especiales.</p>
-                        <a href="#" class="btn">Ver Colección</a>
+                    <div class="category-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/files/JU_Homepage_Category_3_720x.jpg" alt="Joyería Fina">
+                        <h3>Joyería Fina</h3>
+                        <a href="#" class="btn">Comprar Ahora</a>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <div class="container">
+                <h2>Productos Destacados</h2>
+                <div class="product-grid">
+                    <!-- Repeat this block for each featured product -->
+                    <div class="product-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_1_720x.jpg" alt="Producto 1">
+                        <h3>Anillo de Diamantes</h3>
+                        <p class="price">$1,999.99</p>
+                        <a href="#" class="btn">Agregar al Carrito</a>
+                    </div>
+                    <!-- Add more product items here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="about-us">
+            <div class="container">
+                <h2>Sobre Jewelry Unlimited</h2>
+                <p>Jewelry Unlimited es tu destino para joyería fina de alta calidad. Ofrecemos una amplia selección de anillos de compromiso, anillos de boda y joyería fina para todas las ocasiones.</p>
+                <a href="#" class="btn">Conoce Más</a>
             </div>
         </section>
 
         <section class="newsletter">
             <div class="container">
                 <h2>Suscríbete a Nuestro Boletín</h2>
-                <p>Mantente actualizado con nuestras últimas colecciones y ofertas exclusivas</p>
+                <p>Recibe las últimas noticias y ofertas exclusivas</p>
                 <form id="newsletter-form">
-                    <input type="email" placeholder="Ingresa tu email" required>
+                    <input type="email" placeholder="Tu dirección de email" required>
                     <button type="submit" class="btn">Suscribirse</button>
                 </form>
             </div>
@@ -79,39 +121,44 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div>
-                    <h3>Servicio al Cliente</h3>
+                <div class="footer-column">
+                    <h3>Atención al Cliente</h3>
                     <ul>
                         <li><a href="#">Contáctanos</a></li>
                         <li><a href="#">Envíos y Devoluciones</a></li>
                         <li><a href="#">Preguntas Frecuentes</a></li>
                     </ul>
                 </div>
-                <div>
+                <div class="footer-column">
                     <h3>Sobre Nosotros</h3>
                     <ul>
                         <li><a href="#">Nuestra Historia</a></li>
+                        <li><a href="#">Localizador de Tiendas</a></li>
                         <li><a href="#">Carreras</a></li>
-                        <li><a href="#">Prensa</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3>Legal</h3>
+                <div class="footer-column">
+                    <h3>Políticas</h3>
                     <ul>
                         <li><a href="#">Términos de Servicio</a></li>
                         <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Devoluciones</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3>Conéctate con Nosotros</h3>
+                <div class="footer-column">
+                    <h3>Síguenos</h3>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
                     </div>
                 </div>
             </div>
-            <p class="copyright">&copy; 2023 Jewelry Unlimited. Todos los derechos reservados.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Jewelry Unlimited. Todos los derechos reservados.</p>
+                <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/files/payment-icons.png" alt="Métodos de pago aceptados">
+            </div>
         </div>
     </footer>
 

@@ -211,7 +211,8 @@ html, body {
 
 .category-item img {
     width: 100%;
-    height: auto;
+    height: 200px; /* Ajusta este valor según el alto deseado */
+    object-fit: cover; /* Esta propiedad asegura que la imagen mantenga su proporción */
     margin-bottom: 20px;
     transition: transform 0.3s ease;
 }

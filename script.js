@@ -20,6 +20,27 @@ $(document).ready(function() {
             }
         ]
     });
+const slides = document.querySelectorAll('.slide');
+let currentSlide = 0;
+
+document.querySelector('.next').addEventListener('click', () => {
+    changeSlide(1);
+});
+
+document.querySelector('.prev').addEventListener('click', () => {
+    changeSlide(-1);
+});
+
+function changeSlide(direction) {
+    slides[currentSlide].style.display = 'none'; // Oculta la diapositiva actual
+    currentSlide = (currentSlide + direction + slides.length) % slides.length; // Calcula la siguiente diapositiva
+    slides[currentSlide].style.display = 'block'; // Muestra la nueva diapositiva
+}
+
+// Inicializa mostrando la primera diapositiva
+slides.forEach((slide, index) => {
+    slide.style.display = index === 0 ? 'block' : 'none';
+});
 
     // Mobile Menu Toggle
     $('.mobile-menu-toggle').click(function() {

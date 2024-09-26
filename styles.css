@@ -123,90 +123,13 @@ body {
     object-position: center;
 }
 
-.slide-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    width: 90%;
-    max-width: 600px;
-}
-
-.slide-content h2 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-}
-
-.slide-content p {
-    font-size: 24px;
-    margin-bottom: 30px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease 0.2s;
-}
-
-.slide-content .btn {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease 0.4s;
-}
-
-.slick-active .slide-content h2,
-.slick-active .slide-content p,
-.slick-active .slide-content .btn {
-    opacity: 1;
-    transform: translateY(0);
-}
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-@media (max-width: 768px) {
-    .slide {
-        height: 50vh;
-        min-height: 300px;
-    }
-}
-
-@media (max-width: 480px) {
-    .slide {
-        height: 40vh;
-        min-height: 250px;
-    }
-}
-
-/* Button Styles */
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 600;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-    transform: translateY(0);
-}
 /* Estilos para los botones de navegación del slider */
 .hero-slider .slick-prev,
 .hero-slider .slick-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1;
+    z-index: 10;
     background-color: rgba(255, 255, 255, 0.5);
     border: none;
     width: 40px;
@@ -245,6 +168,62 @@ body {
 
 .hero-slider .slick-next:before {
     content: '→';
+}
+
+/* Estilos para los puntos de navegación */
+.hero-slider .slick-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex !important;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hero-slider .slick-dots li {
+    margin: 0 5px;
+}
+
+.hero-slider .slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 10px;
+    height: 10px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.hero-slider .slick-dots li.slick-active button {
+    background: #fff;
+}
+
+@media (max-width: 768px) {
+    .slide {
+        height: 50vh;
+        min-height: 300px;
+    }
+    
+    .hero-slider .slick-prev,
+    .hero-slider .slick-next {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide {
+        height: 40vh;
+        min-height: 250px;
+    }
 }
 
 /* Featured Categories Styles */

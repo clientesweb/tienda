@@ -8,6 +8,7 @@ $(document).ready(function() {
         cssEase: 'linear',
         autoplay: true,
         autoplaySpeed: 5000,
+        arrows: true,
         responsive: [
             {
                 breakpoint: 768,
@@ -98,16 +99,6 @@ $(document).ready(function() {
                 $this.scrollLeft($this.scrollLeft() + scrollSpeed);
                 requestAnimationFrame(scrollContent);
             }
-        }
-    });
-
-    // Lazy Loading Images
-    $('.lazy').Lazy({
-        scrollDirection: 'vertical',
-        effect: 'fadeIn',
-        visibleOnly: true,
-        onError: function(element) {
-            console.log('error loading ' + element.data('src'));
         }
     });
 

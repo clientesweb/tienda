@@ -19,6 +19,7 @@ body {
 html, body {
     overflow-x: hidden;
 }
+
 /* Header Styles */
 .top-bar {
     background-color: #f8f8f8;
@@ -28,7 +29,7 @@ html, body {
 }
 
 .main-header {
-    padding: 20px 0;
+    padding: 10px 0; /* Reducido para hacer el header más fino */
     border-bottom: 1px solid #e7e7e7;
     position: sticky;
     top: 0;
@@ -48,7 +49,7 @@ html, body {
 }
 
 .logo img {
-    max-width: 70px;
+    max-width: 60px; /* Reducido para un logo más pequeño */
     height: auto;
     transition: all 0.3s ease;
 }
@@ -59,13 +60,13 @@ html, body {
 }
 
 .main-nav ul li {
-    margin-right: 20px;
+    margin-right: 15px; /* Reducido para más espacio entre elementos */
 }
 
 .main-nav ul li a {
     text-decoration: none;
     color: #333;
-    font-weight: 600;
+    font-weight: 500; /* Ajustado para un texto más fino */
     text-transform: uppercase;
     transition: color 0.3s ease;
 }
@@ -80,9 +81,9 @@ html, body {
 }
 
 .header-actions a {
-    margin-left: 20px;
+    margin-left: 15px; /* Reducido para más espacio entre iconos */
     color: #333;
-    font-size: 18px;
+    font-size: 16px; /* Reducido para un tamaño de texto más fino */
     transition: color 0.3s ease;
 }
 
@@ -100,9 +101,9 @@ html, body {
 .mobile-menu-toggle span {
     display: block;
     width: 25px;
-    height: 3px;
+    height: 2px; /* Reducido para barras más finas */
     background-color: #333;
-    margin: 5px 0;
+    margin: 4px 0; /* Ajustado para más espacio entre barras */
     transition: all 0.3s ease;
 }
 

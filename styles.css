@@ -16,7 +16,9 @@ body {
     margin: 0 auto;
     padding: 0 15px;
 }
-
+html, body {
+    overflow-x: hidden;
+}
 /* Header Styles */
 .top-bar {
     background-color: #f8f8f8;

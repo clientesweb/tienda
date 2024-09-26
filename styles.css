@@ -163,11 +163,24 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
-.hero-slider img {
+.slide img {
     width: 100%;
-    height: auto;
-    object-fit: cover; /* Esto hace que las imágenes se recorten si es necesario para cubrir el área */
-    max-height: 100vh;  /* Esto asegura que la imagen no exceda la altura de la ventana */
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+@media (max-width: 768px) {
+    .slide {
+        height: 50vh;
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide {
+        height: 40vh;
+        min-height: 250px;
+    }
 }
 
 /* Button Styles */
@@ -186,6 +199,52 @@ body {
 .btn:hover {
     background-color: #0056b3;
     transform: translateY(0);
+}
+/* Estilos para los botones de navegación del slider */
+.hero-slider .slick-prev,
+.hero-slider .slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.hero-slider .slick-prev:hover,
+.hero-slider .slick-next:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-slider .slick-prev {
+    left: 20px;
+}
+
+.hero-slider .slick-next {
+    right: 20px;
+}
+
+.hero-slider .slick-prev:before,
+.hero-slider .slick-next:before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    color: #333;
+    opacity: 0.75;
+}
+
+.hero-slider .slick-prev:before {
+    content: '←';
+}
+
+.hero-slider .slick-next:before {
+    content: '→';
 }
 
 /* Featured Categories Styles */

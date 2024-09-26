@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // Hero Slider con Slick
+    // Hero Slider
     $('.hero-slider').slick({
         dots: true,
         infinite: true,
@@ -7,30 +7,9 @@ $(document).ready(function() {
         fade: true,
         cssEase: 'linear',
         autoplay: true,
-        autoplaySpeed: 5000,
-        arrows: true,  // Flechas habilitadas
-        pauseOnHover: false,
-        pauseOnFocus: false,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: true
-                }
-            }
-        ]
+        autoplaySpeed: 5000
     });
-});
-const slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
 
-document.querySelector('.next').addEventListener('click', () => {
-    changeSlide(1);
-});
-
-document.querySelector('.prev').addEventListener('click', () => {
-    changeSlide(-1);
-});
     // Mobile Menu Toggle
     $('.mobile-menu-toggle').click(function() {
         $('.main-nav').toggleClass('active');
@@ -80,50 +59,6 @@ document.querySelector('.prev').addEventListener('click', () => {
         if ($(window).width() > 768) {
             $('.main-nav').removeClass('active');
             $('.mobile-menu-toggle').removeClass('active');
-        }
-    });
-
-    // Horizontal Scroll for Categories and Products
-    $('.category-grid, .product-grid').each(function() {
-        var $this = $(this);
-        var scrollSpeed = 0;
-        var scrolling = false;
-
-        $this.on('mouseenter', function() {
-            scrolling = true;
-            scrollContent();
-        }).on('mouseleave', function() {
-            scrolling = false;
-        });
-
-        $this.on('wheel', function(e) {
-            e.preventDefault();
-            var delta = e.originalEvent.deltaY;
-            scrollSpeed = delta * 0.5;
-            if (!scrolling) {
-                scrolling = true;
-                scrollContent();
-            }
-        });
-
-        function scrollContent() {
-            if (scrolling) {
-                $this.scrollLeft($this.scrollLeft() + scrollSpeed);
-                requestAnimationFrame(scrollContent);
-            }
-        }
-    });
-
-    // Add to Cart Animation
-    $('.btn').on('click', function(e) {
-        if ($(this).text() === 'Añadir al Carrito') {
-            e.preventDefault();
-            $(this).addClass('added');
-            $(this).text('Añadido al Carrito');
-            setTimeout(() => {
-                $(this).removeClass('added');
-                $(this).text('Añadir al Carrito');
-            }, 2000);
         }
     });
 });

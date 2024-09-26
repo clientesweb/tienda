@@ -401,6 +401,26 @@ footer {
 .footer-bottom img {
     max-width: 300px;
 }
+.footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+}
+
+.footer-bottom p {
+    margin: 10px 0;
+}
+
+.footer-bottom a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-bottom a:hover {
+    color: #0056b3;
+}
 
 /* Responsive Styles */
 @media (max-width: 1024px) {

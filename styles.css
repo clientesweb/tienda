@@ -163,6 +163,12 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
+.hero-slider img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Esto hace que las imágenes se recorten si es necesario para cubrir el área */
+    max-height: 100vh;  /* Esto asegura que la imagen no exceda la altura de la ventana */
+}
 
 /* Button Styles */
 .btn {

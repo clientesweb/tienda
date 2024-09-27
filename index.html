@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sassenach - Tienda Online - Productos Naturales - Cursos - Talleres</title>
+    <meta name="description" content="Sassenach - Tu tienda online de productos naturales, cosmética, cursos y talleres.">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdnjs.cloudflare.com; style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 </head>
 <body>
     <header>
@@ -23,12 +23,16 @@
             <div class="container">
                 <div class="logo">
                     <a href="/">
-                        <img src="img/sassenach.png" alt="Sassenach Logo">
+                        <picture>
+                            <source srcset="img/sassenach.webp" type="image/webp">
+                            <source srcset="img/sassenach.png" type="image/png"> 
+                            <img src="img/sassenach.png" alt="Sassenach Logo">
+                        </picture>
                     </a>
                 </div>
                 <nav class="main-nav">
                     <ul>
-                        <li><a href="#">Comestica Natural</a></li>
+                        <li><a href="#">Cosmética Natural</a></li>
                         <li><a href="#">Productos Naturales</a></li>
                         <li><a href="#">Tintas madre</a></li>
                         <li><a href="#">Cursos</a></li>
@@ -37,9 +41,9 @@
                     </ul>
                 </nav>
                 <div class="header-actions">
-                    <a href="#" class="" aria-label="Search"><i class=""></i></a>
-                    <a href="#" class="" aria-label="Account"><i class=""></i></a>
-                    <a href="#" class="" aria-label="Cart"><i class=""></i></a>
+                    <a href="#" class="search-icon" aria-label="Buscar"><i class="fas fa-search"></i></a>
+                    <a href="#" class="account-icon" aria-label="Cuenta"><i class="fas fa-user"></i></a>
+                    <a href="#" class="cart-icon" aria-label="Carrito"><i class="fas fa-shopping-cart"></i></a>
                     <button class="mobile-menu-toggle" aria-label="Toggle menu">
                         <span></span>
                         <span></span>
@@ -52,30 +56,34 @@
 
     <main>
         <section class="hero-slider" aria-label="Featured collections">
-            <div class="slide">
-                <img src="img/sassenach.jpg" alt="Productos Naturales">
-                <div class="slide-content">
-                    <h2>Productos Naturales</h2>
-                    <p>Descubre nuestra colección de productos naturales</p>
-                    <a href="#" class="btn">Comprar Ahora</a>
+            <div class="slides">
+                <div class="slide">
+                    <img src="img/sassenach.jpg" alt="Productos Naturales" loading="lazy">
+                    <div class="slide-content">
+                        <h2>Productos Naturales</h2>
+                        <p>Descubre nuestra colección de productos naturales</p>
+                        <a href="#" class="btn">Comprar Ahora</a>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="img/sassenach1.jpg" alt="Cosmética Natural" loading="lazy">
+                    <div class="slide-content">
+                        <h2>Cosmética Natural</h2>
+                        <p>Encuentra los mejores productos para tu piel</p>
+                        <a href="#" class="btn">Explorar Colección</a>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="img/sassenach2.jpg" alt="Tintas Madre" loading="lazy">
+                    <div class="slide-content">
+                        <h2>Tintas Madre</h2>
+                        <p>Calidad y belleza garantizadas</p>
+                        <a href="#" class="btn">Ver Productos</a>
+                    </div>
                 </div>
             </div>
-            <div class="slide">
-                <img src="img/sassenach1.jpg" alt="Cosmética Natural">
-                <div class="slide-content">
-                    <h2>Cosmética Natural</h2>
-                    <p>Encuentra los mejores productos para tu piel</p>
-                    <a href="#" class="btn">Explorar Colección</a>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="img/sassenach2.jpg" alt="Tintas Madre">
-                <div class="slide-content">
-                    <h2>Tintas Madre</h2>
-                    <p>Calidad y belleza garantizadas</p>
-                    <a href="#" class="btn">Ver Productos</a>
-                </div>
-            </div>
+            <button class="slider-nav prev" aria-label="Previous slide">&#10094;</button>
+            <button class="slider-nav next" aria-label="Next slide">&#10095;</button>
         </section>
 
         <section class="featured-categories">
@@ -83,17 +91,17 @@
                 <h2>Categorías Destacadas</h2>
                 <div class="category-grid">
                     <div class="category-item">
-                        <img src="img/productos naturales.jpg" alt="Productos Naturales">
+                        <img src="img/productos naturales.jpg" alt="Productos Naturales" loading="lazy">
                         <h3>Productos Naturales</h3>
                         <a href="#" class="btn">Comprar Ahora</a>
                     </div>
                     <div class="category-item">
-                        <img src="img/comestica natural.jpg" alt="Cosmética Natural">
+                        <img src="img/comestica natural.jpg" alt="Cosmética Natural" loading="lazy">
                         <h3>Cosmética Natural</h3>
                         <a href="#" class="btn">Comprar Ahora</a>
                     </div>
                     <div class="category-item">
-                        <img src="img/tintas madre.jpg" alt="Tintas Madre">
+                        <img src="img/tintas madre.jpg" alt="Tintas Madre" loading="lazy">
                         <h3>Tintas Madre</h3>
                         <a href="#" class="btn">Comprar Ahora</a>
                     </div>
@@ -105,30 +113,30 @@
             <div class="container">
                 <h2>Productos Destacados</h2>
                 <div class="product-grid">
-                    <div class="product-item">
-                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_1_720x.jpg" alt="Producto Natural 1">
+                    <article class="product-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_1_720x.jpg" alt="Producto Natural 1" loading="lazy">
                         <h3>Producto Natural 1</h3>
                         <p class="price">$19.99</p>
                         <a href="#" class="btn">Añadir al Carrito</a>
-                    </div>
-                    <div class="product-item">
-                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_2_720x.jpg" alt="Producto Natural 2">
+                    </article>
+                    <article class="product-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_2_720x.jpg" alt="Producto Natural 2" loading="lazy">
                         <h3>Producto Natural 2</h3>
                         <p class="price">$24.99</p>
                         <a href="#" class="btn">Añadir al Carrito</a>
-                    </div>
-                    <div class="product-item">
-                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_3_720x.jpg" alt="Producto Natural 3">
+                    </article>
+                    <article class="product-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_3_720x.jpg" alt="Producto Natural 3" loading="lazy">
                         <h3>Producto Natural 3</h3>
                         <p class="price">$29.99</p>
                         <a href="#" class="btn">Añadir al Carrito</a>
-                    </div>
-                    <div class="product-item">
-                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_4_720x.jpg" alt="Producto Natural 4">
+                    </article>
+                    <article class="product-item">
+                        <img src="https://cdn.shopify.com/s/files/1/0704/6378/2946/products/JU_Product_4_720x.jpg" alt="Producto Natural 4" loading="lazy">
                         <h3>Producto Natural 4</h3>
                         <p class="price">$34.99</p>
                         <a href="#" class="btn">Añadir al Carrito</a>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -149,6 +157,7 @@
                     <input type="email" placeholder="Tu dirección de email" required>
                     <button type="submit" class="btn">Suscribirse</button>
                 </form>
+                <div id="newsletter-message" class="hidden"></div>
             </div>
         </section>
     </main>
@@ -190,16 +199,19 @@
                     </div>
                 </div>
             </div>
-           <div class="footer-bottom">
-    <p>&copy; 2024 Sassenach. Todos los derechos reservados.</p>
-    <img src="img/formas-pago-removebg-preview.png" alt="Métodos de pago aceptados">
-    <p>Powered by <a href="https://dualitydomain.com" target="_blank">Duality Domain</a></p>
-</div>
-<a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
-    <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" />
-</a>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Sassenach. Todos los derechos reservados.</p>
+                <img src="img/formas-pago-removebg-preview.png" alt="Métodos de pago aceptados">
+                <p>Powered by <a href="https://dualitydomain.com" target="_blank">Duality Domain</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" />
+    </a>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

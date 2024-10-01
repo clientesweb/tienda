@@ -37,6 +37,36 @@
     }
 }
 
+@keyframes addToCart {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Clases de animación */
 .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
 }
@@ -61,232 +91,17 @@
     animation-delay: 0.6s;
 }
 
-/* Estilos adicionales */
-.swiper-button-next,
-.swiper-button-prev {
-    color: white !important;
-}
-
-.swiper-pagination-bullet {
-    background: white !important;
-}
-
-.category-item:hover img {
-    transform: scale(1.1);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-}
-
-/* Transiciones suaves */
-a, button {
-    transition: all 0.3s ease;
-}
-
-/* Efecto hover para productos */
-.product-item {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* Estilo para el menú móvil */
-#mobile-menu {
-    transition: transform 0.3s ease-in-out;
-}
-
-#mobile-menu.active {
-    transform: translateX(0);
-}
-
-/* Estilo para el contador del carrito */
-#cart-count {
-    transition: all 0.3s ease;
-}
-
-/* Animación para añadir al carrito */
-@keyframes addToCart {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
 .add-to-cart-animation {
     animation: addToCart 0.3s ease-in-out;
 }
 
-/* Efecto parallax para el hero */
-.parallax {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-/* Efecto de zoom para las imágenes de productos */
-.product-image {
-    transition: transform 0.3s ease;
-}
-
-.product-item:hover .product-image {
-    transform: scale(1.05);
-}
-
-/* Estilo para el botón de scroll to top */
-#scroll-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-    visibility: hidden;
-}
-
-#scroll-to-top.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* Estilo para el loader */
-.loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Efecto de hover para los iconos de redes sociales */
-.social-icon {
-    transition: transform 0.3s ease;
-}
-
-.social-icon:hover {
-    transform: translateY(-5px);
-}
-
-/* Estilo para el formulario de newsletter */
-#newsletter-form input {
-    transition: border-color 0.3s ease;
-}
-
-#newsletter-form input:focus {
-    border-color: #000;
-}
-
-/* Efecto de hover para las categorías */
-.category-item .category-overlay {
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
-
-.category-item:hover .category-overlay {
-    opacity: 1;
-}
-
-/* Animación para los testimonios */
-.testimonial {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.testimonial:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* Estilo para el header sticky */
-.header-sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Animación para el modal */
-.modal {
-    transition: opacity 0.3s ease;
-}
-
-.modal.show {
-    opacity: 1;
-}
-
-/* Estilo para los botones de paginación */
-.pagination-button {
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.pagination-button:hover {
-    background-color: #000;
-    color: #fff;
-}
-
-/* Efecto de hover para los enlaces del footer */
-.footer-link {
-    transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-    color: #fff;
-}
-
-/* Animación para el botón de añadir al carrito */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.add-to-cart:hover {
-    animation: pulse 0.5s infinite;
-}
-/* Estilos base y animaciones (sin cambios) */
-/* ... (mantén todas las animaciones y estilos que ya tienes) ... */
-
-/* Mejoras responsivas */
+/* Estilos base */
 html {
     font-size: 16px;
 }
 
 body {
+    font-family: 'Arial', sans-serif;
     font-size: 1rem;
     line-height: 1.5;
 }
@@ -318,79 +133,163 @@ h2 { font-size: 1.75rem; }
 h3 { font-size: 1.5rem; }
 h4 { font-size: 1.25rem; }
 
-/* Media queries para diferentes tamaños de pantalla */
-@media (max-width: 1024px) {
-    html {
-        font-size: 15px;
-    }
-
-    .container {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
+/* Estilos de componentes */
+.swiper-button-next,
+.swiper-button-prev {
+    color: white !important;
 }
 
-@media (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
-
-    .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    /* Ajusta el layout para tablets */
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    /* Reduce el tamaño de los botones de Swiper en tablets */
-    .swiper-button-next,
-    .swiper-button-prev {
-        transform: scale(0.8);
-    }
+.swiper-pagination-bullet {
+    background: white !important;
 }
 
-@media (max-width: 480px) {
-    html {
-        font-size: 13px;
-    }
+.category-item:hover img {
+    transform: scale(1.1);
+}
 
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+a, button {
+    transition: all 0.3s ease;
+}
 
-    /* Ajusta el layout para móviles */
-    .grid {
-        grid-template-columns: 1fr;
-    }
+.product-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    /* Oculta los botones de Swiper en móviles */
-    .swiper-button-next,
-    .swiper-button-prev {
-        display: none;
-    }
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
 
-    /* Ajusta el tamaño del botón de scroll to top en móviles */
-    #scroll-to-top {
-        width: 30px;
-        height: 30px;
-        bottom: 10px;
-        right: 10px;
-    }
+#mobile-menu {
+    transition: transform 0.3s ease-in-out;
+}
 
-    /* Ajusta el espaciado en el formulario de newsletter para móviles */
-    #newsletter-form {
-        flex-direction: column;
-    }
+#mobile-menu.active {
+    transform: translateX(0);
+}
 
-    #newsletter-form input,
-    #newsletter-form button {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
+#cart-count {
+    transition: all 0.3s ease;
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.product-image {
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover .product-image {
+    transform: scale(1.05);
+}
+
+#scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+.social-icon {
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-5px);
+}
+
+#newsletter-form input {
+    transition: border-color 0.3s ease;
+}
+
+#newsletter-form input:focus {
+    border-color: #000;
+}
+
+.category-item .category-overlay {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.category-item:hover .category-overlay {
+    opacity: 1;
+}
+
+.testimonial {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.header-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.modal {
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.pagination-button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.footer-link {
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #fff;
+}
+
+.add-to-cart:hover {
+    animation: pulse 0.5s infinite;
 }
 
 /* Mejoras en la accesibilidad y usabilidad */
@@ -449,12 +348,6 @@ select {
     margin: 0 auto;
 }
 
-@media (max-width: 480px) {
-    .modal-content {
-        width: 95%;
-    }
-}
-
 /* Mejoras en la responsividad del footer */
 .footer-grid {
     display: grid;
@@ -475,7 +368,43 @@ select {
     cursor: pointer;
 }
 
+/* Mejoras en la responsividad del hero */
+.hero-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Media queries para diferentes tamaños de pantalla */
+@media (max-width: 1024px) {
+    html {
+        font-size: 15px;
+    }
+
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
 @media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        transform: scale(0.8);
+    }
+
     .hamburger-menu {
         display: block;
     }
@@ -483,15 +412,7 @@ select {
     .desktop-menu {
         display: none;
     }
-}
 
-/* Mejoras en la responsividad del hero */
-.hero-content {
-    text-align: center;
-    padding: 2rem;
-}
-
-@media (max-width: 768px) {
     .hero-content h1 {
         font-size: 2.5rem;
     }
@@ -502,6 +423,45 @@ select {
 }
 
 @media (max-width: 480px) {
+    html {
+        font-size: 13px;
+    }
+
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none;
+    }
+
+    #scroll-to-top {
+        width: 30px;
+        height: 30px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    #newsletter-form {
+        flex-direction: column;
+    }
+
+    #newsletter-form input,
+    #newsletter-form button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+
     .hero-content h1 {
         font-size: 2rem;
     }

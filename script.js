@@ -82,18 +82,10 @@ function handleCarousel() {
 // Función para manejar el menú móvil
 function handleMobileMenu() {
     const menuToggle = document.getElementById('menu-toggle');
-    const nav = document.querySelector('nav ul');
+    const mobileMenu = document.getElementById('mobile-menu');
 
     menuToggle.addEventListener('click', () => {
-        nav.classList.toggle('hidden');
-        nav.classList.toggle('flex');
-        nav.classList.toggle('flex-col');
-        nav.classList.toggle('absolute');
-        nav.classList.toggle('top-16');
-        nav.classList.toggle('left-0');
-        nav.classList.toggle('right-0');
-        nav.classList.toggle('bg-white');
-        nav.classList.toggle('shadow-md');
+        mobileMenu.classList.toggle('hidden');
     });
 }
 
@@ -176,6 +168,38 @@ function hideCart() {
     cartModal.classList.add('hidden');
 }
 
+// Funciones para el modal de compra
+function showPurchaseModal() {
+    const purchaseModal = document.getElementById('purchase-modal');
+    purchaseModal.classList.remove('hidden');
+    purchaseModal.classList.add('flex');
+}
+
+function hidePurchaseModal() {
+    const purchaseModal = document.getElementById('purchase-modal');
+    purchaseModal.classList.remove('flex');
+    purchaseModal.classList.add('hidden');
+}
+
+function handlePurchase(event) {
+    event.preventDefault();
+    const name = document.getElementById('purchase-name').value;
+    const email = document.getElementById('purchase-email').value;
+    const address = document.getElementById('purchase-address').value;
+
+    // Aquí puedes agregar la lógica para procesar la compra
+    console.log('Compra realizada:', { name, email, address, cart });
+
+    // Limpia el carrito y cierra los modales
+    cart = [];
+    updateCartCount();
+    hidePurchaseModal();
+    hideCart();
+
+    // Muestra un mensaje de confirmación
+    alert('¡Gracias por tu compra!');
+}
+
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
@@ -189,9 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cart-button').addEventListener('click', showCart);
     document.getElementById('close-cart').addEventListener('click', hideCart);
     document.getElementById('checkout-button').addEventListener('click', () => {
-        alert('¡Gracias por tu compra!');
-        cart = [];
-        updateCartCount();
         hideCart();
+        showPurchaseModal();
     });
+
+    // Event listeners para el modal de compra
+    document.getElementById('close-purchase').addEventListener('click', hidePurchaseModal);
+    document.getElementById('purchase-form').addEventListener('submit', handlePurchase);
 });

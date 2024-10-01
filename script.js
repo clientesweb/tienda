@@ -228,7 +228,7 @@ function showCart() {
 
     cartItems.innerHTML = '';
     let total = 0;
-cart.forEach(item => {
+    cart.forEach(item => {
         const cartItem = document.createElement('div');
         cartItem.className = 'flex justify-between items-center py-2 border-b';
         cartItem.innerHTML = `

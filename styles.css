@@ -37,36 +37,6 @@
     }
 }
 
-@keyframes addToCart {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Clases de animación */
 .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out;
 }
@@ -91,49 +61,7 @@
     animation-delay: 0.6s;
 }
 
-.add-to-cart-animation {
-    animation: addToCart 0.3s ease-in-out;
-}
-
-/* Estilos base */
-html {
-    font-size: 16px;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-/* Grid responsivo */
-.grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-/* Imágenes responsivas */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Tipografía responsiva */
-h1 { font-size: 2rem; }
-h2 { font-size: 1.75rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
-
-/* Estilos de componentes */
+/* Estilos adicionales */
 .swiper-button-next,
 .swiper-button-prev {
     color: white !important;
@@ -147,10 +75,20 @@ h4 { font-size: 1.25rem; }
     transform: scale(1.1);
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Transiciones suaves */
 a, button {
     transition: all 0.3s ease;
 }
 
+/* Efecto hover para productos */
 .product-item {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -160,6 +98,7 @@ a, button {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
+/* Estilo para el menú móvil */
 #mobile-menu {
     transition: transform 0.3s ease-in-out;
 }
@@ -168,10 +107,29 @@ a, button {
     transform: translateX(0);
 }
 
+/* Estilo para el contador del carrito */
 #cart-count {
     transition: all 0.3s ease;
 }
 
+/* Animación para añadir al carrito */
+@keyframes addToCart {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.add-to-cart-animation {
+    animation: addToCart 0.3s ease-in-out;
+}
+
+/* Efecto parallax para el hero */
 .parallax {
     background-attachment: fixed;
     background-position: center;
@@ -179,6 +137,7 @@ a, button {
     background-size: cover;
 }
 
+/* Efecto de zoom para las imágenes de productos */
 .product-image {
     transition: transform 0.3s ease;
 }
@@ -187,6 +146,7 @@ a, button {
     transform: scale(1.05);
 }
 
+/* Estilo para el botón de scroll to top */
 #scroll-to-top {
     position: fixed;
     bottom: 20px;
@@ -210,6 +170,7 @@ a, button {
     visibility: visible;
 }
 
+/* Estilo para el loader */
 .loader {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #3498db;
@@ -219,6 +180,12 @@ a, button {
     animation: spin 1s linear infinite;
 }
 
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Efecto de hover para los iconos de redes sociales */
 .social-icon {
     transition: transform 0.3s ease;
 }
@@ -227,6 +194,7 @@ a, button {
     transform: translateY(-5px);
 }
 
+/* Estilo para el formulario de newsletter */
 #newsletter-form input {
     transition: border-color 0.3s ease;
 }
@@ -235,6 +203,7 @@ a, button {
     border-color: #000;
 }
 
+/* Efecto de hover para las categorías */
 .category-item .category-overlay {
     transition: opacity 0.3s ease;
     opacity: 0;
@@ -244,6 +213,7 @@ a, button {
     opacity: 1;
 }
 
+/* Animación para los testimonios */
 .testimonial {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -253,6 +223,7 @@ a, button {
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
+/* Estilo para el header sticky */
 .header-sticky {
     position: fixed;
     top: 0;
@@ -263,6 +234,7 @@ a, button {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* Animación para el modal */
 .modal {
     transition: opacity 0.3s ease;
 }
@@ -271,6 +243,7 @@ a, button {
     opacity: 1;
 }
 
+/* Estilo para los botones de paginación */
 .pagination-button {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -280,6 +253,7 @@ a, button {
     color: #fff;
 }
 
+/* Efecto de hover para los enlaces del footer */
 .footer-link {
     transition: color 0.3s ease;
 }
@@ -288,227 +262,19 @@ a, button {
     color: #fff;
 }
 
+/* Animación para el botón de añadir al carrito */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 .add-to-cart:hover {
     animation: pulse 0.5s infinite;
-}
-
-/* Mejoras en la accesibilidad y usabilidad */
-button, 
-.button, 
-a {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.5rem 1rem;
-}
-
-input, 
-textarea, 
-select {
-    font-size: 16px; /* Previene el zoom en iOS */
-}
-
-/* Mejoras en el menú móvil */
-#mobile-menu {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 80%;
-    max-width: 300px;
-    height: 100%;
-    background-color: white;
-    z-index: 1000;
-    overflow-y: auto;
-    transition: left 0.3s ease-in-out;
-}
-
-#mobile-menu.active {
-    left: 0;
-}
-
-/* Overlay para el menú móvil */
-.mobile-menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-.mobile-menu-overlay.active {
-    display: block;
-}
-
-/* Mejoras en la responsividad de los modales */
-.modal-content {
-    width: 90%;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* Mejoras en la responsividad del footer */
-.footer-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
-/* Mejoras en la responsividad de los testimonios */
-.testimonial-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-}
-
-/* Estilos para el botón de menú hamburguesa */
-.hamburger-menu {
-    display: none;
-    cursor: pointer;
-}
-
-/* Mejoras en la responsividad del hero */
-.hero-content {
-    text-align: center;
-    padding: 2rem;
-}
-
-/* Media queries para diferentes tamaños de pantalla */
-@media (max-width: 1024px) {
-    html {
-        font-size: 15px;
-    }
-
-    .container {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
-
-    .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .swiper-button-next,
-    .swiper-button-prev {
-        transform: scale(0.8);
-    }
-
-    .hamburger-menu {
-        display: block;
-}
-
-    #scroll-to-top {
-        width: 35px;
-        height: 35px;
-    }
-
-    h1 { font-size: 1.75rem; }
-    h2 { font-size: 1.5rem; }
-    h3 { font-size: 1.25rem; }
-    h4 { font-size: 1.1rem; }
-
-    .testimonial-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 576px) {
-    html {
-        font-size: 13px;
-    }
-
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    #mobile-menu {
-        width: 100%;
-    }
-
-    h1 { font-size: 1.5rem; }
-    h2 { font-size: 1.25rem; }
-    h3 { font-size: 1.1rem; }
-    h4 { font-size: 1rem; }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .testimonial-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-content {
-        padding: 1rem;
-    }
-}
-
-/* Pequeñas pantallas */
-@media (max-width: 400px) {
-    html {
-        font-size: 12px;
-    }
-
-    h1 { font-size: 1.25rem; }
-    h2 { font-size: 1.1rem; }
-    h3 { font-size: 1rem; }
-    h4 { font-size: 0.9rem; }
-
-    #scroll-to-top {
-        width: 30px;
-        height: 30px;
-    }
-
-    button, 
-    .button, 
-    a {
-        min-height: 40px;
-        min-width: 40px;
-        padding: 0.4rem 0.8rem;
-    }
-
-    .hamburger-menu {
-        font-size: 1.5rem;
-    }
-
-    .testimonial-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .container {
-        padding: 0.5rem;
-    }
-}
-/* Asegúrate de que el menú móvil se oculte en pantallas más grandes */
-@media (min-width: 1024px) {
-  #mobile-menu {
-    display: none;
-  }
-}
-
-/* Ajusta la tipografía en pantallas más pequeñas */
-@media (max-width: 640px) {
-  h1 {
-    font-size: 1.5rem; /* Ajusta según tu diseño */
-  }
-  p {
-    font-size: 1rem;
-  }
 }

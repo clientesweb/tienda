@@ -11,8 +11,20 @@
 </head>
 <body class="font-sans">
     <!-- Anuncio superior -->
-    <div id="top-announcement" class="bg-black text-white py-2 px-4 text-center">
-        <p class="text-sm">Envío gratis en pedidos superiores a $99 | Devolución gratuita de 30 días</p>
+    <div id="top-announcement" class="bg-black text-white py-2 px-4 text-center relative overflow-hidden">
+        <div class="swiper-container announcement-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <p class="text-sm">Envío gratis en pedidos superiores a $99 | Devolución gratuita de 30 días</p>
+                </div>
+                <div class="swiper-slide">
+                    <p class="text-sm">¡Nueva colección de verano disponible ahora!</p>
+                </div>
+                <div class="swiper-slide">
+                    <p class="text-sm">10% de descuento en tu primera compra - Usa el código: BIENVENIDO10</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Header -->
@@ -171,7 +183,7 @@
                         </div>
                         <div class="swiper-slide">
                             <div class="bg-white p-6 rounded-lg shadow-md">
-                                <p class="text-gray-600 mb-4">"Compré un anillo para mi esposa y quedó encantada. Definitivamente volveré a comprar aquí."</p>
+                                <p class="text-gray-600 mb-4">"Compré un anillo para mi esposa y quedó encantada.Definitivamente volveré a comprar aquí."</p>
                                 <p class="font-bold">- Carlos R.</p>
                             </div>
                         </div>
@@ -306,4 +318,31 @@
                     <label for="card-number" class="block mb-2">Número de Tarjeta</label>
                     <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
                 </div>
-                <div class="flex space
+                <div class="flex space-x-4">
+                    <div class="w-1/2">
+                        <label for="expiry-date" class="block mb-2">Fecha de Expiración</label>
+                        <input type="text" id="expiry-date" placeholder="MM/AA" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                    <div class="w-1/2">
+                        <label for="cvv" class="block mb-2">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition duration-300">Pagar</button>
+            </form>
+            <div class="mt-4">
+                <p class="text-sm text-gray-600">Métodos de pago aceptados:</p>
+                <div class="flex space-x-4 mt-2">
+                    <i class="fab fa-cc-visa text-3xl text-blue-600"></i>
+                    <i class="fab fa-cc-mastercard text-3xl text-red-600"></i>
+                    <i class="fab fa-cc-amex text-3xl text-blue-400"></i>
+                    <i class="fab fa-cc-paypal text-3xl text-blue-800"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

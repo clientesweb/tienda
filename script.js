@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar Swiper para el anuncio superior
+    const announcementSwiper = new Swiper('.announcement-swiper', {
+        direction: 'vertical',
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    });
+
     // Inicializar Swiper para el hero
-    const heroSwiper = new Swiper('.swiper-container', {
+    const heroSwiper = new Swiper('#hero .swiper-container', {
         loop: true,
         pagination: {
             el: '.swiper-pagination',
@@ -230,68 +240,17 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenu.classList.remove('active');
     });
 
-    // Scroll to top
-    const scrollToTopButton = document.createElement('button');
-    scrollToTopButton.id = 'scroll-to-top';
-    scrollToTopButton.innerHTML = '&uarr;';
-    document.body.appendChild(scrollToTopButton);
-
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 100) {
-            scrollToTopButton.classList.add('visible');
-        } else {
-            scrollToTopButton.classList.remove('visible');
-        }
-    });
-
-    scrollToTopButton.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
     // Header sticky
     const header = document.getElementById('main-header');
     const headerOffset = header.offsetTop;
 
     window.addEventListener('scroll', () => {
         if (window.pageYOffset > headerOffset) {
-            header.classList.add('header-sticky');
+            header.classList.add('scrolled');
         } else {
-            header.classList.remove('header-sticky');
+            header.classList.remove('scrolled');
         }
     });
-
-    // Lazy loading de imágenes
-    const lazyImages = document.querySelectorAll('img[data-src]');
-    const lazyLoadOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                observer.unobserve(img);
-            }
-        });
-    }, lazyLoadOptions);
-
-    lazyImages.forEach(img => lazyLoadObserver.observe(img));
-
-    // Animaciones al hacer scroll
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    const animationObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animated');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    animatedElements.forEach(el => animationObserver.observe(el));
 
     // Vista rápida de productos
     document.querySelectorAll('.quick-view').forEach(button => {

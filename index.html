@@ -3,346 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop The Jewels - Réplica</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="styles.css">
+    <title>Tienda Chamme - Réplica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .animate-fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .carousel-item {
+            display: none;
+        }
+        .carousel-item.active {
+            display: block;
+        }
+    </style>
 </head>
-<body class="font-sans">
-    <!-- Anuncio superior -->
-    <div id="top-announcement" class="bg-black text-white py-2 px-4 text-center relative overflow-hidden">
-        <div class="swiper-container announcement-swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <p class="text-sm">Envío gratis en pedidos superiores a $99 | Devolución gratuita de 30 días</p>
-                </div>
-                <div class="swiper-slide">
-                    <p class="text-sm">¡Nueva colección de verano disponible ahora!</p>
-                </div>
-                <div class="swiper-slide">
-                    <p class="text-sm">10% de descuento en tu primera compra - Usa el código: BIENVENIDO10</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300" id="main-header">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-            <button id="menu-toggle" class="lg:hidden text-gray-600 hover:text-gray-900 transition-colors duration-300">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-            <a href="#" class="text-2xl font-bold">Shop The Jewels</a>
-            <nav id="main-nav" class="hidden lg:flex space-x-6">
-                <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors duration-300">Inicio</a>
-                <a href="#shop" class="text-gray-600 hover:text-gray-900 transition-colors duration-300">Tienda</a>
-                <a href="#about" class="text-gray-600 hover:text-gray-900 transition-colors duration-300">Acerca de</a>
-                <a href="#contact" class="text-gray-600 hover:text-gray-900 transition-colors duration-300">Contacto</a>
-            </nav>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/logo-chamme-1.png" alt="Tienda Chamme Logo" class="h-12">
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#" class="text-gray-700 hover:text-gray-900">Inicio</a></li>
+                <li><a href="#products" class="text-gray-700 hover:text-gray-900">Productos</a></li>
+                <li><a href="#about" class="text-gray-700 hover:text-gray-900">Nosotros</a></li>
+                <li><a href="#contact" class="text-gray-700 hover:text-gray-900">Contacto</a></li>
+            </ul>
             <div class="flex items-center space-x-4">
-                <button aria-label="Buscar" id="search-btn" class="text-gray-600 hover:text-gray-900 transition-colors duration-300">
-                    <i class="fas fa-search text-xl"></i>
+                <button id="cart-button" class="text-gray-700 hover:text-gray-900">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs">0</span>
                 </button>
-                <button aria-label="Carrito" id="cart-btn" class="relative text-gray-600 hover:text-gray-900 transition-colors duration-300">
-                    <i class="fas fa-shopping-bag text-xl"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs transition-all duration-300">0</span>
-                </button>
-                <button aria-label="Cuenta de usuario" id="user-btn" class="text-gray-600 hover:text-gray-900 transition-colors duration-300">
-                    <i class="fas fa-user text-xl"></i>
+                <button class="md:hidden" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
                 </button>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- Menú móvil -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-50 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
-        <div class="flex justify-between items-center p-4 border-b">
-            <h2 class="text-2xl font-bold">Menú</h2>
-            <button id="close-menu" class="text-2xl text-gray-600 hover:text-gray-900 transition-colors duration-300">&times;</button>
-        </div>
-        <nav class="p-4">
-            <a href="#" class="block py-2 text-lg text-gray-600 hover:text-gray-900 transition-colors duration-300">Inicio</a>
-            <a href="#shop" class="block py-2 text-lg text-gray-600 hover:text-gray-900 transition-colors duration-300">Tienda</a>
-            <a href="#about" class="block py-2 text-lg text-gray-600 hover:text-gray-900 transition-colors duration-300">Acerca de</a>
-            <a href="#contact" class="block py-2 text-lg text-gray-600 hover:text-gray-900 transition-colors duration-300">Contacto</a>
-        </nav>
-    </div>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="relative h-screen">
-            <div class="swiper-container h-full">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide relative">
-                        <img src="https://shopthejewels.in/cdn/shop/files/Untitled_design_-_2023-07-01T130745.006_1950x.png?v=1688198280" alt="Hero image 1" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                            <div class="text-center text-white">
-                                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-up">Colección de Joyas Exquisitas</h1>
-                                <p class="text-lg md:text-xl mb-8 animate-fade-in-up animation-delay-300">Descubre nuestras piezas hechas a mano</p>
-                                <a href="#shop" class="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-200 transition duration-300 animate-fade-in-up animation-delay-600">
-                                    Comprar Ahora
-                                </a>
-                            </div>
-                        </div>
+    <main class="mt-20">
+        <section id="hero" class="bg-gray-200 py-20">
+            <div class="container mx-auto px-4">
+                <div id="hero-carousel" class="relative overflow-hidden h-96">
+                    <div class="carousel-item active">
+                        <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/banner-1.jpg" alt="Hero 1" class="w-full h-full object-cover">
                     </div>
-                    <div class="swiper-slide relative">
-                        <img src="https://shopthejewels.in/cdn/shop/files/Untitled_design_-_2023-07-01T130745.006_1950x.png?v=1688198280" alt="Hero image 2" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                            <div class="text-center text-white">
-                                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in-up">Elegancia en Cada Detalle</h1>
-                                <p class="text-lg md:text-xl mb-8 animate-fade-in-up animation-delay-300">Joyas que cuentan tu historia</p>
-                                <a href="#shop" class="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-200 transition duration-300 animate-fade-in-up animation-delay-600">
-                                    Explorar Colección
-                                </a>
-                            </div>
-                        </div>
+                    <div class="carousel-item">
+                        <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/banner-2.jpg" alt="Hero 2" class="w-full h-full object-cover">
                     </div>
+                    <div class="carousel-item">
+                        <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/banner-3.jpg" alt="Hero 3" class="w-full h-full object-cover">
+                    </div>
+                    <button id="prev-slide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="next-slide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
         </section>
 
-        <!-- Featured Products Section -->
-        <section id="featured-products" class="py-16 bg-gray-50">
+        <section id="products" class="py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-8">Productos Destacados</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="featured-products-grid">
+                <h2 class="text-3xl font-bold mb-8 text-center">Nuestros Productos</h2>
+                <div class="mb-8 flex justify-center space-x-4" id="category-filters">
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300" data-category="all">Todos</button>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300 transition duration-300" data-category="category1">Categoría 1</button>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300 transition duration-300" data-category="category2">Categoría 2</button>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300 transition duration-300" data-category="category3">Categoría 3</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="product-grid">
                     <!-- Los productos se cargarán dinámicamente aquí -->
                 </div>
             </div>
         </section>
 
-        <!-- Categories Section -->
-        <section id="categories" class="py-16">
+        <section id="about" class="bg-white py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-8">Categorías</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <a href="#" class="group category-item">
-                        <div class="relative h-64 rounded-lg overflow-hidden">
-                            <img src="https://shopthejewels.in/cdn/shop/files/Untitled_design_-_2023-07-01T130745.006_1950x.png?v=1688198280" alt="Anillos" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <h3 class="text-white text-2xl font-bold">Anillos</h3>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="group category-item">
-                        <div class="relative h-64 rounded-lg overflow-hidden">
-                            <img src="https://shopthejewels.in/cdn/shop/files/Untitled_design_-_2023-07-01T130745.006_1950x.png?v=1688198280" alt="Collares" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <h3 class="text-white text-2xl font-bold">Collares</h3>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="group category-item">
-                        <div class="relative h-64 rounded-lg overflow-hidden">
-                            <img src="https://shopthejewels.in/cdn/shop/files/Untitled_design_-_2023-07-01T130745.006_1950x.png?v=1688198280" alt="Pulseras" class="w-full h-full object-cover transition duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <h3 class="text-white text-2xl font-bold">Pulseras</h3>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                <h2 class="text-3xl font-bold mb-8 text-center">Sobre Nosotros</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto">
+                    Tienda Chamme es tu destino para productos únicos y de alta calidad. Nos enorgullece ofrecer una selección cuidadosamente curada para satisfacer tus necesidades y gustos. Con años de experiencia en el mercado, nos dedicamos a brindar la mejor experiencia de compra a nuestros clientes.
+                </p>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-16 bg-gray-100">
+        <section id="contact" class="py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
-                <div class="flex flex-col lg:flex-row items-center">
-                    <div class="lg:w-1/2 mb-8 lg:mb-0">
-                        <img src="https://shopthejewels.in/cdn/shop/files/Untitled_design_-_2023-07-01T130745.006_1950x.png?v=1688198280" alt="Sobre nosotros" class="rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold mb-8 text-center">Contáctanos</h2>
+                <form class="max-w-lg mx-auto">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-bold mb-2">Nombre</label>
+                        <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </div>
-                    <div class="lg:w-1/2 lg:pl-12">
-                        <h2 class="text-3xl font-bold mb-4">Nuestra Historia</h2>
-                        <p class="text-gray-600 mb-4">
-                            Shop The Jewels nació de la pasión por crear joyas únicas y atemporales. Desde nuestros humildes comienzos, nos hemos dedicado a ofrecer piezas de la más alta calidad que reflejan la elegancia y el estilo de nuestros clientes.
-                        </p>
-                        <p class="text-gray-600 mb-4">
-                            Cada joya es cuidadosamente diseñada y elaborada por nuestros artesanos expertos, utilizando solo los mejores materiales. Nos enorgullece ofrecer una experiencia de compra excepcional y un servicio al cliente inigualable.
-                        </p>
-                        <a href="#" class="inline-block bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition duration-300">Conoce más sobre nosotros</a>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section id="testimonials" class="py-16">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-8">Lo que dicen nuestros clientes</h2>
-                <div class="swiper-container testimonials-slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="bg-white p-6 rounded-lg shadow-md">
-                                <p class="text-gray-600 mb-4">"Las joyas de Shop The Jewels son simplemente hermosas. La calidad es excepcional y el servicio al cliente es de primera clase."</p>
-                                <p class="font-bold">- María G.</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="bg-white p-6 rounded-lg shadow-md">
-                                <p class="text-gray-600 mb-4">"Compré un anillo para mi esposa y quedó encantada.Definitivamente volveré a comprar aquí."</p>
-                                <p class="font-bold">- Carlos R.</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="bg-white p-6 rounded-lg shadow-md">
-                                <p class="text-gray-600 mb-4">"La atención personalizada y la variedad de diseños hacen que Shop The Jewels sea mi tienda de joyas favorita."</p>
-                                <p class="font-bold">- Laura M.</p>
-                            </div>
-                        </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-gray-700 font-bold mb-2">Mensaje</label>
+                        <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                     </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter Section -->
-        <section id="newsletter" class="py-16 bg-gray-100">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold mb-4">Suscríbete a Nuestro Boletín</h2>
-                <p class="mb-8">Recibe las últimas noticias y ofertas exclusivas directamente en tu bandeja de entrada.</p>
-                <form id="newsletter-form" class="max-w-md mx-auto">
-                    <div class="flex">
-                        <input type="email" placeholder="Tu dirección de email" required class="flex-grow px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-black">
-                        <button type="submit" class="bg-black text-white px-6 py-2 rounded-r-md hover:bg-gray-800 transition duration-300">Suscribirse</button>
-                    </div>
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition duration-300 w-full">Enviar Mensaje</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Shop The Jewels</h3>
-                    <p class="text-gray-400">Joyas exquisitas para cada ocasión</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Inicio</a></li>
-                        <li><a href="#shop" class="text-gray-400 hover:text-white transition-colors duration-300">Tienda</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300">Acerca de</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contacto</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Servicio al Cliente</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">FAQ</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Envíos</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Devoluciones</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Guía de Tallas</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Síguenos</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                            <i class="fab fa-facebook text-2xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                            <i class="fab fa-instagram text-2xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
-                            <i class="fab fa-twitter text-2xl"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-                <p>&copy; 2023 Shop The Jewels. Todos los derechos reservados.</p>
-            </div>
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2023 Tienda Chamme. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- Modal de búsqueda -->
-    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
-        <div class="bg-white p-8 rounded-lg w-full max-w-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold">Buscar</h2>
-                <button id="close-search" class="text-2xl">&times;</button>
+    <!-- Modal de carrito -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-8 rounded-lg max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Carrito de Compras</h2>
+            <div id="cart-items" class="mb-4">
+                <!-- Los items del carrito se cargarán aquí -->
             </div>
-            <input type="text" placeholder="Buscar productos..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold">Total:</span>
+                <span id="cart-total" class="font-bold"></span>
+            </div>
+            <button id="checkout-button" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 w-full">Finalizar Compra</button>
+            <button id="close-cart" class="mt-4 text-gray-600 hover:text-gray-800">Cerrar</button>
         </div>
     </div>
 
-    <!-- Modal del carrito -->
-    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
-        <div class="bg-white p-8 rounded-lg w-full max-w-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold">Tu Carrito</h2>
-                <button id="close-cart" class="text-2xl">&times;</button>
-            </div>
-            <div id="cart-items" class="space-y-4">
-                <!-- Los items del carrito se cargarán dinámicamente aquí -->
-            </div>
-            <div class="mt-4 flex justify-between items-center">
-                <p class="text-xl font-bold">Total: <span id="cart-total">$0.00</span></p>
-                <button id="checkout-btn" class="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition duration-300">Pagar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de inicio de sesión -->
-    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
-        <div class="bg-white p-8 rounded-lg w-full max-w-md">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
-                <button id="close-login" class="text-2xl">&times;</button>
-            </div>
-            <form id="login-form" class="space-y-4">
-                <input type="email" placeholder="Email" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                <input type="password" placeholder="Contraseña" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                <button type="submit" class="w-full bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition duration-300">Iniciar Sesión</button>
-            </form>
-            <p class="mt-4 text-center">
-                ¿No tienes una cuenta? <a href="#" class="text-blue-600 hover:underline">Regístrate</a>
-            </p>
-        </div>
-    </div>
-
-    <!-- Modal de pago -->
-    <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
-        <div class="bg-white p-8 rounded-lg w-full max-w-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold">Método de Pago</h2>
-                <button id="close-payment" class="text-2xl">&times;</button>
-            </div>
-            <form id="payment-form" class="space-y-4">
-                <div>
-                    <label for="card-number" class="block mb-2">Número de Tarjeta</label>
-                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                </div>
-                <div class="flex space-x-4">
-                    <div class="w-1/2">
-                        <label for="expiry-date" class="block mb-2">Fecha de Expiración</label>
-                        <input type="text" id="expiry-date" placeholder="MM/AA" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                    </div>
-                    <div class="w-1/2">
-                        <label for="cvv" class="block mb-2">CVV</label>
-                        <input type="text" id="cvv" placeholder="123" required class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-black">
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition duration-300">Pagar</button>
-            </form>
-            <div class="mt-4">
-                <p class="text-sm text-gray-600">Métodos de pago aceptados:</p>
-                <div class="flex space-x-4 mt-2">
-                    <i class="fab fa-cc-visa text-3xl text-blue-600"></i>
-                    <i class="fab fa-cc-mastercard text-3xl text-red-600"></i>
-                    <i class="fab fa-cc-amex text-3xl text-blue-400"></i>
-                    <i class="fab fa-cc-paypal text-3xl text-blue-800"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

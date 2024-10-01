@@ -29,31 +29,43 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/logo-chamme-1.png" alt="Tienda Chamme Logo" class="h-12">
-            <ul class="hidden md:flex space-x-6">
-                <li><a href="#" class="text-gray-700 hover:text-gray-900">Inicio</a></li>
-                <li><a href="#products" class="text-gray-700 hover:text-gray-900">Productos</a></li>
-                <li><a href="#about" class="text-gray-700 hover:text-gray-900">Nosotros</a></li>
-                <li><a href="#contact" class="text-gray-700 hover:text-gray-900">Contacto</a></li>
-            </ul>
-            <div class="flex items-center space-x-4">
-                <button id="cart-button" class="text-gray-700 hover:text-gray-900">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs">0</span>
-                </button>
-                <button class="md:hidden" id="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
+    <div class="bg-gray-800 text-white py-2 px-4 text-center text-sm">
+        <p>Envío gratis en compras superiores a $10000 | 3 cuotas sin interés</p>
+    </div>
+    
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/logo-chamme-1.png" alt="Tienda Chamme Logo" class="h-12">
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="text-gray-700 hover:text-gray-900">Inicio</a>
+                    <a href="#products" class="text-gray-700 hover:text-gray-900">Productos</a>
+                    <a href="#about" class="text-gray-700 hover:text-gray-900">Nosotros</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900">Contacto</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="cart-button" class="text-gray-700 hover:text-gray-900">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs">0</span>
+                    </button>
+                    <button class="md:hidden" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden mt-4 hidden">
+                <a href="#" class="block py-2 text-gray-700 hover:text-gray-900">Inicio</a>
+                <a href="#products" class="block py-2 text-gray-700 hover:text-gray-900">Productos</a>
+                <a href="#about" class="block py-2 text-gray-700 hover:text-gray-900">Nosotros</a>
+                <a href="#contact" class="block py-2 text-gray-700 hover:text-gray-900">Contacto</a>
             </div>
         </nav>
     </header>
 
-    <main class="mt-20">
-        <section id="hero" class="bg-gray-200 py-20">
+    <main>
+        <section id="hero" class="bg-gray-200 py-10 md:py-20">
             <div class="container mx-auto px-4">
-                <div id="hero-carousel" class="relative overflow-hidden h-96">
+                <div id="hero-carousel" class="relative overflow-hidden h-48 md:h-96">
                     <div class="carousel-item active">
                         <img src="https://www.tiendachamme.com.ar/wp-content/uploads/2023/05/banner-1.jpg" alt="Hero 1" class="w-full h-full object-cover">
                     </div>
@@ -73,33 +85,33 @@
             </div>
         </section>
 
-        <section id="products" class="py-16 animate-on-scroll">
+        <section id="products" class="py-10 md:py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold mb-8 text-center">Nuestros Productos</h2>
-                <div class="mb-8 flex justify-center space-x-4" id="category-filters">
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300" data-category="all">Todos</button>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300 transition duration-300" data-category="category1">Categoría 1</button>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300 transition duration-300" data-category="category2">Categoría 2</button>
-                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-300 transition duration-300" data-category="category3">Categoría 3</button>
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Nuestros Productos</h2>
+                <div class="mb-6 md:mb-8 flex flex-wrap justify-center gap-2 md:gap-4" id="category-filters">
+                    <button class="bg-blue-500 text-white px-3 py-1 md:px-4 md:py-2 rounded-full hover:bg-blue-600 transition duration-300 text-sm md:text-base" data-category="all">Todos</button>
+                    <button class="bg-gray-200 text-gray-700 px-3 py-1 md:px-4 md:py-2 rounded-full hover:bg-gray-300 transition duration-300 text-sm md:text-base" data-category="category1">Categoría 1</button>
+                    <button class="bg-gray-200 text-gray-700 px-3 py-1 md:px-4 md:py-2 rounded-full hover:bg-gray-300 transition duration-300 text-sm md:text-base" data-category="category2">Categoría 2</button>
+                    <button class="bg-gray-200 text-gray-700 px-3 py-1 md:px-4 md:py-2 rounded-full hover:bg-gray-300 transition duration-300 text-sm md:text-base" data-category="category3">Categoría 3</button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="product-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8" id="product-grid">
                     <!-- Los productos se cargarán dinámicamente aquí -->
                 </div>
             </div>
         </section>
 
-        <section id="about" class="bg-white py-16 animate-on-scroll">
+        <section id="about" class="bg-white py-10 md:py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold mb-8 text-center">Sobre Nosotros</h2>
-                <p class="text-lg text-center max-w-3xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Sobre Nosotros</h2>
+                <p class="text-base md:text-lg text-center max-w-3xl mx-auto">
                     Tienda Chamme es tu destino para productos únicos y de alta calidad. Nos enorgullece ofrecer una selección cuidadosamente curada para satisfacer tus necesidades y gustos. Con años de experiencia en el mercado, nos dedicamos a brindar la mejor experiencia de compra a nuestros clientes.
                 </p>
             </div>
         </section>
 
-        <section id="contact" class="py-16 animate-on-scroll">
+        <section id="contact" class="py-10 md:py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold mb-8 text-center">Contáctanos</h2>
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Contáctanos</h2>
                 <form class="max-w-lg mx-auto">
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 font-bold mb-2">Nombre</label>
@@ -126,8 +138,8 @@
     </footer>
 
     <!-- Modal de carrito -->
-    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white p-8 rounded-lg max-w-md w-full">
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 md:p-8 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
             <h2 class="text-2xl font-bold mb-4">Carrito de Compras</h2>
             <div id="cart-items" class="mb-4">
                 <!-- Los items del carrito se cargarán aquí -->
@@ -136,11 +148,34 @@
                 <span class="font-bold">Total:</span>
                 <span id="cart-total" class="font-bold"></span>
             </div>
-            <button id="checkout-button" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 w-full">Finalizar Compra</button>
-            <button id="close-cart" class="mt-4 text-gray-600 hover:text-gray-800">Cerrar</button>
+            <button id="checkout-button" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 w-full mb-2">Finalizar Compra</button>
+            <button id="close-cart" class="text-gray-600 hover:text-gray-800 w-full text-center">Cerrar</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Modal de compra -->
+    <div id="purchase-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 md:p-8 rounded-lg max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Finalizar Compra</h2>
+            <form id="purchase-form">
+                <div class="mb-4">
+                    <label for="purchase-name" class="block text-gray-700 font-bold mb-2">Nombre completo</label>
+                    <input type="text" id="purchase-name" name="purchase-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="purchase-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                    <input type="email" id="purchase-email" name="purchase-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="purchase-address" class="block text-gray-700 font-bold mb-2">Dirección de envío</label>
+                    <textarea id="purchase-address" name="purchase-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 w-full mb-2">Confirmar Compra</button>
+                <button type="button" id="close-purchase" class="text-gray-600 hover:text-gray-800 w-full text-center">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>

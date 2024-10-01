@@ -10,6 +10,8 @@ const products = [
     { id: 8, name: 'Producto 8', price: 64.99, image: 'https://via.placeholder.com/300x300', category: 'category2' },
 ];
 
+const featuredProducts = products.slice(0, 4); // Tomamos los primeros 4 productos como destacados
+
 let cart = [];
 
 // Función para cargar productos en el slider
@@ -36,6 +38,28 @@ function loadProductSlider(category = 'all') {
     });
 }
 
+// Función para cargar productos destacados
+function loadFeaturedProducts() {
+    const featuredSlider = document.getElementById('featured-slider');
+    if (!featuredSlider) return;
+
+    featuredSlider.innerHTML = '';
+
+    featuredProducts.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
+                <p class="text-gray-600">$${product.price.toFixed(2)}</p>
+                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+            </div>
+        `;
+        featuredSlider.appendChild(productElement);
+    });
+}
+
 // Función para manejar el filtrado de productos
 function handleProductFilters() {
     const filterButtons = document.querySelectorAll('#category-filters button');
@@ -58,6 +82,23 @@ function handleProductSlider() {
     const slider = document.getElementById('product-slider');
     const prevButton = document.getElementById('prev-product');
     const nextButton = document.getElementById('next-product');
+
+    if (!slider || !prevButton || !nextButton) return;
+
+    prevButton.addEventListener('click', () => {
+        slider.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+
+    nextButton.addEventListener('click', () => {
+        slider.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+}
+
+// Función para manejar el carrusel de productos destacados
+function handleFeaturedSlider() {
+    const slider = document.getElementById('featured-slider');
+    const prevButton = document.getElementById('prev-featured');
+    const nextButton = document.getElementById('next-featured');
 
     if (!slider || !prevButton || !nextButton) return;
 
@@ -118,7 +159,8 @@ function handleMobileMenu() {
     });
 }
 
-// Función para manejar el desplazamiento suave
+// Función para manejar el desplaz
+amiento suave
 function handleSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -215,6 +257,9 @@ function showPurchaseModal() {
 
     purchaseModal.classList.remove('hidden');
     purchaseModal.classList.add('flex');
+
+    // Inicializar el botón de pago de Mercado Pago
+    initMercadoPago();
 }
 
 function hidePurchaseModal() {
@@ -225,26 +270,55 @@ function hidePurchaseModal() {
     purchaseModal.classList.add('hidden');
 }
 
-function handlePurchase(event) {
-    event.preventDefault();
-    const name = document.getElementById('purchase-name')?.value;
-    const email = document.getElementById('purchase-email')?.value;
-    const address = document.getElementById('purchase-address')?.value;
-    const cardNumber = document.getElementById('card-number')?.value;
-    const cardExpiry = document.getElementById('card-expiry')?.value;
-    const cardCVC = document.getElementById('card-cvc')?.value;
+// Función para inicializar Mercado Pago
+function initMercadoPago() {
+    const mp = new MercadoPago('TU_PUBLIC_KEY');
+    const bricksBuilder = mp.bricks();
 
-    // Aquí puedes agregar la lógica para procesar el pago
-    console.log('Compra realizada:', { name, email, address, cardNumber, cardExpiry, cardCVC, cart });
+    const renderCardPaymentBrick = async (bricksBuilder) => {
+        const settings = {
+            initialization: {
+                amount: calculateTotal(), // Función para calcular el total del carrito
+            },
+            callbacks: {
+                onReady: () => {
+                    // callback llamado cuando Brick esté listo
+                },
+                onSubmit: (cardFormData) => {
+                    // callback llamado cuando el usuario haga clic en el botón enviar los datos
+                    return new Promise((resolve, reject) => {
+                        fetch("/process_payment", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(cardFormData)
+                        })
+                        .then((response) => response.json())
+                        .then((response) => {
+                            // recibir el resultado del pago
+                            resolve();
+                        })
+                        .catch((error) => {
+                            // manejar la respuesta de error al intentar crear el pago
+                            reject();
+                        })
+                    });
+                },
+                onError: (error) => {
+                    // callback llamado para todos los casos de error de Brick
+                },
+            },
+        };
+        window.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'mercadopago-button-container', settings);
+    };
 
-    // Limpia el carrito y cierra los modales
-    cart = [];
-    updateCartCount();
-    hidePurchaseModal();
-    hideCart();
+    renderCardPaymentBrick(bricksBuilder);
+}
 
-    // Muestra un mensaje de confirmación
-    alert('¡Gracias por tu compra!');
+// Función para calcular el total del carrito
+function calculateTotal() {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }
 
 // Función para animar el banner superior
@@ -258,8 +332,10 @@ function animateTopBanner() {
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     loadProductSlider();
+    loadFeaturedProducts();
     handleProductFilters();
     handleProductSlider();
+    handleFeaturedSlider();
     handleCarousel();
     handleMobileMenu();
     handleSmoothScroll();
@@ -282,8 +358,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listeners para el modal de compra
     const closePurchaseButton = document.getElementById('close-purchase');
-    const purchaseForm = document.getElementById('purchase-form');
 
     if (closePurchaseButton) closePurchaseButton.addEventListener('click', hidePurchaseModal);
-    if (purchaseForm) purchaseForm.addEventListener('submit', handlePurchase);
 });

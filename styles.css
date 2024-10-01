@@ -278,3 +278,235 @@ a, button {
 .add-to-cart:hover {
     animation: pulse 0.5s infinite;
 }
+/* Estilos base y animaciones (sin cambios) */
+/* ... (mantén todas las animaciones y estilos que ya tienes) ... */
+
+/* Mejoras responsivas */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Grid responsivo */
+.grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Imágenes responsivas */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tipografía responsiva */
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+/* Media queries para diferentes tamaños de pantalla */
+@media (max-width: 1024px) {
+    html {
+        font-size: 15px;
+    }
+
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Ajusta el layout para tablets */
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Reduce el tamaño de los botones de Swiper en tablets */
+    .swiper-button-next,
+    .swiper-button-prev {
+        transform: scale(0.8);
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 13px;
+    }
+
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Ajusta el layout para móviles */
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Oculta los botones de Swiper en móviles */
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none;
+    }
+
+    /* Ajusta el tamaño del botón de scroll to top en móviles */
+    #scroll-to-top {
+        width: 30px;
+        height: 30px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    /* Ajusta el espaciado en el formulario de newsletter para móviles */
+    #newsletter-form {
+        flex-direction: column;
+    }
+
+    #newsletter-form input,
+    #newsletter-form button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Mejoras en la accesibilidad y usabilidad */
+button, 
+.button, 
+a {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 1rem;
+}
+
+input, 
+textarea, 
+select {
+    font-size: 16px; /* Previene el zoom en iOS */
+}
+
+/* Mejoras en el menú móvil */
+#mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background-color: white;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: left 0.3s ease-in-out;
+}
+
+#mobile-menu.active {
+    left: 0;
+}
+
+/* Overlay para el menú móvil */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+}
+
+/* Mejoras en la responsividad de los modales */
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+    }
+}
+
+/* Mejoras en la responsividad del footer */
+.footer-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Mejoras en la responsividad de los testimonios */
+.testimonial-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Estilos para el botón de menú hamburguesa */
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    .desktop-menu {
+        display: none;
+    }
+}
+
+/* Mejoras en la responsividad del hero */
+.hero-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+}

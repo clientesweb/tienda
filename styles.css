@@ -470,3 +470,70 @@ select {
         font-size: 0.9rem;
     }
 }
+/* Ajuste del tamaño de fuentes y espaciados para pantallas pequeñas */
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 0.5rem; /* Reducir los márgenes para mejor uso del espacio */
+    }
+
+    .grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+    }
+
+    /* Ocultar elementos no esenciales en pantallas pequeñas */
+    .desktop-only {
+        display: none;
+    }
+
+    /* Asegurar que los botones y elementos interactivos sean fáciles de tocar */
+    button, 
+    a {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+    }
+
+    .product-item:hover {
+        transform: none; /* Desactivar animaciones complejas en dispositivos móviles */
+        box-shadow: none;
+    }
+
+    /* Ajuste del banner y otros elementos grandes */
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajustes para pantallas medianas (tablets) */
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas para pantallas medianas */
+    }
+
+    /* Ajustes de tamaño y visibilidad del menú */
+    .hamburger-menu {
+        display: block;
+    }
+
+    .desktop-menu {
+        display: none;
+    }
+
+    /* Aumentar el tamaño de los botones */
+    button, 
+    a {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+    }
+}

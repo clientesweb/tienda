@@ -138,31 +138,16 @@
         <section id="featured" class="py-10 md:py-16 animate-on-scroll">
             <div class="container mx-auto px-4">
                 <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Productos Destacados</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-grow">
-                        <img src="https://via.placeholder.com/400x300" alt="Producto Destacado 1" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold mb-2">Producto Destacado 1</h3>
-                            <p class="text-gray-600 mb-4">Descripción breve del producto destacado 1.</p>
-                            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300">Ver Detalles</button>
-                        </div>
+                <div class="relative">
+                    <div class="featured-slider overflow-x-auto flex space-x-4 pb-4" id="featured-slider">
+                        <!-- Los productos destacados se cargarán dinámicamente aquí -->
                     </div>
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-grow">
-                        <img src="https://via.placeholder.com/400x300" alt="Producto Destacado 2" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold mb-2">Producto Destacado 2</h3>
-                            <p class="text-gray-600 mb-4">Descripción breve del producto destacado 2.</p>
-                            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300">Ver Detalles</button>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover-grow">
-                        <img src="https://via.placeholder.com/400x300" alt="Producto Destacado 3" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold mb-2">Producto Destacado 3</h3>
-                            <p class="text-gray-600 mb-4">Descripción breve del producto destacado 3.</p>
-                            <button class="bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300">Ver Detalles</button>
-                        </div>
-                    </div>
+                    <button id="prev-featured" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 shadow-md transition duration-300">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="next-featured" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 shadow-md transition duration-300">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -210,8 +195,7 @@
                             Tienda Chamme es tu destino para productos únicos y de alta calidad. Nos enorgullece ofrecer una selección cuidadosamente curada para satisfacer tus necesidades y gustos.
                         </p>
                         <p class="text-base md:text-lg text-gray-700 mb-4">
-                            Con años de experiencia en el mercado, nos dedicamos a brindar la mejor experiencia de compra a nuestros clientes. Nuest
-                        ro compromiso es ofrecerte productos excepcionales y un servicio al cliente inigualable.
+                            Con años de experiencia en el mercado, nos dedicamos a brindar la mejor experiencia de compra a nuestros clientes. Nuestro compromiso es ofrecerte productos excepcionales y un servicio al cliente inigualable.
                         </p>
                         <a href="#" class="inline-block bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600 transition duration-300">Conoce Más</a>
                     </div>
@@ -274,6 +258,7 @@
                         <i class="fab fa-cc-mastercard text-2xl"></i>
                         <i class="fab fa-cc-amex text-2xl"></i>
                         <i class="fab fa-cc-paypal text-2xl"></i>
+                        <i class="fas fa-money-bill-wave text-2xl"></i> <!-- Icono para Mercado Pago -->
                     </div>
                 </div>
             </div>
@@ -322,26 +307,16 @@
                     <label for="purchase-address" class="block text-gray-700 font-bold mb-2">Dirección de envío</label>
                     <textarea id="purchase-address" name="purchase-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
                 </div>
-                <div class="mb-4">
-                    <label for="card-number" class="block text-gray-700 font-bold mb-2">Número de tarjeta</label>
-                    <input type="text" id="card-number" name="card-number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
+                <div id="mercadopago-button-container">
+                    <!-- El botón de pago de Mercado Pago se insertará aquí -->
                 </div>
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="card-expiry" class="block text-gray-700 font-bold mb-2">Fecha de expiración</label>
-                        <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/AA" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
-                    </div>
-                    <div>
-                        <label for="card-cvc" class="block text-gray-700 font-bold mb-2">CVC</label>
-                        <input type="text" id="card-cvc" name="card-cvc" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
-                    </div>
-                </div>
-                <button type="submit" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 w-full mb-2">Confirmar Compra</button>
-                <button type="button" id="close-purchase" class="text-gray-600 hover:text-gray-800 w-full text-center">Cancelar</button>
+                <button type="button" id="close-purchase" class="mt-4 text-gray-600 hover:text-gray-800 w-full text-center">Cancelar</button>
             </form>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SDK MercadoPago.js -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="app.js"></script>
 </body>
 </html>

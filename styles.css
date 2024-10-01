@@ -496,3 +496,19 @@ select {
         padding: 0.5rem;
     }
 }
+/* Asegúrate de que el menú móvil se oculte en pantallas más grandes */
+@media (min-width: 1024px) {
+  #mobile-menu {
+    display: none;
+  }
+}
+
+/* Ajusta la tipografía en pantallas más pequeñas */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.5rem; /* Ajusta según tu diseño */
+  }
+  p {
+    font-size: 1rem;
+  }
+}

@@ -6,19 +6,21 @@ const products = [
     { id: 4, name: 'Producto 4', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'category1' },
     { id: 5, name: 'Producto 5', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'category2' },
     { id: 6, name: 'Producto 6', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'category3' },
+    { id: 7, name: 'Producto 7', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'category1' },
+    { id: 8, name: 'Producto 8', price: 64.99, image: 'https://via.placeholder.com/300x300', category: 'category2' },
 ];
 
 let cart = [];
 
-// Función para cargar productos
-function loadProducts(category = 'all') {
-    const productGrid = document.getElementById('product-grid');
-    productGrid.innerHTML = '';
+// Función para cargar productos en el slider
+function loadProductSlider(category = 'all') {
+    const productSlider = document.getElementById('product-slider');
+    productSlider.innerHTML = '';
 
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
@@ -27,7 +29,7 @@ function loadProducts(category = 'all') {
                     <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
                 </div>
             `;
-            productGrid.appendChild(productElement);
+            productSlider.appendChild(productElement);
         }
     });
 }
@@ -38,7 +40,7 @@ function handleProductFilters() {
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.getAttribute('data-category');
-            loadProducts(category);
+            loadProductSlider(category);
             
             // Actualizar estilos de los botones
             filterButtons.forEach(btn => btn.classList.remove('bg-blue-500', 'text-white'));
@@ -46,6 +48,21 @@ function handleProductFilters() {
             button.classList.remove('bg-gray-200', 'text-gray-700');
             button.classList.add('bg-blue-500', 'text-white');
         });
+    });
+}
+
+// Función para manejar el carrusel de productos
+function handleProductSlider() {
+    const slider = document.getElementById('product-slider');
+    const prevButton = document.getElementById('prev-product');
+    const nextButton = document.getElementById('next-product');
+
+    prevButton.addEventListener('click', () => {
+        slider.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+
+    nextButton.addEventListener('click', () => {
+        slider.scrollBy({ left: 300, behavior: 'smooth' });
     });
 }
 
@@ -186,9 +203,12 @@ function handlePurchase(event) {
     const name = document.getElementById('purchase-name').value;
     const email = document.getElementById('purchase-email').value;
     const address = document.getElementById('purchase-address').value;
+    const cardNumber = document.getElementById('card-number').value;
+    const cardExpiry = document.getElementById('card-expiry').value;
+    const cardCVC = document.getElementById('card-cvc').value;
 
-    // Aquí puedes agregar la lógica para procesar la compra
-    console.log('Compra realizada:', { name, email, address, cart });
+    // Aquí puedes agregar la lógica para procesar el pago
+    console.log('Compra realizada:', { name, email, address, cardNumber, cardExpiry, cardCVC, cart });
 
     // Limpia el carrito y cierra los modales
     cart = [];
@@ -200,14 +220,22 @@ function handlePurchase(event) {
     alert('¡Gracias por tu compra!');
 }
 
+// Función para animar el banner superior
+function animateTopBanner() {
+    const topBanner = document.getElementById('top-banner');
+    topBanner.classList.add('slide-in');
+}
+
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
+    loadProductSlider();
     handleProductFilters();
+    handleProductSlider();
     handleCarousel();
     handleMobileMenu();
     handleSmoothScroll();
     handleScrollAnimations();
+    animateTopBanner();
 
     // Event listeners para el carrito
     document.getElementById('cart-button').addEventListener('click', showCart);

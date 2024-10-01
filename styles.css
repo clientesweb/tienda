@@ -1,3 +1,283 @@
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInFromLeft 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+    animation: slideInFromRight 0.6s ease-out;
+}
+
+.animation-delay-300 {
+    animation-delay: 0.3s;
+}
+
+.animation-delay-600 {
+    animation-delay: 0.6s;
+}
+
+/* Estilos adicionales */
+.swiper-button-next,
+.swiper-button-prev {
+    color: white !important;
+}
+
+.swiper-pagination-bullet {
+    background: white !important;
+}
+
+.category-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Transiciones suaves */
+a, button {
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover para productos */
+.product-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Estilo para el menú móvil */
+#mobile-menu {
+    transition: transform 0.3s ease-in-out;
+}
+
+#mobile-menu.active {
+    transform: translateX(0);
+}
+
+/* Estilo para el contador del carrito */
+#cart-count {
+    transition: all 0.3s ease;
+}
+
+/* Animación para añadir al carrito */
+@keyframes addToCart {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.add-to-cart-animation {
+    animation: addToCart 0.3s ease-in-out;
+}
+
+/* Efecto parallax para el hero */
+.parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Efecto de zoom para las imágenes de productos */
+.product-image {
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Estilo para el botón de scroll to top */
+#scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Estilo para el loader */
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Efecto de hover para los iconos de redes sociales */
+.social-icon {
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-5px);
+}
+
+/* Estilo para el formulario de newsletter */
+#newsletter-form input {
+    transition: border-color 0.3s ease;
+}
+
+#newsletter-form input:focus {
+    border-color: #000;
+}
+
+/* Efecto de hover para las categorías */
+.category-item .category-overlay {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.category-item:hover .category-overlay {
+    opacity: 1;
+}
+
+/* Animación para los testimonios */
+.testimonial {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Estilo para el header sticky */
+.header-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Animación para el modal */
+.modal {
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+/* Estilo para los botones de paginación */
+.pagination-button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Efecto de hover para los enlaces del footer */
+.footer-link {
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #fff;
+}
+
+/* Animación para el botón de añadir al carrito */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.add-to-cart:hover {
+    animation: pulse 0.5s infinite;
+}
 /* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;

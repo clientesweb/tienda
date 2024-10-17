@@ -1,67 +1,67 @@
 // Simulación de datos de productos
 const products = [
-    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas' },
-    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas' },
-    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas' },
-    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas' },
-    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas' },
-    { id: 6, name: 'Tazón de Cerámica Artesanal', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica' },
-    { id: 7, name: 'Plato Decorativo de Cerámica', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica' },
-    { id: 8, name: 'Jarrón de Cerámica Pintado a Mano', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica' },
-    { id: 9, name: 'Set de Tazas de Café de Cerámica', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica' },
-    { id: 10, name: 'Maceta de Cerámica Decorativa', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica' },
-    { id: 11, name: 'Cojín Decorativo de Algodón', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles' },
-    { id: 12, name: 'Manta Tejida a Mano', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'textiles' },
-    { id: 13, name: 'Cortinas de Lino Natural', price: 89.99, image: 'https://via.placeholder.com/300x300', category: 'textiles' },
-    { id: 14, name: 'Tapete de Yute Redondo', price: 69.99, image: 'https://via.placeholder.com/300x300', category: 'textiles' },
-    { id: 15, name: 'Set de Toallas de Algodón Orgánico', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'textiles' },
+    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
+    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
+    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
+    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
+    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
+    { id: 6, name: 'Tazón de Cerámica Artesanal', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
+    { id: 7, name: 'Plato Decorativo de Cerámica', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
+    { id: 8, name: 'Jarrón de Cerámica Pintado a Mano', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
+    { id: 9, name: 'Set de Tazas de Café de Cerámica', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
+    { id: 10, name: 'Maceta de Cerámica Decorativa', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
+    { id: 11, name: 'Cojín Decorativo de Algodón', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
+    { id: 12, name: 'Manta Tejida a Mano', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
+    { id: 13, name: 'Cortinas de Lino Natural', price: 89.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
+    { id: 14, name: 'Tapete de Yute Redondo', price: 69.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
+    { id: 15, name: 'Set de Toallas de Algodón Orgánico', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
 ];
-
-const featuredProducts = products.slice(0, 4);
 
 let cart = [];
 
-function loadProductSlider(category = 'all') {
-    const productSlider = document.getElementById('product-slider');
-    if (!productSlider) return;
+function loadProducts(category = 'all') {
+    const productGrid = document.getElementById('product-grid');
+    if (!productGrid) return;
 
-    productSlider.innerHTML = '';
+    productGrid.innerHTML = '';
 
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-                    <p class="text-gray-600">$${product.price.toFixed(2)}</p>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                    <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
+                    <p class="text-dark">$${product.price.toFixed(2)}</p>
+                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
                 </div>
             `;
-            productSlider.appendChild(productElement);
+            productGrid.appendChild(productElement);
         }
     });
 }
 
 function loadFeaturedProducts() {
-    const featuredSlider = document.getElementById('featured-slider');
-    if (!featuredSlider) return;
+    const categories = ['velas', 'ceramica', 'textiles'];
+    categories.forEach(category => {
+        const featuredContainer = document.getElementById(`featured-${category}`);
+        if (!featuredContainer) return;
 
-    featuredSlider.innerHTML = '';
-
-    featuredProducts.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-        productElement.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-                <p class="text-gray-600">$${product.price.toFixed(2)}</p>
-                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
-            </div>
-        `;
-        featuredSlider.appendChild(productElement);
+        const featuredProducts = products.filter(product => product.category === category && product.featured).slice(0, 5);
+        featuredProducts.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover">
+                <div class="p-4">
+                    <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
+                    <p class="text-sm text-dark">$${product.price.toFixed(2)}</p>
+                    <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                </div>
+            `;
+            featuredContainer.appendChild(productElement);
+        });
     });
 }
 
@@ -70,120 +70,53 @@ function handleProductFilters() {
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.getAttribute('data-category');
-            loadProductSlider(category);
+            loadProducts(category);
             
             filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
-            filterButtons.forEach(btn => btn.classList.add('bg-gray-200', 'text-gray-700'));
-            button.classList.remove('bg-gray-200', 'text-gray-700');
+            filterButtons.forEach(btn => btn.classList.add('bg-secondary', 'text-dark'));
+            button.classList.remove('bg-secondary', 'text-dark');
             button.classList.add('bg-primary', 'text-white');
         });
     });
 }
 
-function handleProductSlider() {
-    const slider = document.getElementById('product-slider');
-    const prevButton = document.getElementById('prev-product');
-    const nextButton = document.getElementById('next-product');
+function handleSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (!searchInput) return;
 
-    if (!slider || !prevButton || !nextButton) return;
-
-    prevButton.addEventListener('click', () => {
-        slider.scrollBy({ left: -300, behavior: 'smooth' });
-    });
-
-    nextButton.addEventListener('click', () => {
-        slider.scrollBy({ left: 300, behavior: 'smooth' });
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredProducts = products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) || 
+            product.category.toLowerCase().includes(searchTerm)
+        );
+        displaySearchResults(filteredProducts);
     });
 }
 
-function handleFeaturedSlider() {
-    const slider = document.getElementById('featured-slider');
-    const prevButton = document.getElementById('prev-featured');
-    const nextButton = document.getElementById('next-featured');
+function displaySearchResults(filteredProducts) {
+    const productGrid = document.getElementById('product-grid');
+    if (!productGrid) return;
 
-    if (!slider || !prevButton || !nextButton) return;
+    productGrid.innerHTML = '';
 
-    prevButton.addEventListener('click', () => {
-        slider.scrollBy({ left: -300, behavior: 'smooth' });
-    });
-
-    nextButton.addEventListener('click', () => {
-        slider.scrollBy({ left: 300, behavior: 'smooth' });
-    });
-}
-
-function handleCarousel() {
-    const carousel = document.getElementById('hero-carousel');
-    if (!carousel) return;
-
-    const items = carousel.querySelectorAll('.carousel-item');
-    const prevButton = document.getElementById('prev-slide');
-    const nextButton = document.getElementById('next-slide');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        items.forEach(item => item.classList.remove('active'));
-        items[index].classList.add('active');
+    if (filteredProducts.length === 0) {
+        productGrid.innerHTML = '<p class="text-center text-gray-500">No se encontraron productos.</p>';
+        return;
     }
 
-    if (prevButton) {
-        prevButton.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            showSlide(currentIndex);
-        });
-    }
-
-    if (nextButton) {
-        nextButton.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % items.length;
-            showSlide(currentIndex);
-        });
-    }
-
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % items.length;
-        showSlide(currentIndex);
-    }, 5000);
-}
-
-function handleMobileMenu() {
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (!menuToggle || !mobileMenu) return;
-
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-}
-
-function handleSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-function handleScrollAnimations() {
-    const elements = document.querySelectorAll('.animate-on-scroll');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
-            }
-        });
-    });
-
-    elements.forEach(element => {
-        observer.observe(element);
+    filteredProducts.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
+                <p class="text-dark">$${product.price.toFixed(2)}</p>
+                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+            </div>
+        `;
+        productGrid.appendChild(productElement);
     });
 }
 
@@ -244,24 +177,6 @@ function hideCart() {
     cartModal.classList.add('hidden');
 }
 
-function showPurchaseModal() {
-    const purchaseModal = document.getElementById('purchase-modal');
-    if (!purchaseModal) return;
-
-    purchaseModal.classList.remove('hidden');
-    purchaseModal.classList.add('flex');
-
-    initMercadoPago();
-}
-
-function hidePurchaseModal() {
-    const purchaseModal = document.getElementById('purchase-modal');
-    if (!purchaseModal) return;
-
-    purchaseModal.classList.remove('flex');
-    purchaseModal.classList.add('hidden');
-}
-
 function initMercadoPago() {
     const mp = new MercadoPago('TU_PUBLIC_KEY');
     const bricksBuilder = mp.bricks();
@@ -316,15 +231,10 @@ function animateTopBanner() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadProductSlider();
+    loadProducts();
     loadFeaturedProducts();
     handleProductFilters();
-    handleProductSlider();
-    handleFeaturedSlider();
-    handleCarousel();
-    handleMobileMenu();
-    handleSmoothScroll();
-    handleScrollAnimations();
+    handleSearch();
     animateTopBanner();
 
     const cartButton = document.getElementById('cart-button');
@@ -336,11 +246,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
             hideCart();
-            showPurchaseModal();
+            initM ercadoPago();
         });
     }
 
-    const closePurchaseButton = document.getElementById('close-purchase');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    if (closePurchaseButton) closePurchaseButton.addEventListener('click', hidePurchaseModal);
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
 });

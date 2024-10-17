@@ -86,7 +86,7 @@
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
-                <img src="https://clientesweb.github.io/tienda/img/logo.jpg" alt="Mon Amour Textil Logo" class="h-20">
+                <img src="https://clientesweb.github.io/tienda/img/logo.jpg" alt="Mon Amour Textil Logo" class="h-16 md:h-20">
                 <div class="hidden md:flex space-x-6">
                     <a href="#" class="text-dark hover:text-primary transition duration-300">Inicio</a>
                     <a href="#featured" class="text-dark hover:text-primary transition duration-300">Destacados</a>
@@ -95,7 +95,7 @@
                     <a href="#contact" class="text-dark hover:text-primary transition duration-300">Contacto</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="relative">
+                    <div class="relative hidden md:block">
                         <input type="text" id="search-input" placeholder="Buscar productos..." class="pl-8 pr-2 py-1 border border-secondary rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
@@ -114,22 +114,54 @@
                 <a href="#products" class="block py-2 text-dark hover:text-primary transition duration-300">Productos</a>
                 <a href="#about" class="block py-2 text-dark hover:text-primary transition duration-300">Nosotros</a>
                 <a href="#contact" class="block py-2 text-dark hover:text-primary transition duration-300">Contacto</a>
+                <div class="relative mt-2">
+                    <input type="text" id="mobile-search-input" placeholder="Buscar productos..." class="w-full pl-8 pr-2 py-1 border border-secondary rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <section id="hero" class="bg-secondary py-20 md:py-32">
+        <section id="hero" class="bg-secondary py-16 md:py-24">
             <div class="container mx-auto px-4">
-                <div class="flex flex-col md:flex-row items-center justify-between">
-                    <div class="md:w-1/2 mb-8 md:mb-0">
-                        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Bienvenido a Mon Amour Textil</h1>
-                        <p class="text-xl text-dark mb-6">Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales.</p>
-                        <a href="#products" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Productos</a>
+                <div id="hero-carousel" class="relative overflow-hidden h-64 md:h-96 rounded-lg shadow-lg">
+                    <div class="carousel-item active">
+                        <img src="https://via.placeholder.com/1200x600" alt="Hero 1" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div class="text-center">
+                                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Bienvenido a Mon Amour Textil</h1>
+                                <p class="text-xl text-white mb-6">Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales.</p>
+                                <a href="#products" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Productos</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="md:w-1/2">
-                        <img src="https://via.placeholder.com/600x400" alt="Hero Image" class="rounded-lg shadow-xl">
+                    <div class="carousel-item">
+                        <img src="https://via.placeholder.com/1200x600" alt="Hero 2" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div class="text-center">
+                                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Calidad Artesanal</h2>
+                                <p class="text-xl text-white mb-6">Cada pieza cuenta una historia única de artesanía y pasión.</p>
+                                <a href="#about" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Conoce Más</a>
+                            </div>
+                        </div>
                     </div>
+                    <div class="carousel-item">
+                        <img src="https://via.placeholder.com/1200x600" alt="Hero 3" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <div class="text-center">
+                                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Ofertas Especiales</h2>
+                                <p class="text-xl text-white mb-6">Descubre nuestras promociones exclusivas.</p>
+                                <a href="#featured" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Ofertas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="prev-slide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 transition duration-300">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="next-slide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 transition duration-300">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -163,7 +195,7 @@
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="ceramica">Cerámica</button>
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="textiles">Textiles</button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="product-grid">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
                     <!-- Los productos se cargarán dinámicamente aquí -->
                 </div>
             </div>
@@ -174,7 +206,7 @@
                 <h2 class="text-3xl font-bold mb-8 text-center text-primary">Sobre Nosotros</h2>
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
-                        <img src="https://via.placeholder.com/600x400" alt="Sobre Nosotros" class="rounded-lg shadow-lg">
+                        <img src="https://via.placeholder.com/600x400" alt="Sobre Nosotros" class="rounded-lg shadow-lg w-full">
                     </div>
                     <div class="md:w-1/2">
                         <p class="text-lg text-dark mb-4">
@@ -191,6 +223,7 @@
 
         <section id="contact" class="py-16 bg-light">
             <div class="container mx-auto px-4">
+                
                 <h2 class="text-3xl font-bold mb-8 text-center text-primary">Contáctanos</h2>
                 <form class="max-w-lg mx-auto">
                     <div class="mb-4">
@@ -232,7 +265,7 @@
                     <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
                     <div class="flex space-x-4">
                         <a href="#" class="social-icon"><i class="fab fa-facebook-f text-2xl"></i></a>
-                        <a href="#" class="social-icon"><i  class="fab fa-instagram text-2xl"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram text-2xl"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-twitter text-2xl"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-linkedin-in text-2xl"></i></a>
                     </div>

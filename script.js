@@ -20,7 +20,7 @@ const products = [
 let cart = [];
 
 // Inicializar Mercado Pago
-const mp = new MercadoPago('TU_PUBLIC_KEY'); // Mantén tu clave pública
+const mp = new MercadoPago('APP_USR-24f179bb-b438-43c1-8b32-b21af86517b1'); // Mantén tu clave pública
 
 function loadProducts(category = 'all') {
     const productGrid = document.getElementById('product-grid');

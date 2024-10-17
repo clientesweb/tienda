@@ -222,7 +222,7 @@ function createPreference() {
     }));
 
     // Aquí debes poner la URL de tu función serverless en Vercel
-    return fetch("https://tienda-eight-mu.vercel.app/api/createPreference", { // Cambia esta URL
+    return fetch("https://tienda-sjo7.vercel.app/api/createPreference", { // Cambia esta URL
         method: "POST",
         headers: {
             "Content-Type": "application/json",

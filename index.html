@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script>
     tailwind.config = {
         theme: {
@@ -289,14 +290,12 @@
                 <span class="font-bold text-dark">Total:</span>
                 <span id="cart-total" class="font-bold text-primary"></span>
             </div>
+            <div id="wallet_container"></div>
             <button id="checkout-button" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mb-2">Finalizar Compra</button>
             <button id="close-cart" class="text-dark hover:text-primary w-full text-center">Cerrar</button>
         </div>
     </div>
 
-    <div id="mercadopago-button-container"></div>
-
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -19,6 +19,9 @@ const products = [
 
 let cart = [];
 
+// Inicializar Mercado Pago
+const mp = new MercadoPago('TU_PUBLIC_KEY');
+
 function loadProducts(category = 'all') {
     const productGrid = document.getElementById('product-grid');
     if (!productGrid) return;
@@ -72,6 +75,7 @@ function handleProductFilters() {
             filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
             filterButtons.forEach(btn => btn.classList.add('bg-secondary', 'text-dark'));
             button.classList.remove('bg-secondary', 'text-dark');
+            
             button.classList.add('bg-primary', 'text-white');
         });
     });
@@ -134,6 +138,7 @@ function addToCart(productId) {
     }
 
     updateCartCount();
+    showCart();
 }
 
 function updateCartCount() {
@@ -158,8 +163,18 @@ function showCart() {
         const itemElement = document.createElement('div');
         itemElement.className = 'flex justify-between items-center mb-2';
         itemElement.innerHTML = `
-            <span>${item.name} x${item.quantity}</span>
-            <span>$${(item.price * item.quantity).toFixed(2)}</span>
+            <div>
+                <span>${item.name}</span>
+                <div class="flex items-center mt-1">
+                    <button class="bg-secondary text-dark px-2 py-1 rounded-l-full" onclick="updateCartItemQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                    <span class="bg-white px-2 py-1">${item.quantity}</span>
+                    <button class="bg-secondary text-dark px-2 py-1 rounded-r-full" onclick="updateCartItemQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                <button class="text-red-500 mt-1" onclick="removeFromCart(${item.id})">Eliminar</button>
+            </div>
         `;
         cartItems.appendChild(itemElement);
         total += item.price * item.quantity;
@@ -178,78 +193,67 @@ function hideCart() {
     cartModal.classList.add('hidden');
 }
 
+function updateCartItemQuantity(productId, newQuantity) {
+    const cartItem = cart.find(item => item.id === productId);
+    if (!cartItem) return;
+
+    if (newQuantity > 0) {
+        cartItem.quantity = newQuantity;
+    } else {
+        removeFromCart(productId);
+    }
+
+    updateCartCount();
+    showCart();
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartCount();
+    showCart();
+}
+
+function createPreference() {
+    const items = cart.map(item => ({
+        title: item.name,
+        unit_price: item.price,
+        quantity: item.quantity,
+    }));
+
+    return fetch("https://api.mercadopago.com/checkout/preferences", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer TU_ACCESS_TOKEN"
+        },
+        body: JSON.stringify({
+            items: items,
+            back_urls: {
+                success: window.location.href,
+                failure: window.location.href,
+                pending: window.location.href
+            },
+            auto_return: "approved",
+        })
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error("Error al crear la preferencia:", error);
+    });
+}
+
 function initMercadoPago() {
-    const mp = new MercadoPago('TU_PUBLIC_KEY');
-    const bricksBuilder = mp.bricks();
-
-    const renderCardPaymentBrick = async (bricksBuilder) => {
-        const settings = {
-            initialization: {
-                amount: calculateTotal(),
+    createPreference().then(preference => {
+        const checkoutButton = mp.checkout({
+            preference: {
+                id: preference.id
             },
-            callbacks: {
-                onReady: () => {
-                    // callback llamado cuando Brick esté listo
-                },
-                onSubmit: (cardFormData) => {
-                    return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(cardFormData)
-                        })
-                        .then((response) => response.json())
-                        .then((response) => {
-                            resolve();
-                        })
-                        .catch((error) => {
-                            reject();
-                        })
-                    });
-                },
-                onError: (error) => {
-                    // callback llamado para todos los casos de error de Brick
-                },
-            },
-        };
-        window.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'mercadopago-button-container', settings);
-    };
-
-    renderCardPaymentBrick(bricksBuilder);
-}
-
-function calculateTotal() {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-}
-
-function animateTopBanner() {
-    const topBanner = document.getElementById('top-banner');
-    if (!topBanner) return;
-
-    topBanner.classList.add('slide-in');
-}
-
-function handleHeroCarousel() {
-    const carousel = document.getElementById('hero-carousel');
-    if (!carousel) return;
-
-    const items = carousel.querySelectorAll('.carousel-item');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        items.forEach(item => item.classList.remove('active'));
-        items[index].classList.add('active');
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % items.length;
-        showSlide(currentIndex);
-    }
-
-    // Auto-rotate slides
-    setInterval(nextSlide, 5000);
+            render: {
+                container: '#wallet_container',
+                label: 'Pagar con Mercado Pago',
+            }
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -257,8 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFeaturedProducts();
     handleProductFilters();
     handleSearch();
-    animateTopBanner();
-    handleHeroCarousel();
 
     const cartButton = document.getElementById('cart-button');
     const closeCartButton = document.getElementById('close-cart');
@@ -268,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeCartButton) closeCartButton.addEventListener('click', hideCart);
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
-            hideCart();
             initMercadoPago();
         });
     }

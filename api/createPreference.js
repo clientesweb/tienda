@@ -2,7 +2,7 @@ const mercadopago = require('mercadopago');
 
 // Configura el ACCESS_TOKEN de Mercado Pago
 mercadopago.configure({
-  access_token: 'TU_ACCESS_TOKEN'  // Reemplaza esto con tu ACCESS_TOKEN real
+  access_token: 'APP_USR-5308541448286221-101717-666e41c570037d35949b15ebddcba543-741519399'  // Reemplaza esto con tu ACCESS_TOKEN real
 });
 
 // Función para manejar la creación de la preferencia

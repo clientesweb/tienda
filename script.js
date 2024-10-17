@@ -28,7 +28,7 @@ function loadProducts(category = 'all') {
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
@@ -43,25 +43,22 @@ function loadProducts(category = 'all') {
 }
 
 function loadFeaturedProducts() {
-    const categories = ['velas', 'ceramica', 'textiles'];
-    categories.forEach(category => {
-        const featuredContainer = document.getElementById(`featured-${category}`);
-        if (!featuredContainer) return;
+    const featuredContainer = document.getElementById('featured-products');
+    if (!featuredContainer) return;
 
-        const featuredProducts = products.filter(product => product.category === category && product.featured).slice(0, 5);
-        featuredProducts.forEach(product => {
-            const productElement = document.createElement('div');
-            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-            productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover">
-                <div class="p-4">
-                    <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
-                    <p class="text-sm text-dark">$${product.price.toFixed(2)}</p>
-                    <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
-                </div>
-            `;
-            featuredContainer.appendChild(productElement);
-        });
+    const featuredProducts = products.filter(product => product.featured);
+    featuredProducts.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
+                <p class="text-sm text-dark">$${product.price.toFixed(2)}</p>
+                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+            </div>
+        `;
+        featuredContainer.appendChild(productElement);
     });
 }
 
@@ -111,7 +108,7 @@ function displaySearchResults(filteredProducts) {
 
     filteredProducts.forEach(product => {
         const productElement = document.createElement('div');
-        productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
@@ -140,7 +137,7 @@ function addToCart(productId) {
 }
 
 function updateCartCount() {
-    const cartCount =  document.getElementById('cart-count');
+    const cartCount = document.getElementById('cart-count');
     if (!cartCount) return;
 
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -239,8 +236,6 @@ function handleHeroCarousel() {
     if (!carousel) return;
 
     const items = carousel.querySelectorAll('.carousel-item');
-    const prevButton = document.getElementById('prev-slide');
-    const nextButton = document.getElementById('next-slide');
     let currentIndex = 0;
 
     function showSlide(index) {
@@ -252,14 +247,6 @@ function handleHeroCarousel() {
         currentIndex = (currentIndex + 1) % items.length;
         showSlide(currentIndex);
     }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + items.length) % items.length;
-        showSlide(currentIndex);
-    }
-
-    if (prevButton) prevButton.addEventListener('click', prevSlide);
-    if (nextButton) nextButton.addEventListener('click', nextSlide);
 
     // Auto-rotate slides
     setInterval(nextSlide, 5000);

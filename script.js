@@ -20,7 +20,7 @@ const products = [
 let cart = [];
 
 // Inicializar Mercado Pago
-const mp = new MercadoPago('TU_PUBLIC_KEY');
+const mp = new MercadoPago('TU_PUBLIC_KEY'); // Mantén tu clave pública
 
 function loadProducts(category = 'all') {
     const productGrid = document.getElementById('product-grid');
@@ -213,6 +213,7 @@ function removeFromCart(productId) {
     showCart();
 }
 
+// Cambiamos la función para crear la preferencia y eliminar el ACCESS_TOKEN del frontend
 function createPreference() {
     const items = cart.map(item => ({
         title: item.name,
@@ -220,21 +221,13 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    return fetch("https://api.mercadopago.com/checkout/preferences", {
+    // Aquí debes poner la URL de tu función serverless en Vercel
+    return fetch("https://tienda-eight-mu.vercel.app/api/createPreference", { // Cambia esta URL
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer TU_ACCESS_TOKEN"
         },
-        body: JSON.stringify({
-            items: items,
-            back_urls: {
-                success: window.location.href,
-                failure: window.location.href,
-                pending: window.location.href
-            },
-            auto_return: "approved",
-        })
+        body: JSON.stringify({ items: items })
     })
     .then(response => response.json())
     .catch(error => {
@@ -242,17 +235,22 @@ function createPreference() {
     });
 }
 
+// Inicializar Mercado Pago y renderizar el botón de pago
 function initMercadoPago() {
     createPreference().then(preference => {
-        const checkoutButton = mp.checkout({
-            preference: {
-                id: preference.id
-            },
-            render: {
-                container: '#wallet_container',
-                label: 'Pagar con Mercado Pago',
-            }
-        });
+        if (preference && preference.id) {
+            mp.checkout({
+                preference: {
+                    id: preference.id
+                },
+                render: {
+                    container: '#wallet_container', // Aquí se renderiza el botón de Mercado Pago
+                    label: 'Pagar con Mercado Pago',
+                }
+            });
+        } else {
+            console.error("No se pudo crear la preferencia de pago");
+        }
     });
 }
 
@@ -270,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeCartButton) closeCartButton.addEventListener('click', hideCart);
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
-            initMercadoPago();
+            initMercadoPago(); // Inicia el proceso de pago
         });
     }
 

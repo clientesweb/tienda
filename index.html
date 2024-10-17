@@ -56,6 +56,7 @@
         }
         .product-slider {
             scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
         .hover-grow {
             transition: transform 0.3s ease;
@@ -123,15 +124,15 @@
     </header>
 
     <main>
-        <section id="hero" class="bg-secondary py-16 md:py-24">
+        <section id="hero" class="bg-secondary py-24 md:py-32">
             <div class="container mx-auto px-4">
-                <div id="hero-carousel" class="relative overflow-hidden h-64 md:h-96 rounded-lg shadow-lg">
+                <div id="hero-carousel" class="relative overflow-hidden h-96 md:h-[32rem] rounded-lg shadow-lg">
                     <div class="carousel-item active">
                         <img src="https://via.placeholder.com/1200x600" alt="Hero 1" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                             <div class="text-center">
-                                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Bienvenido a Mon Amour Textil</h1>
-                                <p class="text-xl text-white mb-6">Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales.</p>
+                                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Bienvenido a Mon Amour Textil</h1>
+                                <p class="text-xl md:text-2xl text-white mb-6">Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales.</p>
                                 <a href="#products" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Productos</a>
                             </div>
                         </div>
@@ -140,8 +141,8 @@
                         <img src="https://via.placeholder.com/1200x600" alt="Hero 2" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                             <div class="text-center">
-                                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Calidad Artesanal</h2>
-                                <p class="text-xl text-white mb-6">Cada pieza cuenta una historia única de artesanía y pasión.</p>
+                                <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">Calidad Artesanal</h2>
+                                <p class="text-xl md:text-2xl text-white mb-6">Cada pieza cuenta una historia única de artesanía y pasión.</p>
                                 <a href="#about" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Conoce Más</a>
                             </div>
                         </div>
@@ -150,18 +151,12 @@
                         <img src="https://via.placeholder.com/1200x600" alt="Hero 3" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                             <div class="text-center">
-                                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Ofertas Especiales</h2>
-                                <p class="text-xl text-white mb-6">Descubre nuestras promociones exclusivas.</p>
+                                <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">Ofertas Especiales</h2>
+                                <p class="text-xl md:text-2xl text-white mb-6">Descubre nuestras promociones exclusivas.</p>
                                 <a href="#featured" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Ofertas</a>
                             </div>
                         </div>
                     </div>
-                    <button id="prev-slide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 transition duration-300">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button id="next-slide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 transition duration-300">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
             </div>
         </section>
@@ -169,18 +164,9 @@
         <section id="featured" class="py-16 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold mb-8 text-center text-primary">Productos Destacados</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div id="featured-velas" class="space-y-4">
-                        <h3 class="text-xl font-semibold text-dark">Velas</h3>
-                        <!-- Los productos destacados de velas se cargarán aquí -->
-                    </div>
-                    <div id="featured-ceramica" class="space-y-4">
-                        <h3 class="text-xl font-semibold text-dark">Cerámica</h3>
-                        <!-- Los productos destacados de cerámica se cargarán aquí -->
-                    </div>
-                    <div id="featured-textiles" class="space-y-4">
-                        <h3 class="text-xl font-semibold text-dark">Textiles</h3>
-                        <!-- Los productos destacados de textiles se cargarán aquí -->
+                <div class="overflow-x-auto">
+                    <div id="featured-products" class="flex space-x-4 pb-4 product-slider">
+                        <!-- Los productos destacados se cargarán aquí -->
                     </div>
                 </div>
             </div>
@@ -195,8 +181,10 @@
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="ceramica">Cerámica</button>
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="textiles">Textiles</button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
-                    <!-- Los productos se cargarán dinámicamente aquí -->
+                <div class="overflow-x-auto">
+                    <div id="product-grid" class="flex space-x-4 pb-4 product-slider">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -223,7 +211,6 @@
 
         <section id="contact" class="py-16 bg-light">
             <div class="container mx-auto px-4">
-                
                 <h2 class="text-3xl font-bold mb-8 text-center text-primary">Contáctanos</h2>
                 <form class="max-w-lg mx-auto">
                     <div class="mb-4">
@@ -244,7 +231,7 @@
         </section>
     </main>
 
-    <footer class="bg-dark text-white py-8">
+    <footer  class="bg-dark text-white py-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>

@@ -19,9 +19,6 @@ const products = [
 
 let cart = [];
 
-// Inicializar Mercado Pago
-const mp = new MercadoPago('APP_USR-24f179bb-b438-43c1-8b32-b21af86517b1'); // Mantén tu clave pública
-
 function loadProducts(category = 'all') {
     const productGrid = document.getElementById('product-grid');
     if (!productGrid) return;
@@ -75,7 +72,6 @@ function handleProductFilters() {
             filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
             filterButtons.forEach(btn => btn.classList.add('bg-secondary', 'text-dark'));
             button.classList.remove('bg-secondary', 'text-dark');
-            
             button.classList.add('bg-primary', 'text-white');
         });
     });
@@ -138,7 +134,6 @@ function addToCart(productId) {
     }
 
     updateCartCount();
-    showCart();
 }
 
 function updateCartCount() {
@@ -163,18 +158,8 @@ function showCart() {
         const itemElement = document.createElement('div');
         itemElement.className = 'flex justify-between items-center mb-2';
         itemElement.innerHTML = `
-            <div>
-                <span>${item.name}</span>
-                <div class="flex items-center mt-1">
-                    <button class="bg-secondary text-dark px-2 py-1 rounded-l-full" onclick="updateCartItemQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                    <span class="bg-white px-2 py-1">${item.quantity}</span>
-                    <button class="bg-secondary text-dark px-2 py-1 rounded-r-full" onclick="updateCartItemQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                </div>
-            </div>
-            <div class="flex flex-col items-end">
-                <span>$${(item.price * item.quantity).toFixed(2)}</span>
-                <button class="text-red-500 mt-1" onclick="removeFromCart(${item.id})">Eliminar</button>
-            </div>
+            <span>${item.name} x${item.quantity}</span>
+            <span>$${(item.price * item.quantity).toFixed(2)}</span>
         `;
         cartItems.appendChild(itemElement);
         total += item.price * item.quantity;
@@ -193,27 +178,37 @@ function hideCart() {
     cartModal.classList.add('hidden');
 }
 
-function updateCartItemQuantity(productId, newQuantity) {
-    const cartItem = cart.find(item => item.id === productId);
-    if (!cartItem) return;
+function animateTopBanner() {
+    const topBanner = document.getElementById('top-banner');
+    if (!topBanner) return;
 
-    if (newQuantity > 0) {
-        cartItem.quantity = newQuantity;
-    } else {
-        removeFromCart(productId);
+    topBanner.classList.add('slide-in');
+}
+
+function handleHeroCarousel() {
+    const carousel = document.getElementById('hero-carousel');
+    if (!carousel) return;
+
+    const items = carousel.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        items.forEach(item => item.classList.remove('active'));
+        items[index].classList.add('active');
     }
 
-    updateCartCount();
-    showCart();
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+    }
+
+    // Auto-rotate slides
+    setInterval(nextSlide, 5000);
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartCount();
-    showCart();
-}
+// Configuración de MercadoPago
+const mp = new MercadoPago('TEST-12345678-1234-1234-1234-123456789012');
 
-// Cambiamos la función para crear la preferencia y eliminar el ACCESS_TOKEN del frontend
 function createPreference() {
     const items = cart.map(item => ({
         title: item.name,
@@ -221,37 +216,37 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    // Aquí debes poner la URL de tu función serverless en Vercel
-    return fetch("https://tienda-sjo7.vercel.app/api/createPreference", { // Cambia esta URL
-        method: "POST",
+    return fetch('https://api.mercadopago.com/checkout/preferences', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Authorization': 'Bearer TEST-1234567890123456-123456-1234567890abcdef1234567890abcdef-123456789',
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ items: items })
+        body: JSON.stringify({
+            items: items,
+            back_urls: {
+                success: window.location.href + "?status=success",
+                failure: window.location.href + "?status=failure",
+                pending: window.location.href + "?status=pending"
+            },
+            auto_return: "approved"
+        })
     })
-    .then(response => response.json())
-    .catch(error => {
-        console.error("Error al crear la preferencia:", error);
-    });
+    .then(response => response.json());
 }
 
-// Inicializar Mercado Pago y renderizar el botón de pago
 function initMercadoPago() {
     createPreference().then(preference => {
-        if (preference && preference.id) {
-            mp.checkout({
-                preference: {
-                    id: preference.id
-                },
-                render: {
-                    container: '#wallet_container', // Aquí se renderiza el botón de Mercado Pago
-                    label: 'Pagar con Mercado Pago',
-                }
-            });
-        } else {
-            console.error("No se pudo crear la preferencia de pago");
-        }
-    });
+        mp.checkout({
+            preference: {
+                id: preference.id
+            },
+            render: {
+                container: '#mercadopago-button-container',
+                label: 'Pagar con MercadoPago',
+            }
+        });
+    }).catch(error => console.error('Error:', error));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -259,6 +254,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFeaturedProducts();
     handleProductFilters();
     handleSearch();
+    animateTopBanner();
+    handleHeroCarousel();
 
     const cartButton = document.getElementById('cart-button');
     const closeCartButton = document.getElementById('close-cart');
@@ -268,7 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeCartButton) closeCartButton.addEventListener('click', hideCart);
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
-            initMercadoPago(); // Inicia el proceso de pago
+            hideCart();
+            initMercadoPago();
         });
     }
 

@@ -134,7 +134,6 @@ function addToCart(productId) {
     }
 
     updateCartCount();
-    // No llamamos a showCart() aquí para que no se abra automáticamente
 }
 
 function updateCartCount() {
@@ -157,10 +156,17 @@ function showCart() {
 
     cart.forEach(item => {
         const itemElement = document.createElement('div');
-        itemElement.className = 'flex justify-between items-center mb-2';
+        itemElement.className = 'flex justify-between items-center mb-2 pb-2 border-b';
         itemElement.innerHTML = `
-            <span>${item.name} x${item.quantity}</span>
-            <span>$${(item.price * item.quantity).toFixed(2)}</span>
+            <div>
+                <h4 class="font-semibold">${item.name}</h4>
+                <p class="text-sm">Cantidad: ${item.quantity}</p>
+                <p class="text-sm">Precio: $${item.price.toFixed(2)}</p>
+            </div>
+            <div>
+                <p class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</p>
+                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">Eliminar</button>
+            </div>
         `;
         cartItems.appendChild(itemElement);
         total += item.price * item.quantity;
@@ -169,7 +175,7 @@ function showCart() {
     cartTotal.textContent = `$${total.toFixed(2)}`;
     cartModal.classList.remove('hidden');
 
-    initMercadoPago();
+    initMercadoPago(total);
 }
 
 function hideCart() {
@@ -177,6 +183,12 @@ function hideCart() {
     if (!cartModal) return;
 
     cartModal.classList.add('hidden');
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartCount();
+    showCart();
 }
 
 function animateTopBanner() {
@@ -193,14 +205,14 @@ function animateTopBanner() {
     }, 5000);
 }
 
-function initMercadoPago() {
+function initMercadoPago(total) {
     const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
     const bricksBuilder = mp.bricks();
 
     const renderCardPaymentBrick = async (bricksBuilder) => {
         const settings = {
             initialization: {
-                amount: cart.reduce((total, item) => total + item.price * item.quantity, 0),
+                amount: total,
             },
             callbacks: {
                 onReady: () => {

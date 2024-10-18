@@ -77,11 +77,6 @@
         .whatsapp-button:hover {
             transform: scale(1.1);
         }
-         @media (max-width: 640px) {
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-        }
     </style>
 </head>
 <body class="bg-light">
@@ -186,10 +181,8 @@
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="ceramica">Cerámica</button>
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="textiles">Textiles</button>
                 </div>
-                <div class="overflow-x-auto">
-                    <div id="product-grid" class="flex space-x-4 pb-4 product-slider">
-                        <!-- Los productos se cargarán dinámicamente aquí -->
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="product-grid">
+                    <!-- Los productos se cargarán dinámicamente aquí -->
                 </div>
             </div>
         </section>
@@ -236,11 +229,12 @@
         </section>
     </main>
 
-    <footer  class="bg-dark text-white py-8">
+    <footer class="bg-dark text-white py-8">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1  md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <img src="https://clientesweb.github.io/tienda/img/logo.png" alt="Mon Amour Textil Logo" class="h-16 mb-4">
+                    
                     <p class="text-sm">Mon Amour Textil es tu destino para productos únicos y de alta calidad.</p>
                 </div>
                 <div>
@@ -294,16 +288,15 @@
                 <span class="font-bold text-dark">Total:</span>
                 <span id="cart-total" class="font-bold text-primary"></span>
             </div>
-            <div id="mercadopago-button-container" class="mb-4"></div>
-            <button id="close-cart" class="w-full bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300">Cerrar</button>
+            <div id="mercadopago-button-container"></div>
+            <button id="close-cart" class="mt-4 text-dark hover:text-primary w-full text-center">Cerrar</button>
         </div>
     </div>
 
-
     <script src="https://sdk.mercadopago.com/js/v2"></script>
-<script>
-    const MERCADOPAGO_PUBLIC_KEY = 'APP_USR-24f179bb-b438-43c1-8b32-b21af86517b1';
-</script>
-<script src="script.js"></script>
+    <script>
+        const MERCADOPAGO_PUBLIC_KEY = 'APP_USR-24f179bb-b438-43c1-8b32-b21af86517b1';
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>

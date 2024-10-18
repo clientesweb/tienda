@@ -172,39 +172,13 @@
     </header>
 
     <main>
-        <section id="hero" class="bg-secondary py-24 md:py-32 animate-on-scroll">
-            <div class="container mx-auto px-4">
-                <div id="hero-carousel" class="relative overflow-hidden h-96 md:h-[32rem] rounded-lg shadow-lg">
-                    <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/1200x600" alt="Hero 1" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                            <div class="text-center">
-                                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">Bienvenido a Mon Amour Textil</h1>
-                                <p class="text-xl md:text-2xl text-white mb-6">Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales.</p>
-                                <a href="#products" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Productos</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://via.placeholder.com/1200x600" alt="Hero 2" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                            <div class="text-center">
-                                <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">Calidad Artesanal</h2>
-                                <p class="text-xl md:text-2xl text-white mb-6">Cada pieza cuenta una historia única de artesanía y pasión.</p>
-                                <a href="#products" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Explorar Colección</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://via.placeholder.com/1200x600" alt="Hero 3" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                            <div class="text-center">
-                                <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">Ofertas Especiales</h2>
-                                <p class="text-xl md:text-2xl text-white mb-6">Descubre nuestras promociones exclusivas.</p>
-                                <a href="#featured" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Ver Ofertas</a>
-                            </div>
-                        </div>
-                    </div>
+        <section id="hero" class="bg-cover bg-center py-32 md:py-64 relative">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center">
+                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">Bienvenido a Mon Amour Textil</h1>
+                    <p class="text-xl md:text-2xl text-white mb-8">Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales.</p>
+                    <a href="#products" class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-accent transition duration-300 inline-block">Ver Productos</a>
                 </div>
             </div>
         </section>
@@ -232,10 +206,8 @@
                 <div class="mb-8">
                     <input type="text" id="search-input" placeholder="Buscar productos..." class="w-full md:w-1/2 mx-auto block pl-8 pr-2 py-2 border border-secondary rounded-full focus:outline-none  focus:ring-2 focus:ring-primary">
                 </div>
-                <div class="overflow-x-auto">
-                    <div id="product-grid" class="flex space-x-4 pb-4 product-slider">
-                        <!-- Los productos se cargarán dinámicamente aquí -->
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="product-grid">
+                    <!-- Los productos se cargarán dinámicamente aquí -->
                 </div>
             </div>
         </section>
@@ -268,6 +240,7 @@
                     <button type="submit" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300 w-full">Enviar Mensaje</button>
                 </form>
             </div>
+        
         </section>
     </main>
 
@@ -328,6 +301,12 @@
                 <span id="cart-total" class="font-bold text-primary"></span>
             </div>
             <div id="mercadopago-button-container" class="mb-4"></div>
+            <div class="flex justify-center space-x-4 mb-4">
+                <i class="fab fa-cc-visa text-3xl text-gray-600"></i>
+                <i class="fab fa-cc-mastercard text-3xl text-gray-600"></i>
+                <i class="fab fa-cc-amex text-3xl text-gray-600"></i>
+            </div>
+            <p class="text-center text-sm text-gray-500 mb-4">Powered by Duality Domain</p>
             <button id="close-cart" class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full">Cerrar</button>
         </div>
     </div>

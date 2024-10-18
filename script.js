@@ -28,13 +28,13 @@ function loadProducts(category = 'all') {
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
                     <p class="text-dark">$${product.price.toFixed(2)}</p>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
                 </div>
             `;
             productGrid.appendChild(productElement);
@@ -57,7 +57,7 @@ function loadFeaturedProducts() {
             <div class="p-4">
                 <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
                 <p class="text-sm text-dark">$${product.price.toFixed(2)}</p>
-                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
             </div>
         `;
         featuredContainer.appendChild(productElement);
@@ -110,13 +110,13 @@ function displaySearchResults(filteredProducts) {
 
     filteredProducts.forEach(product => {
         const productElement = document.createElement('div');
-        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
                 <p class="text-dark">$${product.price.toFixed(2)}</p>
-                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
             </div>
         `;
         productGrid.appendChild(productElement);
@@ -136,6 +136,7 @@ function addToCart(productId) {
     }
 
     updateCartCount();
+    showCart();
 }
 
 function updateCartCount() {
@@ -150,10 +151,8 @@ function showCart() {
     const cartModal = document.getElementById('cart-modal');
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
-    const checkoutButton = document.getElementById('checkout-button');
-    const mercadopagoButton = document.getElementById('mercadopago-button-container');
 
-    if (!cartModal || !cartItems || !cartTotal || !checkoutButton || !mercadopagoButton) return;
+    if (!cartModal || !cartItems || !cartTotal) return;
 
     cartItems.innerHTML = '';
     let total = 0;
@@ -173,25 +172,46 @@ function showCart() {
     cartModal.classList.remove('hidden');
     cartModal.classList.add('flex');
 
-    // Limpiar el contenedor de MercadoPago y crear un nuevo botón
-    mercadopagoButton.innerHTML = '';
-    createMercadoPagoButton();
+    initMercadoPago();
 }
 
-function createMercadoPagoButton() {
-    const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
-    createPreference().then(preference => {
-        mp.checkout({
-            preference: {
-                id: preference.id
-            },
-            render: {
-                container: '#mercadopago-button-container',
-                label: 'Pagar con MercadoPago',
-            }
-        });
-    }).catch(error => console.error('Error:', error));
+function hideCart() {
+    const cartModal = document.getElementById('cart-modal');
+    if (!cartModal) return;
+
+    cartModal.classList.remove('flex');
+    cartModal.classList.add('hidden');
 }
+
+function animateTopBanner() {
+    const topBanner = document.getElementById('top-banner');
+    if (!topBanner) return;
+
+    topBanner.classList.add('slide-in');
+}
+
+function handleHeroCarousel() {
+    const carousel = document.getElementById('hero-carousel');
+    if (!carousel) return;
+
+    const items = carousel.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        items.forEach(item => item.classList.remove('active'));
+        items[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % items.length;
+        showSlide(currentIndex);
+    }
+
+    // Auto-rotate slides
+    setInterval(nextSlide, 5000);
+}
+
+const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
 
 function createPreference() {
     const items = cart.map(item => ({
@@ -211,6 +231,11 @@ function createPreference() {
 }
 
 function initMercadoPago() {
+    const mercadopagoButtonContainer = document.getElementById('mercadopago-button-container');
+    if (!mercadopagoButtonContainer) return;
+
+    mercadopagoButtonContainer.innerHTML = '';
+
     createPreference().then(preference => {
         mp.checkout({
             preference: {
@@ -237,8 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cartButton) cartButton.addEventListener('click', showCart);
     if (closeCartButton) closeCartButton.addEventListener('click', hideCart);
-
-    // Eliminar la inicialización del botón de MercadoPago aquí, ya que ahora se crea dinámicamente en showCart()
 
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');

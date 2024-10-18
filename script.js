@@ -191,26 +191,47 @@ function removeFromCart(productId) {
     showCart();
 }
 
-function createMercadoPagoButton(total) {
+async function createMercadoPagoButton(total) {
     const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
     
     const buttonContainer = document.getElementById('mercadopago-button-container');
     buttonContainer.innerHTML = ''; // Limpiar el contenedor antes de crear un nuevo botón
 
-    mp.checkout({
-        preference: {
-            items: cart.map(item => ({
-                title: item.name,
-                quantity: item.quantity,
-                currency_id: 'ARS',
-                unit_price: item.price
-            }))
-        },
-        render: {
-            container: '#mercadopago-button-container',
-            label: 'Pagar con Mercado Pago'
+    try {
+        const response = await fetch('/.netlify/functions/create-preference', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    title: item.name,
+                    quantity: item.quantity,
+                    currency_id: 'ARS',
+                    unit_price: item.price
+                }))
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al crear la preferencia de MercadoPago');
         }
-    });
+
+        const preference = await response.json();
+
+        mp.checkout({
+            preference: {
+                id: preference.id
+            },
+            render: {
+                container: '#mercadopago-button-container',
+                label: 'Pagar con Mercado Pago'
+            }
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un error al procesar su pago. Por favor, inténtelo de nuevo.');
+    }
 }
 
 function animateTopBanner() {
@@ -290,7 +311,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (closeCartButton) {
-        closeCartButton.addEventListener('click', hideCart);
+        closeCartButton.addEventListener('click', 
+
+ hideCart);
     }
 
     if (menuToggle && mobileMenu) {
@@ -305,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-fade-in');
-            
             }
         });
     }, { threshold: 0.1 });

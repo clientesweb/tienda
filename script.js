@@ -214,12 +214,19 @@ function initMercadoPago(total) {
             initialization: {
                 amount: total,
             },
+            customization: {
+                visual: {
+                    style: {
+                        theme: 'default'
+                    }
+                }
+            },
             callbacks: {
                 onReady: () => {
-                    // Callback llamado cuando Brick está listo
+                    // Brick listo
                 },
                 onSubmit: (cardFormData) => {
-                    // Callback llamado cuando el usuario hace clic en el botón enviar los datos
+                    // Callback llamado cuando el usuario hace clic en el botón
                     return new Promise((resolve, reject) => {
                         fetch("/process_payment", {
                             method: "POST",
@@ -244,7 +251,7 @@ function initMercadoPago(total) {
                 },
             },
         };
-        window.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'mercadopago-button-container', settings);
+        const cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'mercadopago-button-container', settings);
     };
 
     renderCardPaymentBrick(bricksBuilder);

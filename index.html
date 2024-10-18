@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Amour Textil - Tienda Online</title>
+    <title>Mon Amour Textil - Tienda Online de Velas, Cerámica y Textiles Artesanales</title>
+    <meta name="description" content="Descubre nuestra exquisita colección de velas, cerámica y textiles artesanales en Mon Amour Textil. Productos únicos y de alta calidad para tu hogar.">
+    <link rel="icon" href="https://clientesweb.github.io/tienda/img/favicon.ico" type="image/x-icon">
+    <meta property="og:title" content="Mon Amour Textil - Tienda Online">
+    <meta property="og:description" content="Velas, cerámica y textiles artesanales de alta calidad para tu hogar.">
+    <meta property="og:image" content="https://clientesweb.github.io/tienda/img/og-image.jpg">
+    <meta property="og:url" content="https://monamourtextil.com">
+    <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -86,20 +93,22 @@
     </style>
 </head>
 <body class="bg-light">
-    <div id="top-banner" class="bg-accent text-dark py-2 px-4 text-center text-sm slide-in relative overflow-hidden">
-        <div class="top-banner-slide active">
-            <p>Envío gratis en compras superiores a $10000</p>
-        </div>
-        <div class="top-banner-slide">
-            <p>3 cuotas sin interés en todos los productos</p>
-        </div>
-        <div class="top-banner-slide">
-            <p>20% de descuento en la segunda unidad</p>
-        </div>
-        <div class="absolute top-1/2 right-4 transform -translate-y-1/2 flex space-x-2">
-            <a href="#" class="text-dark hover:text-primary"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-dark hover:text-primary"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-dark hover:text-primary"><i class="fab fa-twitter"></i></a>
+    <div id="top-banner" class="bg-accent text-dark py-2 px-4 text-sm slide-in relative overflow-hidden">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="top-banner-slide active">
+                <p>Envío gratis en compras superiores a $10000</p>
+            </div>
+            <div class="top-banner-slide">
+                <p>3 cuotas sin interés en todos los productos</p>
+            </div>
+            <div class="top-banner-slide">
+                <p>20% de descuento en la segunda unidad</p>
+            </div>
+            <div class="flex space-x-2">
+                <a href="#" class="text-dark hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-dark hover:text-primary"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-dark hover:text-primary"><i class="fab fa-twitter"></i></a>
+            </div>
         </div>
     </div>
     
@@ -111,14 +120,9 @@
                     <a href="#" class="text-dark hover:text-primary transition duration-300">Inicio</a>
                     <a href="#featured" class="text-dark hover:text-primary transition duration-300">Destacados</a>
                     <a href="#products" class="text-dark hover:text-primary transition duration-300">Productos</a>
-                    <a href="#about" class="text-dark hover:text-primary transition duration-300">Nosotros</a>
                     <a href="#contact" class="text-dark hover:text-primary transition duration-300">Contacto</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="relative hidden md:block">
-                        <input type="text" id="search-input" placeholder="Buscar productos..." class="pl-8 pr-2 py-1 border border-secondary rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    </div>
                     <button id="cart-button" class="text-dark hover:text-primary transition duration-300">
                         <i class="fas fa-shopping-cart"></i>
                         <span id="cart-count" class="bg-accent text-white rounded-full px-2 py-1 text-xs">0</span>
@@ -132,12 +136,7 @@
                 <a href="#" class="block py-2 text-dark hover:text-primary transition duration-300">Inicio</a>
                 <a href="#featured" class="block py-2 text-dark hover:text-primary transition duration-300">Destacados</a>
                 <a href="#products" class="block py-2 text-dark hover:text-primary transition duration-300">Productos</a>
-                <a href="#about" class="block py-2 text-dark hover:text-primary transition duration-300">Nosotros</a>
                 <a href="#contact" class="block py-2 text-dark hover:text-primary transition duration-300">Contacto</a>
-                <div class="relative mt-2">
-                    <input type="text" id="mobile-search-input" placeholder="Buscar productos..." class="w-full pl-8 pr-2 py-1 border border-secondary rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                </div>
             </div>
         </nav>
     </header>
@@ -162,7 +161,7 @@
                             <div class="text-center">
                                 <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">Calidad Artesanal</h2>
                                 <p class="text-xl md:text-2xl text-white mb-6">Cada pieza cuenta una historia única de artesanía y pasión.</p>
-                                <a href="#about" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Conoce Más</a>
+                                <a href="#products" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Explorar Colección</a>
                             </div>
                         </div>
                     </div>
@@ -200,8 +199,13 @@
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="ceramica">Cerámica</button>
                     <button class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" data-category="textiles">Textiles</button>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="product-grid">
-                    <!-- Los productos se cargarán dinámicamente aquí -->
+                <div class="mb-8">
+                    <input type="text" id="search-input" placeholder="Buscar productos..." class="w-full md:w-1/2 mx-auto block pl-8 pr-2 py-2 border border-secondary rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                <div class="overflow-x-auto">
+                    <div id="product-grid" class="flex space-x-4 pb-4 product-slider">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -210,26 +214,6 @@
             <div class="container mx-auto px-4">
                 <div id="ad-carousel" class="relative overflow-hidden h-64 md:h-96 rounded-lg shadow-lg">
                     <!-- Las imágenes publicitarias se cargarán aquí -->
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="bg-white py-16">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold mb-8 text-center text-primary">Sobre Nosotros</h2>
-                <div class="flex flex-col md:flex-row items-center gap-8">
-                    <div class="md:w-1/2">
-                        <img src="https://via.placeholder.com/600x400" alt="Sobre Nosotros" class="rounded-lg shadow-lg w-full">
-                    </div>
-                    <div class="md:w-1/2">
-                        <p class="text-lg text-dark mb-4">
-                            Mon Amour Textil es tu destino para productos únicos y de alta calidad. Nos enorgullece ofrecer una selección cuidadosamente curada de velas, cerámica y textiles para satisfacer tus necesidades y gustos.
-                        </p>
-                        <p class="text-lg text-dark mb-4">
-                            Con años de experiencia en el mercado, nos dedicamos a brindar la mejor experiencia de compra a nuestros clientes. Nuestro compromiso es ofrecerte productos excepcionales y un servicio al cliente inigualable.
-                        </p>
-                        <a href="#" class="inline-block bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300">Conoce Más</a>
-                    </div>
                 </div>
             </div>
         </section>
@@ -244,12 +228,13 @@
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block text-dark font-bold mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2  focus:ring-primary" required>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                     </div>
                     <div class="mb-4">
                         <label for="message" class="block text-dark font-bold mb-2">Mensaje</label>
                         <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
                     </div>
+                    
                     <button type="submit" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300 w-full">Enviar Mensaje</button>
                 </form>
             </div>
@@ -261,7 +246,6 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <img src="https://clientesweb.github.io/tienda/img/logo.png" alt="Mon Amour Textil Logo" class="h-16 mb-4">
-                    
                     <p class="text-sm">Mon Amour Textil es tu destino para productos únicos y de alta calidad.</p>
                 </div>
                 <div>
@@ -270,7 +254,6 @@
                         <li><a href="#" class="hover:text-accent transition duration-300">Inicio</a></li>
                         <li><a href="#featured" class="hover:text-accent transition duration-300">Destacados</a></li>
                         <li><a href="#products" class="hover:text-accent transition duration-300">Productos</a></li>
-                        <li><a href="#about" class="hover:text-accent transition duration-300">Nosotros</a></li>
                         <li><a href="#contact" class="hover:text-accent transition duration-300">Contacto</a></li>
                     </ul>
                 </div>
@@ -305,19 +288,17 @@
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
-    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white p-6 md:p-8 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-4 text-primary">Carrito de Compras</h2>
-            <div id="cart-items" class="mb-4">
-                <!-- Los items del carrito se cargarán aquí -->
-            </div>
-            <div class="flex justify-between items-center mb-4">
-                <span class="font-bold text-dark">Total:</span>
-                <span id="cart-total" class="font-bold text-primary"></span>
-            </div>
-            <div id="mercadopago-button-container"></div>
-            <button id="close-cart" class="mt-4 text-dark hover:text-primary w-full text-center">Cerrar</button>
+    <div id="cart-modal" class="fixed bottom-20 right-4 bg-white p-4 rounded-lg shadow-lg hidden">
+        <h2 class="text-xl font-bold mb-4 text-primary">Carrito de Compras</h2>
+        <div id="cart-items" class="mb-4">
+            <!-- Los items del carrito se cargarán aquí -->
         </div>
+        <div class="flex justify-between items-center mb-4">
+            <span class="font-bold text-dark">Total:</span>
+            <span id="cart-total" class="font-bold text-primary"></span>
+        </div>
+        <div id="mercadopago-button-container"></div>
+        <button id="close-cart" class="mt-4 text-dark hover:text-primary w-full text-center">Cerrar</button>
     </div>
 
     <script src="https://sdk.mercadopago.com/js/v2"></script>

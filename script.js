@@ -173,9 +173,10 @@ function showCart() {
     });
 
     cartTotal.textContent = `$${total.toFixed(2)}`;
-    cart.length > 0 ? cartModal.classList.remove('hidden') : cartModal.classList.add('hidden');
+    cartModal.classList.remove('hidden');
 
-    initMercadoPago(total);
+    const mercadoPagoButton = document.getElementById('mercadopago-button');
+    mercadoPagoButton.onclick = () => createMercadoPagoPreference(total);
 }
 
 function hideCart() {
@@ -191,6 +192,35 @@ function removeFromCart(productId) {
     showCart();
 }
 
+async function createMercadoPagoPreference(total) {
+    try {
+        const response = await fetch('/api/create-preference', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    title: item.name,
+                    quantity: item.quantity,
+                    currency_id: 'ARS',
+                    unit_price: item.price
+                }))
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Error creating MercadoPago preference');
+        }
+
+        const data = await response.json();
+        window.location.href = data.init_point;
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un error al procesar su pago. Por favor, inténtelo de nuevo.');
+    }
+}
+
 function animateTopBanner() {
     const topBanner = document.getElementById('top-banner');
     if (!topBanner) return;
@@ -203,58 +233,6 @@ function animateTopBanner() {
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
     }, 5000);
-}
-
-function initMercadoPago(total) {
-    const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
-    const bricksBuilder = mp.bricks();
-
-    const renderCardPaymentBrick = async (bricksBuilder) => {
-        const settings = {
-            initialization: {
-                amount: total,
-            },
-            customization: {
-                visual: {
-                    style: {
-                        theme: 'default'
-                    }
-                }
-            },
-            callbacks: {
-                onReady: () => {
-                    // Brick listo
-                },
-                onSubmit: (cardFormData) => {
-                    // Callback llamado cuando el usuario hace clic en el botón
-                    return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(cardFormData)
-                        })
-                            .then((response) => response.json())
-                            .then((response) => {
-                                // Recibir el resultado del pago
-                                resolve();
-                            })
-                            .catch((error) => {
-                                // Manejar error de pago
-                                reject();
-                            })
-                    });
-                },
-                onError: (error) => {
-                    // Callback llamado para todos los casos de error de Brick
-                },
-            },
-        };
-        const cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'mercadopago-button-container', settings);
-    };
-
-    renderCardPaymentBrick(bricksBuilder);
 }
 
 function initCarousels() {
@@ -324,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (menuToggle && mobileMenu) {
+        
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });

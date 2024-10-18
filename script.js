@@ -206,9 +206,9 @@ function handleHeroCarousel() {
     setInterval(nextSlide, 5000);
 }
 
-// Configuración de MercadoPago
-const mp = new MercadoPago('TEST-12345678-1234-1234-1234-123456789012');
+const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
 
+// Reemplaza la función createPreference
 function createPreference() {
     const items = cart.map(item => ({
         title: item.name,
@@ -216,21 +216,12 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    return fetch('https://api.mercadopago.com/checkout/preferences', {
+    return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer TEST-1234567890123456-123456-1234567890abcdef1234567890abcdef-123456789',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            items: items,
-            back_urls: {
-                success: window.location.href + "?status=success",
-                failure: window.location.href + "?status=failure",
-                pending: window.location.href + "?status=pending"
-            },
-            auto_return: "approved"
-        })
+        body: JSON.stringify({ items })
     })
     .then(response => response.json());
 }

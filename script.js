@@ -150,8 +150,10 @@ function showCart() {
     const cartModal = document.getElementById('cart-modal');
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
+    const checkoutButton = document.getElementById('checkout-button');
+    const mercadopagoButton = document.getElementById('mercadopago-button-container');
 
-    if (!cartModal || !cartItems || !cartTotal) return;
+    if (!cartModal || !cartItems || !cartTotal || !checkoutButton || !mercadopagoButton) return;
 
     cartItems.innerHTML = '';
     let total = 0;
@@ -170,46 +172,26 @@ function showCart() {
     cartTotal.textContent = `$${total.toFixed(2)}`;
     cartModal.classList.remove('hidden');
     cartModal.classList.add('flex');
+
+    // Limpiar el contenedor de MercadoPago y crear un nuevo botón
+    mercadopagoButton.innerHTML = '';
+    createMercadoPagoButton();
 }
 
-function hideCart() {
-    const cartModal = document.getElementById('cart-modal');
-    if (!cartModal) return;
-
-    cartModal.classList.remove('flex');
-    cartModal.classList.add('hidden');
+function createMercadoPagoButton() {
+    const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
+    createPreference().then(preference => {
+        mp.checkout({
+            preference: {
+                id: preference.id
+            },
+            render: {
+                container: '#mercadopago-button-container',
+                label: 'Pagar con MercadoPago',
+            }
+        });
+    }).catch(error => console.error('Error:', error));
 }
-
-function animateTopBanner() {
-    const topBanner = document.getElementById('top-banner');
-    if (!topBanner) return;
-
-    topBanner.classList.add('slide-in');
-}
-
-function handleHeroCarousel() {
-    const carousel = document.getElementById('hero-carousel');
-    if (!carousel) return;
-
-    const items = carousel.querySelectorAll('.carousel-item');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        items.forEach(item => item.classList.remove('active'));
-        items[index].classList.add('active');
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % items.length;
-        showSlide(currentIndex);
-    }
-
-    // Auto-rotate slides
-    setInterval(nextSlide, 5000);
-}
-
-// Asegúrate de que MERCADOPAGO_PUBLIC_KEY esté definido en tu HTML o en una variable de entorno
-const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
 
 function createPreference() {
     const items = cart.map(item => ({
@@ -252,16 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cartButton = document.getElementById('cart-button');
     const closeCartButton = document.getElementById('close-cart');
-    const checkoutButton = document.getElementById('checkout-button');
 
     if (cartButton) cartButton.addEventListener('click', showCart);
     if (closeCartButton) closeCartButton.addEventListener('click', hideCart);
-    if (checkoutButton) {
-        checkoutButton.addEventListener('click', () => {
-            hideCart();
-            initMercadoPago();
-        });
-    }
+
+    // Eliminar la inicialización del botón de MercadoPago aquí, ya que ahora se crea dinámicamente en showCart()
 
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');

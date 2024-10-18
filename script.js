@@ -28,7 +28,7 @@ function loadProducts(category = 'all') {
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
@@ -81,20 +81,18 @@ function handleProductFilters() {
 
 function handleSearch() {
     const searchInput = document.getElementById('search-input');
-    const mobileSearchInput = document.getElementById('mobile-search-input');
     
-    [searchInput, mobileSearchInput].forEach(input => {
-        if (input) {
-            input.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const filteredProducts = products.filter(product => 
-                    product.name.toLowerCase().includes(searchTerm) || 
-                    product.category.toLowerCase().includes(searchTerm)
-                );
-                displaySearchResults(filteredProducts);
-            });
-        }
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.category.toLowerCase().includes(searchTerm)
+            );
+            loadProducts('all');
+            displaySearchResults(filteredProducts);
+        });
+    }
 }
 
 function displaySearchResults(filteredProducts) {
@@ -110,7 +108,7 @@ function displaySearchResults(filteredProducts) {
 
     filteredProducts.forEach(product => {
         const productElement = document.createElement('div');
-        productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
@@ -136,7 +134,7 @@ function addToCart(productId) {
     }
 
     updateCartCount();
-    showCart();
+    // No llamamos a showCart() aquí para que no se abra automáticamente
 }
 
 function updateCartCount() {
@@ -170,7 +168,6 @@ function showCart() {
 
     cartTotal.textContent = `$${total.toFixed(2)}`;
     cartModal.classList.remove('hidden');
-    cartModal.classList.add('flex');
 
     initMercadoPago();
 }
@@ -179,7 +176,6 @@ function hideCart() {
     const cartModal = document.getElementById('cart-modal');
     if (!cartModal) return;
 
-    cartModal.classList.remove('flex');
     cartModal.classList.add('hidden');
 }
 
@@ -197,88 +193,90 @@ function animateTopBanner() {
     }, 5000);
 }
 
-function handleHeroCarousel() {
-    const carousel = document.getElementById('hero-carousel');
-    if (!carousel) return;
-
-    const items = carousel.querySelectorAll('.carousel-item');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        items.forEach(item => item.classList.remove('active'));
-        items[index].classList.add('active');
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % items.length;
-        showSlide(currentIndex);
-    }
-
-    // Auto-rotate slides
-    setInterval(nextSlide, 5000);
-}
-
-function handleAdCarousel() {
-    const adCarousel = document.getElementById('ad-carousel');
-    if (!adCarousel) return;
-
-    const adImages = [
-        'https://via.placeholder.com/1200x400?text=Ad+1',
-        'https://via.placeholder.com/1200x400?text=Ad+2',
-        'https://via.placeholder.com/1200x400?text=Ad+3'
-    ];
-
-    let currentAdIndex = 0;
-
-    function showAd(index) {
-        adCarousel.innerHTML = `<img src="${adImages[index]}" alt="Ad ${index + 1}" class="w-full h-full object-cover">`;
-    }
-
-    function nextAd() {
-        currentAdIndex = (currentAdIndex + 1) % adImages.length;
-        showAd(currentAdIndex);
-    }
-
-    showAd(currentAdIndex);
-    setInterval(nextAd, 5000);
-}
-
-const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
-
-function createPreference() {
-    const items = cart.map(item => ({
-        title: item.name,
-        unit_price: item.price,
-        quantity: item.quantity,
-    }));
-
-    return fetch('/.netlify/functions/create-preference', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ items })
-    })
-    .then(response => response.json());
-}
-
 function initMercadoPago() {
-    const mercadopagoButtonContainer = document.getElementById('mercadopago-button-container');
-    if (!mercadopagoButtonContainer) return;
+    const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
+    const bricksBuilder = mp.bricks();
 
-    mercadopagoButtonContainer.innerHTML = '';
-
-    createPreference().then(preference => {
-        mp.checkout({
-            preference: {
-                id: preference.id
+    const renderCardPaymentBrick = async (bricksBuilder) => {
+        const settings = {
+            initialization: {
+                amount: cart.reduce((total, item) => total + item.price * item.quantity, 0),
             },
-            render: {
-                container: '#mercadopago-button-container',
-                label: 'Pagar con MercadoPago',
-            }
+            callbacks: {
+                onReady: () => {
+                    // Callback llamado cuando Brick está listo
+                },
+                onSubmit: (cardFormData) => {
+                    // Callback llamado cuando el usuario hace clic en el botón enviar los datos
+                    return new Promise((resolve, reject) => {
+                        fetch("/process_payment", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(cardFormData)
+                        })
+                            .then((response) => response.json())
+                            .then((response) => {
+                                // Recibir el resultado del pago
+                                resolve();
+                            })
+                            .catch((error) => {
+                                // Manejar error de pago
+                                reject();
+                            })
+                    });
+                },
+                onError: (error) => {
+                    // Callback llamado para todos los casos de error de Brick
+                },
+            },
+        };
+        window.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'mercadopago-button-container', settings);
+    };
+
+    renderCardPaymentBrick(bricksBuilder);
+}
+
+function initCarousels() {
+    const heroCarousel = document.getElementById('hero-carousel');
+    const adCarousel = document.getElementById('ad-carousel');
+
+    if (heroCarousel) {
+        const heroSlides = heroCarousel.querySelectorAll('.carousel-item');
+        let currentHeroSlide = 0;
+
+        setInterval(() => {
+            heroSlides[currentHeroSlide].classList.remove('active');
+            currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+            heroSlides[currentHeroSlide].classList.add('active');
+        }, 5000);
+    }
+
+    if (adCarousel) {
+        const adImages = [
+            'https://via.placeholder.com/1200x400?text=Oferta+Especial',
+            'https://via.placeholder.com/1200x400?text=Nueva+Colección',
+            'https://via.placeholder.com/1200x400?text=Descuentos+de+Temporada'
+        ];
+
+        adImages.forEach((src, index) => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Ad ${index + 1}`;
+            img.className = `w-full h-full object-cover carousel-item ${index === 0 ? 'active' : ''}`;
+            adCarousel.appendChild(img);
         });
-    }).catch(error => console.error('Error:', error));
+
+        const adSlides = adCarousel.querySelectorAll('.carousel-item');
+        let currentAdSlide = 0;
+
+        setInterval(() => {
+            adSlides[currentAdSlide].classList.remove('active');
+            currentAdSlide = (currentAdSlide + 1) % adSlides.length;
+            adSlides[currentAdSlide].classList.add('active');
+        }, 5000);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -287,21 +285,38 @@ document.addEventListener('DOMContentLoaded', () => {
     handleProductFilters();
     handleSearch();
     animateTopBanner();
-    handleHeroCarousel();
-    handleAdCarousel();
+    initCarousels();
 
     const cartButton = document.getElementById('cart-button');
     const closeCartButton = document.getElementById('close-cart');
-
-    if (cartButton) cartButton.addEventListener('click', showCart);
-    if (closeCartButton) closeCartButton.addEventListener('click', hideCart);
-
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+
+    if (cartButton) {
+        cartButton.addEventListener('click', showCart);
+    }
+
+    if (closeCartButton) {
+        closeCartButton.addEventListener('click', hideCart);
+    }
 
     if (menuToggle && mobileMenu) {
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
     }
+
+    // Animación de elementos al hacer scroll
+    const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    animateOnScrollElements.forEach(element => {
+        observer.observe(element);
+    });
 });

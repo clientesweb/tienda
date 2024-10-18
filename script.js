@@ -255,9 +255,9 @@ function initCarousels() {
     if (heroCarousel) {
         const heroImages = [
             
-            'https://via.placeholder.com/1920x1080?text=Bienvenido+a+Mon+Amour+Textil',
-            'https://via.placeholder.com/1920x1080?text=Descubre+Nuestra+Colección',
-            'https://via.placeholder.com/1920x1080?text=Calidad+Artesanal'
+            'img/hero1.png',
+            'img/hero.png',
+            'img/hero3.png'
         ];
 
         let currentHeroSlide = 0;

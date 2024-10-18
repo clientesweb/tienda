@@ -28,7 +28,7 @@ function loadProducts(category = 'all') {
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
@@ -108,7 +108,7 @@ function displaySearchResults(filteredProducts) {
 
     filteredProducts.forEach(product => {
         const productElement = document.createElement('div');
-        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
@@ -173,7 +173,7 @@ function showCart() {
     });
 
     cartTotal.textContent = `$${total.toFixed(2)}`;
-    cartModal.classList.remove('hidden');
+    cart.length > 0 ? cartModal.classList.remove('hidden') : cartModal.classList.add('hidden');
 
     initMercadoPago(total);
 }
@@ -251,17 +251,21 @@ function initMercadoPago(total) {
 }
 
 function initCarousels() {
-    const heroCarousel = document.getElementById('hero-carousel');
+    const heroCarousel = document.getElementById('hero');
     const adCarousel = document.getElementById('ad-carousel');
 
     if (heroCarousel) {
-        const heroSlides = heroCarousel.querySelectorAll('.carousel-item');
+        const heroImages = [
+            'https://via.placeholder.com/1920x1080?text=Bienvenido+a+Mon+Amour+Textil',
+            'https://via.placeholder.com/1920x1080?text=Descubre+Nuestra+Colección',
+            'https://via.placeholder.com/1920x1080?text=Calidad+Artesanal'
+        ];
+
         let currentHeroSlide = 0;
 
         setInterval(() => {
-            heroSlides[currentHeroSlide].classList.remove('active');
-            currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
-            heroSlides[currentHeroSlide].classList.add('active');
+            currentHeroSlide = (currentHeroSlide + 1) % heroImages.length;
+            heroCarousel.style.backgroundImage = `url('${heroImages[currentHeroSlide]}')`;
         }, 5000);
     }
 

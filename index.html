@@ -291,27 +291,27 @@
     </a>
 
     <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-4">
-        <h2 class="text-2xl font-bold mb-4 text-primary">Carrito de Compras</h2>
-        <div id="cart-items" class="mb-4 max-h-60 overflow-y-auto">
-            <!-- Los items del carrito se cargarán aquí -->
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-4">
+            <h2 class="text-2xl font-bold mb-4 text-primary">Carrito de Compras</h2>
+            <div id="cart-items" class="mb-4 max-h-60 overflow-y-auto">
+                <!-- Los items del carrito se cargarán aquí -->
+            </div>
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold text-dark">Total:</span>
+                <span id="cart-total" class="font-bold text-primary"></span>
+            </div>
+            <div id="mercadopago-button-container">
+                <!-- El botón de MercadoPago se insertará aquí -->
+            </div>
+            <div class="flex justify-center space-x-4 mb-4">
+                <i class="fab fa-cc-visa text-3xl text-gray-600"></i>
+                <i class="fab fa-cc-mastercard text-3xl text-gray-600"></i>
+                <i class="fab fa-cc-amex text-3xl text-gray-600"></i>
+            </div>
+            <p class="text-center text-sm text-gray-500 mb-4">Powered by Duality Domain</p>
+            <button id="close-cart" class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full">Cerrar</button>
         </div>
-        <div class="flex justify-between items-center mb-4">
-            <span class="font-bold text-dark">Total:</span>
-            <span id="cart-total" class="font-bold text-primary"></span>
-        </div>
-        <button id="mercadopago-button" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mb-4">
-            Pagar con Mercado Pago
-        </button>
-        <div class="flex justify-center space-x-4 mb-4">
-            <i class="fab fa-cc-visa text-3xl text-gray-600"></i>
-            <i class="fab fa-cc-mastercard text-3xl text-gray-600"></i>
-            <i class="fab fa-cc-amex text-3xl text-gray-600"></i>
-        </div>
-        <p class="text-center text-sm text-gray-500 mb-4">Powered by Duality Domain</p>
-        <button id="close-cart" class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full">Cerrar</button>
     </div>
-</div>
 
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script>
@@ -320,3 +320,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

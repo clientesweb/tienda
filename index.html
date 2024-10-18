@@ -77,6 +77,11 @@
         .whatsapp-button:hover {
             transform: scale(1.1);
         }
+         @media (max-width: 640px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -289,12 +294,11 @@
                 <span class="font-bold text-dark">Total:</span>
                 <span id="cart-total" class="font-bold text-primary"></span>
             </div>
-            <button id="checkout-button" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mb-2">Finalizar Compra</button>
-            <button id="close-cart" class="text-dark hover:text-primary w-full text-center">Cerrar</button>
+            <div id="mercadopago-button-container" class="mb-4"></div>
+            <button id="close-cart" class="w-full bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300">Cerrar</button>
         </div>
     </div>
 
-    <div id="mercadopago-button-container"></div>
 
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 <script>

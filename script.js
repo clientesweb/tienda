@@ -187,7 +187,14 @@ function animateTopBanner() {
     const topBanner = document.getElementById('top-banner');
     if (!topBanner) return;
 
-    topBanner.classList.add('slide-in');
+    const slides = topBanner.querySelectorAll('.top-banner-slide');
+    let currentSlide = 0;
+
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 5000);
 }
 
 function handleHeroCarousel() {
@@ -209,6 +216,31 @@ function handleHeroCarousel() {
 
     // Auto-rotate slides
     setInterval(nextSlide, 5000);
+}
+
+function handleAdCarousel() {
+    const adCarousel = document.getElementById('ad-carousel');
+    if (!adCarousel) return;
+
+    const adImages = [
+        'https://via.placeholder.com/1200x400?text=Ad+1',
+        'https://via.placeholder.com/1200x400?text=Ad+2',
+        'https://via.placeholder.com/1200x400?text=Ad+3'
+    ];
+
+    let currentAdIndex = 0;
+
+    function showAd(index) {
+        adCarousel.innerHTML = `<img src="${adImages[index]}" alt="Ad ${index + 1}" class="w-full h-full object-cover">`;
+    }
+
+    function nextAd() {
+        currentAdIndex = (currentAdIndex + 1) % adImages.length;
+        showAd(currentAdIndex);
+    }
+
+    showAd(currentAdIndex);
+    setInterval(nextAd, 5000);
 }
 
 const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
@@ -256,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleSearch();
     animateTopBanner();
     handleHeroCarousel();
+    handleAdCarousel();
 
     const cartButton = document.getElementById('cart-button');
     const closeCartButton = document.getElementById('close-cart');

@@ -46,6 +46,8 @@ function loadFeaturedProducts() {
     const featuredContainer = document.getElementById('featured-products');
     if (!featuredContainer) return;
 
+    featuredContainer.innerHTML = '';
+
     const featuredProducts = products.filter(product => product.featured);
     featuredProducts.forEach(product => {
         const productElement = document.createElement('div');
@@ -206,9 +208,9 @@ function handleHeroCarousel() {
     setInterval(nextSlide, 5000);
 }
 
+// Asegúrate de que MERCADOPAGO_PUBLIC_KEY esté definido en tu HTML o en una variable de entorno
 const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
 
-// Reemplaza la función createPreference
 function createPreference() {
     const items = cart.map(item => ({
         title: item.name,

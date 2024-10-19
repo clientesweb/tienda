@@ -1,13 +1,46 @@
 // Simulación de datos de productos
 const products = [
-    // Velas
-    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, description: 'Vela aromática de lavanda para relajación.', onSale: true, inStock: true },
-    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, description: 'Vela de soja 100% natural y ecológica.', onSale: false, inStock: true },
-    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, description: 'Set de 3 velas decorativas para el hogar.', onSale: false, inStock: false },
-    // ... (resto de los productos)
+    // Velas (12 productos)
+    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela aromática de lavanda para relajación.', onSale: true, inStock: true },
+    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela de soja 100% natural y ecológica.', onSale: false, inStock: true },
+    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Set de 3 velas decorativas para el hogar.', onSale: false, inStock: false },
+    { id: 4, name: 'Vela de Vainilla', price: 22.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con esencia de vainilla.', onSale: true, inStock: true },
+    { id: 5, name: 'Vela de Citronela', price: 18.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela de citronela para exteriores.', onSale: false, inStock: true },
+    { id: 6, name: 'Vela de Manzana y Canela', price: 21.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela aromática con aroma a manzana y canela.', onSale: false, inStock: true },
+    { id: 7, name: 'Vela de Jazmín', price: 23.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con esencia de jazmín.', onSale: true, inStock: true },
+    { id: 8, name: 'Vela de Eucalipto', price: 20.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela refrescante con aroma a eucalipto.', onSale: false, inStock: true },
+    { id: 9, name: 'Vela de Chocolate', price: 25.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela aromática con aroma a chocolate.', onSale: false, inStock: true },
+    { id: 10, name: 'Vela de Rosas', price: 26.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con esencia de rosas.', onSale: true, inStock: true },
+    { id: 11, name: 'Vela de Sándalo', price: 27.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con aroma a sándalo.', onSale: false, inStock: true },
+    { id: 12, name: 'Vela de Frutas Tropicales', price: 24.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con mezcla de aromas tropicales.', onSale: false, inStock: true },
+
+    // Textiles (10 productos)
+    { id: 13, name: 'Manta de Algodón', price: 49.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: true, description: 'Manta suave de algodón 100% natural.', onSale: true, inStock: true },
+    { id: 14, name: 'Cojín Decorativo', price: 29.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Cojín decorativo con diseños únicos.', onSale: false, inStock: true },
+    { id: 15, name: 'Cortinas de Lino', price: 79.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: true, description: 'Cortinas de lino natural para tu hogar.', onSale: false, inStock: true },
+    { id: 16, name: 'Mantel de Mesa', price: 39.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Mantel elegante para tu mesa de comedor.', onSale: true, inStock: true },
+    { id: 17, name: 'Toallas de Baño', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Set de toallas suaves y absorbentes.', onSale: false, inStock: true },
+    { id: 18, name: 'Alfombra de Yute', price: 89.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: true, description: 'Alfombra natural de yute para tu sala.', onSale: false, inStock: true },
+    { id: 19, name: 'Funda de Almohada', price: 19.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Funda de almohada de algodón suave.', onSale: true, inStock: true },
+    { id: 20, name: 'Tapiz de Pared', price: 59.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Tapiz decorativo para colgar en la pared.', onSale: false, inStock: true },
+    { id: 21, name: 'Camino de Mesa', price: 29.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Camino de mesa elegante para ocasiones especiales.', onSale: false, inStock: true },
+    { id: 22, name: 'Cortina de Ducha', price: 44.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Cortina de ducha con diseño moderno.', onSale: true, inStock: true },
+
+    // Cerámica (10 productos)
+    { id: 23, name: 'Taza de Café', price: 14.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: true, description: 'Taza de café de cerámica artesanal.', onSale: true, inStock: true },
+    { id: 24, name: 'Plato Decorativo', price: 29.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Plato decorativo de cerámica pintada a mano.', onSale: false, inStock: true },
+    { id: 25, name: 'Jarrón de Cerámica', price: 39.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: true, description: 'Jarrón de cerámica para decoración del hogar.', onSale: false, inStock: true },
+    { id: 26, name: 'Set de Platos', price: 59.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Set de 4 platos de cerámica para comedor.', onSale: true, inStock: true },
+    { id: 27, name: 'Maceta de Cerámica', price: 24.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Maceta de cerámica para plantas de interior.', onSale: false, inStock: true },
+    { id: 28, name: 'Cuenco de Cerámica', price: 19.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: true, description: 'Cuenco de cerámica para servir alimentos.', onSale: false, inStock: true },
+    { id: 29, name: 'Tetera de Cerámica', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Tetera de cerámica con diseño elegante.', onSale: true, inStock: true },
+    { id: 30, name: 'Portavelas de Cerámica', price: 16.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Portavelas de cerámica para velas pequeñas.', onSale: false, inStock: true },
+    { id: 31, name: 'Figura Decorativa', price: 44.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Figura decorativa de cerámica para el hogar.', onSale: false, inStock: true },
+    { id: 32, name: 'Azucarero de Cerámica', price: 22.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Azucarero de cerámica con tapa.', onSale: true, inStock: true }
 ];
 
 let cart = [];
+let currentStep = 1;
 
 function loadProducts(category = 'all') {
     const productGrid = document.getElementById('product-grid');
@@ -68,7 +101,7 @@ function handleProductFilters() {
     const filterButtons = document.querySelectorAll('#category-filters button');
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const category = button.getAttribute('data-category');
+            const  category = button.getAttribute('data-category');
             loadProducts(category);
             
             filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
@@ -153,8 +186,10 @@ function showCart() {
     const cartModal = document.getElementById('cart-modal');
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
+    const customerInfoForm = document.getElementById('customer-info-form');
+    const mercadoPagoContainer = document.getElementById('mercadopago-button-container');
 
-    if (!cartModal || !cartItems || !cartTotal) return;
+    if (!cartModal || !cartItems || !cartTotal || !customerInfoForm || !mercadoPagoContainer) return;
 
     cartItems.innerHTML = '';
     let total = 0;
@@ -180,7 +215,44 @@ function showCart() {
     cartTotal.textContent = `$${total.toFixed(2)}`;
     cartModal.classList.remove('hidden');
 
-    createMercadoPagoButton(total);
+    // Mostrar el paso actual
+    showStep(currentStep);
+}
+
+function showStep(step) {
+    const cartItems = document.getElementById('cart-items');
+    const customerInfoForm = document.getElementById('customer-info-form');
+    const mercadoPagoContainer = document.getElementById('mercadopago-button-container');
+    const submitOrderButton = document.getElementById('submit-order');
+    const nextStepButton = document.getElementById('next-step');
+    const prevStepButton = document.getElementById('prev-step');
+
+    cartItems.style.display = step === 1 ? 'block' : 'none';
+    customerInfoForm.style.display = step === 2 ? 'block' : 'none';
+    mercadoPagoContainer.style.display = step === 3 ? 'block' : 'none';
+    submitOrderButton.style.display = step === 2 ? 'block' : 'none';
+    nextStepButton.style.display = step < 3 ? 'block' : 'none';
+    prevStepButton.style.display = step > 1 ? 'block' : 'none';
+
+    // Actualizar el título del modal
+    const modalTitle = document.getElementById('cart-modal-title');
+    modalTitle.textContent = step === 1 ? 'Carrito de Compras' : 
+                             step === 2 ? 'Información del Cliente' : 
+                             'Pago con MercadoPago';
+}
+
+function nextStep() {
+    if (currentStep < 3) {
+        currentStep++;
+        showStep(currentStep);
+    }
+}
+
+function prevStep() {
+    if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+    }
 }
 
 function hideCart() {
@@ -188,6 +260,7 @@ function hideCart() {
     if (!cartModal) return;
 
     cartModal.classList.add('hidden');
+    currentStep = 1; // Reiniciar al primer paso cuando se cierra el carrito
 }
 
 function removeFromCart(productId) {
@@ -345,10 +418,8 @@ function sendOrderInfo() {
     console.log('Información del pedido:', orderInfo);
     alert('Gracias por su pedido. Nos pondremos en contacto con usted pronto.');
 
-    // Limpia el carrito y cierra el modal
-    cart = [];
-    updateCartCount();
-    hideCart();
+    // Avanzar al siguiente paso (pago con MercadoPago)
+    nextStep();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -364,6 +435,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const submitOrderButton = document.getElementById('submit-order');
+    const nextStepButton = document.getElementById('next-step');
+    const prevStepButton = document.getElementById('prev-step');
 
     if (cartButton) {
         cartButton.addEventListener('click', showCart);
@@ -381,6 +454,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (submitOrderButton) {
         submitOrderButton.addEventListener('click', sendOrderInfo);
+    }
+
+    if (nextStepButton) {
+        nextStepButton.addEventListener('click', nextStep);
+    }
+
+    if (prevStepButton) {
+        prevStepButton.addEventListener('click', prevStep);
     }
 
     // Animación de elementos al hacer scroll

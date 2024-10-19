@@ -99,9 +99,10 @@ function loadFeaturedProducts() {
 
 function handleProductFilters() {
     const filterButtons = document.querySelectorAll('#category-filters button');
+    
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const  category = button.getAttribute('data-category');
+            const category = button.getAttribute('data-category');
             loadProducts(category);
             
             filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
@@ -187,9 +188,8 @@ function showCart() {
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
     const customerInfoForm = document.getElementById('customer-info-form');
-    const mercadoPagoContainer = document.getElementById('mercadopago-button-container');
 
-    if (!cartModal || !cartItems || !cartTotal || !customerInfoForm || !mercadoPagoContainer) return;
+    if (!cartModal || !cartItems || !cartTotal || !customerInfoForm) return;
 
     cartItems.innerHTML = '';
     let total = 0;
@@ -215,48 +215,8 @@ function showCart() {
     cartTotal.textContent = `$${total.toFixed(2)}`;
     cartModal.classList.remove('hidden');
 
-    // Mostrar el paso actual
-    showStep(currentStep);
-}
-
-function showStep(step) {
-    const cartItems = document.getElementById('cart-items');
-    const customerInfoForm = document.getElementById('customer-info-form');
-    const mercadoPagoContainer = document.getElementById('mercadopago-button-container');
-    const submitOrderButton = document.getElementById('submit-order');
-    const nextStepButton = document.getElementById('next-step');
-    const prevStepButton = document.getElementById('prev-step');
-
-    cartItems.style.display = step === 1 ? 'block' : 'none';
-    customerInfoForm.style.display = step === 2 ? 'block' : 'none';
-    mercadoPagoContainer.style.display = step === 3 ? 'block' : 'none';
-    submitOrderButton.style.display = step === 2 ? 'block' : 'none';
-    nextStepButton.style.display = step < 3 ? 'block' : 'none';
-    prevStepButton.style.display = step > 1 ? 'block' : 'none';
-
-    // Actualizar el título del modal
-    const modalTitle = document.getElementById('cart-modal-title');
-    modalTitle.textContent = step === 1 ? 'Carrito de Compras' : 
-                             step === 2 ? 'Información del Cliente' : 
-                             'Pago con MercadoPago';
-
-    if (step === 3) {
-        createMercadoPagoButton(cart.reduce((total, item) => total + item.price * item.quantity, 0));
-    }
-}
-
-function nextStep() {
-    if (currentStep < 3) {
-        currentStep++;
-        showStep(currentStep);
-    }
-}
-
-function prevStep() {
-    if (currentStep > 1) {
-        currentStep--;
-        showStep(currentStep);
-    }
+    // Mostrar el formulario de información del cliente
+    customerInfoForm.style.display = 'block';
 }
 
 function hideCart() {
@@ -264,7 +224,6 @@ function hideCart() {
     if (!cartModal) return;
 
     cartModal.classList.add('hidden');
-    currentStep = 1; // Reiniciar al primer paso cuando se cierra el carrito
 }
 
 function removeFromCart(productId) {
@@ -274,48 +233,90 @@ function removeFromCart(productId) {
     showNotification('Producto eliminado del carrito');
 }
 
-async function createMercadoPagoButton(total) {
-    const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
-    
-    const buttonContainer = document.getElementById('mercadopago-button-container');
-    if (buttonContainer.innerHTML.trim() !== '') {
-        return; // Si ya hay un botón, no lo recreamos
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.className = 'fixed bottom-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full opacity-0 transition-opacity duration-300';
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.remove('opacity-0');
+    }, 100);
+
+    setTimeout(() => {
+        notification.classList.add('opacity-0');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+async function sendOrderInfo(event) {
+    event.preventDefault();
+
+    const customerName = document.getElementById('customer-name').value;
+    const customerEmail = document.getElementById('customer-email').value;
+    const customerPhone = document.getElementById('customer-phone').value;
+
+    if (!customerName || !customerEmail || !customerPhone) {
+        alert('Por favor, complete todos los campos de información del cliente.');
+        return;
     }
 
+    const orderInfo = {
+        customer: {
+            name: customerName,
+            email: customerEmail,
+            phone: customerPhone
+        },
+        items: cart.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price
+        })),
+        total: cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    };
+
     try {
-        const response = await fetch('/.netlify/functions/create-preference', {
+        // Enviar datos a Formspree
+        const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                items: cart.map(item => ({
-                    title: item.name,
-                    quantity: item.quantity,
-                    currency_id: 'ARS',
-                    unit_price: item.price
-                }))
-            })
+            body: JSON.stringify(orderInfo)
         });
 
-        if (!response.ok) {
-            throw new Error('Error al crear la preferencia de MercadoPago');
-        }
+        if (response.ok) {
+            // Si el envío a Formspree es exitoso, crear la preferencia de MercadoPago
+            const mercadoPagoResponse = await fetch('/.netlify/functions/create-preference', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    items: cart.map(item => ({
+                        title: item.name,
+                        quantity: item.quantity,
+                        currency_id: 'ARS',
+                        unit_price: item.price
+                    }))
+                })
+            });
 
-        const preference = await response.json();
-
-        mp.checkout({
-            preference: {
-                id: preference.id
-            },
-            render: {
-                container: '#mercadopago-button-container',
-                label: 'Pagar con Mercado Pago'
+            if (mercadoPagoResponse.ok) {
+                const preference = await mercadoPagoResponse.json();
+                // Redirigir al usuario al Checkout Pro de MercadoPago
+                window.location.href = preference.init_point;
+            } else {
+                throw new Error('Error al crear la preferencia de MercadoPago');
             }
-        });
+        } else {
+            throw new Error('Error al enviar el formulario');
+        }
     } catch (error) {
         console.error('Error:', error);
-        alert('Hubo un error al procesar su pago. Por favor, inténtelo de nuevo.');
+        alert('Hubo un error al procesar su pedido. Por favor, inténtelo de nuevo.');
     }
 }
 
@@ -378,58 +379,6 @@ function initCarousels() {
     }
 }
 
-function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.textContent = message;
-    notification.className = 'fixed bottom-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full opacity-0 transition-opacity duration-300';
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.remove('opacity-0');
-    }, 100);
-
-    setTimeout(() => {
-        notification.classList.add('opacity-0');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
-}
-
-function sendOrderInfo() {
-    const customerName = document.getElementById('customer-name').value;
-    const customerEmail = document.getElementById('customer-email').value;
-    const customerPhone = document.getElementById('customer-phone').value;
-
-    if (!customerName || !customerEmail || !customerPhone) {
-        alert('Por favor, complete todos los campos de información del cliente.');
-        return;
-    }
-
-    const orderInfo = {
-        customer: {
-            name: customerName,
-            email: customerEmail,
-            phone: customerPhone
-        },
-        items: cart.map(item => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price
-        })),
-        total: cart.reduce((total, item) => total + item.price * item.quantity, 0)
-    };
-
-    // Aquí puedes implementar la lógica para enviar la información por WhatsApp o email
-    console.log('Información del pedido:', orderInfo);
-    alert('Gracias por su pedido. Nos pondremos en contacto con usted pronto.');
-
-    createMercadoPagoButton(cart.reduce((total, item) => total + item.price * item.quantity, 0));
-
-    // Avanzar al siguiente paso (pago con MercadoPago)
-    nextStep();
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
     loadFeaturedProducts();
@@ -443,8 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const submitOrderButton = document.getElementById('submit-order');
-    const nextStepButton = document.getElementById('next-step');
-    const prevStepButton = document.getElementById('prev-step');
 
     if (cartButton) {
         cartButton.addEventListener('click', showCart);
@@ -462,14 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (submitOrderButton) {
         submitOrderButton.addEventListener('click', sendOrderInfo);
-    }
-
-    if (nextStepButton) {
-        nextStepButton.addEventListener('click', nextStep);
-    }
-
-    if (prevStepButton) {
-        prevStepButton.addEventListener('click', prevStep);
     }
 
     // Animación de elementos al hacer scroll

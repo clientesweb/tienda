@@ -211,8 +211,10 @@
                 <div class="mb-8">
                     <input type="text" id="search-input" placeholder="Buscar productos..." class="w-full md:w-1/2 mx-auto block pl-8 pr-2 py-2 border border-secondary rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="product-grid">
-                    <!-- Los productos se cargarán dinámicamente aquí -->
+                <div class="overflow-x-auto">
+                    <div id="product-grid" class="flex space-x-4 pb-4 product-slider">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -241,7 +243,7 @@
                         <label  for="message" class="block text-dark font-bold mb-2">Mensaje</label>
                         <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
                     </div>
-                    <button type="submit" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold  hover:bg-accent transition duration-300 w-full">Enviar Mensaje</button>
+                    <button type="submit" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300 w-full">Enviar Mensaje</button>
                 </form>
             </div>
         </section>
@@ -251,7 +253,7 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <img src="https://clientesweb.github.io/tienda/img/logo.png" alt="Mon Amour Textil Logo" class="h-16 mb-4">
+                    <img  src="https://clientesweb.github.io/tienda/img/logo.png" alt="Mon Amour Textil Logo" class="h-16 mb-4">
                     <p class="text-sm">Mon Amour Textil es tu destino para productos únicos y de alta calidad.</p>
                 </div>
                 <div>
@@ -296,31 +298,21 @@
     <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-4">
             <h2 class="text-2xl font-bold mb-4 text-primary">Carrito de Compras</h2>
-            <div id="cart-step-1" class="mb-4">
-                <div id="cart-items" class="mb-4 max-h-60 overflow-y-auto">
-                    <!-- Los items del carrito se cargarán aquí -->
-                </div>
-                <div class="flex justify-between items-center mb-4">
-                    <span class="font-bold text-dark">Total:</span>
-                    <span id="cart-total" class="font-bold text-primary"></span>
-                </div>
-                <button id="cart-next-1" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full">Siguiente</button>
+            <div id="cart-items" class="mb-4 max-h-60 overflow-y-auto">
+                <!-- Los items del carrito se cargarán aquí -->
             </div>
-            <div id="cart-step-2" class="hidden">
-                <form id="customer-info-form" class="mb-4">
-                    <input type="text" id="customer-name" placeholder="Nombre y Apellido" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
-                    <input type="tel" id="customer-whatsapp" placeholder="WhatsApp" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
-                    <input type="email" id="customer-email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
-                </form>
-                <button id="cart-next-2" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full">Siguiente</button>
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-bold text-dark">Total:</span>
+                <span id="cart-total" class="font-bold text-primary"></span>
             </div>
-            <div id="cart-step-3" class="hidden">
-                <div id="order-summary" class="mb-4">
-                    <!-- El resumen del pedido se cargará aquí -->
-                </div>
-                <div id="mercadopago-button-container" class="flex justify-center mb-4">
-                    <!-- El botón de MercadoPago se insertará aquí -->
-                </div>
+            <form id="customer-info-form" class="mb-4">
+                <input type="text" id="customer-name" placeholder="Nombre" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
+                <input type="email" id="customer-email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
+                <input type="tel" id="customer-phone" placeholder="Teléfono" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
+            </form>
+            <button id="submit-order" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mb-4">Enviar Pedido</button>
+            <div id="mercadopago-button-container" class="flex justify-center mb-4">
+                <!-- El botón de MercadoPago se insertará aquí -->
             </div>
             <div class="flex justify-center space-x-4 mb-4">
                 <i class="fab fa-cc-visa text-3xl text-gray-600"></i>

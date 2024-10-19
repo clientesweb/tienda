@@ -63,7 +63,7 @@ function loadProducts(category = 'all') {
     products.forEach(product => {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
-            productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
@@ -124,7 +124,6 @@ function handleSearch() {
                 product.name.toLowerCase().includes(searchTerm) || 
                 product.category.toLowerCase().includes(searchTerm)
             );
-            loadProducts('all');
             displaySearchResults(filteredProducts);
         });
     }
@@ -143,7 +142,7 @@ function displaySearchResults(filteredProducts) {
 
     filteredProducts.forEach(product => {
         const productElement = document.createElement('div');
-        productElement.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">

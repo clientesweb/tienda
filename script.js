@@ -3,8 +3,8 @@ const products = [
     // Velas (12 productos)
     { id: 1, name: 'Vitrè cera de soja aromatizada', price: 10700, image: 'img/velas1.png', category: 'velas', featured: true, description: 'Envase de vidrio reutilizable - 100gr.', onSale: false, inStock: true },
     { id: 2, name: 'Croques', price: 9800, image: 'img/velas2.png', category: 'velas', featured: true, description: 'Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada', onSale: false, inStock: true },
-    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Set de 3 velas decorativas para el hogar.', onSale: false, inStock: false },
-    { id: 4, name: 'Vela de Vainilla', price: 22.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con esencia de vainilla.', onSale: true, inStock: true },
+    { id: 3, name: 'Dinan', price: 15600, image: 'img/velas3.png', category: 'velas', featured: false, description: 'Envase reutilizable de vidrio con tapa. 200 gr de cera de soja aromatizada.', onSale: false, inStock: false },
+    { id: 4, name: 'Saignon', price: 53000, image: 'img/velas11.png', category: 'velas', featured: false, description: 'Velón suspendido en envase reutilizable de vidrio. 500 gr de cera de soja aromatizada.', onSale: false, inStock: true },
     { id: 5, name: 'Vela de Citronela', price: 18.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela de citronela para exteriores.', onSale: false, inStock: true },
     { id: 6, name: 'Vela de Manzana y Canela', price: 21.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela aromática con aroma a manzana y canela.', onSale: false, inStock: true },
     { id: 7, name: 'Vela de Jazmín', price: 23.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con esencia de jazmín.', onSale: true, inStock: true },

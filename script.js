@@ -1,55 +1,12 @@
 // Simulación de datos de productos
 const products = [
     // Velas
-    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
-    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
-    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
-    { id: 6, name: 'Vela de Cera de Abeja', price: 27.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 7, name: 'Vela Flotante', price: 15.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 8, name: 'Vela de Citronela', price: 18.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 9, name: 'Vela de Masaje', price: 32.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 10, name: 'Vela de Sándalo', price: 26.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 11, name: 'Vela de Té', price: 12.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 12, name: 'Vela de Eucalipto', price: 23.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 13, name: 'Vela de Jazmín', price: 25.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 14, name: 'Vela de Canela', price: 21.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 15, name: 'Vela de Menta', price: 20.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-
-    // Cerámica
-    { id: 16, name: 'Tazón de Cerámica Artesanal', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 17, name: 'Plato Decorativo de Cerámica', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 18, name: 'Jarrón de Cerámica Pintado a Mano', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 19, name: 'Set de Tazas de Café de Cerámica', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 20, name: 'Maceta de Cerámica Decorativa', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 21, name: 'Cuenco de Cerámica', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 22, name: 'Florero de Cerámica', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 23, name: 'Plato de Sushi de Cerámica', price: 37.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 24, name: 'Tetera de Cerámica', price: 64.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 25, name: 'Azucarero de Cerámica', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 26, name: 'Salero y Pimentero de Cerámica', price: 32.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 27, name: 'Bandeja de Cerámica', price: 47.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 28, name: 'Jarra de Cerámica', price: 42.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 29, name: 'Portavelas de Cerámica', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 30, name: 'Escultura de Cerámica', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-
-    // Textiles
-    { id: 31, name: 'Cojín Decorativo de Algodón', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 32, name: 'Manta Tejida a Mano', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 33, name: 'Cortinas de Lino Natural', price: 89.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 34, name: 'Tapete de Yute Redondo', price: 69.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 35, name: 'Set de Toallas de Algodón Orgánico', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 36, name: 'Mantel de Lino', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 37, name: 'Alfombra de Lana', price: 129.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 38, name: 'Funda de Cojín Bordada', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 39, name: 'Camino de Mesa', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 40, name: 'Cortina de Ducha de Algodón', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 41, name: 'Tapiz de Pared', price: 84.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 42, name: 'Funda Nórdica', price: 99.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 43, name: 'Cojín de Suelo', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 44, name: 'Manta de Sofá', price: 74.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 45, name: 'Set de Servilletas de Tela', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
+    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 10 },
+    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 15 },
+    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, stock: 8 },
+    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, stock: 12 },
+    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 20 },
+    // ... (resto de los productos)
 ];
 
 let cart = [];
@@ -64,12 +21,22 @@ function loadProducts(category = 'all') {
         if (category === 'all' || product.category === category) {
             const productElement = document.createElement('div');
             productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+            
+            const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0; // 30% de probabilidad de descuento entre 10% y 40%
+            const discountedPrice = product.price * (1 - discount / 100);
+            
             productElement.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                    <p class="text-dark">$${product.price.toFixed(2)}</p>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                    <p class="text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
+                    ${discount > 0 ? `<p class="text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
+                    <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
+                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
+                            onclick="addToCart(${product.id})" 
+                            ${product.stock === 0 ? 'disabled' : ''}>
+                        ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
+                    </button>
                 </div>
             `;
             productGrid.appendChild(productElement);
@@ -87,12 +54,22 @@ function loadFeaturedProducts() {
     featuredProducts.forEach(product => {
         const productElement = document.createElement('div');
         productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        
+        const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0;
+        const discountedPrice = product.price * (1 - discount / 100);
+        
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
-                <p class="text-sm text-dark">$${product.price.toFixed(2)}</p>
-                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                <p class="text-sm text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
+                ${discount > 0 ? `<p class="text-sm text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
+                <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
+                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
+                        onclick="addToCart(${product.id})"
+                        ${product.stock === 0 ? 'disabled' : ''}>
+                    ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
+                </button>
             </div>
         `;
         featuredContainer.appendChild(productElement);
@@ -143,12 +120,22 @@ function displaySearchResults(filteredProducts) {
     filteredProducts.forEach(product => {
         const productElement = document.createElement('div');
         productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        
+        const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0;
+        const discountedPrice = product.price * (1 - discount / 100);
+        
         productElement.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                <p class="text-dark">$${product.price.toFixed(2)}</p>
-                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                <p class="text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
+                ${discount > 0 ? `<p class="text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
+                <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
+                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
+                        onclick="addToCart(${product.id})"
+                        ${product.stock === 0 ? 'disabled' : ''}>
+                    ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
+                </button>
             </div>
         `;
         productGrid.appendChild(productElement);
@@ -157,18 +144,25 @@ function displaySearchResults(filteredProducts) {
 
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
-    if (!product) return;
+    if (!product || product.stock === 0) return;
 
     const existingItem = cart.find(item => item.id === productId);
 
     if (existingItem) {
-        existingItem.quantity += 1;
+        if (existingItem.quantity < product.stock) {
+            existingItem.quantity += 1;
+        } else {
+            showNotification('No hay más stock disponible para este producto');
+            return;
+        }
     } else {
         cart.push({ ...product, quantity: 1 });
     }
 
+    product.stock -= 1;
     updateCartCount();
     showNotification('Producto agregado al carrito');
+    loadProducts(); // Actualizar la visualización de los productos
 }
 
 function updateCartCount() {
@@ -196,10 +190,10 @@ function showCart() {
             <div>
                 <h4 class="font-semibold">${item.name}</h4>
                 <p class="text-sm">Cantidad: ${item.quantity}</p>
-                <p class="text-sm">Precio: $${item.price.toFixed(2)}</p>
+                <p class="text-sm">Precio: ${item.price.toFixed(2)}€</p>
             </div>
             <div>
-                <p class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</p>
+                <p class="font-semibold">${(item.price * item.quantity).toFixed(2)}€</p>
                 <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">Eliminar</button>
             </div>
         `;
@@ -207,7 +201,7 @@ function showCart() {
         total += item.price * item.quantity;
     });
 
-    cartTotal.textContent = `$${total.toFixed(2)}`;
+    cartTotal.textContent = `${total.toFixed(2)}€`;
     cartModal.classList.remove('hidden');
 
     createMercadoPagoButton(total);
@@ -221,10 +215,19 @@ function hideCart() {
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    const itemIndex = cart.findIndex(item => item.id === productId);
+    if (itemIndex > -1) {
+        const item = cart[itemIndex];
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            product.stock += item.quantity;
+        }
+        cart.splice(itemIndex, 1);
+    }
     updateCartCount();
     showCart();
     showNotification('Producto eliminado del carrito');
+    loadProducts(); // Actualizar la visualización de los productos
 }
 
 async function createMercadoPagoButton(total) {
@@ -291,15 +294,19 @@ function initCarousels() {
     if (heroCarousel) {
         const heroImages = [
             'img/hero1.png',
-            'img/hero.png',
+            'img/hero2.png',
             'img/hero3.png'
         ];
 
         let currentHeroSlide = 0;
 
         setInterval(() => {
-            currentHeroSlide = (currentHeroSlide + 1) % heroImages.length;
-            heroCarousel.style.backgroundImage = `url('${heroImages[currentHeroSlide]}')`;
+            heroCarousel.style.opacity = '0';
+            setTimeout(() => {
+                currentHeroSlide = (currentHeroSlide + 1) % heroImages.length;
+                heroCarousel.style.backgroundImage = `url('${heroImages[currentHeroSlide]}')`;
+                heroCarousel.style.opacity = '1';
+            }, 500);
         }, 5000);
     }
 

@@ -239,6 +239,10 @@ function showStep(step) {
     modalTitle.textContent = step === 1 ? 'Carrito de Compras' : 
                              step === 2 ? 'Información del Cliente' : 
                              'Pago con MercadoPago';
+
+    if (step === 3) {
+        createMercadoPagoButton(cart.reduce((total, item) => total + item.price * item.quantity, 0));
+    }
 }
 
 function nextStep() {
@@ -274,7 +278,9 @@ async function createMercadoPagoButton(total) {
     const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
     
     const buttonContainer = document.getElementById('mercadopago-button-container');
-    buttonContainer.innerHTML = ''; // Limpiar el contenedor antes de crear un nuevo botón
+    if (buttonContainer.innerHTML.trim() !== '') {
+        return; // Si ya hay un botón, no lo recreamos
+    }
 
     try {
         const response = await fetch('/.netlify/functions/create-preference', {
@@ -417,6 +423,8 @@ function sendOrderInfo() {
     // Aquí puedes implementar la lógica para enviar la información por WhatsApp o email
     console.log('Información del pedido:', orderInfo);
     alert('Gracias por su pedido. Nos pondremos en contacto con usted pronto.');
+
+    createMercadoPagoButton(cart.reduce((total, item) => total + item.price * item.quantity, 0));
 
     // Avanzar al siguiente paso (pago con MercadoPago)
     nextStep();

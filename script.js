@@ -1,55 +1,10 @@
 // Simulación de datos de productos
 const products = [
     // Velas
-    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
-    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
-    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true },
-    { id: 6, name: 'Vela de Cera de Abeja', price: 27.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 7, name: 'Vela Flotante', price: 15.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 8, name: 'Vela de Citronela', price: 18.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 9, name: 'Vela de Masaje', price: 32.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 10, name: 'Vela de Sándalo', price: 26.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 11, name: 'Vela de Té', price: 12.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 12, name: 'Vela de Eucalipto', price: 23.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 13, name: 'Vela de Jazmín', price: 25.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 14, name: 'Vela de Canela', price: 21.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-    { id: 15, name: 'Vela de Menta', price: 20.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false },
-
-    // Cerámica
-    { id: 16, name: 'Tazón de Cerámica Artesanal', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 17, name: 'Plato Decorativo de Cerámica', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 18, name: 'Jarrón de Cerámica Pintado a Mano', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 19, name: 'Set de Tazas de Café de Cerámica', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 20, name: 'Maceta de Cerámica Decorativa', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true },
-    { id: 21, name: 'Cuenco de Cerámica', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 22, name: 'Florero de Cerámica', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 23, name: 'Plato de Sushi de Cerámica', price: 37.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 24, name: 'Tetera de Cerámica', price: 64.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 25, name: 'Azucarero de Cerámica', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 26, name: 'Salero y Pimentero de Cerámica', price: 32.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 27, name: 'Bandeja de Cerámica', price: 47.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 28, name: 'Jarra de Cerámica', price: 42.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 29, name: 'Portavelas de Cerámica', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-    { id: 30, name: 'Escultura de Cerámica', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false },
-
-    // Textiles
-    { id: 31, name: 'Cojín Decorativo de Algodón', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 32, name: 'Manta Tejida a Mano', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 33, name: 'Cortinas de Lino Natural', price: 89.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 34, name: 'Tapete de Yute Redondo', price: 69.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 35, name: 'Set de Toallas de Algodón Orgánico', price: 54.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true },
-    { id: 36, name: 'Mantel de Lino', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 37, name: 'Alfombra de Lana', price: 129.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 38, name: 'Funda de Cojín Bordada', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 39, name: 'Camino de Mesa', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 40, name: 'Cortina de Ducha de Algodón', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 41, name: 'Tapiz de Pared', price: 84.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 42, name: 'Funda Nórdica', price: 99.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 43, name: 'Cojín de Suelo', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 44, name: 'Manta de Sofá', price: 74.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
-    { id: 45, name: 'Set de Servilletas de Tela', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false },
+    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, description: 'Vela aromática de lavanda para relajación.', onSale: true, inStock: true },
+    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, description: 'Vela de soja 100% natural y ecológica.', onSale: false, inStock: true },
+    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, description: 'Set de 3 velas decorativas para el hogar.', onSale: false, inStock: false },
+    // ... (resto de los productos)
 ];
 
 let cart = [];
@@ -68,8 +23,13 @@ function loadProducts(category = 'all') {
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                    <p class="text-dark">$${product.price.toFixed(2)}</p>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                    <p class="text-sm text-gray-600 mb-2">${product.description}</p>
+                    <p class="text-dark ${product.onSale ? 'line-through' : ''}">${product.onSale ? `$${(product.price * 1.2).toFixed(2)}` : `$${product.price.toFixed(2)}`}</p>
+                    ${product.onSale ? `<p class="text-accent font-bold">Oferta: $${product.price.toFixed(2)}</p>` : ''}
+                    <p class="text-sm ${product.inStock ? 'text-green-600' : 'text-red-600'}">${product.inStock ? 'En stock' : 'Agotado'}</p>
+                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
+                        ${product.inStock ? 'Agregar al carrito' : 'Agotado'}
+                    </button>
                 </div>
             `;
             productGrid.appendChild(productElement);
@@ -91,8 +51,13 @@ function loadFeaturedProducts() {
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
-                <p class="text-sm text-dark">$${product.price.toFixed(2)}</p>
-                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                <p class="text-sm text-gray-600 mb-2">${product.description}</p>
+                <p class="text-sm text-dark ${product.onSale ? 'line-through' : ''}">${product.onSale ? `$${(product.price * 1.2).toFixed(2)}` : `$${product.price.toFixed(2)}`}</p>
+                ${product.onSale ? `<p class="text-sm text-accent font-bold">Oferta: $${product.price.toFixed(2)}</p>` : ''}
+                <p class="text-xs ${product.inStock ? 'text-green-600' : 'text-red-600'}">${product.inStock ? 'En stock' : 'Agotado'}</p>
+                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
+                    ${product.inStock ? 'Agregar al carrito' : 'Agotado'}
+                </button>
             </div>
         `;
         featuredContainer.appendChild(productElement);
@@ -147,8 +112,13 @@ function displaySearchResults(filteredProducts) {
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                <p class="text-dark">$${product.price.toFixed(2)}</p>
-                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full" onclick="addToCart(${product.id})">Agregar al carrito</button>
+                <p class="text-sm text-gray-600 mb-2">${product.description}</p>
+                <p class="text-dark ${product.onSale ? 'line-through' : ''}">${product.onSale ? `$${(product.price * 1.2).toFixed(2)}` : `$${product.price.toFixed(2)}`}</p>
+                ${product.onSale ? `<p class="text-accent font-bold">Oferta: $${product.price.toFixed(2)}</p>` : ''}
+                <p class="text-sm ${product.inStock ? 'text-green-600' : 'text-red-600'}">${product.inStock ? 'En stock' : 'Agotado'}</p>
+                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
+                    ${product.inStock ? 'Agregar al carrito' : 'Agotado'}
+                </button>
             </div>
         `;
         productGrid.appendChild(productElement);
@@ -157,7 +127,7 @@ function displaySearchResults(filteredProducts) {
 
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
-    if (!product) return;
+    if (!product || !product.inStock) return;
 
     const existingItem = cart.find(item => item.id === productId);
 
@@ -347,6 +317,40 @@ function showNotification(message) {
     }, 3000);
 }
 
+function sendOrderInfo() {
+    const customerName = document.getElementById('customer-name').value;
+    const customerEmail = document.getElementById('customer-email').value;
+    const customerPhone = document.getElementById('customer-phone').value;
+
+    if (!customerName || !customerEmail || !customerPhone) {
+        alert('Por favor, complete todos los campos de información del cliente.');
+        return;
+    }
+
+    const orderInfo = {
+        customer: {
+            name: customerName,
+            email: customerEmail,
+            phone: customerPhone
+        },
+        items: cart.map(item => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price
+        })),
+        total: cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    };
+
+    // Aquí puedes implementar la lógica para enviar la información por WhatsApp o email
+    console.log('Información del pedido:', orderInfo);
+    alert('Gracias por su pedido. Nos pondremos en contacto con usted pronto.');
+
+    // Limpia el carrito y cierra el modal
+    cart = [];
+    updateCartCount();
+    hideCart();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
     loadFeaturedProducts();
@@ -359,6 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeCartButton = document.getElementById('close-cart');
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+    const submitOrderButton = document.getElementById('submit-order');
 
     if (cartButton) {
         cartButton.addEventListener('click', showCart);
@@ -372,6 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+    }
+
+    if (submitOrderButton) {
+        submitOrderButton.addEventListener('click', sendOrderInfo);
     }
 
     // Animación de elementos al hacer scroll

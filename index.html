@@ -297,7 +297,7 @@
 
     <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md mx-4">
-            <h2 class="text-2xl font-bold mb-4 text-primary">Carrito de Compras</h2>
+            <h2 id="cart-modal-title" class="text-2xl font-bold mb-4 text-primary">Carrito de Compras</h2>
             <div id="cart-items" class="mb-4 max-h-60 overflow-y-auto">
                 <!-- Los items del carrito se cargarán aquí -->
             </div>
@@ -305,13 +305,13 @@
                 <span class="font-bold text-dark">Total:</span>
                 <span id="cart-total" class="font-bold text-primary"></span>
             </div>
-            <form id="customer-info-form" class="mb-4">
+            <form id="customer-info-form" class="mb-4" style="display: none;">
                 <input type="text" id="customer-name" placeholder="Nombre" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
                 <input type="email" id="customer-email" placeholder="Email" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
                 <input type="tel" id="customer-phone" placeholder="Teléfono" class="w-full mb-2 px-3 py-2 border border-secondary rounded-md" required>
             </form>
-            <button id="submit-order" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mb-4">Enviar Pedido</button>
-            <div id="mercadopago-button-container" class="flex justify-center mb-4">
+            <button id="submit-order" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mb-4" style="display: none;">Enviar Pedido</button>
+            <div id="mercadopago-button-container" class="flex justify-center mb-4" style="display: none;">
                 <!-- El botón de MercadoPago se insertará aquí -->
             </div>
             <div class="flex justify-center space-x-4 mb-4">
@@ -320,7 +320,11 @@
                 <i class="fab fa-cc-amex text-3xl text-gray-600"></i>
             </div>
             <p class="text-center text-sm text-gray-500 mb-4">Powered by Duality Domain</p>
-            <button id="close-cart" class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full">Cerrar</button>
+            <div class="flex justify-between">
+                <button id="prev-step" class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300" style="display: none;">Anterior</button>
+                <button id="next-step" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300">Siguiente</button>
+            </div>
+            <button id="close-cart" class="bg-secondary text-dark px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full mt-4">Cerrar</button>
         </div>
     </div>
 

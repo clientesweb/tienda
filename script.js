@@ -1,5 +1,5 @@
 // Simulación de datos de productos
-const products = [
+let products = [
     // Velas
     { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 10, description: 'Vela aromática de lavanda para relajación y aromaterapia.' },
     { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 15, description: 'Vela ecológica hecha de soja 100% natural.' },
@@ -88,7 +88,7 @@ function loadFeaturedProducts() {
         const productElement = document.createElement('div');
         productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
         
-        const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0;
+        const discount = Math.random()  < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0;
         const discountedPrice = product.price * (1 - discount / 100);
         
         productElement.innerHTML = `
@@ -122,6 +122,7 @@ function addToCart(productId) {
         product.stock--;
         updateCartCount();
         updateCartModal();
+        showNotification(`${product.name} agregado al carrito`);
     }
 }
 
@@ -135,6 +136,7 @@ function removeFromCart(productId) {
         cart.splice(index, 1);
         updateCartCount();
         updateCartModal();
+        showNotification(`Producto eliminado del carrito`);
     }
 }
 
@@ -179,20 +181,72 @@ function updateMercadoPagoButton(total) {
         const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
         const checkout = mp.checkout({
             preference: {
-                items: [
-                    {
-                        title: 'Compra en Mon Amour Textil',
-                        quantity: 1,
-                        currency_id: 'ARS',
-                        unit_price: total
-                    }
-                ]
+                items: cart.map(item => ({
+                    title: item.name,
+                    quantity: item.quantity,
+                    currency_id: 'ARS',
+                    unit_price: item.price
+                }))
             },
             render: {
                 container: '#mercadopago-button-container',
                 label: 'Pagar con MercadoPago'
             }
         });
+    }
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+    document.body.appendChild(notification);
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+function loadAdminPanel() {
+    const adminProducts = document.getElementById('admin-products');
+    adminProducts.innerHTML = '';
+
+    products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'mb-4 p-4 border rounded';
+        productElement.innerHTML = `
+            <h3 class="font-bold">${product.name}</h3>
+            <p>Precio: <input type="number" value="${product.price}" onchange="updateProductPrice(${product.id}, this.value)" class="border rounded px-2 py-1 w-24"></p>
+            <p>Stock: <input type="number" value="${product.stock}" onchange="updateProductStock(${product.id}, this.value)" class="border rounded px-2 py-1 w-24"></p>
+            <p>Descuento: <input type="number" value="0" onchange="updateProductDiscount(${product.id}, this.value)" class="border rounded px-2 py-1 w-24"> %</p>
+        `;
+        adminProducts.appendChild(productElement);
+    });
+}
+
+function updateProductPrice(id, newPrice) {
+    const product = products.find(p => p.id === id);
+    if (product) {
+        product.price = parseFloat(newPrice);
+        loadProducts();
+        loadFeaturedProducts();
+    }
+}
+
+function updateProductStock(id, newStock) {
+    const product = products.find(p => p.id === id);
+    if (product) {
+        product.stock = parseInt(newStock);
+        loadProducts();
+        loadFeaturedProducts();
+    }
+}
+
+function updateProductDiscount(id, discount) {
+    const product = products.find(p => p.id === id);
+    if (product) {
+        product.discount = parseInt(discount);
+        loadProducts();
+        loadFeaturedProducts();
     }
 }
 
@@ -334,6 +388,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle && mobileMenu) {
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // Panel de administración
+    const adminButton = document.getElementById('admin-button');
+    const adminPanel = document.getElementById('admin-panel');
+    const closeAdminButton = document.getElementById('close-admin');
+
+    if (adminButton && adminPanel && closeAdminButton) {
+        adminButton.addEventListener('click', () => {
+            adminPanel.classList.remove('hidden');
+            loadAdminPanel();
+        });
+
+        closeAdminButton.addEventListener('click', () => {
+            adminPanel.classList.add('hidden');
+        });
+
+        adminPanel.addEventListener('click', (e) => {
+            if (e.target === adminPanel) {
+                adminPanel.classList.add('hidden');
+            }
         });
     }
 });

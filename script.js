@@ -1,7 +1,7 @@
 // Simulación de datos de productos
 const products = [
     // Velas (12 productos)
-    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela aromática de lavanda para relajación.', onSale: true, inStock: true },
+    { id: 1, name: 'Vitrè cera de soja aromatizada', price: 10.700, image: 'img/producto.png', category: 'velas', featured: true, description: 'Envase de vidrio reutilizable - 100gr.', onSale: true, inStock: true },
     { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: true, description: 'Vela de soja 100% natural y ecológica.', onSale: false, inStock: true },
     { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Set de 3 velas decorativas para el hogar.', onSale: false, inStock: false },
     { id: 4, name: 'Vela de Vainilla', price: 22.99, image: '/placeholder.svg?height=300&width=300', category: 'velas', featured: false, description: 'Vela aromática con esencia de vainilla.', onSale: true, inStock: true },

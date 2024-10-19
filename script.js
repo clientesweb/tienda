@@ -1,47 +1,80 @@
 // Simulación de datos de productos
 const products = [
     // Velas
-    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 10 },
-    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 15 },
-    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, stock: 8 },
-    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, stock: 12 },
-    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 20 },
-    // ... (resto de los productos)
+    { id: 1, name: 'Vela Aromática Lavanda', price: 19.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 10, description: 'Vela aromática de lavanda para relajación y aromaterapia.' },
+    { id: 2, name: 'Vela de Soja Natural', price: 24.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 15, description: 'Vela ecológica hecha de soja 100% natural.' },
+    { id: 3, name: 'Set de Velas Decorativas', price: 34.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, stock: 8, description: 'Set de 3 velas decorativas para crear ambiente.' },
+    { id: 4, name: 'Vela en Tarro de Cristal', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: false, stock: 12, description: 'Elegante vela en tarro de cristal reutilizable.' },
+    { id: 5, name: 'Vela Perfumada de Vainilla', price: 22.99, image: 'https://via.placeholder.com/300x300', category: 'velas', featured: true, stock: 20, description: 'Vela con aroma a vainilla para un ambiente acogedor.' },
+    
+    // Cerámica
+    { id: 6, name: 'Tazón de Cerámica Artesanal', price: 39.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true, stock: 7, description: 'Tazón hecho a mano con diseño único.' },
+    { id: 7, name: 'Plato Decorativo de Cerámica', price: 44.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true, stock: 5, description: 'Plato decorativo con motivos florales pintados a mano.' },
+    { id: 8, name: 'Jarrón de Cerámica Pintado', price: 59.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: false, stock: 3, description: 'Jarrón de cerámica con diseño abstracto pintado a mano.' },
+    { id: 9, name: 'Set de Tazas de Café', price: 49.99, image: 'https://via.placeholder.com/300x300', category: 'ceramica', featured: true, stock: 10, description: 'Set de 4 tazas de café de cerámica con diseños variados.' },
+    
+    // Textiles
+    { id: 10, name: 'Cojín Decorativo de Algodón', price: 29.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true, stock: 15, description: 'Cojín decorativo de algodón orgánico con diseño geométrico.' },
+    { id: 11, name: 'Manta Tejida a Mano', price: 79.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true, stock: 6, description: 'Manta suave y cálida tejida a mano con lana de alpaca.' },
+    { id: 12, name: 'Cortinas de Lino Natural', price: 89.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: false, stock: 4, description: 'Par de cortinas de lino natural con acabado rústico.' },
+    { id: 13, name: 'Tapete de Yute Redondo', price: 69.99, image: 'https://via.placeholder.com/300x300', category: 'textiles', featured: true, stock: 8, description: 'Tapete redondo de yute trenzado, perfecto para decoración boho.' },
 ];
 
 let cart = [];
+let currentPage = 1;
+const productsPerPage = 6;
 
-function loadProducts(category = 'all') {
+function loadProducts(category = 'all', page = 1) {
     const productGrid = document.getElementById('product-grid');
     if (!productGrid) return;
 
     productGrid.innerHTML = '';
 
-    products.forEach(product => {
-        if (category === 'all' || product.category === category) {
-            const productElement = document.createElement('div');
-            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-            
-            const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0; // 30% de probabilidad de descuento entre 10% y 40%
-            const discountedPrice = product.price * (1 - discount / 100);
-            
-            productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                    <p class="text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
-                    ${discount > 0 ? `<p class="text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
-                    <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
-                            onclick="addToCart(${product.id})" 
-                            ${product.stock === 0 ? 'disabled' : ''}>
-                        ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
-                    </button>
-                </div>
-            `;
-            productGrid.appendChild(productElement);
-        }
+    const startIndex = (page - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+
+    const filteredProducts = products.filter(product => category === 'all' || product.category === category);
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+    paginatedProducts.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
+        
+        const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0; // 30% de probabilidad de descuento entre 10% y 40%
+        const discountedPrice = product.price * (1 - discount / 100);
+        
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
+                <p class="text-sm text-gray-600 mb-2">${product.description}</p>
+                <p class="text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
+                ${discount > 0 ? `<p class="text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
+                <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
+                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
+                        onclick="addToCart(${product.id})" 
+                        ${product.stock === 0 ? 'disabled' : ''}>
+                    ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
+                </button>
+            </div>
+        `;
+        productGrid.appendChild(productElement);
     });
+
+    updatePaginationButtons(filteredProducts.length, page);
+}
+
+function updatePaginationButtons(totalProducts, currentPage) {
+    const prevButton = document.getElementById('prev-products');
+    const nextButton = document.getElementById('next-products');
+
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages;
+
+    prevButton.classList.toggle('opacity-50', currentPage === 1);
+    nextButton.classList.toggle('opacity-50', currentPage === totalPages);
 }
 
 function loadFeaturedProducts() {
@@ -62,11 +95,12 @@ function loadFeaturedProducts() {
             <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
                 <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
+                <p class="text-sm text-gray-600 mb-2">${product.description}</p>
                 <p class="text-sm text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
                 ${discount > 0 ? `<p class="text-sm text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
-                <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
-                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
-                        onclick="addToCart(${product.id})"
+                <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock'  : 'Agotado'}</p>
+                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full hover:bg-accent transition duration-300 w-full text-sm ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
+                        onclick="addToCart(${product.id})" 
                         ${product.stock === 0 ? 'disabled' : ''}>
                     ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
                 </button>
@@ -76,313 +110,211 @@ function loadFeaturedProducts() {
     });
 }
 
-function handleProductFilters() {
-    const filterButtons = document.querySelectorAll('#category-filters button');
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.getAttribute('data-category');
-            loadProducts(category);
-            
-            filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
-            filterButtons.forEach(btn => btn.classList.add('bg-secondary', 'text-dark'));
-            button.classList.remove('bg-secondary', 'text-dark');
-            button.classList.add('bg-primary', 'text-white');
-        });
-    });
-}
-
-function handleSearch() {
-    const searchInput = document.getElementById('search-input');
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const filteredProducts = products.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) || 
-                product.category.toLowerCase().includes(searchTerm)
-            );
-            displaySearchResults(filteredProducts);
-        });
-    }
-}
-
-function displaySearchResults(filteredProducts) {
-    const productGrid = document.getElementById('product-grid');
-    if (!productGrid) return;
-
-    productGrid.innerHTML = '';
-
-    if (filteredProducts.length === 0) {
-        productGrid.innerHTML = '<p class="text-center text-gray-500">No se encontraron productos.</p>';
-        return;
-    }
-
-    filteredProducts.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-        
-        const discount = Math.random() < 0.3 ? Math.floor(Math.random() * 30) + 10 : 0;
-        const discountedPrice = product.price * (1 - discount / 100);
-        
-        productElement.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                <p class="text-dark ${discount > 0 ? 'line-through' : ''}">${product.price.toFixed(2)}€</p>
-                ${discount > 0 ? `<p class="text-accent font-bold">${discountedPrice.toFixed(2)}€ (-${discount}%)</p>` : ''}
-                <p class="text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}">${product.stock > 0 ? 'En stock' : 'Agotado'}</p>
-                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}" 
-                        onclick="addToCart(${product.id})"
-                        ${product.stock === 0 ? 'disabled' : ''}>
-                    ${product.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
-                </button>
-            </div>
-        `;
-        productGrid.appendChild(productElement);
-    });
-}
-
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
-    if (!product || product.stock === 0) return;
-
-    const existingItem = cart.find(item => item.id === productId);
-
-    if (existingItem) {
-        if (existingItem.quantity < product.stock) {
-            existingItem.quantity += 1;
+    if (product && product.stock > 0) {
+        const existingItem = cart.find(item => item.id === productId);
+        if (existingItem) {
+            existingItem.quantity++;
         } else {
-            showNotification('No hay más stock disponible para este producto');
-            return;
+            cart.push({ ...product, quantity: 1 });
         }
-    } else {
-        cart.push({ ...product, quantity: 1 });
+        product.stock--;
+        updateCartCount();
+        updateCartModal();
     }
+}
 
-    product.stock -= 1;
-    updateCartCount();
-    showNotification('Producto agregado al carrito');
-    loadProducts(); // Actualizar la visualización de los productos
+function removeFromCart(productId) {
+    const index = cart.findIndex(item => item.id === productId);
+    if (index !== -1) {
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            product.stock += cart[index].quantity;
+        }
+        cart.splice(index, 1);
+        updateCartCount();
+        updateCartModal();
+    }
 }
 
 function updateCartCount() {
     const cartCount = document.getElementById('cart-count');
-    if (!cartCount) return;
-
-    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = totalItems;
 }
 
-function showCart() {
-    const cartModal = document.getElementById('cart-modal');
+function updateCartModal() {
     const cartItems = document.getElementById('cart-items');
     const cartTotal = document.getElementById('cart-total');
-
-    if (!cartModal || !cartItems || !cartTotal) return;
-
+    
     cartItems.innerHTML = '';
     let total = 0;
 
     cart.forEach(item => {
         const itemElement = document.createElement('div');
-        itemElement.className = 'flex justify-between items-center mb-2 pb-2 border-b';
+        itemElement.className = 'flex justify-between items-center mb-2';
         itemElement.innerHTML = `
-            <div>
-                <h4 class="font-semibold">${item.name}</h4>
-                <p class="text-sm">Cantidad: ${item.quantity}</p>
-                <p class="text-sm">Precio: ${item.price.toFixed(2)}€</p>
-            </div>
-            <div>
-                <p class="font-semibold">${(item.price * item.quantity).toFixed(2)}€</p>
-                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">Eliminar</button>
-            </div>
+            <span>${item.name} x${item.quantity}</span>
+            <span>${(item.price * item.quantity).toFixed(2)}€</span>
+            <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">
+                <i class="fas fa-trash"></i>
+            </button>
         `;
         cartItems.appendChild(itemElement);
         total += item.price * item.quantity;
     });
 
     cartTotal.textContent = `${total.toFixed(2)}€`;
-    cartModal.classList.remove('hidden');
 
-    createMercadoPagoButton(total);
+    // Actualizar el botón de MercadoPago
+    updateMercadoPagoButton(total);
 }
 
-function hideCart() {
-    const cartModal = document.getElementById('cart-modal');
-    if (!cartModal) return;
+function updateMercadoPagoButton(total) {
+    const mpButtonContainer = document.getElementById('mercadopago-button-container');
+    mpButtonContainer.innerHTML = ''; // Limpiar el contenedor
 
-    cartModal.classList.add('hidden');
-}
-
-function removeFromCart(productId) {
-    const itemIndex = cart.findIndex(item => item.id === productId);
-    if (itemIndex > -1) {
-        const item = cart[itemIndex];
-        const product = products.find(p => p.id === productId);
-        if (product) {
-            product.stock += item.quantity;
-        }
-        cart.splice(itemIndex, 1);
-    }
-    updateCartCount();
-    showCart();
-    showNotification('Producto eliminado del carrito');
-    loadProducts(); // Actualizar la visualización de los productos
-}
-
-async function createMercadoPagoButton(total) {
-    const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
-    
-    const buttonContainer = document.getElementById('mercadopago-button-container');
-    buttonContainer.innerHTML = ''; // Limpiar el contenedor antes de crear un nuevo botón
-
-    try {
-        const response = await fetch('/.netlify/functions/create-preference', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                items: cart.map(item => ({
-                    title: item.name,
-                    quantity: item.quantity,
-                    currency_id: 'ARS',
-                    unit_price: item.price
-                }))
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Error al crear la preferencia de MercadoPago');
-        }
-
-        const preference = await response.json();
-
-        mp.checkout({
+    if (total > 0) {
+        const mp = new MercadoPago(MERCADOPAGO_PUBLIC_KEY);
+        const checkout = mp.checkout({
             preference: {
-                id: preference.id
+                items: [
+                    {
+                        title: 'Compra en Mon Amour Textil',
+                        quantity: 1,
+                        currency_id: 'ARS',
+                        unit_price: total
+                    }
+                ]
             },
             render: {
                 container: '#mercadopago-button-container',
-                label: 'Pagar con Mercado Pago'
+                label: 'Pagar con MercadoPago'
             }
         });
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un error al procesar su pago. Por favor, inténtelo de nuevo.');
     }
-}
-
-function animateTopBanner() {
-    const topBanner = document.getElementById('top-banner');
-    if (!topBanner) return;
-
-    const slides = topBanner.querySelectorAll('.top-banner-slide');
-    let currentSlide = 0;
-
-    setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }, 5000);
-}
-
-function initCarousels() {
-    const heroCarousel = document.getElementById('hero');
-    const adCarousel = document.getElementById('ad-carousel');
-
-    if (heroCarousel) {
-        const heroImages = [
-            'img/hero1.png',
-            'img/hero2.png',
-            'img/hero3.png'
-        ];
-
-        let currentHeroSlide = 0;
-
-        setInterval(() => {
-            heroCarousel.style.opacity = '0';
-            setTimeout(() => {
-                currentHeroSlide = (currentHeroSlide + 1) % heroImages.length;
-                heroCarousel.style.backgroundImage = `url('${heroImages[currentHeroSlide]}')`;
-                heroCarousel.style.opacity = '1';
-            }, 500);
-        }, 5000);
-    }
-
-    if (adCarousel) {
-        const adImages = [
-            'https://via.placeholder.com/1200x400?text=Oferta+Especial',
-            'https://via.placeholder.com/1200x400?text=Nueva+Colección',
-            'https://via.placeholder.com/1200x400?text=Descuentos+de+Temporada'
-        ];
-
-        adImages.forEach((src, index) => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = `Ad ${index + 1}`;
-            img.className = `w-full h-full object-cover carousel-item ${index === 0 ? 'active' : ''}`;
-            adCarousel.appendChild(img);
-        });
-
-        const adSlides = adCarousel.querySelectorAll('.carousel-item');
-        let currentAdSlide = 0;
-
-        setInterval(() => {
-            adSlides[currentAdSlide].classList.remove('active');
-            currentAdSlide = (currentAdSlide + 1) % adSlides.length;
-            adSlides[currentAdSlide].classList.add('active');
-        }, 5000);
-    }
-}
-
-function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.textContent = message;
-    notification.className = 'fixed bottom-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full opacity-0 transition-opacity duration-300';
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.classList.remove('opacity-0');
-    }, 100);
-
-    setTimeout(() => {
-        notification.classList.add('opacity-0');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
     loadFeaturedProducts();
-    handleProductFilters();
-    handleSearch();
-    animateTopBanner();
-    initCarousels();
 
-    const cartButton = document.getElementById('cart-button');
-    const closeCartButton = document.getElementById('close-cart');
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (cartButton) {
-        cartButton.addEventListener('click', showCart);
-    }
-
-    if (closeCartButton) {
-        closeCartButton.addEventListener('click', hideCart);
-    }
-
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+    const categoryFilters = document.getElementById('category-filters');
+    if (categoryFilters) {
+        categoryFilters.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const category = e.target.getAttribute('data-category');
+                currentPage = 1;
+                loadProducts(category, currentPage);
+            }
         });
     }
 
+    const prevButton = document.getElementById('prev-products');
+    const nextButton = document.getElementById('next-products');
+
+    if (prevButton && nextButton) {
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                loadProducts('all', currentPage);
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            const totalProducts = products.length;
+            const totalPages = Math.ceil(totalProducts / productsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                loadProducts('all', currentPage);
+            }
+        });
+    }
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            currentPage = 1;
+            loadProducts('all', currentPage, filteredProducts);
+        });
+    }
+
+    const cartButton = document.getElementById('cart-button');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCartButton = document.getElementById('close-cart');
+
+    if (cartButton && cartModal && closeCartButton) {
+        cartButton.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+            updateCartModal();
+        });
+
+        closeCartButton.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+        });
+
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.add('hidden');
+            }
+        });
+    }
+
+    // Carrusel de imágenes del hero
+    const heroSection = document.getElementById('hero');
+    const heroImages = [
+        'https://via.placeholder.com/1200x600?text=Imagen+Hero+1',
+        'https://via.placeholder.com/1200x600?text=Imagen+Hero+2',
+        'https://via.placeholder.com/1200x600?text=Imagen+Hero+3'
+    ];
+    let currentHeroImage = 0;
+
+    function changeHeroImage() {
+        heroSection.style.backgroundImage = `url('${heroImages[currentHeroImage]}')`;
+        currentHeroImage = (currentHeroImage + 1) % heroImages.length;
+    }
+
+    changeHeroImage(); // Establecer la primera imagen
+    setInterval(changeHeroImage, 5000); // Cambiar la imagen cada 5 segundos
+
+    // Carrusel de anuncios
+    const adCarousel = document.getElementById('ad-carousel');
+    const adImages = [
+        'https://via.placeholder.com/800x400?text=Anuncio+1',
+        'https://via.placeholder.com/800x400?text=Anuncio+2',
+        'https://via.placeholder.com/800x400?text=Anuncio+3'
+    ];
+    let currentAdImage = 0;
+
+    function changeAdImage() {
+        adCarousel.style.backgroundImage = `url('${adImages[currentAdImage]}')`;
+        currentAdImage = (currentAdImage + 1) % adImages.length;
+    }
+
+    changeAdImage(); // Establecer el primer anuncio
+    setInterval(changeAdImage, 7000); // Cambiar el anuncio cada 7 segundos
+
+    // Banner superior rotativo
+    const topBannerSlides = document.querySelectorAll('.top-banner-slide');
+    let currentBannerSlide = 0;
+
+    function rotateBanner() {
+        topBannerSlides[currentBannerSlide].classList.remove('active');
+        currentBannerSlide = (currentBannerSlide + 1) % topBannerSlides.length;
+        topBannerSlides[currentBannerSlide].classList.add('active');
+    }
+
+    setInterval(rotateBanner, 5000); // Rotar el banner cada 5 segundos
+
     // Animación de elementos al hacer scroll
     const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -394,4 +326,14 @@ document.addEventListener('DOMContentLoaded', () => {
     animateOnScrollElements.forEach(element => {
         observer.observe(element);
     });
+
+    // Menú móvil
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
 });

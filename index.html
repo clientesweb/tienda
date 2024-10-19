@@ -74,15 +74,10 @@
         }
         .carousel-item {
             display: none;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
         }
         .carousel-item.active {
             display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
         .slide-in {
             animation: slideIn 0.5s ease-out;
@@ -131,7 +126,6 @@
         }
         .top-banner-slide.active {
             display: block;
-            animation: fadeIn 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -224,6 +218,10 @@
                         <!-- Los productos se cargarán dinámicamente aquí -->
                     </div>
                 </div>
+                <div class="flex justify-center mt-4 space-x-2">
+                    <button id="prev-products" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300">&lt; Anterior</button>
+                    <button id="next-products" class="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300">Siguiente &gt;</button>
+                </div>
             </div>
         </section>
 
@@ -244,14 +242,14 @@
                         <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                     </div>
                     <div class="mb-4">
-                        <label for="email" class="block text-dark  font-bold mb-2">Email</label>
+                        <label for="email"   class="block text-dark font-bold mb-2">Email</label>
                         <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required>
                     </div>
                     <div class="mb-4">
-                        <label  for="message" class="block text-dark font-bold mb-2">Mensaje</label>
+                        <label for="message" class="block text-dark font-bold mb-2">Mensaje</label>
                         <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
                     </div>
-                    <button type="submit" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold  hover:bg-accent transition duration-300 w-full">Enviar Mensaje</button>
+                    <button type="submit" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-accent transition duration-300 w-full">Enviar Mensaje</button>
                 </form>
             </div>
         </section>

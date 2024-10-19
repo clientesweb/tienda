@@ -279,7 +279,7 @@ async function sendOrderInfo(event) {
 
     try {
         // Enviar datos a Formspree
-        const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT', {
+        const response = await fetch('https://formspree.io/f/myzyyrpe', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

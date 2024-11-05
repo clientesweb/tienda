@@ -33,8 +33,10 @@ exports.handler = async function(event, context) {
     const validItem = item => 
       item.title && 
       typeof item.quantity === 'number' && 
+      item.quantity > 0 &&
       item.currency_id && 
-      typeof item.unit_price === 'number';
+      typeof item.unit_price === 'number' &&
+      item.unit_price > 0;
 
     if (!items.every(validItem)) {
       return {
@@ -67,7 +69,10 @@ exports.handler = async function(event, context) {
           failure: `${process.env.URL}/failure`,
           pending: `${process.env.URL}/pending`
         },
-        auto_return: "approved"
+        auto_return: "approved",
+        external_reference: `order_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+        expires: true,
+        expiration_date_to: new Date(Date.now() + 30 * 60 * 1000).toISOString()
       })
     });
 
@@ -86,7 +91,7 @@ exports.handler = async function(event, context) {
     return {
       statusCode: 200,
       headers: {
-        'Access-Control-Allow-Origin': '*', // Reemplaza '*' con tu dominio en producción
+        'Access-Control-Allow-Origin': 'https://magenta-lolly-353b43.netlify.app',
         'Access-Control-Allow-Headers': 'Content-Type',
       },
       body: JSON.stringify(data)

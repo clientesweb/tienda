@@ -1,6 +1,7 @@
 [build]
-  publish = "."
-  command = "# No build command"
+  functions = "functions"
 
-[functions]
-  directory = "netlify/functions"
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

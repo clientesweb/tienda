@@ -108,7 +108,9 @@ function handleProductFilters() {
             filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
             filterButtons.forEach(btn => btn.classList.add('bg-secondary', 'text-dark'));
             button.classList.remove('bg-secondary', 'text-dark');
-            button.classList.add('bg-primary', 'text-white');
+            button.classList.add('bg-primary', 
+
+ 'text-white');
         });
     });
 }
@@ -254,6 +256,11 @@ function showNotification(message) {
 async function sendOrderInfo(event) {
     event.preventDefault();
 
+    if (!navigator.onLine) {
+        alert('Parece que no tienes conexión a internet. Por favor, verifica tu conexión e intenta nuevamente.');
+        return;
+    }
+
     const customerName = document.getElementById('customer-name').value;
     const customerEmail = document.getElementById('customer-email').value;
     const customerPhone = document.getElementById('customer-phone').value;
@@ -276,6 +283,10 @@ async function sendOrderInfo(event) {
         })),
         total: cart.reduce((total, item) => total + item.price * item.quantity, 0)
     };
+
+    const submitButton = document.getElementById('submit-order');
+    submitButton.textContent = 'Procesando...';
+    submitButton.disabled = true;
 
     try {
         // Enviar datos a Formspree
@@ -306,17 +317,38 @@ async function sendOrderInfo(event) {
 
             if (mercadoPagoResponse.ok) {
                 const preference = await mercadoPagoResponse.json();
-                // Redirigir al usuario al Checkout Pro de MercadoPago
-                window.location.href = preference.init_point;
+                if (preference && preference.init_point) {
+                    // Limpiar el carrito
+                    cart = [];
+                    updateCartCount();
+                    // Redirigir al usuario al Checkout Pro de MercadoPago
+                    window.location.href = preference.init_point;
+                } else {
+                    throw new Error('La respuesta de MercadoPago no contiene un punto de inicio válido');
+                }
             } else {
-                throw new Error('Error al crear la preferencia de MercadoPago');
+                const errorData = await mercadoPagoResponse.json();
+                throw new Error(`Error al crear la preferencia de MercadoPago: ${errorData.message || 'Error desconocido'}`);
             }
         } else {
-            throw new Error('Error al enviar el formulario');
+            if (response.status === 422) {
+                throw new Error('Datos del formulario inválidos');
+            } else {
+                throw new Error(`Error en Formspree: ${response.status}`);
+            }
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un error al procesar su pedido. Por favor, inténtelo de nuevo.');
+        console.error('Error detallado:', error);
+        if (error.message.includes('MercadoPago')) {
+            alert('Hubo un error al procesar el pago con MercadoPago. Por favor, inténtelo de nuevo.');
+        } else if (error.message.includes('formulario')) {
+            alert('Hubo un error al enviar la información del pedido. Por favor, verifique sus datos e inténtelo de nuevo.');
+        } else {
+            alert('Ocurrió un error inesperado. Por favor, inténtelo de nuevo más tarde.');
+        }
+    } finally {
+        submitButton.textContent = 'Enviar Pedido';
+        submitButton.disabled = false;
     }
 }
 

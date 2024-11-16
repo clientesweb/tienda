@@ -1,7 +1,23 @@
 {
-  "name": "tienda",
+  "name": "mi-tienda-online",
   "version": "1.0.0",
+  "description": "Tienda online con integración de MercadoPago",
+  "main": "index.js",
+  "scripts": {
+    "start": "netlify dev",
+    "build": "netlify build"
+  },
+  "keywords": [
+    "ecommerce",
+    "mercadopago",
+    "netlify"
+  ],
+  "author": "Tu Nombre",
+  "license": "ISC",
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "mercadopago": "^1.5.14"
+  },
+  "devDependencies": {
+    "netlify-cli": "^12.0.11"
   }
 }

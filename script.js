@@ -245,7 +245,7 @@ async function createPreference() {
 async function handleCheckout(formData) {
     try {
         // Enviar datos del formulario
-        const response = await fetch('/ruta-a-tu-endpoint-de-formulario', {
+        const response = await fetch('https://formspree.io/f/mvgorzwo', {
             method: 'POST',
             body: formData
         });

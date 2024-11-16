@@ -185,28 +185,6 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function createWhatsAppMessage(formData) {
-    let message = "🛒 *Nuevo Pedido - Mon Amour Textil*\n\n";
-    message += "*Datos del Cliente:*\n";
-    message += `- Nombre: ${formData.get('nombre')} ${formData.get('apellido')}\n`;
-    message += `- Email: ${formData.get('email')}\n`;
-    message += `- Teléfono: ${formData.get('telefono')}\n`;
-    message += `- Método de envío: ${formData.get('envio')}\n`;
-    message += `- Método de pago: ${formData.get('pago')}\n\n`;
-    
-    message += "*Productos:*\n";
-    cart.forEach(item => {
-        message += `- ${item.name}\n`;
-        message += `  Cantidad: ${item.quantity}\n`;
-        message += `  Precio: ${formatPrice(item.price)}\n`;
-        message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
-    });
-    
-    message += `*Total: ${formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0))}*`;
-    
-    return encodeURIComponent(message);
-}
-
 function updateAdvertisingBanner() {
     const advertisingBanner = document.getElementById('advertisingBanner');
     const advertisingMessage = document.getElementById('advertisingMessage');
@@ -226,6 +204,38 @@ function updateAdvertisingBanner() {
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
+}
+
+// MercadoPago integration
+async function initMercadoPago() {
+    const mp = new MercadoPago('YOUR_PUBLIC_KEY');
+
+    const bricksBuilder = mp.bricks();
+
+    await bricksBuilder.create("wallet", "mercadopago-button-container", {
+        initialization: {
+            preferenceId: await createPreference(),
+        },
+    });
+}
+
+async function createPreference() {
+    const response = await fetch('/.netlify/functions/createPreference', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            items: cart.map(item => ({
+                title: item.name,
+                unit_price: item.price,
+                quantity: item.quantity,
+            })),
+        }),
+    });
+
+    const preference = await response.json();
+    return preference.id;
 }
 
 // Event Listeners
@@ -264,15 +274,30 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const formData = new FormData(this);
-        const whatsappMessage = createWhatsAppMessage(formData);
-        window.open(`https://wa.me/5493534786106?text=${whatsappMessage}`, '_blank');
-        document.getElementById('checkoutModal').classList.add('hidden');
-        document.getElementById('cartModal').classList.add('hidden');
-        cart = [];
-        updateCartUI();
+        formData.append('cart', JSON.stringify(cart));
+        
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                // Initialize MercadoPago checkout
+                await initMercadoPago();
+            } else {
+                throw new Error('Error en el envío del formulario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.');
+        }
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {

@@ -208,7 +208,7 @@ async function initMercadoPago() {
         const bricksBuilder = mp.bricks();
         
         console.log('Creating Brick...');
-        await bricksBuilder.create("wallet", "mercadopago-button-container", {
+        const renderComponent = await bricksBuilder.create("wallet", "mercadopago-button-container", {
             initialization: {
                 preferenceId: preference.id,
             },
@@ -220,34 +220,12 @@ async function initMercadoPago() {
                 onReady: () => {
                     console.log("MercadoPago Brick ready");
                     console.log("MercadoPago button should be visible now");
-                },
-                onSubmit: (formData) => {
-                    console.log('Payment submitted:', formData);
-                    return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(formData)
-                        })
-                        .then((response) => response.json())
-                        .then((result) => {
-                            if (result.status === "approved") {
-                                resolve();
-                            } else {
-                                reject();
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error processing payment:', error);
-                            reject();
-                        });
-                    });
+                    document.getElementById('mercadopago-button-container').style.display = 'block';
                 }
             },
         });
         console.log('Brick created successfully');
+        console.log('Render component:', renderComponent);
     } catch (error) {
         console.error('Error initializing MercadoPago:', error);
         alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
@@ -305,12 +283,14 @@ document.getElementById('checkoutForm').addEventListener('submit', async functio
             const mpContainer = document.getElementById('mercadopago-button-container');
             mpContainer.innerHTML = '';
             
+            // Show the MercadoPago container
+            mpContainer.style.display = 'block';
+            
             // Initialize MercadoPago checkout
             await initMercadoPago();
             
-            // Hide the form and show the MercadoPago button
+            // Hide the form
             this.style.display = 'none';
-            mpContainer.style.display = 'block';
         } else {
             const errorData = await response.json();
             throw new Error(errorData.error || 'Error en el envío del formulario');

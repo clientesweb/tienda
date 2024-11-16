@@ -177,9 +177,10 @@
 </head>
 <body class="flex min-h-screen flex-col">
 <!-- Preloader -->
-<div id="preloader">
+<div id="preloader" style="display: none;">
  <div class="loader"></div>
 </div>
+<script>document.getElementById('preloader').style.display = 'flex';</script>
 
 <!-- Top Banner -->
 <div id="topBanner" class="gradient-bg p-2 text-center text-white relative">

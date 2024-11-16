@@ -1,3 +1,10 @@
+function hidePreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.display = 'none';
+    }
+}
+
 // Carrito de compras
 let cart = [];
 
@@ -77,6 +84,7 @@ function displayProducts() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
+    hidePreloader();
     displayProducts();
     updateCartUI();
 
@@ -302,3 +310,7 @@ document.getElementById('checkoutForm').addEventListener('submit', async functio
 });
 
 console.log("Script loaded successfully!");
+
+window.addEventListener('load', () => {
+    setTimeout(hidePreloader, 1000);
+});

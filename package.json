@@ -2,7 +2,7 @@
   "name": "mi-tienda-online",
   "version": "1.0.0",
   "description": "Tienda online con integración de MercadoPago",
-  "main": "index.html",
+  "main": "/",
   "scripts": {
     "start": "netlify dev",
     "build": "netlify build"

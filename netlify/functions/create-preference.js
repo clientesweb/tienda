@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 
 export const handler = async (event, context) => {
-  // Ensure the request method is POST
   if (event.httpMethod !== 'POST') {
     return { 
       statusCode: 405, 
@@ -50,7 +49,10 @@ export const handler = async (event, context) => {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('MercadoPago API error:', errorData);
-      throw new Error('Error from MercadoPago API');
+      return {
+        statusCode: response.status,
+        body: JSON.stringify({ error: 'Error from MercadoPago API', details: errorData })
+      };
     }
 
     const data = await response.json();
@@ -63,7 +65,7 @@ export const handler = async (event, context) => {
     console.error('Error creating preference:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error creating preference' })
+      body: JSON.stringify({ error: 'Error creating preference', details: error.message })
     };
   }
 };

@@ -1,237 +1,217 @@
-function hidePreloader() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.style.display = 'none';
-    }
-}
+// Data
+const products = {
+    velas: [
+        { id: 1, name: "Vela Aromática Lavanda", price: 2500, image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Vela aromática de lavanda para relajación." },
+        { id: 2, name: "Vela de Soja Vainilla", price: 2800, image: "https://images.unsplash.com/photo-1602178856955-35a35ca588b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Vela de soja con aroma a vainilla." },
+        { id: 3, name: "Set de Velas Decorativas", price: 3500, image: "https://images.unsplash.com/photo-1636103775596-3a519c4da522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Set de velas decorativas para el hogar." },
+    ],
+    aromas: [
+        { id: 4, name: "Difusor de Aromas Floral", price: 3200, image: "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Difusor de aromas con esencia floral." },
+        { id: 5, name: "Aceite Esencial de Eucalipto", price: 1800, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Aceite esencial de eucalipto puro." },
+        { id: 6, name: "Spray Ambiental Cítrico", price: 1500, image: "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Spray ambiental con aroma cítrico refrescante." },
+    ],
+    textiles: [
+        { id: 7, name: "Manta de Algodón", price: 4500, image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Manta suave de algodón para sofá." },
+        { id: 8, name: "Cojín Decorativo", price: 2200, image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Cojín decorativo con diseño moderno." },
+        { id: 9, name: "Cortinas de Lino", price: 6800, image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Cortinas de lino elegantes para sala." },
+    ],
+    ceramica: [
+        { id: 10, name: "Juego de Tazas", price: 3800, image: "https://images.unsplash.com/photo-1614702799409-de3c4343e65b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Juego de tazas de cerámica artesanal." },
+        { id: 11, name: "Florero de Cerámica", price: 2900, image: "https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Florero de cerámica con diseño único." },
+        { id: 12, name: "Plato Decorativo", price: 2500, image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Plato decorativo de cerámica pintada a mano." },
+    ],
+};
 
-// Carrito de compras
-let cart = [];
-
-// Productos
-const products = [
-    { id: 1, name: "Vela Aromática Lavanda", price: 1500, category: "velas", image: "vela-lavanda.jpg" },
-    { id: 2, name: "Difusor de Aromas Vainilla", price: 2000, category: "aromas", image: "difusor-vainilla.jpg" },
-    { id: 3, name: "Almohadón Decorativo", price: 2500, category: "textiles", image: "almohadon-decorativo.jpg" },
-    { id: 4, name: "Taza de Cerámica Artesanal", price: 1800, category: "ceramica", image: "taza-ceramica.jpg" },
-    // Agrega más productos aquí
+const bannerMessages = [
+    "¡Nueva colección de textiles disponible!",
+    "Envíos gratis en compras superiores a $10000",
+    "¡Ofertas especiales en velas aromáticas!"
 ];
 
-// Función para agregar producto al carrito
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        const existingItem = cart.find(item => item.id === productId);
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ ...product, quantity: 1 });
-        }
-        updateCartUI();
+const heroImages = [
+    "img/hero1.jpg",
+    "img/hero2.jpg",
+    "img/hero3.jpg"
+];
+
+// State
+let cart = [];
+let currentBanner = 0;
+let currentHeroImage = 0;
+
+// DOM Elements
+const bannerMessageEl = document.getElementById('bannerMessage');
+const cartItemCountEl = document.getElementById('cartItemCount');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const heroEl = document.getElementById('hero');
+const productContainers = {
+    velas: document.getElementById('velasContainer'),
+    aromas: document.getElementById('aromasContainer'),
+    textiles: document.getElementById('textilesContainer'),
+    ceramica: document.getElementById('ceramicaContainer'),
+};
+
+// Functions
+function updateBanner() {
+    bannerMessageEl.textContent = bannerMessages[currentBanner];
+    currentBanner = (currentBanner + 1) % bannerMessages.length;
+}
+
+function updateHero() {
+    heroEl.style.backgroundImage = `url('${heroImages[currentHeroImage]}')`;
+    heroEl.style.backgroundSize = 'cover';
+    heroEl.style.backgroundPosition = 'center';
+    currentHeroImage = (currentHeroImage + 1) % heroImages.length;
+}
+
+function renderProducts() {
+    for (const [category, productList] of Object.entries(products)) {
+        productContainers[category].innerHTML = productList.map(product => `
+            <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4">
+                    <div class="relative mb-4 aspect-square">
+                        <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+                    </div>
+                    <h3 class="text-sm font-medium line-clamp-2">${product.name}</h3>
+                    <p class="mt-2 text-lg font-bold">$${product.price.toLocaleString()}</p>
+                    <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                        Ver detalles
+                    </button>
+                </div>
+            </div>
+        `).join('');
     }
 }
 
-// Función para actualizar la UI del carrito
-function updateCartUI() {
-    const cartItemCount = document.getElementById('cartItemCount');
-    const cartItems = document.getElementById('cartItems');
-    const cartTotal = document.getElementById('cartTotal');
-
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartItemCount.textContent = totalItems;
-    cartItemCount.classList.toggle('hidden', totalItems === 0);
-
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'flex justify-between items-center';
-        itemElement.innerHTML = `
-            <span>${item.name} x${item.quantity}</span>
-            <span>$${item.price * item.quantity}</span>
-        `;
-        cartItems.appendChild(itemElement);
-        total += item.price * item.quantity;
-    });
-
-    cartTotal.textContent = total;
+function scrollProducts(category, amount) {
+    productContainers[category].scrollBy({ left: amount, behavior: 'smooth' });
 }
 
-// Función para mostrar productos
-function displayProducts() {
-    const containers = {
-        velas: document.getElementById('velasContainer'),
-        aromas: document.getElementById('aromasContainer'),
-        textiles: document.getElementById('textilesContainer'),
-        ceramica: document.getElementById('ceramicaContainer')
-    };
+function openProductModal(productId, category) {
+    const product = products[category].find(p => p.id === productId);
+    if (!product) return;
 
-    products.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'product-card bg-white p-4 rounded-lg shadow-md flex flex-col';
-        productElement.innerHTML = `
-            <img src="img/${product.image}" alt="${product.name}" class="w-full h-48 object-cover mb-4 rounded">
-            <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-            <p class="text-gray-600 mb-4">$${product.price}</p>
-            <button onclick="addToCart(${product.id})" class="mt-auto bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+    const modalTitle = document.getElementById('productModalTitle');
+    const modalContent = document.getElementById('productModalContent');
+
+    modalTitle.textContent = product.name;
+    modalContent.innerHTML = `
+        <div class="grid gap-4 py-4">
+            <div class="relative h-64 w-full">
+                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+            </div>
+            <p class="text-gray-600">${product.description}</p>
+            <p class="text-lg font-bold">$${product.price.toLocaleString()}</p>
+            <div class="flex items-center justify-between">
+                <label for="quantity" class="text-sm font-medium">Cantidad:</label>
+                <div class="flex items-center">
+                    <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
+                    <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
+                    <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                </div>
+            </div>
+            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
                 Agregar al carrito
             </button>
-        `;
-        containers[product.category].appendChild(productElement);
-    });
+        </div>
+    `;
+
+    document.getElementById('productModal').classList.remove('hidden');
 }
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', () => {
-    hidePreloader();
-    displayProducts();
+function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+}
+
+function updateQuantity(change) {
+    const quantityInput = document.getElementById('quantity');
+    let newQuantity = parseInt(quantityInput.value) + change;
+    if (newQuantity < 1) newQuantity = 1;
+    quantityInput.value = newQuantity;
+}
+
+function addToCart(productId, category) {
+    const product = products[category].find(p => p.id === productId);
+    if (!product) return;
+
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const existingItem = cart.find(item => item.id === product.id);
+
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({ ...product, quantity });
+    }
+
     updateCartUI();
+    closeProductModal();
+}
 
-    // Mostrar/ocultar carrito
-    const cartButton = document.getElementById('cartButton');
-    const cartModal = document.getElementById('cartModal');
-    const closeCart = document.getElementById('closeCart');
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartUI();
+}
 
-    cartButton.addEventListener('click', () => cartModal.classList.toggle('hidden'));
-    closeCart.addEventListener('click', () => cartModal.classList.add('hidden'));
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    // Mostrar/ocultar menú móvil
-    const mobileMenuButton = document.getElementById('mobileMenuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMobileMenu = document.getElementById('closeMobileMenu');
+    cartItemCountEl.textContent = totalItems;
+    cartItemCountEl.classList.toggle('hidden', totalItems === 0);
 
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-        mobileMenuButton.querySelector('i').classList.toggle('open');
-    });
-    closeMobileMenu.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        mobileMenuButton.querySelector('i').classList.remove('open');
-    });
+    cartItemsEl.innerHTML = cart.map(item => `
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+                <div>
+                    <p class="font-medium">${item.name}</p>
+                    <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
+                </div>
+            </div>
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})">
+                <i class="fas fa-trash h-4 w-4"></i>
+            </button>
+        </div>
+    `).join('');
 
-    // Checkout
-    const checkoutButton = document.getElementById('checkoutButton');
-    const checkoutModal = document.getElementById('checkoutModal');
-    const closeCheckoutModal = document.getElementById('closeCheckoutModal');
+    cartTotalEl.textContent = totalPrice.toLocaleString();
+}
 
-    checkoutButton.addEventListener('click', () => {
-        checkoutModal.classList.remove('hidden');
-        cartModal.classList.add('hidden');
-    });
-    closeCheckoutModal.addEventListener('click', () => checkoutModal.classList.add('hidden'));
+function formatPrice(price) {
+    return new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS'
+    }).format(price);
+}
 
-    // Banner rotativo
-    const bannerMessages = [
-        "¡Envío gratis en compras superiores a $10000!",
-        "¡20% de descuento en velas aromáticas!",
-        "¡Nueva colección de textiles disponible!"
-    ];
-    let currentBannerIndex = 0;
-    const bannerMessage = document.getElementById('bannerMessage');
-    const topBanner = document.getElementById('topBanner');
-    const closeBanner = document.getElementById('closeBanner');
-
-    function rotateBanner() {
-        bannerMessage.textContent = bannerMessages[currentBannerIndex];
-        currentBannerIndex = (currentBannerIndex + 1) % bannerMessages.length;
-    }
-
-    rotateBanner();
-    setInterval(rotateBanner, 5000);
-
-    closeBanner.addEventListener('click', () => topBanner.classList.add('hidden'));
-
-    // Hero banner rotativo
-    const heroImages = ['hero1.jpg', 'hero2.jpg', 'hero3.jpg'];
-    let currentHeroIndex = 0;
-    const heroElement = document.getElementById('hero');
-
-    function rotateHero() {
-        heroElement.style.backgroundImage = `url('img/${heroImages[currentHeroIndex]}')`;
-        currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
-    }
-
-    rotateHero();
-    setInterval(rotateHero, 5000);
-
-    // Mostrar/ocultar notificación de WhatsApp
-    const whatsappButton = document.getElementById('whatsappButton');
-    const whatsappNotification = document.getElementById('whatsappNotification');
-    const closeWhatsappNotification = document.getElementById('closeWhatsappNotification');
-
-    setTimeout(() => {
-        whatsappNotification.classList.remove('hidden');
-    }, 5000);
-
-    closeWhatsappNotification.addEventListener('click', () => {
-        whatsappNotification.classList.add('hidden');
-    });
-
-    whatsappButton.addEventListener('click', () => {
-        window.open('https://wa.me/5493534786106', '_blank');
-    });
-
-    // Animación del logo de WhatsApp
-    whatsappButton.addEventListener('mouseover', () => {
-        whatsappButton.querySelector('i').style.transform = 'scale(1.2)';
-    });
-
-    whatsappButton.addEventListener('mouseout', () => {
-        whatsappButton.querySelector('i').style.transform = 'scale(1)';
-    });
-
-    // Banner publicitario rotativo
-    const advertisingMessages = [
-        "¡Descubre nuestra nueva colección de verano!",
-        "¡Ofertas especiales en productos para el hogar!",
-        "¡Envío gratis en compras superiores a $15000!"
-    ];
-    let currentAdIndex = 0;
+function updateAdvertisingBanner() {
+    const advertisingBanner = document.getElementById('advertisingBanner');
     const advertisingMessage = document.getElementById('advertisingMessage');
+    const currentHour = new Date().getHours();
+    let message, backgroundImage;
 
-    function rotateAdvertising() {
-        advertisingMessage.textContent = advertisingMessages[currentAdIndex];
-        currentAdIndex = (currentAdIndex + 1) % advertisingMessages.length;
+    if (currentHour >= 6 && currentHour < 12) {
+        message = "¡Oferta matutina! 15% de descuento en todas las velas aromáticas";
+        backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+    } else if (currentHour >= 12 && currentHour < 18) {
+        message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
+        backgroundImage =
+            "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+    } else {
+        message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
+        backgroundImage =
+            "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
-    rotateAdvertising();
-    setInterval(rotateAdvertising, 7000);
-});
-
-// Función para desplazar productos
-function scrollProducts(category, direction) {
-    const container = document.getElementById(`${category}Container`);
-    container.scrollBy({ left: direction, behavior: 'smooth' });
+    advertisingMessage.textContent = message;
+    advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
 // MercadoPago integration
 async function initMercadoPago() {
     const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
     return mp.bricks();
-}
-    try {
-        const preference = await createPreference();
-        const bricksBuilder = mp.bricks();
-        
-        await bricksBuilder.create("wallet", "mercadopago-button-container", {
-            initialization: {
-                preferenceId: preference.id,
-            },
-            callbacks: {
-                onError: (error) => {
-                    console.error('Error in MercadoPago Brick:', error);
-                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
-                },
-                onReady: () => {
-                    console.log("MercadoPago Brick ready");
-                }
-            },
-        });
-    } catch (error) {
-        console.error('Error initializing MercadoPago:', error);
-        alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
-    }
 }
 
 async function createPreference() {
@@ -252,7 +232,6 @@ async function createPreference() {
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.error('Error creating preference:', errorData);
             throw new Error(errorData.error || 'Error creating preference');
         }
 
@@ -312,8 +291,75 @@ async function handleCheckout(formData) {
     }
 }
 
-console.log("Script loaded successfully!");
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('closeBanner').addEventListener('click', () => {
+        document.getElementById('topBanner').classList.add('hidden');
+    });
 
-window.addEventListener('load', () => {
-    setTimeout(hidePreloader, 1000);
+    document.getElementById('mobileMenuButton').addEventListener('click', () => {
+        const menuIcon = document.querySelector('.menu-icon');
+        menuIcon.classList.toggle('open');
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    document.getElementById('closeMobileMenu').addEventListener('click', () => {
+        const menuIcon = document.querySelector('.menu-icon');
+        menuIcon.classList.remove('open');
+        document.getElementById('mobileMenu').classList.add('hidden');
+    });
+
+    document.getElementById('cartButton').addEventListener('click', () => {
+        document.getElementById('cartModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeCart').addEventListener('click', () => {
+        document.getElementById('cartModal').classList.add('hidden');
+    });
+
+    document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
+
+    document.getElementById('whatsappButton').addEventListener('click', () => {
+        window.open('https://wa.me/5493534786106', '_blank');
+    });
+
+    document.getElementById('closeWhatsappNotification').addEventListener('click', () => {
+        document.getElementById('whatsappNotification').classList.add('hidden');
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.append('cart', JSON.stringify(cart));
+        await handleCheckout(formData);
+    });
+
+    document.getElementById('checkoutButton').addEventListener('click', function() {
+        document.getElementById('cartModal').classList.add('hidden');
+        document.getElementById('checkoutModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeCheckoutModal').addEventListener('click', function() {
+        document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    updateBanner();
+    setInterval(updateBanner, 5000);
+
+    updateHero();
+    setInterval(updateHero, 5000);
+
+    renderProducts();
+
+    updateAdvertisingBanner();
+    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+
+    setTimeout(() => {
+        document.getElementById('whatsappNotification').classList.remove('hidden');
+    }, 10000);
+
+    // Remove preloader
+    document.getElementById('preloader').style.display = 'none';
 });
+
+console.log("Script loaded successfully!");

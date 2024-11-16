@@ -1,40 +1,28 @@
-const fetch = require('node-fetch');
+async function createPreference() {
+    try {
+        const response = await fetch('/.netlify/functions/create-preference', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    title: item.name,
+                    unit_price: item.price,
+                    quantity: item.quantity,
+                })),
+            }),
+        });
 
-exports.handler = async function(event, context) {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error creating preference:', errorData);
+            throw new Error(errorData.error || 'Error creating preference');
+        }
 
-  const { items } = JSON.parse(event.body);
-
-  try {
-    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        items: items,
-        back_urls: {
-          success: `${process.env.URL}/success`,
-          failure: `${process.env.URL}/failure`,
-          pending: `${process.env.URL}/pending`
-        },
-        auto_return: "approved"
-      })
-    });
-
-    const data = await response.json();
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Error creating preference' })
-    };
-  }
-};
+        return await response.json();
+    } catch (error) {
+        console.error('Error in createPreference:', error);
+        throw error;
+    }
+}

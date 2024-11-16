@@ -227,7 +227,7 @@ async function initMercadoPago() {
 
 async function createPreference() {
     try {
-        const response = await fetch('netlify/functions/create-preference.js', {
+                    const mercadoPagoResponse = await fetch('/.netlify/functions/create-preference', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

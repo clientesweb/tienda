@@ -159,15 +159,19 @@
  #mercadopago-button-container {
      width: 100%;
      min-height: 48px;
+     display: none;
  }
 
  .mercadopago-button {
      width: 100% !important;
  }
 
- /* Asegurarse de que el modal de MercadoPago esté por encima de otros elementos */
  .mercadopago-modal {
      z-index: 9999 !important;
+ }
+
+ #checkoutModal {
+     z-index: 9998;
  }
 </style>
 </head>

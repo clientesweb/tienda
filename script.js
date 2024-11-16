@@ -196,12 +196,10 @@ function updateAdvertisingBanner() {
         backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage =
-            "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
         message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
-        backgroundImage =
-            "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
     advertisingMessage.textContent = message;
@@ -211,7 +209,29 @@ function updateAdvertisingBanner() {
 // MercadoPago integration
 async function initMercadoPago() {
     const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
-    return mp.bricks();
+
+    try {
+        const preference = await createPreference();
+        const bricksBuilder = mp.bricks();
+        
+        await bricksBuilder.create("wallet", "mercadopago-button-container", {
+            initialization: {
+                preferenceId: preference.id,
+            },
+            callbacks: {
+                onError: (error) => {
+                    console.error('Error in MercadoPago Brick:', error);
+                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
+                },
+                onReady: () => {
+                    console.log("MercadoPago Brick ready");
+                }
+            },
+        });
+    } catch (error) {
+        console.error('Error initializing MercadoPago:', error);
+        alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
+    }
 }
 
 async function createPreference() {
@@ -232,6 +252,7 @@ async function createPreference() {
 
         if (!response.ok) {
             const errorData = await response.json();
+            console.error('Error creating preference:', errorData);
             throw new Error(errorData.error || 'Error creating preference');
         }
 
@@ -239,55 +260,6 @@ async function createPreference() {
     } catch (error) {
         console.error('Error in createPreference:', error);
         throw error;
-    }
-}
-
-async function handleCheckout(formData) {
-    try {
-        // Enviar datos del formulario
-        const response = await fetch('https://formspree.io/f/mvgorzwo', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!response.ok) {
-            throw new Error('Error al enviar el formulario');
-        }
-
-        // Crear preferencia de pago
-        const preference = await createPreference();
-
-        // Inicializar MercadoPago
-        const bricksBuilder = await initMercadoPago();
-
-        // Limpiar el contenedor del botón de MercadoPago
-        const mpContainer = document.getElementById('mercadopago-button-container');
-        mpContainer.innerHTML = '';
-
-        // Crear el botón de pago
-        await bricksBuilder.create("wallet", "mercadopago-button-container", {
-            initialization: {
-                preferenceId: preference.id,
-            },
-            callbacks: {
-                onError: (error) => {
-                    console.error('Error in MercadoPago Brick:', error);
-                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
-                },
-                onReady: () => {
-                    console.log("MercadoPago Brick ready");
-                    // Mostrar el contenedor de MercadoPago
-                    mpContainer.style.display = 'block';
-                }
-            },
-        });
-
-        // Ocultar el formulario
-        document.getElementById('checkoutForm').style.display = 'none';
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
     }
 }
 
@@ -331,7 +303,35 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const formData = new FormData(this);
         formData.append('cart', JSON.stringify(cart));
-        await handleCheckout(formData);
+        
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                // Clear the existing MercadoPago button container
+                const mpContainer = document.getElementById('mercadopago-button-container');
+                mpContainer.innerHTML = '';
+                
+                // Initialize MercadoPago checkout
+                await initMercadoPago();
+                
+                // Hide the form and show the MercadoPago button
+                this.style.display = 'none';
+                mpContainer.style.display = 'block';
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Error en el envío del formulario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
+        }
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {

@@ -1,427 +1,307 @@
-// Simulación de datos de productos
-const products = [
-    // Velas (12 productos)
-    { id: 1, name: 'Vitrè cera de soja aromatizada', price: 10700, image: 'img/velas1.png', category: 'velas', featured: true, description: 'Envase de vidrio reutilizable - 100gr.', onSale: false, inStock: true },
-    { id: 2, name: 'Croques', price: 9800, image: 'img/velas2.png', category: 'velas', featured: true, description: 'Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada', onSale: false, inStock: true },
-    { id: 3, name: 'Dinan', price: 15600, image: 'img/velas3.png', category: 'velas', featured: false, description: 'Envase reutilizable de vidrio con tapa. 200 gr de cera de soja aromatizada.', onSale: false, inStock: false },
-    { id: 4, name: 'Saignon', price: 53000, image: 'img/velas11.png', category: 'velas', featured: false, description: 'Velón suspendido en envase reutilizable de vidrio. 500 gr de cera de soja aromatizada.', onSale: false, inStock: true },
-    { id: 5, name: 'Lottie Pequeño', price: 6400, image: 'img/velas4.png', category: 'velas', featured: false, description: 'Cuenco de 8cm de diámetro reutilizable de madera. 100 gr de cera de soja aromatizada.', onSale: false, inStock: true },
-    { id: 6, name: 'Lottie Mediano', price: 8400, image: 'img/velas10.png', category: 'velas', featured: true, description: 'Cuenco de 12 cm de diámetro reutilizable de madera . 200 gr de cera de soja aromatizada (doble pabilo).', onSale: false, inStock: true },
-    { id: 7, name: 'Sèlène x3', price: 11400, image: 'img/velas6.png', category: 'velas', featured: false, description: '', onSale: false, inStock: true },
-    { id: 8, name: 'Bombones Marie', price: 2500, image: 'img/producto.png', category: 'velas', featured: false, description: '5 mini bombones de cera de soja perfumados.', onSale: false, inStock: true },
-    { id: 9, name: 'Jolie con flor', price: 7800, image: 'img/velas12.png', category: 'velas', featured: true, description: 'Cuenco reutilizable de madera con 150gr. De cera de soja aromatizada', onSale: true, inStock: true },
-    { id: 10, name: 'Yanis Grande', price: 5300, image: 'img/velas5.png', category: 'velas', featured: false, description: '', onSale: true, inStock: true },
-    { id: 11, name: 'Yanis Pequeña x3', price: 5700, image: 'img/velas8.png', category: 'velas', featured: false, description: '', onSale: false, inStock: true },
-    { id: 12, name: 'Teva x3', price: 10800, image: 'img/velas7.png', category: 'velas', featured: false, description: '', onSale: false, inStock: true },
+// Data
+const products = {
+    velas: [
+        { id: 1, name: "Vela Aromática Lavanda", price: 2500, image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Vela aromática de lavanda para relajación." },
+        { id: 2, name: "Vela de Soja Vainilla", price: 2800, image: "https://images.unsplash.com/photo-1602178856955-35a35ca588b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Vela de soja con aroma a vainilla." },
+        { id: 3, name: "Set de Velas Decorativas", price: 3500, image: "https://images.unsplash.com/photo-1636103775596-3a519c4da522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Set de velas decorativas para el hogar." },
+    ],
+    aromas: [
+        { id: 4, name: "Difusor de Aromas Floral", price: 3200, image: "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Difusor de aromas con esencia floral." },
+        { id: 5, name: "Aceite Esencial de Eucalipto", price: 1800, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Aceite esencial de eucalipto puro." },
+        { id: 6, name: "Spray Ambiental Cítrico", price: 1500, image: "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Spray ambiental con aroma cítrico refrescante." },
+    ],
+    textiles: [
+        { id: 7, name: "Manta de Algodón", price: 4500, image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Manta suave de algodón para sofá." },
+        { id: 8, name: "Cojín Decorativo", price: 2200, image: "https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Cojín decorativo con diseño moderno." },
+        { id: 9, name: "Cortinas de Lino", price: 6800, image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Cortinas de lino elegantes para sala." },
+    ],
+    ceramica: [
+        { id: 10, name: "Juego de Tazas", price: 3800, image: "https://images.unsplash.com/photo-1614702799409-de3c4343e65b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Juego de tazas de cerámica artesanal." },
+        { id: 11, name: "Florero de Cerámica", price: 2900, image: "https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Florero de cerámica con diseño único." },
+        { id: 12, name: "Plato Decorativo", price: 2500, image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Plato decorativo de cerámica pintada a mano." },
+    ],
+};
 
-    // Textiles (10 productos)
-    { id: 13, name: 'Manta de Algodón', price: 49.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: true, description: 'Manta suave de algodón 100% natural.', onSale: true, inStock: true },
-    { id: 14, name: 'Cojín Decorativo', price: 29.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Cojín decorativo con diseños únicos.', onSale: false, inStock: true },
-    { id: 15, name: 'Cortinas de Lino', price: 79.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: true, description: 'Cortinas de lino natural para tu hogar.', onSale: false, inStock: true },
-    { id: 16, name: 'Mantel de Mesa', price: 39.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Mantel elegante para tu mesa de comedor.', onSale: true, inStock: true },
-    { id: 17, name: 'Toallas de Baño', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Set de toallas suaves y absorbentes.', onSale: false, inStock: true },
-    { id: 18, name: 'Alfombra de Yute', price: 89.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: true, description: 'Alfombra natural de yute para tu sala.', onSale: false, inStock: true },
-    { id: 19, name: 'Funda de Almohada', price: 19.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Funda de almohada de algodón suave.', onSale: true, inStock: true },
-    { id: 20, name: 'Tapiz de Pared', price: 59.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Tapiz decorativo para colgar en la pared.', onSale: false, inStock: true },
-    { id: 21, name: 'Camino de Mesa', price: 29.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Camino de mesa elegante para ocasiones especiales.', onSale: false, inStock: true },
-    { id: 22, name: 'Cortina de Ducha', price: 44.99, image: '/placeholder.svg?height=300&width=300', category: 'textiles', featured: false, description: 'Cortina de ducha con diseño moderno.', onSale: true, inStock: true },
-
-    // Cerámica (10 productos)
-    { id: 23, name: 'Taza de Café', price: 14.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: true, description: 'Taza de café de cerámica artesanal.', onSale: true, inStock: true },
-    { id: 24, name: 'Plato Decorativo', price: 29.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Plato decorativo de cerámica pintada a mano.', onSale: false, inStock: true },
-    { id: 25, name: 'Jarrón de Cerámica', price: 39.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: true, description: 'Jarrón de cerámica para decoración del hogar.', onSale: false, inStock: true },
-    { id: 26, name: 'Set de Platos', price: 59.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Set de 4 platos de cerámica para comedor.', onSale: true, inStock: true },
-    { id: 27, name: 'Maceta de Cerámica', price: 24.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Maceta de cerámica para plantas de interior.', onSale: false, inStock: true },
-    { id: 28, name: 'Cuenco de Cerámica', price: 19.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: true, description: 'Cuenco de cerámica para servir alimentos.', onSale: false, inStock: true },
-    { id: 29, name: 'Tetera de Cerámica', price: 34.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Tetera de cerámica con diseño elegante.', onSale: true, inStock: true },
-    { id: 30, name: 'Portavelas de Cerámica', price: 16.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Portavelas de cerámica para velas pequeñas.', onSale: false, inStock: true },
-    { id: 31, name: 'Figura Decorativa', price: 44.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Figura decorativa de cerámica para el hogar.', onSale: false, inStock: true },
-    { id: 32, name: 'Azucarero de Cerámica', price: 22.99, image: '/placeholder.svg?height=300&width=300', category: 'ceramica', featured: false, description: 'Azucarero de cerámica con tapa.', onSale: true, inStock: true }
+const bannerMessages = [
+    "¡Nueva colección de textiles disponible!",
+    "Envíos gratis en compras superiores a $10000",
+    "¡Ofertas especiales en velas aromáticas!"
 ];
 
+const heroImages = [
+    "img/hero1.jpg",
+    "img/hero2.jpg",
+    "img/hero3.jpg"
+];
+
+// State
 let cart = [];
-let currentStep = 1;
+let currentBanner = 0;
+let currentHeroImage = 0;
 
-function loadProducts(category = 'all') {
-    const productGrid = document.getElementById('product-grid');
-    if (!productGrid) return;
+// DOM Elements
+const bannerMessageEl = document.getElementById('bannerMessage');
+const cartItemCountEl = document.getElementById('cartItemCount');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const heroEl = document.getElementById('hero');
+const productContainers = {
+    velas: document.getElementById('velasContainer'),
+    aromas: document.getElementById('aromasContainer'),
+    textiles: document.getElementById('textilesContainer'),
+    ceramica: document.getElementById('ceramicaContainer'),
+};
 
-    productGrid.innerHTML = '';
+// Functions
+function updateBanner() {
+    bannerMessageEl.textContent = bannerMessages[currentBanner];
+    currentBanner = (currentBanner + 1) % bannerMessages.length;
+}
 
-    products.forEach(product => {
-        if (category === 'all' || product.category === category) {
-            const productElement = document.createElement('div');
-            productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-            productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+function updateHero() {
+    heroEl.style.backgroundImage = `url('${heroImages[currentHeroImage]}')`;
+    heroEl.style.backgroundSize = 'cover';
+    heroEl.style.backgroundPosition = 'center';
+    currentHeroImage = (currentHeroImage + 1) % heroImages.length;
+}
+
+function renderProducts() {
+    for (const [category, productList] of Object.entries(products)) {
+        productContainers[category].innerHTML = productList.map(product => `
+            <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                    <p class="text-sm text-gray-600 mb-2">${product.description}</p>
-                    <p class="text-dark ${product.onSale ? 'line-through' : ''}">${product.onSale ? `$${(product.price * 1.2).toFixed(2)}` : `$${product.price.toFixed(2)}`}</p>
-                    ${product.onSale ? `<p class="text-accent font-bold">Oferta: $${product.price.toFixed(2)}</p>` : ''}
-                    <p class="text-sm ${product.inStock ? 'text-green-600' : 'text-red-600'}">${product.inStock ? 'En stock' : 'Agotado'}</p>
-                    <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
-                        ${product.inStock ? 'Agregar al carrito' : 'Agotado'}
+                    <div class="relative mb-4 aspect-square">
+                        <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+                    </div>
+                    <h3 class="text-sm font-medium line-clamp-2">${product.name}</h3>
+                    <p class="mt-2 text-lg font-bold">$${product.price.toLocaleString()}</p>
+                    <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                        Ver detalles
                     </button>
                 </div>
-            `;
-            productGrid.appendChild(productElement);
-        }
-    });
-}
-
-function loadFeaturedProducts() {
-    const featuredContainer = document.getElementById('featured-products');
-    if (!featuredContainer) return;
-
-    featuredContainer.innerHTML = '';
-
-    const featuredProducts = products.filter(product => product.featured);
-    featuredProducts.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-        productElement.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h4 class="text-md font-semibold mb-2 text-primary">${product.name}</h4>
-                <p class="text-sm text-gray-600 mb-2">${product.description}</p>
-                <p class="text-sm text-dark ${product.onSale ? 'line-through' : ''}">${product.onSale ? `$${(product.price * 1.2).toFixed(2)}` : `$${product.price.toFixed(2)}`}</p>
-                ${product.onSale ? `<p class="text-sm text-accent font-bold">Oferta: $${product.price.toFixed(2)}</p>` : ''}
-                <p class="text-xs ${product.inStock ? 'text-green-600' : 'text-red-600'}">${product.inStock ? 'En stock' : 'Agotado'}</p>
-                <button class="mt-2 bg-primary text-white px-3 py-1 rounded-full text-sm hover:bg-accent transition duration-300 w-full ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
-                    ${product.inStock ? 'Agregar al carrito' : 'Agotado'}
-                </button>
             </div>
-        `;
-        featuredContainer.appendChild(productElement);
-    });
-}
-
-function handleProductFilters() {
-    const filterButtons = document.querySelectorAll('#category-filters button');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.getAttribute('data-category');
-            loadProducts(category);
-            
-            filterButtons.forEach(btn => btn.classList.remove('bg-primary', 'text-white'));
-            filterButtons.forEach(btn => btn.classList.add('bg-secondary', 'text-dark'));
-            button.classList.remove('bg-secondary', 'text-dark');
-            button.classList.add('bg-primary', 'text-white');
-        });
-    });
-}
-
-function handleSearch() {
-    const searchInput = document.getElementById('search-input');
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const filteredProducts = products.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) || 
-                product.category.toLowerCase().includes(searchTerm)
-            );
-            displaySearchResults(filteredProducts);
-        });
+        `).join('');
     }
 }
 
-function displaySearchResults(filteredProducts) {
-    const productGrid = document.getElementById('product-grid');
-    if (!productGrid) return;
-
-    productGrid.innerHTML = '';
-
-    if (filteredProducts.length === 0) {
-        productGrid.innerHTML = '<p class="text-center text-gray-500">No se encontraron productos.</p>';
-        return;
-    }
-
-    filteredProducts.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.className = 'flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105';
-        productElement.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-semibold mb-2 text-primary">${product.name}</h3>
-                <p class="text-sm text-gray-600 mb-2">${product.description}</p>
-                <p class="text-dark ${product.onSale ? 'line-through' : ''}">${product.onSale ? `$${(product.price * 1.2).toFixed(2)}` : `$${product.price.toFixed(2)}`}</p>
-                ${product.onSale ? `<p class="text-accent font-bold">Oferta: $${product.price.toFixed(2)}</p>` : ''}
-                <p class="text-sm ${product.inStock ? 'text-green-600' : 'text-red-600'}">${product.inStock ? 'En stock' : 'Agotado'}</p>
-                <button class="mt-4 bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition duration-300 w-full ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
-                    ${product.inStock ? 'Agregar al carrito' : 'Agotado'}
-                </button>
-            </div>
-        `;
-        productGrid.appendChild(productElement);
-    });
+function scrollProducts(category, amount) {
+    productContainers[category].scrollBy({ left: amount, behavior: 'smooth' });
 }
 
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    if (!product || !product.inStock) return;
+function openProductModal(productId, category) {
+    const product = products[category].find(p => p.id === productId);
+    if (!product) return;
 
-    const existingItem = cart.find(item => item.id === productId);
+    const modalTitle = document.getElementById('productModalTitle');
+    const modalContent = document.getElementById('productModalContent');
+
+    modalTitle.textContent = product.name;
+    modalContent.innerHTML = `
+        <div class="grid gap-4 py-4">
+            <div class="relative h-64 w-full">
+                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+            </div>
+            <p class="text-gray-600">${product.description}</p>
+            <p class="text-lg font-bold">$${product.price.toLocaleString()}</p>
+            <div class="flex items-center justify-between">
+                <label for="quantity" class="text-sm font-medium">Cantidad:</label>
+                <div class="flex items-center">
+                    <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
+                    <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
+                    <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                </div>
+            </div>
+            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
+                Agregar al carrito
+            </button>
+        </div>
+    `;
+
+    document.getElementById('productModal').classList.remove('hidden');
+}
+
+function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+}
+
+function updateQuantity(change) {
+    const quantityInput = document.getElementById('quantity');
+    let newQuantity = parseInt(quantityInput.value) + change;
+    if (newQuantity < 1) newQuantity = 1;
+    quantityInput.value = newQuantity;
+}
+
+function addToCart(productId, category) {
+    const product = products[category].find(p => p.id === productId);
+    if (!product) return;
+
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, quantity: 1 });
+        cart.push({ ...product, quantity });
     }
 
-    updateCartCount();
-    showNotification('Producto agregado al carrito');
-}
-
-function updateCartCount() {
-    const cartCount = document.getElementById('cart-count');
-    if (!cartCount) return;
-
-    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-    cartCount.textContent = totalItems;
-}
-
-function showCart() {
-    const cartModal = document.getElementById('cart-modal');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    const customerInfoForm = document.getElementById('customer-info-form');
-
-    if (!cartModal || !cartItems || !cartTotal || !customerInfoForm) return;
-
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'flex justify-between items-center mb-2 pb-2 border-b';
-        itemElement.innerHTML = `
-            <div>
-                <h4 class="font-semibold">${item.name}</h4>
-                <p class="text-sm">Cantidad: ${item.quantity}</p>
-                <p class="text-sm">Precio: $${item.price.toFixed(2)}</p>
-            </div>
-            <div>
-                <p class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</p>
-                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">Eliminar</button>
-            </div>
-        `;
-        cartItems.appendChild(itemElement);
-        total += item.price * item.quantity;
-    });
-
-    cartTotal.textContent = `$${total.toFixed(2)}`;
-    cartModal.classList.remove('hidden');
-
-    // Mostrar el formulario de información del cliente
-    customerInfoForm.style.display = 'block';
-}
-
-function hideCart() {
-    const cartModal = document.getElementById('cart-modal');
-    if (!cartModal) return;
-
-    cartModal.classList.add('hidden');
+    updateCartUI();
+    closeProductModal();
 }
 
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
-    updateCartCount();
-    showCart();
-    showNotification('Producto eliminado del carrito');
+    updateCartUI();
 }
 
-function showNotification(message) {
-    const notification = document.createElement('div');
-    notification.textContent = message;
-    notification.className = 'fixed bottom-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full opacity-0 transition-opacity duration-300';
-    document.body.appendChild(notification);
+function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-    setTimeout(() => {
-        notification.classList.remove('opacity-0');
-    }, 100);
+    cartItemCountEl.textContent = totalItems;
+    cartItemCountEl.classList.toggle('hidden', totalItems === 0);
 
-    setTimeout(() => {
-        notification.classList.add('opacity-0');
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
+    cartItemsEl.innerHTML = cart.map(item => `
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+                <div>
+                    <p class="font-medium">${item.name}</p>
+                    <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
+                </div>
+            </div>
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})">
+                <i class="fas fa-trash h-4 w-4"></i>
+            </button>
+        </div>
+    `).join('');
+
+    cartTotalEl.textContent = totalPrice.toLocaleString();
 }
 
-async function sendOrderInfo(event) {
-    event.preventDefault();
-
-    const customerName = document.getElementById('customer-name').value;
-    const customerEmail = document.getElementById('customer-email').value;
-    const customerPhone = document.getElementById('customer-phone').value;
-
-    if (!customerName || !customerEmail || !customerPhone) {
-        alert('Por favor, complete todos los campos de información del cliente.');
-        return;
-    }
-
-    const orderInfo = {
-        customer: {
-            name: customerName,
-            email: customerEmail,
-            phone: customerPhone
-        },
-        items: cart.map(item => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price
-        })),
-        total: cart.reduce((total, item) => total + item.price * item.quantity, 0)
-    };
-
-    try {
-        // Enviar datos a Formspree
-        const response = await fetch('https://formspree.io/f/mvgorzwo', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(orderInfo)
-        });
-
-        if (response.ok) {
-            // Si el envío a Formspree es exitoso, crear la preferencia de MercadoPago
-            const mercadoPagoResponse = await fetch('/.netlify/functions/create-preference', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    items: cart.map(item => ({
-                        title: item.name,
-                        quantity: item.quantity,
-                        currency_id: 'ARS',
-                        unit_price: item.price
-                    }))
-                })
-            });
-
-            if (mercadoPagoResponse.ok) {
-                const preference = await mercadoPagoResponse.json();
-                // Redirigir al usuario al Checkout Pro de MercadoPago
-                window.location.href = preference.init_point;
-            } else {
-                throw new Error('Error al crear la preferencia de MercadoPago');
-            }
-        } else {
-            throw new Error('Error al enviar el formulario');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Hubo un error al procesar su pedido. Por favor, inténtelo de nuevo.');
-    }
+function formatPrice(price) {
+    return new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS'
+    }).format(price);
 }
 
-function animateTopBanner() {
-    const topBanner = document.getElementById('top-banner');
-    if (!topBanner) return;
-
-    const slides = topBanner.querySelectorAll('.top-banner-slide');
-    let currentSlide = 0;
-
-    setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }, 5000);
-}
-
-function initCarousels() {
-    const heroCarousel = document.getElementById('hero');
-    const adCarousel = document.getElementById('ad-carousel');
-
-    if (heroCarousel) {
-        const heroImages = [
-            'img/hero1.png',
-            'img/hero.png',
-            'img/hero3.png'
-        ];
-
-        let currentHeroSlide = 0;
-
-        setInterval(() => {
-            currentHeroSlide = (currentHeroSlide + 1) % heroImages.length;
-            heroCarousel.style.backgroundImage = `url('${heroImages[currentHeroSlide]}')`;
-        }, 5000);
-    }
-
-    if (adCarousel) {
-        const adImages = [
-            'https://via.placeholder.com/1200x400?text=Oferta+Especial',
-            'https://via.placeholder.com/1200x400?text=Nueva+Colección',
-            'https://via.placeholder.com/1200x400?text=Descuentos+de+Temporada'
-        ];
-
-        adImages.forEach((src, index) => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = `Ad ${index + 1}`;
-            img.className = `w-full h-full object-cover carousel-item ${index === 0 ? 'active' : ''}`;
-            adCarousel.appendChild(img);
-        });
-
-        const adSlides = adCarousel.querySelectorAll('.carousel-item');
-        let currentAdSlide = 0;
-
-        setInterval(() => {
-            adSlides[currentAdSlide].classList.remove('active');
-            currentAdSlide = (currentAdSlide + 1) % adSlides.length;
-            adSlides[currentAdSlide].classList.add('active');
-        }, 5000);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
-    loadFeaturedProducts();
-    handleProductFilters();
-    handleSearch();
-    animateTopBanner();
-    initCarousels();
-
-    const cartButton = document.getElementById('cart-button');
-    const closeCartButton = document.getElementById('close-cart');
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const submitOrderButton = document.getElementById('submit-order');
-
-    if (cartButton) {
-        cartButton.addEventListener('click', showCart);
-    }
-
-    if (closeCartButton) {
-        closeCartButton.addEventListener('click', hideCart);
-    }
-
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-
-    if (submitOrderButton) {
-        submitOrderButton.addEventListener('click', sendOrderInfo);
-    }
-
-    // Animación de elementos al hacer scroll
-    const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    animateOnScrollElements.forEach(element => {
-        observer.observe(element);
+function createWhatsAppMessage(formData) {
+    let message = "🛒 *Nuevo Pedido - Mon Amour Textil*\n\n";
+    message += "*Datos del Cliente:*\n";
+    message += `- Nombre: ${formData.get('nombre')} ${formData.get('apellido')}\n`;
+    message += `- Email: ${formData.get('email')}\n`;
+    message += `- Teléfono: ${formData.get('telefono')}\n`;
+    message += `- Método de envío: ${formData.get('envio')}\n`;
+    message += `- Método de pago: ${formData.get('pago')}\n\n`;
+    
+    message += "*Productos:*\n";
+    cart.forEach(item => {
+        message += `- ${item.name}\n`;
+        message += `  Cantidad: ${item.quantity}\n`;
+        message += `  Precio: ${formatPrice(item.price)}\n`;
+        message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
     });
+    
+    message += `*Total: ${formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0))}*`;
+    
+    return encodeURIComponent(message);
+}
+
+function updateAdvertisingBanner() {
+    const advertisingBanner = document.getElementById('advertisingBanner');
+    const advertisingMessage = document.getElementById('advertisingMessage');
+    const currentHour = new Date().getHours();
+    let message, backgroundImage;
+
+    if (currentHour >= 6 && currentHour < 12) {
+        message = "¡Oferta matutina! 15% de descuento en todas las velas aromáticas";
+        backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+    } else if (currentHour >= 12 && currentHour < 18) {
+        message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
+        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+    } else {
+        message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
+        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+    }
+
+    advertisingMessage.textContent = message;
+    advertisingBanner.style.backgroundImage = backgroundImage;
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('closeBanner').addEventListener('click', () => {
+        document.getElementById('topBanner').classList.add('hidden');
+    });
+
+    document.getElementById('mobileMenuButton').addEventListener('click', () => {
+        const menuIcon = document.querySelector('.menu-icon');
+        menuIcon.classList.toggle('open');
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    document.getElementById('closeMobileMenu').addEventListener('click', () => {
+        const menuIcon = document.querySelector('.menu-icon');
+        menuIcon.classList.remove('open');
+        document.getElementById('mobileMenu').classList.add('hidden');
+    });
+
+    document.getElementById('cartButton').addEventListener('click', () => {
+        document.getElementById('cartModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeCart').addEventListener('click', () => {
+        document.getElementById('cartModal').classList.add('hidden');
+    });
+
+    document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
+
+    document.getElementById('whatsappButton').addEventListener('click', () => {
+        window.open('https://wa.me/5493534786106', '_blank');
+    });
+
+    document.getElementById('closeWhatsappNotification').addEventListener('click', () => {
+        document.getElementById('whatsappNotification').classList.add('hidden');
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const whatsappMessage = createWhatsAppMessage(formData);
+        window.open(`https://wa.me/5493534786106?text=${whatsappMessage}`, '_blank');
+        document.getElementById('checkoutModal').classList.add('hidden');
+        document.getElementById('cartModal').classList.add('hidden');
+        cart = [];
+        updateCartUI();
+    });
+
+    document.getElementById('checkoutButton').addEventListener('click', function() {
+        document.getElementById('cartModal').classList.add('hidden');
+        document.getElementById('checkoutModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeCheckoutModal').addEventListener('click', function() {
+        document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    updateBanner();
+    setInterval(updateBanner, 5000);
+
+    updateHero();
+    setInterval(updateHero, 5000);
+
+    renderProducts();
+
+    updateAdvertisingBanner();
+    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+
+    setTimeout(() => {
+        document.getElementById('whatsappNotification').classList.remove('hidden');
+    }, 10000);
+
+    // Remove preloader
+    document.getElementById('preloader').style.display = 'none';
 });
+
+// For demonstration purposes only (this won't work in a Node.js environment)
+console.log("Script loaded successfully!");

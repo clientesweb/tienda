@@ -154,33 +154,13 @@
      background-clip: text;
      color: transparent;
  }
-
- /* Estilos adicionales para el modal de MercadoPago */
- #mercadopago-button-container {
-     width: 100%;
-     min-height: 48px;
-     display: none;
- }
-
- .mercadopago-button {
-     width: 100% !important;
- }
-
- .mercadopago-modal {
-     z-index: 9999 !important;
- }
-
- #checkoutModal {
-     z-index: 9998;
- }
 </style>
 </head>
 <body class="flex min-h-screen flex-col">
 <!-- Preloader -->
-<div id="preloader" style="display: none;">
+<div id="preloader">
  <div class="loader"></div>
 </div>
-<script>document.getElementById('preloader').style.display = 'flex';</script>
 
 <!-- Top Banner -->
 <div id="topBanner" class="gradient-bg p-2 text-center text-white relative">
@@ -483,7 +463,7 @@
                 <label class="block text-sm font-medium text-gray-700">Código Postal</label>
                 <input type="text" name="codigo_postal" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
             </div>
-            <div id="mercadopago-button-container" class="w-full min-h-[48px]"></div>
+            <div id="mercadopago-button-container"></div>
             <input type="hidden" name="cart" id="cartInput">
             <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
                 Proceder al pago

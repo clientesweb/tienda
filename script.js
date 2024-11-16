@@ -212,30 +212,46 @@ async function initMercadoPago() {
 
     const bricksBuilder = mp.bricks();
 
-    await bricksBuilder.create("wallet", "mercadopago-button-container", {
-        initialization: {
-            preferenceId: await createPreference(),
-        },
-    });
+    try {
+        const preference = await createPreference();
+        await bricksBuilder.create("wallet", "mercadopago-button-container", {
+            initialization: {
+                preferenceId: preference.id,
+            },
+        });
+    } catch (error) {
+        console.error('Error initializing MercadoPago:', error);
+        alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
+    }
 }
 
 async function createPreference() {
-    const response = await fetch('/.netlify/functions/createPreference', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            items: cart.map(item => ({
-                title: item.name,
-                unit_price: item.price,
-                quantity: item.quantity,
-            })),
-        }),
-    });
+    try {
+        const response = await fetch('netlify/functions/create-preference.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    title: item.name,
+                    unit_price: item.price,
+                    quantity: item.quantity,
+                })),
+            }),
+        });
 
-    const preference = await response.json();
-    return preference.id;
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error creating preference:', errorData);
+            throw new Error(errorData.error || 'Error creating preference');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error in createPreference:', error);
+        throw error;
+    }
 }
 
 // Event Listeners
@@ -275,30 +291,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        formData.append('cart', JSON.stringify(cart));
-        
-        try {
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                // Initialize MercadoPago checkout
-                await initMercadoPago();
-            } else {
-                throw new Error('Error en el envío del formulario');
+    e.preventDefault();
+    const formData = new FormData(this);
+    formData.append('cart', JSON.stringify(cart));
+    
+    try {
+        const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.');
+        });
+        
+        if (response.ok) {
+            // Initialize MercadoPago checkout
+            await initMercadoPago();
+        } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error en el envío del formulario');
         }
-    });
+    } catch (error) {
+        console.error('Error:', error);
+        alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
+    }
+});
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');

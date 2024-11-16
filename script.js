@@ -208,7 +208,8 @@ function scrollProducts(category, direction) {
 // MercadoPago integration
 async function initMercadoPago() {
     const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
-
+    return mp.bricks();
+}
     try {
         const preference = await createPreference();
         const bricksBuilder = mp.bricks();
@@ -262,40 +263,54 @@ async function createPreference() {
     }
 }
 
-document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    formData.append('cart', JSON.stringify(cart));
-    
+async function handleCheckout(formData) {
     try {
-        const response = await fetch(this.action, {
+        // Enviar datos del formulario
+        const response = await fetch('/ruta-a-tu-endpoint-de-formulario', {
             method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
+            body: formData
         });
-        
-        if (response.ok) {
-            // Clear the existing MercadoPago button container
-            const mpContainer = document.getElementById('mercadopago-button-container');
-            mpContainer.innerHTML = '';
-            
-            // Initialize MercadoPago checkout
-            await initMercadoPago();
-            
-            // Hide the form and show the MercadoPago button
-            this.style.display = 'none';
-            mpContainer.style.display = 'block';
-        } else {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Error en el envío del formulario');
+
+        if (!response.ok) {
+            throw new Error('Error al enviar el formulario');
         }
+
+        // Crear preferencia de pago
+        const preference = await createPreference();
+
+        // Inicializar MercadoPago
+        const bricksBuilder = await initMercadoPago();
+
+        // Limpiar el contenedor del botón de MercadoPago
+        const mpContainer = document.getElementById('mercadopago-button-container');
+        mpContainer.innerHTML = '';
+
+        // Crear el botón de pago
+        await bricksBuilder.create("wallet", "mercadopago-button-container", {
+            initialization: {
+                preferenceId: preference.id,
+            },
+            callbacks: {
+                onError: (error) => {
+                    console.error('Error in MercadoPago Brick:', error);
+                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
+                },
+                onReady: () => {
+                    console.log("MercadoPago Brick ready");
+                    // Mostrar el contenedor de MercadoPago
+                    mpContainer.style.display = 'block';
+                }
+            },
+        });
+
+        // Ocultar el formulario
+        document.getElementById('checkoutForm').style.display = 'none';
+
     } catch (error) {
         console.error('Error:', error);
         alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
     }
-});
+}
 
 console.log("Script loaded successfully!");
 

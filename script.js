@@ -207,9 +207,91 @@ function updateAdvertisingBanner() {
 }
 
 // MercadoPago integration
-async function initMercadoPago() {
-    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
+const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
 
+async function calculateShipping() {
+    const zipcode = document.getElementById('codigo_postal').value;
+    if (!zipcode) {
+        alert('Por favor, ingrese un código postal válido.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/.netlify/functions/calcular-envio', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ zipcode }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al calcular el costo de envío');
+        }
+
+        const data = await response.json();
+        document.getElementById('costoEnvioValor').textContent = formatPrice(data.cost);
+        document.getElementById('costoEnvio').classList.remove('hidden');
+        updateTotalWithShipping(data.cost);
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Hubo un error al calcular el costo de envío. Por favor, intente nuevamente.');
+    }
+}
+
+function updateTotalWithShipping(shippingCost) {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = subtotal + shippingCost;
+    document.getElementById('cartTotal').textContent = formatPrice(total);
+}
+
+async function createPreference() {
+    const formData = new FormData(document.getElementById('checkoutForm'));
+    const shippingCost = parseFloat(document.getElementById('costoEnvioValor').textContent.replace('$', '').replace('.', '').replace(',', '.'));
+
+    try {
+        const response = await fetch('/.netlify/functions/create-preference', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    title: item.name,
+                    unit_price: item.price,
+                    quantity: item.quantity,
+                })),
+                payer: {
+                    name: formData.get('nombre'),
+                    surname: formData.get('apellido'),
+                    email: formData.get('email'),
+                    phone: {
+                        number: formData.get('telefono')
+                    },
+                    address: {
+                        street_name: formData.get('direccion'),
+                        zip_code: formData.get('codigo_postal')
+                    }
+                },
+                shipments: {
+                    cost: shippingCost,
+                    mode: "not_specified"
+                }
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al crear la preferencia de pago');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+async function initMercadoPago() {
     try {
         const preference = await createPreference();
         const bricksBuilder = mp.bricks();
@@ -231,35 +313,6 @@ async function initMercadoPago() {
     } catch (error) {
         console.error('Error initializing MercadoPago:', error);
         alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
-    }
-}
-
-async function createPreference() {
-    try {
-        const response = await fetch('/.netlify/functions/create-preference', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                items: cart.map(item => ({
-                    title: item.name,
-                    unit_price: item.price,
-                    quantity: item.quantity,
-                })),
-            }),
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Error creating preference:', errorData);
-            throw new Error(errorData.error || 'Error creating preference');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('Error in createPreference:', error);
-        throw error;
     }
 }
 
@@ -299,35 +352,22 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
+    document.getElementById('calcularEnvio').addEventListener('click', calculateShipping);
+
     document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const formData = new FormData(this);
-        formData.append('cart', JSON.stringify(cart));
         
         try {
-            const response = await fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
+            // Clear the existing MercadoPago button container
+            const mpContainer = document.getElementById('mercadopago-button-container');
+            mpContainer.innerHTML = '';
             
-            if (response.ok) {
-                // Clear the existing MercadoPago button container
-                const mpContainer = document.getElementById('mercadopago-button-container');
-                mpContainer.innerHTML = '';
-                
-                // Initialize MercadoPago checkout
-                await initMercadoPago();
-                
-                // Hide the form and show the MercadoPago button
-                this.style.display = 'none';
-                mpContainer.style.display = 'block';
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Error en el envío del formulario');
-            }
+            // Initialize MercadoPago checkout
+            await initMercadoPago();
+            
+            // Hide the form and show the MercadoPago button
+            this.style.display = 'none';
+            mpContainer.style.display = 'block';
         } catch (error) {
             console.error('Error:', error);
             alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);

@@ -210,13 +210,22 @@ function updateAdvertisingBanner() {
 async function initMercadoPago() {
     const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
 
-    const bricksBuilder = mp.bricks();
-
     try {
         const preference = await createPreference();
+        const bricksBuilder = mp.bricks();
+        
         await bricksBuilder.create("wallet", "mercadopago-button-container", {
             initialization: {
                 preferenceId: preference.id,
+            },
+            callbacks: {
+                onError: (error) => {
+                    console.error('Error in MercadoPago Brick:', error);
+                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
+                },
+                onReady: () => {
+                    console.log("MercadoPago Brick ready");
+                }
             },
         });
     } catch (error) {
@@ -227,7 +236,7 @@ async function initMercadoPago() {
 
 async function createPreference() {
     try {
-                    const mercadoPagoResponse = await fetch('/.netlify/functions/create-preference', {
+        const response = await fetch('/.netlify/functions/create-preference', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -291,31 +300,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    formData.append('cart', JSON.stringify(cart));
-    
-    try {
-        const response = await fetch(this.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
+        e.preventDefault();
+        const formData = new FormData(this);
+        formData.append('cart', JSON.stringify(cart));
         
-        if (response.ok) {
-            // Initialize MercadoPago checkout
-            await initMercadoPago();
-        } else {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Error en el envío del formulario');
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                // Clear the existing MercadoPago button container
+                const mpContainer = document.getElementById('mercadopago-button-container');
+                mpContainer.innerHTML = '';
+                
+                // Initialize MercadoPago checkout
+                await initMercadoPago();
+                
+                // Hide the form and show the MercadoPago button
+                this.style.display = 'none';
+                mpContainer.style.display = 'block';
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Error en el envío del formulario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
-    }
-});
+    });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
@@ -345,5 +362,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('preloader').style.display = 'none';
 });
 
-// For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

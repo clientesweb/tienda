@@ -1,7 +1,17 @@
 {
-  "name": "tienda",
+  "name": "mon-amour-textil",
   "version": "1.0.0",
+  "description": "E-commerce website for Mon Amour Textil",
+  "main": "index.js",
+  "scripts": {
+    "start": "netlify dev",
+    "build": "netlify build"
+  },
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "axios": "^1.4.0",
+    "mercadopago": "^1.5.16"
+  },
+  "devDependencies": {
+    "netlify-cli": "^15.0.0"
   }
 }

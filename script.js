@@ -207,16 +207,13 @@ function scrollProducts(category, direction) {
 
 // MercadoPago integration
 async function initMercadoPago() {
-    console.log('Initializing MercadoPago...');
     const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
 
     try {
         const preference = await createPreference();
-        console.log('Preference created:', preference);
         const bricksBuilder = mp.bricks();
         
-        console.log('Creating Brick...');
-        const renderComponent = await bricksBuilder.create("wallet", "mercadopago-button-container", {
+        await bricksBuilder.create("wallet", "mercadopago-button-container", {
             initialization: {
                 preferenceId: preference.id,
             },
@@ -227,13 +224,9 @@ async function initMercadoPago() {
                 },
                 onReady: () => {
                     console.log("MercadoPago Brick ready");
-                    console.log("MercadoPago button should be visible now");
-                    document.getElementById('mercadopago-button-container').style.display = 'block';
                 }
             },
         });
-        console.log('Brick created successfully');
-        console.log('Render component:', renderComponent);
     } catch (error) {
         console.error('Error initializing MercadoPago:', error);
         alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
@@ -269,10 +262,8 @@ async function createPreference() {
     }
 }
 
-// Event listener for form submission
 document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    console.log('Checkout form submitted');
     const formData = new FormData(this);
     formData.append('cart', JSON.stringify(cart));
     
@@ -286,19 +277,16 @@ document.getElementById('checkoutForm').addEventListener('submit', async functio
         });
         
         if (response.ok) {
-            console.log('Form submission successful');
             // Clear the existing MercadoPago button container
             const mpContainer = document.getElementById('mercadopago-button-container');
             mpContainer.innerHTML = '';
             
-            // Show the MercadoPago container
-            mpContainer.style.display = 'block';
-            
             // Initialize MercadoPago checkout
             await initMercadoPago();
             
-            // Hide the form
+            // Hide the form and show the MercadoPago button
             this.style.display = 'none';
+            mpContainer.style.display = 'block';
         } else {
             const errorData = await response.json();
             throw new Error(errorData.error || 'Error en el envío del formulario');

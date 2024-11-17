@@ -200,12 +200,10 @@ function updateAdvertisingBanner() {
         backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage =
-            "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
         message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
-        backgroundImage =
-            "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
     advertisingMessage.textContent = message;
@@ -240,6 +238,9 @@ async function calculateShipping() {
         document.getElementById('costoEnvioValor').textContent = formatPrice(shippingCost);
         document.getElementById('costoEnvio').classList.remove('hidden');
         updateCartUI();
+        
+        // Habilitar el botón de proceder al pago después de calcular el envío
+        document.getElementById('procederPago').disabled = false;
     } catch (error) {
         console.error('Error:', error);
         alert('Hubo un error al calcular el costo de envío. Por favor, intente nuevamente.');
@@ -357,19 +358,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('calcularEnvio').addEventListener('click', calculateShipping);
 
-    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+    document.getElementById('procederPago').addEventListener('click', async function(e) {
         e.preventDefault();
         
+        if (shippingCost === 0) {
+            alert('Por favor, calcule el costo de envío antes de proceder al pago.');
+            return;
+        }
+
         try {
-            // Clear the existing MercadoPago button container
+            // Limpiar el contenedor del botón de MercadoPago existente
             const mpContainer = document.getElementById('mercadopago-button-container');
             mpContainer.innerHTML = '';
             
-            // Initialize MercadoPago checkout
+            // Inicializar el checkout de MercadoPago
             await initMercadoPago();
             
-            // Hide the form and show the MercadoPago button
-            this.style.display = 'none';
+            // Ocultar el formulario y mostrar el botón de MercadoPago
+            document.getElementById('checkoutForm').style.display = 'none';
             mpContainer.style.display = 'block';
         } catch (error) {
             console.error('Error:', error);
@@ -380,6 +386,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
+        
+        // Resetear el formulario y ocultar el costo de envío
+        document.getElementById('checkoutForm').reset();
+        document.getElementById('costoEnvio').classList.add('hidden');
+        document.getElementById('procederPago').disabled = true;
+        
+        // Ocultar el botón de MercadoPago y mostrar el formulario
+        document.getElementById('mercadopago-button-container').style.display = 'none';
+        document.getElementById('checkoutForm').style.display = 'block';
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {

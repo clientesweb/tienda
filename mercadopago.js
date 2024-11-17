@@ -5,8 +5,14 @@ const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', {
     locale: 'es-AR'
 });
 
+let checkoutButtonCreated = false;
+
 // Función para crear el botón de pago
 function createCheckoutButton(preferenceId) {
+    if (checkoutButtonCreated) {
+        document.getElementById('mercadopago-button').innerHTML = '';
+    }
+
     const bricksBuilder = mp.bricks();
 
     bricksBuilder.create("wallet", "mercadopago-button", {
@@ -15,7 +21,10 @@ function createCheckoutButton(preferenceId) {
         },
         callbacks: {
             onError: (error) => console.error('Error en el pago:', error),
-            onReady: () => console.log('Botón de pago listo')
+            onReady: () => {
+                console.log('Botón de pago listo');
+                checkoutButtonCreated = true;
+            }
         }
     });
 }
@@ -49,15 +58,32 @@ function createPreference() {
     .then(data => data.id);
 }
 
+// Función para mostrar y ocultar el indicador de carga
+function toggleLoadingIndicator(show) {
+    const button = document.getElementById('checkoutButton');
+    if (show) {
+        button.disabled = true;
+        button.innerHTML = 'Procesando...';
+    } else {
+        button.disabled = false;
+        button.innerHTML = 'Finalizar compra';
+    }
+}
+
 // Evento para iniciar el proceso de pago
 document.getElementById('checkoutForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    createPreference()
-        .then(preferenceId => {
-            createCheckoutButton(preferenceId);
-        })
-        .catch(error => {
-            console.error('Error al crear la preferencia:', error);
-        });
+    if (!checkoutButtonCreated) {
+        toggleLoadingIndicator(true);
+        createPreference()
+            .then(preferenceId => {
+                createCheckoutButton(preferenceId);
+                toggleLoadingIndicator(false);
+            })
+            .catch(error => {
+                console.error('Error al crear la preferencia:', error);
+                toggleLoadingIndicator(false);
+            });
+    }
 });

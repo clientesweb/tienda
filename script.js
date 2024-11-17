@@ -38,6 +38,7 @@ const heroImages = [
 let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
+let shippingCost = 0;
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -155,7 +156,8 @@ function removeFromCart(productId) {
 
 function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = subtotal + shippingCost;
 
     cartItemCountEl.textContent = totalItems;
     cartItemCountEl.classList.toggle('hidden', totalItems === 0);
@@ -175,7 +177,9 @@ function updateCartUI() {
         </div>
     `).join('');
 
-    cartTotalEl.textContent = totalPrice.toLocaleString();
+    document.getElementById('subtotal').textContent = formatPrice(subtotal);
+    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    cartTotalEl.textContent = formatPrice(total);
 }
 
 function formatPrice(price) {
@@ -196,10 +200,12 @@ function updateAdvertisingBanner() {
         backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage =
+            "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
         message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
-        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage =
+            "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
     advertisingMessage.textContent = message;
@@ -230,24 +236,20 @@ async function calculateShipping() {
         }
 
         const data = await response.json();
-        document.getElementById('costoEnvioValor').textContent = formatPrice(data.cost);
+        shippingCost = data.cost;
+        document.getElementById('costoEnvioValor').textContent = formatPrice(shippingCost);
         document.getElementById('costoEnvio').classList.remove('hidden');
-        updateTotalWithShipping(data.cost);
+        updateCartUI();
     } catch (error) {
         console.error('Error:', error);
         alert('Hubo un error al calcular el costo de envío. Por favor, intente nuevamente.');
     }
 }
 
-function updateTotalWithShipping(shippingCost) {
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal + shippingCost;
-    document.getElementById('cartTotal').textContent = formatPrice(total);
-}
-
 async function createPreference() {
     const formData = new FormData(document.getElementById('checkoutForm'));
-    const shippingCost = parseFloat(document.getElementById('costoEnvioValor').textContent.replace('$', '').replace('.', '').replace(',', '.'));
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = subtotal + shippingCost;
 
     try {
         const response = await fetch('/.netlify/functions/create-preference', {
@@ -276,7 +278,8 @@ async function createPreference() {
                 shipments: {
                     cost: shippingCost,
                     mode: "not_specified"
-                }
+                },
+                total_amount: total
             }),
         });
 

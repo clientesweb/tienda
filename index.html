@@ -540,25 +540,25 @@
 </div>
 
     <!-- Cart Modal -->
-    <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
-                <button id="closeCart" class="text-gray-600 hover:text-primary">
-                    <i class="fas fa-times h-5 w-5"></i>
-                </button>
-            </div>
-            <div id="cartItems" class="space-y-4">
-                <!-- Cart items will be dynamically inserted here -->
-            </div>
-            <div class="border-t pt-4 mt-4">
-                <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
-            </div>
-            <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
-                Proceder al pago
+<div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+    <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4 flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
+            <button id="closeCart" class="text-gray-600 hover:text-primary" aria-label="Cerrar carrito">
+                <i class="fas fa-times h-5 w-5"></i>
             </button>
         </div>
+        <div id="cartItems" class="space-y-4 flex-grow overflow-y-auto">
+            <!-- Cart items will be dynamically inserted here -->
+        </div>
+        <div class="border-t pt-4 mt-4">
+            <p class="font-bold text-lg">Total: $<span id="cartTotal">0</span></p>
+        </div>
+        <button id="checkoutButton" class="w-full bg-primary text-white py-3 px-4 rounded mt-4 hover:bg-primary-dark transition-colors text-lg font-semibold">
+            Proceder al pago
+        </button>
     </div>
+</div>
 
     <!-- Product Modal -->
     <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">

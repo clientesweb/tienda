@@ -24,7 +24,7 @@ const products = {
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
-    "Envíos gratis en compras superiores a $150000",
+    "Envíos gratis en compras superiores a $10000",
     "¡Ofertas especiales en velas aromáticas!"
 ];
 
@@ -40,26 +40,26 @@ let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
 
-// DOM Elements
-const bannerMessageEl = document.getElementById('bannerMessage');
-const cartItemCountEl = document.getElementById('cartItemCount');
-const cartItemsEl = document.getElementById('cartItems');
-const cartTotalEl = document.getElementById('cartTotal');
-const heroEl = document.getElementById('hero');
-const productContainers = {
-    velas: document.getElementById('velasContainer'),
-    aromas: document.getElementById('aromasContainer'),
-    textiles: document.getElementById('textilesContainer'),
-    ceramica: document.getElementById('ceramicaContainer'),
-};
+// Shipping options
+const shippingOptions = [
+    { id: "andreani_sucursal", name: "Andreani a sucursal", price: 9000 },
+    { id: "andreani_domicilio", name: "Andreani a domicilio", price: 12000 },
+    { id: "oca_sucursal", name: "Oca a sucursal", price: 12500 },
+    { id: "oca_domicilio", name: "Oca a domicilio", price: 15000 },
+    { id: "correo_argentino_sucursal", name: "Correo Argentino a sucursal", price: 12500 },
+    { id: "correo_argentino_domicilio", name: "Correo Argentino a domicilio", price: 15000 },
+    { id: "retiro_local", name: "Retiro en nuestro local", price: 0 },
+];
 
 // Functions
 function updateBanner() {
+    const bannerMessageEl = document.getElementById('bannerMessage');
     bannerMessageEl.textContent = bannerMessages[currentBanner];
     currentBanner = (currentBanner + 1) % bannerMessages.length;
 }
 
 function updateHero() {
+    const heroEl = document.getElementById('hero');
     heroEl.style.backgroundImage = `url('${heroImages[currentHeroImage]}')`;
     heroEl.style.backgroundSize = 'cover';
     heroEl.style.backgroundPosition = 'center';
@@ -68,7 +68,8 @@ function updateHero() {
 
 function renderProducts() {
     for (const [category, productList] of Object.entries(products)) {
-        productContainers[category].innerHTML = productList.map(product => `
+        const container = document.getElementById(`${category}Container`);
+        container.innerHTML = productList.map(product => `
             <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-4">
                     <div class="relative mb-4 aspect-square">
@@ -83,10 +84,6 @@ function renderProducts() {
             </div>
         `).join('');
     }
-}
-
-function scrollProducts(category, amount) {
-    productContainers[category].scrollBy({ left: amount, behavior: 'smooth' });
 }
 
 function openProductModal(productId, category) {
@@ -121,10 +118,6 @@ function openProductModal(productId, category) {
     document.getElementById('productModal').classList.remove('hidden');
 }
 
-function closeProductModal() {
-    document.getElementById('productModal').classList.add('hidden');
-}
-
 function updateQuantity(change) {
     const quantityInput = document.getElementById('quantity');
     let newQuantity = parseInt(quantityInput.value) + change;
@@ -155,9 +148,14 @@ function removeFromCart(productId) {
 }
 
 function updateCartUI() {
+    const cartItemCountEl = document.getElementById('cartItemCount');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartTotalEl = document.getElementById('cartTotal');
+
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    
+    const total = subtotal + shippingCost;
+
     cartItemCountEl.textContent = totalItems;
     cartItemCountEl.classList.toggle('hidden', totalItems === 0);
 
@@ -176,9 +174,7 @@ function updateCartUI() {
         </div>
     `).join('');
 
-    document.getElementById('cartSubtotal').textContent = subtotal.toLocaleString();
-    updateShippingCost();
-    updateTotal();
+    cartTotalEl.textContent = total.toLocaleString();
 }
 
 function formatPrice(price) {
@@ -188,38 +184,17 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function updateShippingCost() {
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const shippingCostEl = document.getElementById('shippingCost');
-    
-    if (subtotal >= 150000) {
-        shippingCost = 0;
-        shippingCostEl.textContent = 'Envío gratis';
-    } else {
-        const shippingMethod = document.getElementById('shippingMethod').value;
-        shippingCost = getShippingCost(shippingMethod);
-        shippingCostEl.textContent = `Costo de envío: $${shippingCost.toLocaleString()}`;
-    }
+function updateShippingOptions() {
+    const shippingSelect = document.getElementById('metodoEnvio');
+    shippingSelect.innerHTML = shippingOptions.map(option => `
+        <option value="${option.id}">${option.name} - $${option.price.toLocaleString()}</option>
+    `).join('');
 }
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = subtotal + shippingCost;
-    document.getElementById('cartTotal').textContent = total.toLocaleString();
-    document.getElementById('orderTotal').textContent = `Total: $${total.toLocaleString()}`;
-}
-
-function getShippingCost(method) {
-    const shippingCosts = {
-        andreani_sucursal: 9000,
-        andreani_domicilio: 12000,
-        oca_sucursal: 12500,
-        correo_argentino_sucursal: 12500,
-        correo_argentino_domicilio: 15000,
-        oca_domicilio: 15000,
-        local: 0
-    };
-    return shippingCosts[method] || 0;
+    document.getElementById('cartTotal').textContent = formatPrice(total);
 }
 
 function updateAdvertisingBanner() {
@@ -241,38 +216,6 @@ function updateAdvertisingBanner() {
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
-}
-
-function prepareOrderData() {
-    const form = document.getElementById('checkoutForm');
-    const formData = new FormData(form);
-    
-    const orderData = {
-        customerInfo: Object.fromEntries(formData),
-        cartItems: cart.map(item => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity
-        })),
-        subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-        shippingCost: shippingCost,
-        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost
-    };
-
-    return orderData;
-}
-
-function sendOrderToFormspree(orderData) {
-    return fetch('https://formspree.io/f/mvgorzwo', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderData)
-    })
-    .then(response => response.json())
-    .catch(error => console.error('Error:', error));
 }
 
 // Event Listeners
@@ -301,7 +244,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('cartModal').classList.add('hidden');
     });
 
-    document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
+    document.getElementById('closeProductModal').addEventListener('click', () => {
+        document.getElementById('productModal').classList.add('hidden');
+    });
 
     document.getElementById('whatsappButton').addEventListener('click', () => {
         window.open('https://wa.me/5493534786106', '_blank');
@@ -311,16 +256,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('shippingMethod').addEventListener('change', function() {
-        updateShippingCost();
-        updateTotal();
+    document.getElementById('metodoEnvio').addEventListener('change', function() {
+        const selectedOption = shippingOptions.find(option => option.id === this.value);
+        if (selectedOption) {
+            shippingCost = selectedOption.price;
+            updateTotal();
+        }
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
-        updateShippingCost();
-        updateTotal();
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
@@ -329,12 +275,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const orderData = prepareOrderData();
-        sendOrderToFormspree(orderData)
-            .then(() => {
-                // Aquí puedes llamar a la función para iniciar el pago con Mercado Pago
-                initMercadoPago(orderData);
-            });
+        // Here you would typically send the form data to your server or payment processor
+        console.log('Form submitted');
+        // For demonstration purposes, we'll just close the modal
+        document.getElementById('checkoutModal').classList.add('hidden');
+        cart = []; // Clear the cart
+        updateCartUI();
+        alert('¡Gracias por tu compra!');
     });
 
     updateBanner();
@@ -344,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateHero, 5000);
 
     renderProducts();
+    updateShippingOptions();
 
     updateAdvertisingBanner();
     setInterval(updateAdvertisingBanner, 3600000); // Update every hour
@@ -356,5 +304,5 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('preloader').style.display = 'none';
 });
 
-// For demonstration purposes only (this won't work in a Node.js environment)
+// Log a message to confirm the script has loaded
 console.log("Script loaded successfully!");

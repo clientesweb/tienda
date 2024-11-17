@@ -1,40 +1,34 @@
-const fetch = require('node-fetch');
+const mercadopago = require('mercadopago');
 
 exports.handler = async function(event, context) {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, body: 'Method Not Allowed' };
+    }
 
-  const { items } = JSON.parse(event.body);
+    const { items, payer, shipments } = JSON.parse(event.body);
 
-  try {
-    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        items: items,
-        back_urls: {
-          success: `${process.env.URL}/success`,
-          failure: `${process.env.URL}/failure`,
-          pending: `${process.env.URL}/pending`
-        },
-        auto_return: "approved"
-      })
-    });
+    try {
+        mercadopago.configure({
+            access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN
+        });
 
-    const data = await response.json();
+        const preference = {
+            items: items,
+            payer: payer,
+            shipments: shipments
+        };
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Error creating preference' })
-    };
-  }
+        const response = await mercadopago.preferences.create(preference);
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify(response.body)
+        };
+    } catch (error) {
+        console.error('Error:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Error al crear la preferencia' })
+        };
+    }
 };

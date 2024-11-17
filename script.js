@@ -24,7 +24,7 @@ const products = {
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
-    "Envíos gratis en compras superiores a $150000",
+    "Envíos gratis en compras superiores a $10000",
     "¡Ofertas especiales en velas aromáticas!"
 ];
 
@@ -178,7 +178,6 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = total.toLocaleString();
-    updateShippingOptions();
 }
 
 function formatPrice(price) {
@@ -188,35 +187,32 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function updateShippingOptions() {
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const shippingSelect = document.getElementById('shippingMethod');
-    const shippingOptions = [
-        { value: "free", label: "Envío GRATIS (pedidos desde $150.000)", price: 0 },
-        { value: "andreani_sucursal", label: "Andreani a sucursal", price: 9000 },
-        { value: "andreani_domicilio", label: "Andreani a domicilio", price: 12000 },
-        { value: "oca_sucursal", label: "OCA a sucursal", price: 12500 },
-        { value: "correo_argentino_sucursal", label: "Correo Argentino a sucursal", price: 12500 },
-        { value: "correo_argentino_domicilio", label: "Correo Argentino a domicilio", price: 15000 },
-        { value: "oca_domicilio", label: "OCA a domicilio", price: 15000 },
-        { value: "local", label: "Retirar en nuestro local (Gratis)", price: 0 }
-    ];
-
-    shippingSelect.innerHTML = shippingOptions.map(option => `
-        <option value="${option.value}" ${option.value === 'free' && subtotal < 150000 ? 'disabled' : ''}>
-            ${option.label} ${option.price > 0 ? '- $' + option.price.toLocaleString() : ''}
-        </option>
-    `).join('');
-
-    shippingSelect.value = subtotal >= 150000 ? 'free' : 'andreani_sucursal';
-    updateShippingCost();
+function calculateShipping(postalCode) {
+    // Simular una llamada a la API de Mercado Envíos
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const shippingOptions = {
+                standard: {
+                    name: "Estándar",
+                    price: 500,
+                    estimatedDelivery: '3-5 días hábiles'
+                },
+                express: {
+                    name: "Express",
+                    price: 800,
+                    estimatedDelivery: '1-2 días hábiles'
+                }
+            };
+            resolve(shippingOptions);
+        }, 1000);
+    });
 }
 
-function updateShippingCost() {
+function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
-    const selectedOption = shippingSelect.options[shippingSelect.selectedIndex];
-    shippingCost = parseInt(selectedOption.value === 'free' || selectedOption.value === 'local' ? 0 : selectedOption.textContent.match(/\$(\d+)/)[1].replace(',', ''));
-    updateTotal();
+    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
+        <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
+    `).join('');
 }
 
 function updateTotal() {
@@ -238,57 +234,12 @@ function updateAdvertisingBanner() {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
         backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
-        message = "¡Oferta nocturna! Envío gratis en compras superiores a $150.000";
+        message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
         backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
-}
-
-function submitCheckoutForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    // Agregar productos del carrito al formData
-    cart.forEach((item, index) => {
-        formData.append(`product_${index}_name`, item.name);
-        formData.append(`product_${index}_price`, item.price);
-        formData.append(`product_${index}_quantity`, item.quantity);
-    });
-
-    // Agregar total y costo de envío
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal + shippingCost;
-    formData.append('subtotal', subtotal);
-    formData.append('shipping_cost', shippingCost);
-    formData.append('total', total);
-
-    // Enviar datos a Formspree
-    fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            // Si el envío a Formspree es exitoso, iniciar el proceso de pago con MercadoPago
-            initMercadoPago();
-        } else {
-            throw new Error('Error en el envío del formulario');
-        }
-    }).catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un error al procesar tu pedido. Por favor, intenta de nuevo.');
-    });
-}
-
-function initMercadoPago() {
-    // Aquí iría la lógica para iniciar el proceso de pago con MercadoPago
-    console.log('Iniciando proceso de pago con MercadoPago');
-    // Esta función se completará cuando actualicemos el archivo mercadopago.js
 }
 
 // Event Listeners
@@ -327,7 +278,23 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('shippingMethod').addEventListener('change', updateShippingCost);
+    document.getElementById('postalCode').addEventListener('change', function() {
+        const postalCode = this.value;
+        if (postalCode.length === 4) {
+            calculateShipping(postalCode)
+                .then(shippingOptions => {
+                    updateShippingOptions(shippingOptions);
+                    shippingCost = shippingOptions.standard.price;
+                    updateTotal();
+                });
+        }
+    });
+
+    document.getElementById('shippingMethod').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
+        updateTotal();
+    });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
@@ -337,8 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
     });
-
-    document.getElementById('checkoutForm').addEventListener('submit', submitCheckoutForm);
 
     updateBanner();
     setInterval(updateBanner, 5000);

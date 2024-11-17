@@ -455,19 +455,8 @@
                     <option value="">Seleccionar...</option>
                 </select>
             </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Método de pago</label>
-                <select name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    <option value="">Seleccionar...</option>
-                    <option value="mercadopago">Mercado Pago</option>
-                    <option value="transferencia">Transferencia</option>
-                    <option value="rapipago">Rapipago</option>
-                    <option value="pagofacil">Pago Fácil</option>
-                    <option value="efectivo">Efectivo</option>
-                </select>
-            </div>
-            <button type="submit" id="submitFormspree" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                Continuar con el pago
+            <button type="submit" id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                Finalizar compra
             </button>
             <div id="mercadopago-button" class="hidden"></div>
         </form>

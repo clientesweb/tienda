@@ -1,40 +1,50 @@
-const fetch = require('node-fetch');
+async function createPreference() {
+    console.log('Creating preference...');
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-exports.handler = async function(event, context) {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
+        const response = await fetch('/.netlify/functions/create-preference', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cart.map(item => ({
+                    title: item.name,
+                    unit_price: item.price,
+                    quantity: item.quantity,
+                })),
+            }),
+            signal: controller.signal
+        });
 
-  const { items } = JSON.parse(event.body);
+        clearTimeout(timeoutId);
 
-  try {
-    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        items: items,
-        back_urls: {
-          success: `${process.env.URL}/success`,
-          failure: `${process.env.URL}/failure`,
-          pending: `${process.env.URL}/pending`
-        },
-        auto_return: "approved"
-      })
-    });
+        console.log('Preference creation response status:', response.status);
 
-    const data = await response.json();
+        if (!response.ok) {
+            let errorMessage;
+            try {
+                const errorData = await response.json();
+                console.error('Error creating preference:', errorData);
+                errorMessage = errorData.error || 'Error creating preference';
+            } catch (jsonError) {
+                console.error('Error parsing error response:', jsonError);
+                errorMessage = `HTTP error! status: ${response.status}`;
+            }
+            throw new Error(errorMessage);
+        }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Error creating preference' })
-    };
-  }
-};
+        const data = await response.json();
+        console.log('Preference created successfully:', data);
+        return data;
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.error('Request timed out');
+            throw new Error('La solicitud ha tardado demasiado. Por favor, inténtalo de nuevo.');
+        }
+        console.error('Error in createPreference:', error);
+        throw error;
+    }
+}

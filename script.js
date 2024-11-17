@@ -200,10 +200,12 @@ function updateAdvertisingBanner() {
         backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage =
+            "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
         message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
-        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage =
+            "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
     advertisingMessage.textContent = message;
@@ -285,19 +287,27 @@ async function createPreference() {
         });
 
         if (!response.ok) {
-            throw new Error('Error al crear la preferencia de pago');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return await response.json();
+        const data = await response.json();
+        
+        if (!data || !data.id) {
+            throw new Error('La respuesta del servidor no contiene una preferencia válida');
+        }
+
+        return data;
     } catch (error) {
-        console.error('Error:', error);
-        throw error;
+        console.error('Error creating preference:', error);
+        throw new Error(`Error al crear la preferencia de pago: ${error.message}`);
     }
 }
 
 async function initMercadoPago() {
     try {
+        console.log("Starting MercadoPago initialization");
         const preference = await createPreference();
+        console.log("Preference created:", preference);
         const bricksBuilder = mp.bricks();
         
         await bricksBuilder.create("wallet", "mercadopago-button-container", {
@@ -307,16 +317,17 @@ async function initMercadoPago() {
             callbacks: {
                 onError: (error) => {
                     console.error('Error in MercadoPago Brick:', error);
-                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
+                    alert(`Hubo un error al procesar el pago: ${error.message}. Por favor, intenta nuevamente.`);
                 },
                 onReady: () => {
                     console.log("MercadoPago Brick ready");
                 }
             },
         });
+        console.log("MercadoPago initialization completed");
     } catch (error) {
         console.error('Error initializing MercadoPago:', error);
-        alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
+        alert(`Hubo un error al inicializar el pago: ${error.message}. Por favor, intenta nuevamente.`);
     }
 }
 
@@ -371,12 +382,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const mpContainer = document.getElementById('mercadopago-button-container');
             mpContainer.innerHTML = '';
             
+            // Asegurar que el contenedor sea visible y tenga un tamaño adecuado
+            mpContainer.style.display = 'block';
+            mpContainer.style.minHeight = '200px';
+            
             // Inicializar el checkout de MercadoPago
             await initMercadoPago();
             
-            // Ocultar el formulario y mostrar el botón de MercadoPago
+            // Ocultar el formulario
             document.getElementById('checkoutForm').style.display = 'none';
-            mpContainer.style.display = 'block';
         } catch (error) {
             console.error('Error:', error);
             alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);

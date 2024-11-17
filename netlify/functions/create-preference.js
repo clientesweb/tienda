@@ -5,7 +5,7 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const { items, shipments } = JSON.parse(event.body);
+  const { items, shipments, payer } = JSON.parse(event.body);
 
   mercadopago.configure({
     access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN
@@ -14,15 +14,39 @@ exports.handler = async function(event, context) {
   try {
     const preference = {
       items: items,
-      shipments: shipments
+      shipments: {
+        cost: shipments.cost,
+        mode: "not_specified",
+      },
+      payer: payer,
+      back_urls: {
+        success: `${process.env.URL}/success`,
+        failure: `${process.env.URL}/failure`,
+        pending: `${process.env.URL}/pending`
+      },
+      auto_return: "approved",
+      payment_methods: {
+        excluded_payment_types: [
+          {
+            id: "ticket"
+          }
+        ],
+        installments: 12
+      },
+      statement_descriptor: "MITIENDAONLINE",
+      external_reference: "Order-" + Date.now()
     };
 
     const response = await mercadopago.preferences.create(preference);
     return {
       statusCode: 200,
-      body: JSON.stringify({ id: response.body.id })
+      body: JSON.stringify({ 
+        id: response.body.id,
+        init_point: response.body.init_point
+      })
     };
   } catch (error) {
+    console.error('Error creating preference:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message })

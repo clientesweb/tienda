@@ -5,9 +5,13 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const { items } = JSON.parse(event.body);
-
   try {
+    const { items, payer, shipments, total_amount } = JSON.parse(event.body);
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      throw new Error('Invalid or empty items array');
+    }
+
     const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
       method: 'POST',
       headers: {
@@ -16,14 +20,22 @@ exports.handler = async function(event, context) {
       },
       body: JSON.stringify({
         items: items,
+        payer: payer,
+        shipments: shipments,
         back_urls: {
           success: `${process.env.URL}/success`,
           failure: `${process.env.URL}/failure`,
           pending: `${process.env.URL}/pending`
         },
-        auto_return: "approved"
+        auto_return: "approved",
+        total_amount: total_amount
       })
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`MercadoPago API error: ${JSON.stringify(errorData)}`);
+    }
 
     const data = await response.json();
 
@@ -32,9 +44,10 @@ exports.handler = async function(event, context) {
       body: JSON.stringify(data)
     };
   } catch (error) {
+    console.error('Error in create-preference:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error creating preference' })
+      body: JSON.stringify({ error: `Error creating preference: ${error.message}` })
     };
   }
 };

@@ -24,7 +24,7 @@ const products = {
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
-    "Envíos gratis en compras superiores a $10000",
+    "Envíos gratis en compras superiores a $150000",
     "¡Ofertas especiales en velas aromáticas!"
 ];
 
@@ -157,8 +157,7 @@ function removeFromCart(productId) {
 function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal + shippingCost;
-
+    
     cartItemCountEl.textContent = totalItems;
     cartItemCountEl.classList.toggle('hidden', totalItems === 0);
 
@@ -177,7 +176,9 @@ function updateCartUI() {
         </div>
     `).join('');
 
-    cartTotalEl.textContent = total.toLocaleString();
+    document.getElementById('cartSubtotal').textContent = subtotal.toLocaleString();
+    updateShippingCost();
+    updateTotal();
 }
 
 function formatPrice(price) {
@@ -187,38 +188,38 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function calculateShipping(postalCode) {
-    // Simular una llamada a la API de Mercado Envíos
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const shippingOptions = {
-                standard: {
-                    name: "Estándar",
-                    price: 500,
-                    estimatedDelivery: '3-5 días hábiles'
-                },
-                express: {
-                    name: "Express",
-                    price: 800,
-                    estimatedDelivery: '1-2 días hábiles'
-                }
-            };
-            resolve(shippingOptions);
-        }, 1000);
-    });
-}
-
-function updateShippingOptions(shippingOptions) {
-    const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
-    `).join('');
+function updateShippingCost() {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shippingCostEl = document.getElementById('shippingCost');
+    
+    if (subtotal >= 150000) {
+        shippingCost = 0;
+        shippingCostEl.textContent = 'Envío gratis';
+    } else {
+        const shippingMethod = document.getElementById('shippingMethod').value;
+        shippingCost = getShippingCost(shippingMethod);
+        shippingCostEl.textContent = `Costo de envío: $${shippingCost.toLocaleString()}`;
+    }
 }
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = subtotal + shippingCost;
-    document.getElementById('cartTotal').textContent = formatPrice(total);
+    document.getElementById('cartTotal').textContent = total.toLocaleString();
+    document.getElementById('orderTotal').textContent = `Total: $${total.toLocaleString()}`;
+}
+
+function getShippingCost(method) {
+    const shippingCosts = {
+        andreani_sucursal: 9000,
+        andreani_domicilio: 12000,
+        oca_sucursal: 12500,
+        correo_argentino_sucursal: 12500,
+        correo_argentino_domicilio: 15000,
+        oca_domicilio: 15000,
+        local: 0
+    };
+    return shippingCosts[method] || 0;
 }
 
 function updateAdvertisingBanner() {
@@ -240,6 +241,38 @@ function updateAdvertisingBanner() {
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
+}
+
+function prepareOrderData() {
+    const form = document.getElementById('checkoutForm');
+    const formData = new FormData(form);
+    
+    const orderData = {
+        customerInfo: Object.fromEntries(formData),
+        cartItems: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        })),
+        subtotal: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        shippingCost: shippingCost,
+        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost
+    };
+
+    return orderData;
+}
+
+function sendOrderToFormspree(orderData) {
+    return fetch('https://formspree.io/f/mvgorzwo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .catch(error => console.error('Error:', error));
 }
 
 // Event Listeners
@@ -278,31 +311,30 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('postalCode').addEventListener('change', function() {
-        const postalCode = this.value;
-        if (postalCode.length === 4) {
-            calculateShipping(postalCode)
-                .then(shippingOptions => {
-                    updateShippingOptions(shippingOptions);
-                    shippingCost = shippingOptions.standard.price;
-                    updateTotal();
-                });
-        }
-    });
-
     document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
+        updateShippingCost();
         updateTotal();
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
+        updateShippingCost();
+        updateTotal();
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const orderData = prepareOrderData();
+        sendOrderToFormspree(orderData)
+            .then(() => {
+                // Aquí puedes llamar a la función para iniciar el pago con Mercado Pago
+                initMercadoPago(orderData);
+            });
     });
 
     updateBanner();

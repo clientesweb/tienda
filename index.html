@@ -154,42 +154,6 @@
             background-clip: text;
             color: transparent;
         }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body class="flex min-h-screen flex-col">
@@ -415,7 +379,7 @@
                         </li>
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                            <a href="/cdn-cgi/l/email-protection#e881868e87a88587868985879d9a9c8d909c8184c68b8785"><span class="__cf_email__" data-cfemail="543d3a323b14393b3a35393b212620312c203d387a373b39">[email&#160;protected]</span></a>
+                            <a href="mailto:info@monamourtextil.com">info@monamourtextil.com</a>
                         </li>
                     </ul>
                 </div>
@@ -455,80 +419,45 @@
         </div>
     </footer>
 
-    <!-- Cart Modal -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-auto mt-20">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold gradient-text">Carrito de Compras</h2>
-                <span class="close text-gray-600 hover:text-gray-800 cursor-pointer">&times;</span>
-            </div>
-            <div id="cartItems" class="space-y-4 max-h-96 overflow-y-auto">
-                <!-- Cart items will be dynamically inserted here -->
-            </div>
-            <div class="border-t pt-4 mt-4">
-                <p class="font-bold text-xl">Total: $<span id="cartTotal">0</span></p>
-            </div>
-            <button id="checkoutButton" class="w-full bg-primary text-white py-3 px-4 rounded-lg mt-6 hover:bg-primary-dark transition-colors text-lg font-semibold">
-                Proceder al pago
-            </button>
-        </div>
-    </div>
-
     <!-- Checkout Form Modal -->
-    <div id="checkoutModal" class="modal">
-        <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-lg mx-auto mt-10 mb-10">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold gradient-text">Finalizar Compra</h2>
-                <span class="close text-gray-600 hover:text-gray-800 cursor-pointer">&times;</span>
+    <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+        <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
+                <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-times h-5 w-5"></i>
+                </button>
             </div>
-            <form id="checkoutForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
-                    <div>
-                        <label for="apellido" class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
-                    <div>
-                        <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                        <input type="tel" id="telefono" name="telefono" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
-                    <div>
-                        <label for="codigoPostal" class="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
-                        <input type="text" id="codigoPostal" name="codigoPostal" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
+            <form id="checkoutForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                    <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label for="calle" class="block text-sm font-medium text-gray-700 mb-1">Calle</label>
-                    <input type="text" id="calle" name="calle" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                </div>
-                <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <label for="numero" class="block text-sm font-medium text-gray-700 mb-1">Número</label>
-                        <input type="text" id="numero" name="numero" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
-                    <div>
-                        <label for="departamento" class="block text-sm font-medium text-gray-700 mb-1">Departamento (opcional)</label>
-                        <input type="text" id="departamento" name="departamento" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                    </div>
+                    <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                    <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label for="barrio" class="block text-sm font-medium text-gray-700 mb-1">Barrio (opcional)</label>
-                    <input type="text" id="barrio" name="barrio" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
-                    <input type="text" id="ciudad" name="ciudad" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                    <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label for="dni" class="block text-sm font-medium text-gray-700 mb-1">DNI o CUIT</label>
-                    <input type="text" id="dni" name="dni" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <label class="block text-sm font-medium text-gray-700">Código Postal</label>
+                    <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label for="metodoPago" class="block text-sm font-medium text-gray-700 mb-1">Método de pago</label>
-                    <select id="metodoPago" name="metodoPago" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <label class="block text-sm font-medium text-gray-700">Método de envío</label>
+                    <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option value="">Seleccionar...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Método de pago</label>
+                    <select name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                         <option value="">Seleccionar...</option>
                         <option value="mercadopago">Mercado Pago</option>
                         <option value="transferencia">Transferencia</option>
@@ -537,33 +466,43 @@
                         <option value="efectivo">Efectivo</option>
                     </select>
                 </div>
-                <div>
-                    <label for="metodoEnvio" class="block text-sm font-medium text-gray-700 mb-1">Método de envío</label>
-                    <select id="metodoEnvio" name="metodoEnvio" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
-                        <option value="">Seleccionar...</option>
-                        <option value="andreani_sucursal">Andreani a sucursal ($9.000)</option>
-                        <option value="andreani_domicilio">Andreani a domicilio ($12.000)</option>
-                        <option value="oca_sucursal">Oca a sucursal ($12.500)</option>
-                        <option value="oca_domicilio">Oca a domicilio ($15.000)</option>
-                        <option value="correo_argentino_sucursal">Correo Argentino a sucursal ($12.500)</option>
-                        <option value="correo_argentino_domicilio">Correo Argentino a domicilio ($15.000)</option>
-                        <option value="retiro_local">Retiro en nuestro local (Gratis)</option>
-                    </select>
-                </div>
                 <div id="mercadopago-button"></div>
-                <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold">
+                <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
                     Finalizar compra
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Product Modal -->
-    <div id="productModal" class="modal">
-        <div class="modal-content bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-auto mt-20">
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+        <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 id="productModalTitle" class="text-2xl font-bold gradient-text"></h2>
-                <span class="close text-gray-600 hover:text-gray-800 cursor-pointer">&times;</span>
+                <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
+                <button id="closeCart" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-times h-5 w-5"></i>
+                </button>
+            </div>
+            <div id="cartItems" class="space-y-4">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <div class="border-t pt-4 mt-4">
+                <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
+            </div>
+            <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
+                Proceder al pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+        <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="productModalTitle" class="text-xl font-bold gradient-text"></h2>
+                <button id="closeProductModal" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-times h-5 w-5"></i>
+                </button>
             </div>
             <div id="productModalContent">
                 <!-- Product details will be dynamically inserted here -->
@@ -584,7 +523,6 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="mercadopago.js"></script>
     <script src="script.js"></script>

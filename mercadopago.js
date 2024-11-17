@@ -1,7 +1,7 @@
 // mercadopago.js
 
 // Inicializar el objeto de Mercado Pago
-const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', {
+const mp = new MercadoPago('TU_PUBLIC_KEY_AQUI', {
     locale: 'es-AR'
 });
 

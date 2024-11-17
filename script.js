@@ -38,7 +38,6 @@ const heroImages = [
 let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
-let shippingCost = 0;
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -156,8 +155,7 @@ function removeFromCart(productId) {
 
 function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal + shippingCost;
+    const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     cartItemCountEl.textContent = totalItems;
     cartItemCountEl.classList.toggle('hidden', totalItems === 0);
@@ -177,9 +175,7 @@ function updateCartUI() {
         </div>
     `).join('');
 
-    document.getElementById('subtotal').textContent = formatPrice(subtotal);
-    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
-    cartTotalEl.textContent = formatPrice(total);
+    cartTotalEl.textContent = totalPrice.toLocaleString();
 }
 
 function formatPrice(price) {
@@ -200,12 +196,10 @@ function updateAdvertisingBanner() {
         backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage =
-            "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
         message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
-        backgroundImage =
-            "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
     advertisingMessage.textContent = message;
@@ -236,23 +230,24 @@ async function calculateShipping() {
         }
 
         const data = await response.json();
-        shippingCost = data.cost;
-        document.getElementById('costoEnvioValor').textContent = formatPrice(shippingCost);
+        document.getElementById('costoEnvioValor').textContent = formatPrice(data.cost);
         document.getElementById('costoEnvio').classList.remove('hidden');
-        updateCartUI();
-        
-        // Habilitar el botón de proceder al pago después de calcular el envío
-        document.getElementById('procederPago').disabled = false;
+        updateTotalWithShipping(data.cost);
     } catch (error) {
         console.error('Error:', error);
         alert('Hubo un error al calcular el costo de envío. Por favor, intente nuevamente.');
     }
 }
 
-async function createPreference() {
-    const formData = new FormData(document.getElementById('checkoutForm'));
+function updateTotalWithShipping(shippingCost) {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = subtotal + shippingCost;
+    document.getElementById('cartTotal').textContent = formatPrice(total);
+}
+
+async function createPreference() {
+    const formData = new FormData(document.getElementById('checkoutForm'));
+    const shippingCost = parseFloat(document.getElementById('costoEnvioValor').textContent.replace('$', '').replace('.', '').replace(',', '.'));
 
     try {
         const response = await fetch('/.netlify/functions/create-preference', {
@@ -281,33 +276,24 @@ async function createPreference() {
                 shipments: {
                     cost: shippingCost,
                     mode: "not_specified"
-                },
-                total_amount: total
+                }
             }),
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error('Error al crear la preferencia de pago');
         }
 
-        const data = await response.json();
-        
-        if (!data || !data.id) {
-            throw new Error('La respuesta del servidor no contiene una preferencia válida');
-        }
-
-        return data;
+        return await response.json();
     } catch (error) {
-        console.error('Error creating preference:', error);
-        throw new Error(`Error al crear la preferencia de pago: ${error.message}`);
+        console.error('Error:', error);
+        throw error;
     }
 }
 
 async function initMercadoPago() {
     try {
-        console.log("Starting MercadoPago initialization");
         const preference = await createPreference();
-        console.log("Preference created:", preference);
         const bricksBuilder = mp.bricks();
         
         await bricksBuilder.create("wallet", "mercadopago-button-container", {
@@ -317,17 +303,16 @@ async function initMercadoPago() {
             callbacks: {
                 onError: (error) => {
                     console.error('Error in MercadoPago Brick:', error);
-                    alert(`Hubo un error al procesar el pago: ${error.message}. Por favor, intenta nuevamente.`);
+                    alert('Hubo un error al procesar el pago. Por favor, intenta nuevamente.');
                 },
                 onReady: () => {
                     console.log("MercadoPago Brick ready");
                 }
             },
         });
-        console.log("MercadoPago initialization completed");
     } catch (error) {
         console.error('Error initializing MercadoPago:', error);
-        alert(`Hubo un error al inicializar el pago: ${error.message}. Por favor, intenta nuevamente.`);
+        alert('Hubo un error al inicializar el pago. Por favor, intenta nuevamente.');
     }
 }
 
@@ -369,28 +354,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('calcularEnvio').addEventListener('click', calculateShipping);
 
-    document.getElementById('procederPago').addEventListener('click', async function(e) {
+    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        if (shippingCost === 0) {
-            alert('Por favor, calcule el costo de envío antes de proceder al pago.');
-            return;
-        }
-
         try {
-            // Limpiar el contenedor del botón de MercadoPago existente
+            // Clear the existing MercadoPago button container
             const mpContainer = document.getElementById('mercadopago-button-container');
             mpContainer.innerHTML = '';
             
-            // Asegurar que el contenedor sea visible y tenga un tamaño adecuado
-            mpContainer.style.display = 'block';
-            mpContainer.style.minHeight = '200px';
-            
-            // Inicializar el checkout de MercadoPago
+            // Initialize MercadoPago checkout
             await initMercadoPago();
             
-            // Ocultar el formulario
-            document.getElementById('checkoutForm').style.display = 'none';
+            // Hide the form and show the MercadoPago button
+            this.style.display = 'none';
+            mpContainer.style.display = 'block';
         } catch (error) {
             console.error('Error:', error);
             alert(`Hubo un error al procesar tu pedido: ${error.message}. Por favor, intenta nuevamente.`);
@@ -400,15 +377,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
-        
-        // Resetear el formulario y ocultar el costo de envío
-        document.getElementById('checkoutForm').reset();
-        document.getElementById('costoEnvio').classList.add('hidden');
-        document.getElementById('procederPago').disabled = true;
-        
-        // Ocultar el botón de MercadoPago y mostrar el formulario
-        document.getElementById('mercadopago-button-container').style.display = 'none';
-        document.getElementById('checkoutForm').style.display = 'block';
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {

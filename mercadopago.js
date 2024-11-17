@@ -32,7 +32,7 @@ function createPreference() {
     const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
     const shippingCost = parseInt(selectedShipping.textContent.match(/\$(\d+)/)[1]);
 
-    return fetch('/create_preference', {
+    return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

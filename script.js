@@ -242,93 +242,6 @@ function updateAdvertisingBanner() {
     advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
-// Mercado Pago Integration
-function initMercadoPago() {
-    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
-    const bricksBuilder = mp.bricks();
-    const mercadopagoButton = document.getElementById('mercadopago-button');
-
-    // Desactivar el botón de MercadoPago al cargar la página
-    if (mercadopagoButton) {
-        mercadopagoButton.style.pointerEvents = 'none';
-        mercadopagoButton.style.opacity = '0.5';
-    }
-
-    const renderPaymentBrick = async (bricksBuilder) => {
-        const settings = {
-            initialization: {
-                amount: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost,
-            },
-            customization: {
-                visual: {
-                    style: {
-                        theme: 'default'
-                    }
-                }
-            },
-            callbacks: {
-                onReady: () => {
-                    console.log('Brick ready');
-                },
-                onSubmit: ({ selectedPaymentMethod, formData }) => {
-                    // Callback llamado al hacer clic en el botón de MercadoPago
-                    return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(formData)
-                        })
-                        .then((response) => response.json())
-                        .then((response) => {
-                            // Recibir el resultado del pago
-                            resolve();
-                        })
-                        .catch((error) => {
-                            // Manejar la respuesta de error al intentar crear el pago
-                            reject();
-                        });
-                    });
-                },
-                onError: (error) => {
-                    console.error(error);
-                },
-            },
-        };
-        window.paymentBrickController = await bricksBuilder.create('payment', 'mercadopago-button', settings);
-    };
-
-    renderPaymentBrick(bricksBuilder);
-
-    // Escuchar el envío del formulario de FormsSpreen
-    const form = document.getElementById('formsspreen-form');
-    if (form) {
-        form.addEventListener('submit', (event) => {
-            event.preventDefault(); // Evitar el comportamiento predeterminado
-            const formData = new FormData(form);
-            fetch('https://formspree.io/f/xrbglzrk', {
-                method: 'POST',
-                body: formData,
-            })
-            .then((response) => {
-                if (response.ok) {
-                    console.log('Formulario enviado exitosamente');
-
-                    // Activar el botón de MercadoPago
-                    if (mercadopagoButton) {
-                        mercadopagoButton.style.pointerEvents = 'auto';
-                        mercadopagoButton.style.opacity = '1';
-                    }
-                } else {
-                    console.error('Error al enviar el formulario');
-                }
-            })
-            .catch((error) => console.error('Error:', error));
-        });
-    }
-}
-
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -386,7 +299,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
-        initMercadoPago(); // Initialize Mercado Pago when opening the checkout modal
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {

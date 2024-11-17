@@ -242,6 +242,52 @@ function updateAdvertisingBanner() {
     advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
+function openPaymentModal() {
+    document.getElementById('paymentModal').classList.remove('hidden');
+    if (!checkoutButtonCreated) {
+        toggleLoadingIndicator(true);
+        createPreference()
+            .then(preferenceId => {
+                createCheckoutButton(preferenceId);
+                toggleLoadingIndicator(false);
+            })
+            .catch(error => {
+                console.error('Error al crear la preferencia:', error);
+                toggleLoadingIndicator(false);
+            });
+    }
+}
+
+function closePaymentModal() {
+    document.getElementById('paymentModal').classList.add('hidden');
+}
+
+function openTransferModal() {
+    document.getElementById('transferModal').classList.remove('hidden');
+}
+
+function closeTransferModal() {
+    document.getElementById('transferModal').classList.add('hidden');
+}
+
+function toggleLoadingIndicator(show) {
+    const button = document.getElementById('checkoutButton');
+    if (show) {
+        button.disabled = true;
+        button.innerHTML = 'Procesando...';
+    } else {
+        button.disabled = false;
+        button.innerHTML = 'Finalizar compra';
+    }
+}
+
+function sendWhatsAppMessage(imageUrl) {
+    // Implementa aquí la lógica para enviar el mensaje por WhatsApp
+    console.log('Enviando mensaje de WhatsApp con imagen:', imageUrl);
+    alert('Comprobante enviado por WhatsApp. Nos pondremos en contacto contigo pronto.');
+}
+
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -304,6 +350,56 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
     });
+
+    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        try {
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                document.getElementById('checkoutModal').classList.add('hidden');
+                openPaymentModal();
+            } else {
+                throw new Error('Error en el envío del formulario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un error al procesar tu solicitud. Por favor, intenta de nuevo.');
+        }
+    });
+
+    document.getElementById('transferButton').addEventListener('click', function() {
+        closePaymentModal();
+        openTransferModal();
+    });
+
+    document.getElementById('transferForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const fileInput = document.getElementById('comprobante');
+        const file = fileInput.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                sendWhatsAppMessage(reader.result);
+                closeTransferModal();
+            }
+            reader.readAsDataURL(file);
+        } else {
+            alert('Por favor, selecciona un comprobante de transferencia.');
+        }
+    });
+
+    document.getElementById('closePaymentModal').addEventListener('click', closePaymentModal);
+    document.getElementById('closeTransferModal').addEventListener('click', closeTransferModal);
 
     updateBanner();
     setInterval(updateBanner, 5000);

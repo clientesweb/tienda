@@ -39,6 +39,7 @@ let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
+let currentCheckoutStep = 'envio';
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -210,7 +211,8 @@ function calculateShipping(postalCode) {
 
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
+    shippingSelect.innerHTML = '<option value="">Seleccionar...</option>' +
+        Object.entries(shippingOptions).map(([key, option]) => `
         <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
     `).join('');
 }
@@ -240,6 +242,99 @@ function updateAdvertisingBanner() {
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
+}
+
+function updateCheckoutUI() {
+    const envioSection = document.getElementById('envioSection');
+    const pagoSection = document.getElementById('pagoSection');
+    const detalleSection = document.getElementById('detalleSection');
+    const prevStepButton = document.getElementById('prevStep');
+    const nextStepButton = document.getElementById('nextStep');
+
+    envioSection.classList.add('hidden');
+    pagoSection.classList.add('hidden');
+    detalleSection.classList.add('hidden');
+
+    document.getElementById('envioTab').classList.remove('text-primary', 'border-primary');
+    document.getElementById('pagoTab').classList.remove('text-primary', 'border-primary');
+    document.getElementById('detalleTab').classList.remove('text-primary', 'border-primary');
+
+    switch (currentCheckoutStep) {
+        case 'envio':
+            envioSection.classList.remove('hidden');
+            document.getElementById('envioTab').classList.add('text-primary', 'border-primary');
+            prevStepButton.classList.add('hidden');
+            nextStepButton.textContent = 'Siguiente';
+            break;
+        case 'pago':
+            pagoSection.classList.remove('hidden');
+            document.getElementById('pagoTab').classList.add('text-primary', 'border-primary');
+            prevStepButton.classList.remove('hidden');
+            nextStepButton.textContent = 'Siguiente';
+            break;
+        case 'detalle':
+            detalleSection.classList.remove('hidden');
+            document.getElementById('detalleTab').classList.add('text-primary', 'border-primary');
+            prevStepButton.classList.remove('hidden');
+            nextStepButton.textContent = 'Finalizar compra';
+            updateOrderSummary();
+            break;
+    }
+}
+
+function updateOrderSummary() {
+    const orderSummaryEl = document.getElementById('orderSummary');
+    const orderTotalEl = document.getElementById('orderTotal');
+
+    orderSummaryEl.innerHTML = cart.map(item => `
+        <div class="flex justify-between">
+            <span>${item.name} x${item.quantity}</span>
+            <span>${formatPrice(item.price * item.quantity)}</span>
+        </div>
+    `).join('');
+
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = subtotal + shippingCost;
+
+    orderSummaryEl.innerHTML += `
+        <div class="flex justify-between mt-2 pt-2 border-t">
+            <span>Envío:</span>
+            <span>${formatPrice(shippingCost)}</span>
+        </div>
+    `;
+
+    orderTotalEl.textContent = formatPrice(total);
+}
+
+function handleCheckoutNavigation(direction) {
+    const steps = ['envio', 'pago', 'detalle'];
+    const currentIndex = steps.indexOf(currentCheckoutStep);
+    
+    if (direction === 'next') {
+        if (currentIndex < steps.length - 1) {
+            currentCheckoutStep = steps[currentIndex + 1];
+        } else {
+            // Handle order submission
+            submitOrder();
+            return;
+        }
+    } else if (direction === 'prev' && currentIndex > 0) {
+        currentCheckoutStep = steps[currentIndex - 1];
+    }
+
+    updateCheckoutUI();
+}
+
+function submitOrder() {
+    // Here you would typically send the order data to your server
+    console.log('Order submitted!');
+    // Clear the cart
+    cart = [];
+    updateCartUI();
+    // Close the checkout modal
+    document.getElementById('checkoutModal').classList.add('hidden');
+    // Show a confirmation message
+    alert('¡Gracias por tu compra! Tu pedido ha sido recibido.');
 }
 
 // Event Listeners
@@ -299,10 +394,40 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
+        currentCheckoutStep = 'envio';
+        updateCheckoutUI();
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    document.getElementById('envioTab').addEventListener('click', () => {
+        currentCheckoutStep = 'envio';
+        updateCheckoutUI();
+    });
+
+    document.getElementById('pagoTab').addEventListener('click', () => {
+        currentCheckoutStep = 'pago';
+        updateCheckoutUI();
+    });
+
+    document.getElementById('detalleTab').addEventListener('click', () => {
+        currentCheckoutStep = 'detalle';
+        updateCheckoutUI();
+    });
+
+    document.getElementById('prevStep').addEventListener('click', () => {
+        handleCheckoutNavigation('prev');
+    });
+
+    document.getElementById('nextStep').addEventListener('click', () => {
+        handleCheckoutNavigation('next');
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitOrder();
     });
 
     updateBanner();

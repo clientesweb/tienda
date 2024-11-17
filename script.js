@@ -1,3 +1,12 @@
+// Add preloader transition
+const style = document.createElement('style');
+style.textContent = `
+    #preloader {
+        transition: opacity 0.5s ease-out;
+    }
+`;
+document.head.appendChild(style);
+
 // Data
 const products = {
     velas: [
@@ -299,9 +308,17 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         document.getElementById('whatsappNotification').classList.remove('hidden');
     }, 10000);
+});
 
-    // Remove preloader
-    document.getElementById('preloader').style.display = 'none';
+// Remove preloader
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
+    }
 });
 
 // Log a message to confirm the script has loaded

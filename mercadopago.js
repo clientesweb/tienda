@@ -1,17 +1,17 @@
 // mercadopago.js
 
-// Inicializar el objeto de Mercado Pago
+// Initialize the Mercado Pago object
 const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', {
     locale: 'es-AR'
 });
 
 let checkoutButtonCreated = false;
 
-// Función para crear el botón de pago
+// Function to create the payment button
 function createCheckoutButton(preferenceId) {
-    // Limpiar el contenedor del botón si ya existe
-    const mpButtonContainer = document.getElementById('mercadopago-button');
-    mpButtonContainer.innerHTML = '';
+    // Clear existing button if it exists
+    const buttonContainer = document.getElementById('mercadopago-button');
+    buttonContainer.innerHTML = '';
 
     const bricksBuilder = mp.bricks();
 
@@ -22,137 +22,138 @@ function createCheckoutButton(preferenceId) {
         callbacks: {
             onError: (error) => {
                 console.error('Error en el pago:', error);
-                showErrorMessage('Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
+                showNotification('Error en el proceso de pago. Por favor, intente nuevamente.', 'error');
             },
             onReady: () => {
                 console.log('Botón de pago listo');
                 checkoutButtonCreated = true;
-                hideLoadingIndicator();
-            },
-            onSubmit: () => {
-                showLoadingIndicator('Procesando pago...');
-            },
-            onPaymentSuccess: (data) => {
-                console.log('Pago exitoso:', data);
-                showSuccessMessage('¡Pago realizado con éxito! Gracias por tu compra.');
-                clearCart();
+                showNotification('Listo para procesar el pago', 'success');
             }
         }
     });
 }
 
-// Función para crear la preferencia de pago
-function createPreference() {
+// Function to create the payment preference
+async function createPreference() {
     const items = cart.map(item => ({
         title: item.name,
-        unit_price: item.price,
-        quantity: item.quantity,
+        unit_price: parseFloat(item.price),
+        quantity: parseInt(item.quantity),
     }));
 
-    const shippingMethod = document.getElementById('shippingMethod');
-    const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
-    const shippingCost = parseInt(selectedShipping.dataset.cost);
+    const shippingMethod = document.getElementById('metodoEnvio');
+    const selectedShipping = shippingOptions.find(option => option.id === shippingMethod.value);
+    const shippingCost = selectedShipping ? selectedShipping.price : 0;
 
-    const orderData = prepareOrderData();
+    const formData = new FormData(document.getElementById('checkoutForm'));
+    const customerData = Object.fromEntries(formData.entries());
 
-    return fetch('/.netlify/functions/create-preference', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            items: items,
-            shipments: {
-                cost: shippingCost,
-                mode: "not_specified",
+    try {
+        const response = await fetch('/.netlify/functions/create-preference', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            payer: {
-                name: orderData.customerInfo.nombre,
-                surname: orderData.customerInfo.apellido,
-                email: orderData.customerInfo.email,
-                phone: {
-                    area_code: "",
-                    number: orderData.customerInfo.telefono
+            body: JSON.stringify({
+                items: items,
+                shipments: {
+                    cost: shippingCost,
+                    mode: "not_specified",
                 },
-                address: {
-                    street_name: orderData.customerInfo.calle,
-                    street_number: orderData.customerInfo.numero,
-                    zip_code: orderData.customerInfo.codigoPostal
+                payer: {
+                    name: customerData.nombre,
+                    surname: customerData.apellido,
+                    email: customerData.email,
+                    phone: {
+                        area_code: "",
+                        number: customerData.telefono
+                    },
+                    identification: {
+                        type: "DNI",
+                        number: customerData.dni
+                    },
+                    address: {
+                        street_name: customerData.calle,
+                        street_number: customerData.numero,
+                        zip_code: customerData.codigoPostal
+                    }
                 }
-            }
-        })
-    })
-    .then(response => response.json())
-    .then(data => data.id);
-}
-
-// Función para mostrar el indicador de carga
-function showLoadingIndicator(message = 'Cargando...') {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    loadingIndicator.textContent = message;
-    loadingIndicator.classList.remove('hidden');
-}
-
-// Función para ocultar el indicador de carga
-function hideLoadingIndicator() {
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    loadingIndicator.classList.add('hidden');
-}
-
-// Función para mostrar mensajes de error
-function showErrorMessage(message) {
-    const errorMessage = document.getElementById('errorMessage');
-    errorMessage.textContent = message;
-    errorMessage.classList.remove('hidden');
-    setTimeout(() => {
-        errorMessage.classList.add('hidden');
-    }, 5000);
-}
-
-// Función para mostrar mensajes de éxito
-function showSuccessMessage(message) {
-    const successMessage = document.getElementById('successMessage');
-    successMessage.textContent = message;
-    successMessage.classList.remove('hidden');
-    setTimeout(() => {
-        successMessage.classList.add('hidden');
-    }, 5000);
-}
-
-// Función para limpiar el carrito después de un pago exitoso
-function clearCart() {
-    cart = [];
-    updateCartUI();
-    document.getElementById('checkoutModal').classList.add('hidden');
-}
-
-// Función para iniciar el proceso de pago con Mercado Pago
-function initMercadoPago(orderData) {
-    showLoadingIndicator('Preparando el pago...');
-    
-    // Primero, enviar los datos del pedido a Formspree
-    sendOrderToFormspree(orderData)
-        .then(() => {
-            // Luego, crear la preferencia de pago de Mercado Pago
-            return createPreference();
-        })
-        .then(preferenceId => {
-            createCheckoutButton(preferenceId);
-        })
-        .catch(error => {
-            console.error('Error al iniciar el proceso de pago:', error);
-            showErrorMessage('Hubo un error al iniciar el proceso de pago. Por favor, inténtalo de nuevo.');
-            hideLoadingIndicator();
+            })
         });
+
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+        }
+
+        const data = await response.json();
+        return data.id;
+    } catch (error) {
+        console.error('Error al crear la preferencia:', error);
+        showNotification('Error al procesar la orden. Por favor, intente nuevamente.', 'error');
+        throw error;
+    }
 }
 
-// Evento para iniciar el proceso de pago
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+// Function to show and hide the loading indicator
+function toggleLoadingIndicator(show) {
+    const button = document.getElementById('checkoutButton');
+    button.disabled = show;
+    button.innerHTML = show ? 'Procesando...' : 'Finalizar compra';
+}
+
+// Function to show notifications
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = `notification ${type}`;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+}
+
+// Event to start the payment process
+document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const orderData = prepareOrderData();
-    initMercadoPago(orderData);
+    if (!checkoutButtonCreated) {
+        toggleLoadingIndicator(true);
+        try {
+            const preferenceId = await createPreference();
+            createCheckoutButton(preferenceId);
+        } catch (error) {
+            console.error('Error al crear la preferencia:', error);
+        } finally {
+            toggleLoadingIndicator(false);
+        }
+    }
 });
 
-// Asegúrate de que estas funciones estén definidas o importadas correctamente
-// prepareOrderData, updateCartUI, sendOrderToFormspree
+// Function to validate the form before submission
+function validateForm() {
+    const form = document.getElementById('checkoutForm');
+    const inputs = form.querySelectorAll('input[required], select[required]');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            isValid = false;
+            input.classList.add('invalid');
+        } else {
+            input.classList.remove('invalid');
+        }
+    });
+
+    return isValid;
+}
+
+// Add form validation before submission
+document.getElementById('checkoutButton').addEventListener('click', function(e) {
+    if (!validateForm()) {
+        e.preventDefault();
+        showNotification('Por favor, complete todos los campos requeridos.', 'error');
+    }
+});
+
+// Initialize shipping options
+updateShippingOptions();

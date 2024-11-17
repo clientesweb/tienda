@@ -3,601 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Amour Textil - Decoración y Textiles de Hogar</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#D4C098',
-                        secondary: '#A6A18F',
-                        'primary-dark': '#C8C2AC',
-                        'secondary-dark': '#848071',
-                        cream: '#EAE3C9',
-                        ivory: '#F3ECD0'
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Mon Amour Textil</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Estilos existentes */
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        /* Preloader */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #D4C098;
-            border-right: 5px solid #A6A18F;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .gradient-text {
-            background: linear-gradient(45deg, #D4C098, #A6A18F);
-            -webkit-background-clip: text;
             background-clip: text;
+            -webkit-background-clip: text;
             color: transparent;
+            background-image: linear-gradient(to right, #4F46E5, #E11D48);
         }
-
-        /* Menu icon animation */
         .menu-icon {
-            transition: transform 0.3s ease;
-        }
-        .menu-icon.open {
-            transform: rotate(90deg);
-        }
-
-        /* Product card hover effects */
-        .product-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* WhatsApp logo animation */
-        .whatsapp-logo {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Product slider styles */
-        .product-slider {
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .product-slider-container {
+            width: 24px;
+            height: 24px;
             position: relative;
-        }
-
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .slider-button:hover {
-            background: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .slider-button.prev {
+        .menu-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4F46E5;
+            border-radius: 9px;
+            opacity: 1;
             left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
         }
-
-        .slider-button.next {
-            right: 0;
+        .menu-icon span:nth-child(1) {
+            top: 0px;
         }
-
-        /* Gradient background for advertising banner */
-        .gradient-bg {
-            background: linear-gradient(45deg, #D4C098, #A6A18F);
+        .menu-icon span:nth-child(2), .menu-icon span:nth-child(3) {
+            top: 10px;
         }
-
-        /* Gradient icons */
-        .gradient-icon {
-            background: linear-gradient(45deg, #D4C098, #A6A18F);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .menu-icon span:nth-child(4) {
+            top: 20px;
+        }
+        .menu-icon.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        .menu-icon.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        .menu-icon.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        .menu-icon.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
         }
     </style>
 </head>
-<body class="flex min-h-screen flex-col">
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader"></div>
+<body class="bg-gray-100">
+    <div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
+        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div>
     </div>
 
-    <!-- Top Banner -->
-    <div id="topBanner" class="gradient-bg p-2 text-center text-white relative">
-        <p class="text-sm">
-            <span id="bannerMessage"></span>
-            <a href="#" class="underline">COMPRAR AHORA</a>
-        </p>
-        <button id="closeBanner" class="absolute right-2 top-2 text-white hover:bg-primary-dark p-1">
-            <i class="fas fa-times h-4 w-4"></i>
+    <div id="topBanner" class="bg-primary text-white py-2 px-4 text-center relative">
+        <span id="bannerMessage"></span>
+        <button id="closeBanner" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-200">
+            <i class="fas fa-times"></i>
         </button>
     </div>
 
-    <!-- Header -->
-    <header class="border-b sticky top-0 bg-white z-50">
-        <div class="container mx-auto flex items-center justify-between px-4 py-4">
-            <button id="mobileMenuButton" class="text-gray-600 hover:text-primary lg:hidden">
-                <i class="fas fa-bars h-5 w-5 menu-icon"></i>
-            </button>
-
-            <nav class="hidden lg:flex space-x-6">
-                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
-                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
-                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
-                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
-            </nav>
-
-            <a href="/" class="flex items-center justify-center flex-grow lg:flex-grow-0">
-                <img src="img/logo.png" alt="Mon Amour Textil" class="h-20 w-auto">
-            </a>
-
-            <div class="flex items-center space-x-4">
-                <button id="cartButton" class="text-gray-600 hover:text-primary relative">
-                    <i class="fas fa-shopping-cart h-5 w-5"></i>
-                    <span id="cartItemCount" class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs text-white hidden"></span>
-                </button>
+    <header class="bg-white shadow-md">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold gradient-text">Mon Amour Textil</div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#" class="text-gray-800 hover:text-primary">Inicio</a>
+                    <a href="#" class="text-gray-800 hover:text-primary">Productos</a>
+                    <a href="#" class="text-gray-800 hover:text-primary">Sobre Nosotros</a>
+                    <a href="#" class="text-gray-800 hover:text-primary">Contacto</a>
+                </div>
+                <div class="flex items-center">
+                    <button id="cartButton" class="text-gray-800 hover:text-primary mr-4 relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartItemCount" class="absolute -top-2 -right-2 bg-primary text-white rounded-full text-xs w-5 h-5 flex items-center justify-center hidden"></span>
+                    </button>
+                    <div class="md:hidden">
+                        <button id="mobileMenuButton" class="text-gray-800 hover:text-primary">
+                            <div class="menu-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
             </div>
+        </nav>
+        <div id="mobileMenu" class="md:hidden bg-white py-2 px-4 hidden">
+            <a href="#" class="block py-2 text-gray-800 hover:text-primary">Inicio</a>
+            <a href="#" class="block py-2 text-gray-800 hover:text-primary">Productos</a>
+            <a href="#" class="block py-2 text-gray-800 hover:text-primary">Sobre Nosotros</a>
+            <a href="#" class="block py-2 text-gray-800 hover:text-primary">Contacto</a>
+            <button id="closeMobileMenu" class="mt-4 w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                Cerrar
+            </button>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white h-full w-64 p-4">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text">Menú</h2>
-                <button id="closeMobileMenu" class="text-gray-600 hover:text-primary">
-                    <i class="fas fa-times h-5 w-5"></i>
-                </button>
-            </div>
-            <nav class="flex flex-col space-y-4">
-                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
-                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
-                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
-                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
-            </nav>
-        </div>
-    </div>
-
     <main>
-        <!-- Hero Banner -->
-        <div id="hero" class="relative h-[500px] w-full overflow-hidden">
-            <!-- Hero images will be dynamically inserted here -->
-        </div>
-
-        <!-- New Advertising Banner without background image -->
-        <div class="gradient-bg p-6 text-center text-white">
-            <h2 class="text-2xl font-bold mb-2">¡Ofertas Especiales!</h2>
-            <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
-            <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
-        </div>
-
-        <!-- Product Sections -->
-        <section id="velas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">VELAS</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('velas', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="velasContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('velas', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+        <section id="hero" class="bg-gray-200 py-20 px-6 text-center relative overflow-hidden">
+            <div class="relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">Bienvenido a Mon Amour Textil</h1>
+                <p class="text-xl mb-8">Descubre nuestra colección de productos para el hogar</p>
+                <a href="#products" class="bg-primary text-white py-2 px-6 rounded-full hover:bg-primary-dark transition-colors text-lg">Ver Productos</a>
             </div>
         </section>
 
-        <section id="aromas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">AROMAS</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('aromas', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
-                    <!-- Products will be dynamically inserted here -->
+        <section id="products" class="container mx-auto px-6 py-12">
+            <h2 class="text-3xl font-bold mb-8 text-center gradient-text">Nuestros Productos</h2>
+            
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-4">Velas</h3>
+                <div class="relative">
+                    <div id="velasContainer" class="flex space-x-4 overflow-x-auto pb-4">
+                        <!-- Products will be dynamically inserted here -->
+                    </div>
+                    <button onclick="scrollProducts('velas', -300)" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="scrollProducts('velas', 300)" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-                <button class="slider-button next" onclick="scrollProducts('aromas', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-4">Aromas</h3>
+                <div class="relative">
+                    <div id="aromasContainer" class="flex space-x-4 overflow-x-auto pb-4">
+                        <!-- Products will be dynamically inserted here -->
+                    </div>
+                    <button onclick="scrollProducts('aromas', -300)" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="scrollProducts('aromas', 300)" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-4">Textiles</h3>
+                <div class="relative">
+                    <div id="textilesContainer" class="flex space-x-4 overflow-x-auto pb-4">
+                        <!-- Products will be dynamically inserted here -->
+                    </div>
+                    <button onclick="scrollProducts('textiles', -300)" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="scrollProducts('textiles', 300)" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-4">Cerámica</h3>
+                <div class="relative">
+                    <div id="ceramicaContainer" class="flex space-x-4 overflow-x-auto pb-4">
+                        <!-- Products will be dynamically inserted here -->
+                    </div>
+                    <button onclick="scrollProducts('ceramica', -300)" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="scrollProducts('ceramica', 300)" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full shadow">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- New Advertising Banner -->
-        <div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
+        <section id="advertisingBanner" class="py-12 bg-cover bg-center text-white relative">
             <div class="absolute inset-0 bg-black opacity-50"></div>
-            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text"></p>
-        </div>
-
-        <section id="textiles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TEXTILES</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('textiles', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <section id="ceramica" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">CERÁMICA</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('ceramica', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('ceramica', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Featured Collection Section -->
-        <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
-            <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-gray-800">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
-                        <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
-                    </div>
-                    <div class="relative">
-                        <img src="img/featured-collection.jpg" alt="Colección Destacada" class="w-full rounded-lg shadow-xl">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section with Gradient Icons -->
-        <section class="bg-white py-12 mb-16">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-truck text-4xl gradient-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">ENVÍO RÁPIDO</h3>
-                        <p class="text-gray-600">A toda Argentina</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">COMPRA SEGURA</h3>
-                        <p class="text-gray-600">Garantía 100%</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-gift text-4xl gradient-icon"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">PROMOCIONES</h3>
-                        <p class="text-gray-600">Aprovechá nuestras ofertas</p>
-                    </div>
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 id="advertisingMessage" class="text-3xl font-bold mb-4 text-center"></h2>
+                <div class="text-center">
+                    <a href="#products" class="inline-block bg-white text-primary py-2 px-6 rounded-full hover:bg-gray-100 transition-colors text-lg">Ver Ofertas</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="gradient-bg text-white py-16">
-        <div class="container mx-auto px-4">
-            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-                <div>
-                    <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mb-4">
-                    <p class="text-sm text-gray-200">
-                        Textiles y decoración para tu hogar. Productos artesanales de alta calidad.
-                    </p>
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-between">
+                <div class="w-full md:w-1/4 mb-6 md:mb-0">
+                    <h3 class="text-lg font-semibold mb-2">Mon Amour Textil</h3>
+                    <p class="text-sm">Productos de calidad para tu hogar</p>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Enlaces rápidos</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#velas" class="text-sm text-gray-200 hover:text-white transition-colors">Velas</a></li>
-                        <li><a href="#aromas" class="text-sm text-gray-200 hover:text-white transition-colors">Aromas</a></li>
-                        <li><a href="#textiles" class="text-sm text-gray-200 hover:text-white transition-colors">Textiles</a></li>
-                        <li><a href="#ceramica" class="text-sm text-gray-200 hover:text-white transition-colors">Cerámica</a></li>
+                <div class="w-full md:w-1/4 mb-6 md:mb-0">
+                    <h3 class="text-lg font-semibold mb-2">Enlaces</h3>
+                    <ul class="text-sm">
+                        <li><a href="#" class="hover:text-gray-300">Inicio</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Productos</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Sobre Nosotros</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Contacto</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Contacto</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center text-sm text-gray-200">
-                            <i class="fas fa-map-marker-alt mr-2 h-4 w-4"></i>
-                            Bell Ville, Argentina
-                        </li>
-                        <li class="flex items-center text-sm text-gray-200">
-                            <i class="fas fa-phone mr-2 h-4 w-4"></i>
-                            +54 9 353 478-6106
-                        </li>
-                        <li class="flex items-center text-sm text-gray-200">
-                            <i class="fab fa-whatsapp mr-2 h-4 w-4"></i>
-                            WhatsApp: +54 9 353 478-6106
-                        </li>
-                        <li class="flex items-center text-sm text-gray-200">
-                            <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                            <a href="mailto:info@monamourtextil.com">info@monamourtextil.com</a>
-                        </li>
-                    </ul>
+                <div class="w-full md:w-1/4 mb-6 md:mb-0">
+                    <h3 class="text-lg font-semibold mb-2">Contacto</h3>
+                    <p class="text-sm">Email: info@monamour.com</p>
+                    <p class="text-sm">Teléfono: (123) 456-7890</p>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
-                    <div class="flex space-x-4 mb-4">
-                        <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                            <i class="fab fa-facebook h-6 w-6"></i>
-                        </a>
-                        <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                            <i class="fab fa-instagram h-6 w-6"></i>
-                        </a>
-                        <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                            <i class="fab fa-pinterest h-6 w-6"></i>
-                        </a>
+                <div class="w-full md:w-1/4">
+                    <h3 class="text-lg font-semibold mb-2">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-gray-300"><i class="fab fa-twitter"></i></a>
                     </div>
-                    <h4 class="text-sm font-semibold mb-2">Suscríbete a nuestro newsletter</h4>
-                    <form class="flex flex-col sm:flex-row gap-2">
-                        <input type="email" placeholder="Tu email" class="flex-grow px-3 py-2 text-gray-900 rounded-md focus:outline-none">
-                        <button type="submit" class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">Suscribir</button>
-                    </form>
                 </div>
             </div>
-            <div class="mt-8 border-t border-gray-700 pt-8">
-                <h3 class="text-lg font-semibold mb-4">Políticas</h3>
-                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Privacidad y Cookies</a></li>
-                    <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Términos y Condiciones de Uso</a></li>
-                    <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Política de Garantía</a></li>
-                    <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Envío</a></li>
-                </ul>
-            </div>
-            <div class="mt-8 text-center text-sm text-gray-200">
-                <p>© 2024 Mon Amour Textil. Todos los derechos reservados.</p>
-                <p class="mt-2">Powered by <a href="https://dualitydomain.com" class="hover:text-white transition-colors">Duality Domain</a></p>
+            <div class="mt-8 text-center text-sm">
+                <p>&copy; 2023 Mon Amour Textil. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Checkout Form Modal -->
-<div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
-    <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
-            <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
-                <i class="fas fa-times h-5 w-5"></i>
-            </button>
-        </div>
-        <div class="mb-4">
-            <div class="flex justify-between items-center">
-                <button id="envioTab" class="py-2 px-4 font-semibold text-primary border-b-2 border-primary">Envío</button>
-                <button id="pagoTab" class="py-2 px-4 font-semibold text-gray-500">Pago</button>
-                <button id="detalleTab" class="py-2 px-4 font-semibold text-gray-500">Detalle</button>
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+        <div class="bg-white w-full max-w-md mx-auto mt-20 rounded-lg overflow-hidden">
+            <div class="p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="productModalTitle" class="text-xl font-bold"></h2>
+                    <button id="closeProductModal" class="text-gray-600 hover:text-gray-800">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="productModalContent"></div>
             </div>
         </div>
-        <form id="checkoutForm" class="space-y-4">
-            <!-- Sección de Envío -->
-            <div id="envioSection">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Apellido</label>
-                        <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                    <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">DNI</label>
-                    <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Calle</label>
-                    <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Número</label>
-                        <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
-                        <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
-                    <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Ciudad</label>
-                    <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Provincia</label>
-                    <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Código Postal</label>
-                    <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Método de envío</label>
-                    <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar...</option>
-                    </select>
-                </div>
-            </div>
-            
-            <!-- Sección de Pago -->
-            <div id="pagoSection" class="hidden">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Método de pago</label>
-                    <select name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar...</option>
-                        <option value="mercadopago">Mercado Pago</option>
-                        <option value="transferencia">Transferencia</option>
-                        <option value="rapipago">Rapipago</option>
-                        <option value="pagofacil">Pago Fácil</option>
-                        <option value="efectivo">Efectivo</option>
-                    </select>
-                </div>
-                <div id="mercadopago-button"></div>
-                <div id="transferencia-info" class="hidden mt-4 p-4 bg-gray-100 rounded-md">
-                    <h3 class="font-semibold mb-2">Datos para transferencia bancaria:</h3>
-                    <p>Banco: [Nombre del Banco]</p>
-                    <p>Titular: [Nombre del Titular]</p>
-                    <p>CBU: [Número de CBU]</p>
-                    <p>Alias: [Alias de la cuenta]</p>
-                </div>
-            </div>
-            
-            <!-- Sección de Detalle -->
-            <div id="detalleSection" class="hidden">
-                <h3 class="font-semibold mb-2">Resumen de la compra</h3>
-                <div id="orderSummary" class="space-y-2">
-                    <!-- Los detalles del pedido se insertarán aquí dinámicamente -->
-                </div>
-                <div class="mt-4 pt-4 border-t">
-                    <div class="flex justify-between">
-                        <span class="font-semibold">Total:</span>
-                        <span id="orderTotal" class="font-semibold"></span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex justify-between mt-6">
-                <button type="button" id="prevStep" class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-colors">
-                    Anterior
-                </button>
-                <button type="button" id="nextStep" class="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Siguiente
-                </button>
-            </div>
-        </form>
     </div>
-</div>
 
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
+        <div class="bg-white w-full max-w-md mx-auto mt-20 rounded-lg overflow-hidden">
+            <div class="p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">Carrito de Compras</h2>
+                    <button id="closeCart" class="text-gray-600 hover:text-gray-800">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="cartItems" class="space-y-4"></div>
+                <div class="mt-4 pt-4 border-t">
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Total:</span>
+                        <span id="cartTotal" class="font-semibold"></span>
+                    </div>
+                </div>
+                <button id="checkoutButton" class="mt-4 w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Form Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
-                <button id="closeCart" class="text-gray-600 hover:text-primary">
+                <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
+                <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
-            <div id="cartItems" class="space-y-4">
-                <!-- Cart items will be dynamically inserted here -->
+            <div class="mb-4">
+                <div class="flex justify-between items-center">
+                    <button id="envioTab" class="py-2 px-4 font-semibold text-primary border-b-2 border-primary">Envío</button>
+                    <button id="pagoTab" class="py-2 px-4 font-semibold text-gray-500">Pago</button>
+                    <button id="detalleTab" class="py-2 px-4 font-semibold text-gray-500">Detalle</button>
+                </div>
             </div>
-            <div class="border-t pt-4 mt-4">
-                <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
-            </div>
-            <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
-                Proceder al pago
-            </button>
+            <form id="checkoutForm" class="space-y-4">
+                <!-- Sección de Envío -->
+                <div id="envioSection">
+                    <form id="shippingForm" action="https://formspree.io/f/TU_ID_DE_FORMSPREE" method="POST">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                                <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                                <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                            <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Dirección</label>
+                            <input type="text" name="direccion" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                            <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Código Postal</label>
+                            <input type="text" name="codigoPostal" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Sección de Pago -->
+                <div id="pagoSection" class="hidden">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Método de pago</label>
+                        <select id="paymentMethod" name="paymentMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            <option value="">Seleccionar...</option>
+                            <option value="mercadopago">Mercado Pago</option>
+                            <option value="transferencia">Transferencia Bancaria</option>
+                        </select>
+                    </div>
+                    <div id="mercadopago-button" class="hidden mt-4"></div>
+                    <div id="transferencia-info" class="hidden mt-4">
+                        <button id="showBankInfoButton" class="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                            Ver datos bancarios
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Sección de Detalle -->
+                <div id="detalleSection" class="hidden">
+                    <h3 class="font-semibold mb-2">Resumen de la compra</h3>
+                    <div id="orderSummary" class="space-y-2">
+                        <!-- Los detalles del pedido se insertarán aquí dinámicamente -->
+                    </div>
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="flex justify-between">
+                            <span class="font-semibold">Total:</span>
+                            <span id="orderTotal" class="font-semibold"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between mt-6">
+                    <button type="button" id="prevStep" class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-colors">
+                        Anterior
+                    </button>
+                    <button type="button" id="nextStep" class="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                        Siguiente
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- Product Modal -->
-    <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="productModalTitle" class="text-xl font-bold gradient-text"></h2>
-                <button id="closeProductModal" class="text-gray-600 hover:text-primary">
-                    <i class="fas fa-times h-5 w-5"></i>
-                </button>
-            </div>
-            <div id="productModalContent">
-                <!-- Product details will be dynamically inserted here -->
+    <!-- Modal para datos bancarios -->
+    <div id="bankInfoModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Datos Bancarios</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        Banco: [Nombre del Banco]<br>
+                        Titular: [Nombre del Titular]<br>
+                        CBU: [Número de CBU]<br>
+                        Alias: [Alias de la cuenta]
+                    </p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="closeBankInfoModal" class="px-4 py-2 bg-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                        Cerrar
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- WhatsApp Button and Notification -->
-    <div class="fixed bottom-4 right-4 z-40">
-        <button id="whatsappButton" class="bg-[#25D366] hover:bg-[#20BA56] text-white rounded-full p-4 shadow-lg transition-colors">
-            <i class="fab fa-whatsapp h-6 w-6 whatsapp-logo"></i>
-        </button>
-        <div id="whatsappNotification" class="absolute bottom-full right-0 mb-2 bg-gradient-to-r from-primary to-secondary p-4 rounded-lg shadow-lg hidden w-64">
-            <p class="text-sm font-medium mb-2 text-white">¿Necesitas ayuda? ¡Contáctanos por WhatsApp!</p>
-            <button id="closeWhatsappNotification" class="text-sm text-white hover:text-gray-200 transition-colors">
-                Cerrar
-            </button>
+    <!-- Modal para subir comprobante -->
+    <div id="uploadReceiptModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Subir Comprobante</h3>
+                <div class="mt-2 px-7 py-3">
+                    <input type="file" id="receiptUpload" accept="image/*" class="w-full">
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="sendReceiptButton" class="px-4 py-2 bg-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                        Enviar Comprobante
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <script src="mercadopago.js"></script>
+    <div id="whatsappButton" class="fixed bottom-4 right-4 bg-green-500 text-white rounded-full p-3 cursor-pointer shadow-lg hover:bg-green-600 transition-colors">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </div>
+
+    <div id="whatsappNotification" class="fixed bottom-20 right-4 bg-white p-4 rounded-lg shadow-lg hidden">
+        <p class="text-sm mb-2">¿Necesitas ayuda? ¡Contáctanos por WhatsApp!</p>
+        <button id="closeWhatsappNotification" class="text-xs text-gray-500 hover:text-gray-700">Cerrar</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

@@ -178,6 +178,12 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = total.toLocaleString();
+
+    // Habilitar o deshabilitar el botón de checkout según si hay items en el carrito
+    const checkoutButton = document.getElementById('checkoutButton');
+    checkoutButton.disabled = totalItems === 0;
+    checkoutButton.classList.toggle('opacity-50', totalItems === 0);
+    checkoutButton.classList.toggle('cursor-not-allowed', totalItems === 0);
 }
 
 function formatPrice(price) {
@@ -254,6 +260,7 @@ function openPaymentModal() {
             .catch(error => {
                 console.error('Error al crear la preferencia:', error);
                 toggleLoadingIndicator(false);
+                alert('Hubo un error al preparar el pago. Por favor, intenta de nuevo.');
             });
     }
 }
@@ -343,8 +350,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
-        document.getElementById('cartModal').classList.add('hidden');
-        document.getElementById('checkoutModal').classList.remove('hidden');
+        if (cart.length > 0) {
+            document.getElementById('cartModal').classList.add('hidden');
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        } else {
+            alert('Tu carrito está vacío. Agrega algunos productos antes de proceder al pago.');
+        }
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {

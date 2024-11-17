@@ -1,7 +1,7 @@
 // mercadopago.js
 
 // Inicializar el objeto de Mercado Pago
-const mp = new MercadoPago('TU_PUBLIC_KEY_AQUI', {
+const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', {
     locale: 'es-AR'
 });
 
@@ -32,7 +32,7 @@ function createPreference() {
     const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
     const shippingCost = parseInt(selectedShipping.textContent.match(/\$(\d+)/)[1]);
 
-    return fetch('/create_preference', {
+    return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

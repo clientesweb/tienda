@@ -327,6 +327,15 @@ function handleCheckoutNavigation(direction) {
 
 function submitOrder() {
     // Here you would typically send the order data to your server
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    if (paymentMethod === 'transferencia') {
+        showUploadReceipt();
+    } else if (paymentMethod === 'mercadopago') {
+        // Aquí iría la lógica para iniciar el checkout de Mercado Pago
+        console.log('Iniciando checkout de Mercado Pago');
+    } else {
+        alert('Por favor, selecciona un método de pago.');
+    }
     console.log('Order submitted!');
     // Clear the cart
     cart = [];
@@ -447,6 +456,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
+
+
+    function showBankInfo() {
+        document.getElementById('bankInfoModal').classList.remove('hidden');
+    }
+
+    function closeBankInfo() {
+        document.getElementById('bankInfoModal').classList.add('hidden');
+    }
+
+    function showUploadReceipt() {
+        document.getElementById('uploadReceiptModal').classList.remove('hidden');
+    }
+
+    function sendReceiptToWhatsApp() {
+        const fileInput = document.getElementById('receiptUpload');
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const image = e.target.result;
+                const orderDetails = cart.map(item => `${item.name} x${item.quantity}`).join(', ');
+                const message = `Hola, aquí te dejo el comprobante de la compra (${orderDetails}).`;
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/5493534786106?text=${encodedMessage}`, '_blank');
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            alert('Por favor, selecciona un archivo primero.');
+        }
+    }
+
+    document.getElementById('showBankInfoButton').addEventListener('click', showBankInfo);
+    document.getElementById('closeBankInfoModal').addEventListener('click', closeBankInfo);
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+        if (this.value === 'mercadopago') {
+            document.getElementById('mercadopago-button').classList.remove('hidden');
+            document.getElementById('transferencia-info').classList.add('hidden');
+        } else if (this.value === 'transferencia') {
+            document.getElementById('mercadopago-button').classList.add('hidden');
+            document.getElementById('transferencia-info').classList.remove('hidden');
+        }
+    });
+    document.getElementById('sendReceiptButton').addEventListener('click', sendReceiptToWhatsApp);
 });
 
 // For demonstration purposes only (this won't work in a Node.js environment)

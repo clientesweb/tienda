@@ -1,56 +1,50 @@
-const axios = require('axios');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 exports.handler = async function(event, context) {
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
-  }
-
-  let zipcode;
-  try {
-    ({ zipcode } = JSON.parse(event.body));
-  } catch (error) {
-    console.error('Error parsing request body:', error);
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request body' }) };
-  }
-
-  if (!zipcode) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Zipcode is required' }) };
+    return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
-    const response = await axios.post('https://api.mercadolibre.com/sites/MLA/shipping_options', {
-      zip_code: zipcode,
-      item_dimensions: {
-        height: 10,
-        width: 10,
-        length: 10,
-        weight: 1
-      }
-    }, {
-      headers: {
-        'Authorization': `Bearer ${process.env.MERCADO_PAGO_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    const { zipcode } = JSON.parse(event.body);
 
-    console.log('Mercado Envíos API response:', JSON.stringify(response.data, null, 2));
-
-    if (!response.data.options || response.data.options.length === 0) {
-      console.error('No shipping options returned from Mercado Envíos API');
-      return { statusCode: 404, body: JSON.stringify({ error: 'No se encontraron opciones de envío' }) };
+    if (!zipcode) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Zipcode is required' }) };
     }
 
-    const shippingCost = response.data.options[0].cost;
+    // Here you would typically make a call to a shipping API
+    // For this example, we'll use a mock calculation based on the zipcode
+    const shippingCost = calculateShippingCost(zipcode);
 
     return {
       statusCode: 200,
       body: JSON.stringify({ cost: shippingCost })
     };
   } catch (error) {
-    console.error('Error calling Mercado Envíos API:', error.response ? error.response.data : error.message);
+    console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error al calcular el costo de envío', details: error.message })
+      body: JSON.stringify({ error: 'Failed to calculate shipping cost' })
     };
   }
 };
+
+function calculateShippingCost(zipcode) {
+  // This is a mock function. In a real scenario, you'd integrate with a shipping API
+  // or use a more sophisticated calculation method.
+  const baseRate = 500; // Base shipping rate in ARS
+  const zipcodeNumber = parseInt(zipcode);
+  
+  if (zipcodeNumber >= 1000 && zipcodeNumber < 2000) {
+    return baseRate; // Base rate for Buenos Aires City
+  } else if (zipcodeNumber >= 2000 && zipcodeNumber < 3000) {
+    return baseRate + 200; // Slightly higher for Buenos Aires Province
+  } else if (zipcodeNumber >= 3000 && zipcodeNumber < 4000) {
+    return baseRate + 400; // Higher for further provinces
+  } else {
+    return baseRate + 600; // Highest rate for remote areas
+  }
+}
+
+// Log to console when the function is loaded
+console.log("Calcular envío function loaded successfully!");

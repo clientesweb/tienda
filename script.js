@@ -1,12 +1,3 @@
-// Add preloader transition
-const style = document.createElement('style');
-style.textContent = `
-    #preloader {
-        transition: opacity 0.5s ease-out;
-    }
-`;
-document.head.appendChild(style);
-
 // Data
 const products = {
     velas: [
@@ -49,26 +40,26 @@ let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
 
-// Shipping options
-const shippingOptions = [
-    { id: "andreani_sucursal", name: "Andreani a sucursal", price: 9000 },
-    { id: "andreani_domicilio", name: "Andreani a domicilio", price: 12000 },
-    { id: "oca_sucursal", name: "Oca a sucursal", price: 12500 },
-    { id: "oca_domicilio", name: "Oca a domicilio", price: 15000 },
-    { id: "correo_argentino_sucursal", name: "Correo Argentino a sucursal", price: 12500 },
-    { id: "correo_argentino_domicilio", name: "Correo Argentino a domicilio", price: 15000 },
-    { id: "retiro_local", name: "Retiro en nuestro local", price: 0 },
-];
+// DOM Elements
+const bannerMessageEl = document.getElementById('bannerMessage');
+const cartItemCountEl = document.getElementById('cartItemCount');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+const heroEl = document.getElementById('hero');
+const productContainers = {
+    velas: document.getElementById('velasContainer'),
+    aromas: document.getElementById('aromasContainer'),
+    textiles: document.getElementById('textilesContainer'),
+    ceramica: document.getElementById('ceramicaContainer'),
+};
 
 // Functions
 function updateBanner() {
-    const bannerMessageEl = document.getElementById('bannerMessage');
     bannerMessageEl.textContent = bannerMessages[currentBanner];
     currentBanner = (currentBanner + 1) % bannerMessages.length;
 }
 
 function updateHero() {
-    const heroEl = document.getElementById('hero');
     heroEl.style.backgroundImage = `url('${heroImages[currentHeroImage]}')`;
     heroEl.style.backgroundSize = 'cover';
     heroEl.style.backgroundPosition = 'center';
@@ -77,8 +68,7 @@ function updateHero() {
 
 function renderProducts() {
     for (const [category, productList] of Object.entries(products)) {
-        const container = document.getElementById(`${category}Container`);
-        container.innerHTML = productList.map(product => `
+        productContainers[category].innerHTML = productList.map(product => `
             <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-4">
                     <div class="relative mb-4 aspect-square">
@@ -93,6 +83,10 @@ function renderProducts() {
             </div>
         `).join('');
     }
+}
+
+function scrollProducts(category, amount) {
+    productContainers[category].scrollBy({ left: amount, behavior: 'smooth' });
 }
 
 function openProductModal(productId, category) {
@@ -127,6 +121,10 @@ function openProductModal(productId, category) {
     document.getElementById('productModal').classList.remove('hidden');
 }
 
+function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+}
+
 function updateQuantity(change) {
     const quantityInput = document.getElementById('quantity');
     let newQuantity = parseInt(quantityInput.value) + change;
@@ -157,10 +155,6 @@ function removeFromCart(productId) {
 }
 
 function updateCartUI() {
-    const cartItemCountEl = document.getElementById('cartItemCount');
-    const cartItemsEl = document.getElementById('cartItems');
-    const cartTotalEl = document.getElementById('cartTotal');
-
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = subtotal + shippingCost;
@@ -193,10 +187,31 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function updateShippingOptions() {
-    const shippingSelect = document.getElementById('metodoEnvio');
-    shippingSelect.innerHTML = shippingOptions.map(option => `
-        <option value="${option.id}">${option.name} - $${option.price.toLocaleString()}</option>
+function calculateShipping(postalCode) {
+    // Simular una llamada a la API de Mercado Envíos
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const shippingOptions = {
+                standard: {
+                    name: "Estándar",
+                    price: 500,
+                    estimatedDelivery: '3-5 días hábiles'
+                },
+                express: {
+                    name: "Express",
+                    price: 800,
+                    estimatedDelivery: '1-2 días hábiles'
+                }
+            };
+            resolve(shippingOptions);
+        }, 1000);
+    });
+}
+
+function updateShippingOptions(shippingOptions) {
+    const shippingSelect = document.getElementById('shippingMethod');
+    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
+        <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
     `).join('');
 }
 
@@ -253,9 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('cartModal').classList.add('hidden');
     });
 
-    document.getElementById('closeProductModal').addEventListener('click', () => {
-        document.getElementById('productModal').classList.add('hidden');
-    });
+    document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
 
     document.getElementById('whatsappButton').addEventListener('click', () => {
         window.open('https://wa.me/5493534786106', '_blank');
@@ -265,12 +278,22 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('metodoEnvio').addEventListener('change', function() {
-        const selectedOption = shippingOptions.find(option => option.id === this.value);
-        if (selectedOption) {
-            shippingCost = selectedOption.price;
-            updateTotal();
+    document.getElementById('postalCode').addEventListener('change', function() {
+        const postalCode = this.value;
+        if (postalCode.length === 4) {
+            calculateShipping(postalCode)
+                .then(shippingOptions => {
+                    updateShippingOptions(shippingOptions);
+                    shippingCost = shippingOptions.standard.price;
+                    updateTotal();
+                });
         }
+    });
+
+    document.getElementById('shippingMethod').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
+        updateTotal();
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
@@ -282,17 +305,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
     });
 
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Here you would typically send the form data to your server or payment processor
-        console.log('Form submitted');
-        // For demonstration purposes, we'll just close the modal
-        document.getElementById('checkoutModal').classList.add('hidden');
-        cart = []; // Clear the cart
-        updateCartUI();
-        alert('¡Gracias por tu compra!');
-    });
-
     updateBanner();
     setInterval(updateBanner, 5000);
 
@@ -300,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateHero, 5000);
 
     renderProducts();
-    updateShippingOptions();
 
     updateAdvertisingBanner();
     setInterval(updateAdvertisingBanner, 3600000); // Update every hour
@@ -308,18 +319,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         document.getElementById('whatsappNotification').classList.remove('hidden');
     }, 10000);
+
+    // Remove preloader
+    document.getElementById('preloader').style.display = 'none';
 });
 
-// Remove preloader
-window.addEventListener('load', function() {
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 500);
-    }
-});
-
-// Log a message to confirm the script has loaded
+// For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Send data to Formspree
         const formData = new FormData(this);
-        fetch('https://formspree.io/f/xrbglzrk', {
+        fetch('https://formspree.io/f/your-formspree-id', {
             method: 'POST',
             body: formData,
             headers: {
@@ -430,8 +430,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 10000);
 
     // Remove preloader
-    document.getElementById('preloader').style.display = 'none';
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('hidden');
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 300); // Ajusta este tiempo según la duración de tu animación de fade-out
+    }
+
+    // For demonstration purposes only (this won't work in a Node.js environment)
+    console.log("Script loaded successfully!");
 });
 
-// For demonstration purposes only (this won't work in a Node.js environment)
-console.log("Script loaded successfully!");
+window.addEventListener('load', function() {
+    // Remove preloader
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('hidden');
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 300);
+    }
+});

@@ -60,82 +60,30 @@ function createPreference() {
 
 // Función para mostrar y ocultar el indicador de carga
 function toggleLoadingIndicator(show) {
-    const button = document.getElementById('nextToPayment');
+    const button = document.getElementById('checkoutButton');
     if (show) {
         button.disabled = true;
         button.innerHTML = 'Procesando...';
     } else {
         button.disabled = false;
-        button.innerHTML = 'Continuar al Pago';
+        button.innerHTML = 'Finalizar compra';
     }
 }
 
-// Función para actualizar el paso del checkout
-function updateCheckoutStep(step) {
-    document.querySelectorAll('.step-content').forEach((el, index) => {
-        el.classList.toggle('hidden', index + 1 !== step);
-    });
-    document.querySelectorAll('.step').forEach((el, index) => {
-        el.classList.toggle('bg-primary', index + 1 <= step);
-        el.classList.toggle('text-white', index + 1 <= step);
-        el.classList.toggle('bg-gray-300', index + 1 > step);
-        el.classList.toggle('text-gray-600', index + 1 > step);
-    });
-}
-
-// Función para enviar información a Formspree
-function sendFormspreeData() {
-    const form = document.getElementById('checkoutForm');
-    const formData = new FormData(form);
-
-    // Agregar los items del carrito y el total al formulario
-    formData.append('cartItems', JSON.stringify(cart));
-    formData.append('cartTotal', document.getElementById('cartTotal').textContent);
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            console.log('Información enviada a Formspree exitosamente');
-            updateCheckoutStep(3);
-        } else {
-            throw new Error('Error al enviar la información a Formspree');
-        }
-    }).catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo.');
-    });
-}
-
-// Evento para continuar al pago
-document.getElementById('nextToPayment').addEventListener('click', function(e) {
+// Evento para iniciar el proceso de pago
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Validar el formulario antes de continuar
-    const form = document.getElementById('checkoutForm');
-    if (form.checkValidity()) {
+    if (!checkoutButtonCreated) {
         toggleLoadingIndicator(true);
-        sendFormspreeData(); // Enviar datos a Formspree
         createPreference()
             .then(preferenceId => {
                 createCheckoutButton(preferenceId);
-                updateCheckoutStep(2);
                 toggleLoadingIndicator(false);
             })
             .catch(error => {
                 console.error('Error al crear la preferencia:', error);
                 toggleLoadingIndicator(false);
             });
-    } else {
-        form.reportValidity();
     }
-});
-
-// Inicialización
-document.addEventListener('DOMContentLoaded', function() {
-    // Aquí puedes agregar cualquier inicialización adicional que necesites
 });

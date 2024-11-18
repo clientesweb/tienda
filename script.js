@@ -39,7 +39,6 @@ let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
-let currentStep = 1;
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -189,6 +188,7 @@ function formatPrice(price) {
 }
 
 function calculateShipping(postalCode) {
+    // Simular una llamada a la API de Mercado Envíos
     return new Promise((resolve) => {
         setTimeout(() => {
             const shippingOptions = {
@@ -209,20 +209,10 @@ function calculateShipping(postalCode) {
 }
 
 function updateShippingOptions(shippingOptions) {
-    const shippingSelect = document.getElementById('shippingOptions');
+    const shippingSelect = document.getElementById('shippingMethod');
     shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <div class="flex items-center space-x-2">
-            <input type="radio" id="${key}"
-                   name="shippingMethod"
-                   value="${key}"
-                   class="form-radio text-primary focus:ring-primary"
-                   ${key === 'standard' ? 'checked' : ''}>
-            <label for="${key}" class="text-sm">
-                ${option.name} - $${option.price} (${option.estimatedDelivery})
-            </label>
-        </div>
+        <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
     `).join('');
-    shippingSelect.classList.remove('hidden');
 }
 
 function updateTotal() {
@@ -250,46 +240,6 @@ function updateAdvertisingBanner() {
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
-}
-
-function updateCheckoutStep(step) {
-    currentStep = step;
-    document.querySelectorAll('.step-content').forEach((el, index) => {
-        el.classList.toggle('hidden', index + 1 !== step);
-    });
-    document.querySelectorAll('.step').forEach((el, index) => {
-        el.classList.toggle('bg-primary', index + 1 <= step);
-        el.classList.toggle('text-white', index + 1 <= step);
-        el.classList.toggle('bg-gray-300', index + 1 > step);
-        el.classList.toggle('text-gray-600', index + 1 > step);
-    });
-}
-
-function submitCheckoutForm(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-
-    // Add cart items and total to form data
-    formData.append('cartItems', JSON.stringify(cart));
-    formData.append('cartTotal', document.getElementById('cartTotal').textContent);
-
-    fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            updateCheckoutStep(3);
-        } else {
-            throw new Error('Error en el envío del formulario');
-        }
-    }).catch(error => {
-        console.error('Error:', error);
-        alert('Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo.');
-    });
 }
 
 // Event Listeners
@@ -328,8 +278,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('searchPostalCode').addEventListener('click', function() {
-        const postalCode = document.getElementById('postalCode').value;
+    document.getElementById('postalCode').addEventListener('change', function() {
+        const postalCode = this.value;
         if (postalCode.length === 4) {
             calculateShipping(postalCode)
                 .then(shippingOptions => {
@@ -340,50 +290,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.getElementById('shippingOptions').addEventListener('change', function(e) {
-        if (e.target.name === 'shippingMethod') {
-            const selectedOption = e.target.value;
-            shippingCost = selectedOption === 'express' ? 800 : 500;
-            updateTotal();
-        }
+    document.getElementById('shippingMethod').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
+        updateTotal();
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
-        updateCheckoutStep(1);
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
     });
-
-    document.getElementById('nextToPayment').addEventListener('click', function() {
-        updateCheckoutStep(2);
-    });
-
-    document.getElementById('showTransferModal').addEventListener('click', function() {
-        document.getElementById('transferModal').classList.remove('hidden');
-    });
-
-    document.getElementById('closeTransferModal').addEventListener('click', function() {
-        document.getElementById('transferModal').classList.add('hidden');
-    });
-
-    document.getElementById('submitTransfer').addEventListener('click', function() {
-        // Here you would handle the transfer submission
-        alert('Comprobante enviado. Procesaremos tu pedido pronto.');
-        document.getElementById('transferModal').classList.add('hidden');
-        updateCheckoutStep(3);
-    });
-
-    document.getElementById('closeCheckout').addEventListener('click', function() {
-        document.getElementById('checkoutModal').classList.add('hidden');
-        cart = [];
-        updateCartUI();
-    });
-
-    document.getElementById('checkoutForm').addEventListener('submit', submitCheckoutForm);
 
     updateBanner();
     setInterval(updateBanner, 5000);
@@ -404,4 +324,5 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('preloader').style.display = 'none';
 });
 
+// For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

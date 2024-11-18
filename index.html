@@ -506,19 +506,6 @@
     </div>
 </div>
 
-<!-- Script para cambiar de secciones -->
-<script>
-function showShippingSection() {
-    document.getElementById('datosSection').style.display = 'none';
-    document.getElementById('envioSection').style.display = 'block';
-}
-
-function showDatosSection() {
-    document.getElementById('envioSection').style.display = 'none';
-    document.getElementById('datosSection').style.display = 'block';
-}
-</script>
-
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
@@ -571,5 +558,17 @@ function showDatosSection() {
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="mercadopago.js"></script>
     <script src="script.js"></script>
+    <!-- Script para cambiar de secciones -->
+<script>
+function showShippingSection() {
+    document.getElementById('datosSection').style.display = 'none';
+    document.getElementById('envioSection').style.display = 'block';
+}
+
+function showDatosSection() {
+    document.getElementById('envioSection').style.display = 'none';
+    document.getElementById('datosSection').style.display = 'block';
+}
+</script>
 </body>
 </html>

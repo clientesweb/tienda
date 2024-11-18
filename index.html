@@ -17,18 +17,13 @@
                         'secondary-dark': '#848071',
                         cream: '#EAE3C9',
                         ivory: '#F3ECD0'
-                    },
-                    fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
+                    }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
+        /* Estilos existentes */
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
@@ -37,6 +32,7 @@
             scrollbar-width: none;
         }
         
+        /* Preloader */
         #preloader {
             position: fixed;
             top: 0;
@@ -72,6 +68,7 @@
             color: transparent;
         }
 
+        /* Menu icon animation */
         .menu-icon {
             transition: transform 0.3s ease;
         }
@@ -79,24 +76,33 @@
             transform: rotate(90deg);
         }
 
+        /* Product card hover effects */
         .product-card {
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .product-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
+        /* WhatsApp logo animation */
         .whatsapp-logo {
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
+        /* Product slider styles */
         .product-slider {
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
@@ -136,45 +142,27 @@
             right: 0;
         }
 
+        /* Gradient background for advertising banner */
         .gradient-bg {
             background: linear-gradient(45deg, #D4C098, #A6A18F);
         }
 
+        /* Gradient icons */
         .gradient-icon {
             background: linear-gradient(45deg, #D4C098, #A6A18F);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-
-        .accordion-item {
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .accordion-button {
-            transition: all 0.3s ease;
-        }
-
-        .accordion-button:hover {
-            background-color: #f3f4f6;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .accordion-content.open {
-            max-height: 500px;
-        }
     </style>
 </head>
-<body class="flex min-h-screen flex-col font-sans">
+<body class="flex min-h-screen flex-col">
+    <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>
     </div>
 
+    <!-- Top Banner -->
     <div id="topBanner" class="gradient-bg p-2 text-center text-white relative">
         <p class="text-sm">
             <span id="bannerMessage"></span>
@@ -185,6 +173,7 @@
         </button>
     </div>
 
+    <!-- Header -->
     <header class="border-b sticky top-0 bg-white z-50">
         <div class="container mx-auto flex items-center justify-between px-4 py-4">
             <button id="mobileMenuButton" class="text-gray-600 hover:text-primary lg:hidden">
@@ -192,20 +181,10 @@
             </button>
 
             <nav class="hidden lg:flex space-x-6">
-                <div class="relative group">
-                    <a href="#" class="text-sm font-medium hover:text-primary">TIENDA</a>
-                    <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                        <div class="py-1">
-                            <a href="#velas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">VELAS</a>
-                            <a href="#aromas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">AROMAS</a>
-                            <a href="#textiles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">TEXTILES</a>
-                            <a href="#ceramica" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">CERÁMICA</a>
-                        </div>
-                    </div>
-                </div>
-                <a href="#nosotros" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
-                <a href="#cambios" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
-                <a href="#contacto" class="text-sm font-medium hover:text-primary">CONTACTO</a>
+                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
+                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
+                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
             </nav>
 
             <a href="/" class="flex items-center justify-center flex-grow lg:flex-grow-0">
@@ -221,8 +200,9 @@
         </div>
     </header>
 
+    <!-- Mobile Menu -->
     <div id="mobileMenu" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white h-full w-64 p-4 overflow-y-auto">
+        <div class="bg-white h-full w-64 p-4">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold gradient-text">Menú</h2>
                 <button id="closeMobileMenu" class="text-gray-600 hover:text-primary">
@@ -230,38 +210,30 @@
                 </button>
             </div>
             <nav class="flex flex-col space-y-4">
-                <div class="accordion-item">
-                    <button class="accordion-button flex justify-between items-center w-full py-2 text-left text-sm font-medium hover:text-primary">
-                        TIENDA
-                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
-                    </button>
-                    <div class="accordion-content">
-                        <a href="#velas" class="block py-2 pl-4 text-sm hover:text-primary">VELAS</a>
-                        <a href="#aromas" class="block py-2 pl-4 text-sm hover:text-primary">AROMAS</a>
-                        <a href="#textiles" class="block py-2 pl-4 text-sm hover:text-primary">TEXTILES</a>
-                        <a href="#ceramica" class="block py-2 pl-4 text-sm hover:text-primary">CERÁMICA</a>
-                    </div>
-                </div>
-                <a href="#nosotros" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
-                <a href="#cambios" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
-                <a href="#contacto" class="text-sm font-medium hover:text-primary">CONTACTO</a>
+                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
+                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
+                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
             </nav>
         </div>
     </div>
 
     <main>
+        <!-- Hero Banner -->
         <div id="hero" class="relative h-[500px] w-full overflow-hidden">
             <!-- Hero images will be dynamically inserted here -->
         </div>
 
+        <!-- New Advertising Banner without background image -->
         <div class="gradient-bg p-6 text-center text-white">
-            <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
+            <h2 class="text-2xl font-bold mb-2">¡Ofertas Especiales!</h2>
             <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
             <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
         </div>
 
+        <!-- Product Sections -->
         <section id="velas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">VELAS</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">VELAS</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('velas', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -276,7 +248,7 @@
         </section>
 
         <section id="aromas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">AROMAS</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">AROMAS</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('aromas', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -290,13 +262,14 @@
             </div>
         </section>
 
+        <!-- New Advertising Banner -->
         <div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
             <div class="absolute inset-0 bg-black opacity-50"></div>
-            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text font-serif"></p>
+            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text"></p>
         </div>
 
         <section id="textiles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">TEXTILES</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TEXTILES</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -311,7 +284,7 @@
         </section>
 
         <section id="ceramica" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">CERÁMICA</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">CERÁMICA</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('ceramica', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -325,11 +298,12 @@
             </div>
         </section>
 
+        <!-- Featured Collection Section -->
         <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
+                        <h2 class="text-4xl font-bold text-gray-800">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
                         <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
                     </div>
                     <div class="relative">
@@ -339,6 +313,7 @@
             </div>
         </section>
 
+        <!-- Features Section with Gradient Icons -->
         <section class="bg-white py-12 mb-16">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -346,21 +321,21 @@
                         <div class="w-16 h-16 mx-auto mb-4">
                             <i class="fas fa-truck text-4xl gradient-icon"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 font-serif">ENVÍO RÁPIDO</h3>
+                        <h3 class="text-xl font-bold mb-2">ENVÍO RÁPIDO</h3>
                         <p class="text-gray-600">A toda Argentina</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
                             <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 font-serif">COMPRA SEGURA</h3>
+                        <h3 class="text-xl font-bold mb-2">COMPRA SEGURA</h3>
                         <p class="text-gray-600">Garantía 100%</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
                             <i class="fas fa-gift text-4xl gradient-icon"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 font-serif">PROMOCIONES</h3>
+                        <h3 class="text-xl font-bold mb-2">PROMOCIONES</h3>
                         <p class="text-gray-600">Aprovechá nuestras ofertas</p>
                     </div>
                 </div>
@@ -368,6 +343,7 @@
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="gradient-bg text-white py-16">
         <div class="container mx-auto px-4">
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -378,7 +354,7 @@
                     </p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 font-serif">Enlaces rápidos</h3>
+                    <h3 class="text-lg font-semibold mb-4">Enlaces rápidos</h3>
                     <ul class="space-y-2">
                         <li><a href="#velas" class="text-sm text-gray-200 hover:text-white transition-colors">Velas</a></li>
                         <li><a href="#aromas" class="text-sm text-gray-200 hover:text-white transition-colors">Aromas</a></li>
@@ -387,7 +363,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 font-serif">Contacto</h3>
+                    <h3 class="text-lg font-semibold mb-4">Contacto</h3>
                     <ul class="space-y-2">
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-map-marker-alt mr-2 h-4 w-4"></i>
@@ -403,12 +379,12 @@
                         </li>
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                            <a href="mailto:info@monamour.com">info@monamour.com</a>
+                            <a href="mailto:info@monamourtextil.com">info@monamourtextil.com</a>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4 font-serif">Síguenos</h3>
+                    <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
                     <div class="flex space-x-4 mb-4">
                         <a href="#" class="text-gray-200 hover:text-white transition-colors">
                             <i class="fab fa-facebook h-6 w-6"></i>
@@ -428,7 +404,7 @@
                 </div>
             </div>
             <div class="mt-8 border-t border-gray-700 pt-8">
-                <h3 class="text-lg font-semibold mb-4 font-serif">Políticas</h3>
+                <h3 class="text-lg font-semibold mb-4">Políticas</h3>
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Privacidad y Cookies</a></li>
                     <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Términos y Condiciones de Uso</a></li>
@@ -443,213 +419,167 @@
         </div>
     </footer>
 
-    <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
-        <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
+<!-- Checkout Form Modal -->
+<div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+    <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
+            <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+                <i class="fas fa-times h-5 w-5"></i>
+            </button>
+        </div>
+        <form id="checkoutForm" class="space-y-4" action="https://formspree.io/f/xrbglzrk" method="POST">
+            <!-- Contacto -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+            </div>
+
+            <!-- Opciones de envío -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-700 mb-2">Opciones de envío</h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Código postal</label>
+                    <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
+                    Buscar opciones de envío
+                </button>
+                <div id="shippingOptions" class="mt-2 hidden">
+                    <label class="block text-sm font-medium text-gray-700">Método de envío</label>
+                    <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option value="">Seleccionar...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Datos del destinatario -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-700 mb-2">Datos del destinatario</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                        <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">DNI</label>
+                    <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                    <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+            </div>
+
+            <!-- Domicilio del destinatario -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-700 mb-2">Domicilio del destinatario</h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Calle</label>
+                    <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">Número</label>
+                    <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
+                    <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
+                    <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                    <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div class="mt-2">
+                    <label class="block text-sm font-medium text-gray-700">Provincia</label>
+                    <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+            </div>
+
+            <!-- Método de pago -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Método de pago</label>
+                <select name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    <option value="">Seleccionar...</option>
+                    <option value="mercadopago">Mercado Pago</option>
+                    <option value="transferencia">Transferencia</option>
+                    <option value="rapipago">Rapipago</option>
+                    <option value="pagofacil">Pago Fácil</option>
+                    <option value="efectivo">Efectivo</option>
+                </select>
+            </div>
+
+            <!-- Campo oculto para los datos del carrito -->
+            <input type="hidden" name="cartItems" id="cartItemsInput">
+
+            <div id="mercadopago-button"></div>
+            <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                Finalizar compra
+            </button>
+        </form>
+    </div>
+</div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+        <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text font-serif">Finalizar Compra</h2>
-                <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+                <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
+                <button id="closeCart" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
-            <form id="checkoutForm" class="space-y-4" action="https://formspree.io/f/xrbglzrk" method="POST">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Opciones de envío</h3>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Código postal</label>
-                        <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
-                        Buscar opciones de envío
-                    </button>
-                    <div id="shippingOptions" class="mt-2 hidden">
-                        <label class="block text-sm font-medium text-gray-700">Método de envío</label>
-                        <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                            <option value="">Seleccionar...</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Datos del destinatario</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                            <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Apellido</label>
-                            <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">DNI</label>
-                        <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Domicilio del destinatario</h3>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Calle</label>
-                        <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Número</label>
-                        <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
-                        <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
-                        <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Ciudad</label>
-                        <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Provincia</label>
-                        <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Método de pago</label>
-                    <select name="pago" id="paymentMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar...</option>
-                        <option value="mercadopago">Mercado Pago</option>
-                        <option value="transferencia">Transferencia</option>
-                        <option value="rapipago">Rapipago</option>
-                        <option value="pagofacil">Pago Fácil</option>
-                        <option value="efectivo">Efectivo</option>
-                    </select>
-                </div>
-
-                <input type="hidden" name="cartItems" id="cartItems">
-                <input type="hidden" name="total" id="cartTotal">
-
-                <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Finalizar Compra
-                </button>
-            </form>
+            <div id="cartItems" class="space-y-4">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <div class="border-t pt-4 mt-4">
+                <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
+            </div>
+            <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
+                Proceder al pago
+            </button>
         </div>
     </div>
 
-    <div id="bankDetailsModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
-        <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
-            <div class="flex justify-center mb-4">
-                <img src="img/logo.png" alt="Mon Amour Logo" class="h-20 w-auto">
-            </div>
-            <h2 class="text-xl font-bold text-center mb-4 gradient-text font-serif">Datos Bancarios</h2>
-            <div class="space-y-4">
-                <div>
-                    <h3 class="font-medium">Banco:</h3>
-                    <p>Banco de la Nación Argentina</p>
-                </div>
-                <div>
-                    <h3 class="font-medium">Titular:</h3>
-                    <p>Mon Amour Textil S.A.</p>
-                </div>
-                <div>
-                    <h3 class="font-medium">CBU:</h3>
-                    <p>0110000000000000000000</p>
-                </div>
-                <div>
-                    <h3 class="font-medium">Alias:</h3>
-                    <p>MONAMOUR.TEXTIL</p>
-                </div>
-                <div>
-                    <h3 class="font-medium">CUIT:</h3>
-                    <p>30-00000000-0</p>
-                </div>
-                <button id="closeBankDetailsModal" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Entendido
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+        <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="productModalTitle" class="text-xl font-bold gradient-text"></h2>
+                <button id="closeProductModal" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-times h-5 w-5"></i>
                 </button>
+            </div>
+            <div id="productModalContent">
+                <!-- Product details will be dynamically inserted here -->
             </div>
         </div>
     </div>
 
-    <script>
-        // JavaScript code here
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const closeMobileMenuButton = document.getElementById('closeMobileMenu');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const accordionButtons = document.querySelectorAll('.accordion-button');
-            const checkoutModal = document.getElementById('checkoutModal');
-            const closeCheckoutModalButton = document.getElementById('closeCheckoutModal');
-            const cartButton = document.getElementById('cartButton');
-            const paymentMethodSelect = document.getElementById('paymentMethod');
-            const bankDetailsModal = document.getElementById('bankDetailsModal');
-            const closeBankDetailsModalButton = document.getElementById('closeBankDetailsModal');
+    <!-- WhatsApp Button and Notification -->
+    <div class="fixed bottom-4 right-4 z-40">
+        <button id="whatsappButton" class="bg-[#25D366] hover:bg-[#20BA56] text-white rounded-full p-4 shadow-lg transition-colors">
+            <i class="fab fa-whatsapp h-6 w-6 whatsapp-logo"></i>
+        </button>
+        <div id="whatsappNotification" class="absolute bottom-full right-0 mb-2 bg-gradient-to-r from-primary to-secondary p-4 rounded-lg shadow-lg hidden w-64">
+            <p class="text-sm font-medium mb-2 text-white">¿Necesitas ayuda? ¡Contáctanos por WhatsApp!</p>
+            <button id="closeWhatsappNotification" class="text-sm text-white hover:text-gray-200 transition-colors">
+                Cerrar
+            </button>
+        </div>
+    </div>
 
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.remove('hidden');
-                mobileMenuButton.querySelector('i').classList.add('open');
-            });
-
-            closeMobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenuButton.querySelector('i').classList.remove('open');
-            });
-
-            accordionButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const content = button.nextElementSibling;
-                    content.classList.toggle('open');
-                    button.querySelector('i').classList.toggle('fa-chevron-down');
-                    button.querySelector('i').classList.toggle('fa-chevron-up');
-                });
-            });
-
-            cartButton.addEventListener('click', () => {
-                checkoutModal.classList.remove('hidden');
-            });
-
-            closeCheckoutModalButton.addEventListener('click', () => {
-                checkoutModal.classList.add('hidden');
-            });
-
-            paymentMethodSelect.addEventListener('change', (event) => {
-                if (event.target.value === 'transferencia') {
-                    bankDetailsModal.classList.remove('hidden');
-                }
-            });
-
-            closeBankDetailsModalButton.addEventListener('click', () => {
-                bankDetailsModal.classList.add('hidden');
-            });
-
-            // Close modals when clicking outside
-            window.addEventListener('click', (event) => {
-                if (event.target === mobileMenu) {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuButton.querySelector('i').classList.remove('open');
-                }
-                if (event.target === checkoutModal) {
-                    checkoutModal.classList.add('hidden');
-                }
-                if (event.target === bankDetailsModal) {
-                    bankDetailsModal.classList.add('hidden');
-                }
-            });
-        });
-
-        function scrollProducts(containerId, scrollAmount) {
-            const container = document.getElementById(containerId + 'Container');
-            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-    </script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="mercadopago.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

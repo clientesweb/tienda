@@ -159,6 +159,10 @@
             background-clip: text;
             color: transparent;
         }
+  #hero {
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+    transition: background-image 1s ease-in-out;
+  }    
     </style>
 </head>
 <body class="flex min-h-screen flex-col font-sans">
@@ -241,10 +245,9 @@
 
     <main>
         <!-- Hero Banner -->
-<div id="hero" class="relative h-[500px] w-full overflow-hidden bg-cover bg-center">
-    <!-- Hero images will be dynamically inserted here -->
+<div id="hero" class="relative w-full overflow-hidden">
+    <!-- Las imágenes serán insertadas dinámicamente -->
 </div>
-        </div>
 
         <!-- New Advertising Banner without background image -->
         <div class="gradient-bg p-6 text-center text-white">

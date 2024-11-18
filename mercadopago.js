@@ -20,10 +20,14 @@ function createCheckoutButton(preferenceId) {
             preferenceId: preferenceId
         },
         callbacks: {
-            onError: (error) => console.error('Error en el pago:', error),
+            onError: (error) => {
+                console.error('Error en el pago:', error);
+                alert('Hubo un error al procesar el pago. Por favor, intenta de nuevo.');
+            },
             onReady: () => {
                 console.log('Botón de pago listo');
                 checkoutButtonCreated = true;
+                document.getElementById('mercadopago-button').style.display = 'block';
             }
         }
     });
@@ -54,7 +58,12 @@ function createPreference() {
             }
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al crear la preferencia de pago');
+        }
+        return response.json();
+    })
     .then(data => data.id);
 }
 
@@ -70,20 +79,20 @@ function toggleLoadingIndicator(show) {
     }
 }
 
-// Evento para iniciar el proceso de pago
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    if (!checkoutButtonCreated) {
-        toggleLoadingIndicator(true);
-        createPreference()
-            .then(preferenceId => {
-                createCheckoutButton(preferenceId);
-                toggleLoadingIndicator(false);
-            })
-            .catch(error => {
-                console.error('Error al crear la preferencia:', error);
-                toggleLoadingIndicator(false);
-            });
-    }
-});
+// Función para iniciar el proceso de pago con Mercado Pago
+function initiateMercadoPagoPayment() {
+    toggleLoadingIndicator(true);
+    createPreference()
+        .then(preferenceId => {
+            createCheckoutButton(preferenceId);
+            toggleLoadingIndicator(false);
+        })
+        .catch(error => {
+            console.error('Error al crear la preferencia:', error);
+            toggleLoadingIndicator(false);
+            alert('Hubo un problema al iniciar el proceso de pago. Por favor, intenta de nuevo.');
+        });
+}
+
+// No es necesario agregar un event listener aquí, ya que el proceso de pago
+// se iniciará desde el script principal después de la presentación exitosa de Formspree.

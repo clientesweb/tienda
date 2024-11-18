@@ -15,22 +15,36 @@ const products = {
         { id: 12, name: "Sèlène x3", price: 11400, image: "img/selene-x3.jpg", description: "Set de 3 velas Sèlène" },
     ],
     aromas: [
-        { id: 4, name: "Difusor de Aromas Floral", price: 3200, image: "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Difusor de aromas con esencia floral." },
-        { id: 5, name: "Aceite Esencial de Eucalipto", price: 1800, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Aceite esencial de eucalipto puro." },
-        { id: 6, name: "Spray Ambiental Cítrico", price: 1500, image: "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Spray ambiental con aroma cítrico refrescante." },
+        { id: 13, name: "Difusor de Aromas Floral", price: 3200, image: "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Difusor de aromas con esencia floral." },
+        { id: 14, name: "Aceite Esencial de Eucalipto", price: 1800, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Aceite esencial de eucalipto puro." },
+        { id: 15, name: "Spray Ambiental Cítrico", price: 1500, image: "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Spray ambiental con aroma cítrico refrescante." },
     ],
-    textiles: [
-        { id: 7, name: "Cortina Burdeos", price: 75200, image: "img/cortina-burdeos.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Lazos para atar al barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar." },
-        { id: 8, name: "Cortina Marsella", price: 60775, image: "img/cortina-marsella.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." },
-        { id: 9, name: "Cortina Niza", price: 60775, image: "img/cortina-niza.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." }
-    ],
+    textiles: {
+        cortinasBano: [
+            { id: 16, name: "Cortina Burdeos", price: 75200, image: "img/cortina-burdeos.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Lazos para atar al barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar." },
+            { id: 17, name: "Cortina Marsella", price: 60775, image: "img/cortina-marsella.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." },
+            { id: 18, name: "Cortina Niza", price: 60775, image: "img/cortina-niza.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." }
+        ],
+        cortinasInterior: [
+            { id: 19, name: "Cortina Lino Natural", price: 85000, image: "img/cortina-lino-natural.jpg", description: "Cortina de interior en lino natural. Medidas personalizables." },
+            { id: 20, name: "Cortina Blackout", price: 95000, image: "img/cortina-blackout.jpg", description: "Cortina blackout para dormitorios. 100% opaca." }
+        ],
+        cubreSommier: [
+            { id: 21, name: "Cubre Sommier Blanco", price: 45000, image: "img/cubre-sommier-blanco.jpg", description: "Cubre sommier en algodón 100%. Disponible en varios tamaños." },
+            { id: 22, name: "Cubre Sommier Estampado", price: 50000, image: "img/cubre-sommier-estampado.jpg", description: "Cubre sommier con estampado floral. Algodón y poliéster." }
+        ],
+        accesorios: [
+            { id: 23, name: "Almohadones Decorativos", price: 15000, image: "img/almohadones-decorativos.jpg", description: "Set de 2 almohadones decorativos. Varios diseños disponibles." },
+            { id: 24, name: "Camino de Mesa", price: 25000, image: "img/camino-de-mesa.jpg", description: "Camino de mesa en lino. Ideal para decorar tu comedor." }
+        ]
+    },
     ceramica: [
-        { id: 10, name: "Set de Mate Amelia", price: 30800, image: "img/set-mate-amelia.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro." },
-        { id: 11, name: "Set Sophie", price: 24000, image: "img/set-sophie.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón." },
-        { id: 12, name: "Fanal Lucia", price: 12000, image: "img/fanal-lucia.jpg", description: "Pieza de cerámica única realizada y pintada a mano. Incluye: fanal y plato." },
-        { id: 13, name: "Set Julieta", price: 19400, image: "img/set-julieta.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada." },
-        { id: 14, name: "Mini Florero Lea", price: 8000, image: "img/mini-florero-lea.jpg", description: "Pieza única de cerámica realizada y pintada a mano." },
-        { id: 15, name: "Florero Luisa (forma de nube)", price: 14000, image: "img/florero-luisa.jpg", description: "Pieza única de cerámica realizada y pintada a mano con forma de nube." },
+        { id: 25, name: "Set de Mate Amelia", price: 30800, image: "img/set-mate-amelia.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro." },
+        { id: 26, name: "Set Sophie", price: 24000, image: "img/set-sophie.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón." },
+        { id: 27, name: "Fanal Lucia", price: 12000, image: "img/fanal-lucia.jpg", description: "Pieza de cerámica única realizada y pintada a mano. Incluye: fanal y plato." },
+        { id: 28, name: "Set Julieta", price: 19400, image: "img/set-julieta.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada." },
+        { id: 29, name: "Mini Florero Lea", price: 8000, image: "img/mini-florero-lea.jpg", description: "Pieza única de cerámica realizada y pintada a mano." },
+        { id: 30, name: "Florero Luisa (forma de nube)", price: 14000, image: "img/florero-luisa.jpg", description: "Pieza única de cerámica realizada y pintada a mano con forma de nube." },
     ],
 };
 
@@ -61,7 +75,10 @@ const heroEl = document.getElementById('hero');
 const productContainers = {
     velas: document.getElementById('velasContainer'),
     aromas: document.getElementById('aromasContainer'),
-    textiles: document.getElementById('textilesContainer'),
+    cortinasBano: document.getElementById('cortinasBanoContainer'),
+    cortinasInterior: document.getElementById('cortinasInteriorContainer'),
+    cubreSommier: document.getElementById('cubreSommierContainer'),
+    accesorios: document.getElementById('accesoriosContainer'),
     ceramica: document.getElementById('ceramicaContainer'),
 };
 
@@ -80,20 +97,41 @@ function updateHero() {
 
 function renderProducts() {
     for (const [category, productList] of Object.entries(products)) {
-        productContainers[category].innerHTML = productList.map(product => `
-            <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="p-4">
-                    <div class="relative mb-4 aspect-square">
-                        <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+        if (category === 'textiles') {
+            for (const [subCategory, subProductList] of Object.entries(productList)) {
+                if (productContainers[subCategory]) {
+                    productContainers[subCategory].innerHTML = subProductList.map(product => `
+                        <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
+                            <div class="p-4">
+                                <div class="relative mb-4 aspect-square">
+                                    <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+                                </div>
+                                <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
+                                <p class="mt-2 text-lg font-bold">$${product.price.toLocaleString()}</p>
+                                <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}', '${subCategory}')">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        } else if (productContainers[category]) {
+            productContainers[category].innerHTML = productList.map(product => `
+                <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="relative mb-4 aspect-square">
+                            <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+                        </div>
+                        <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
+                        <p class="mt-2 text-lg font-bold">$${product.price.toLocaleString()}</p>
+                        <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                            Ver detalles
+                        </button>
                     </div>
-                    <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                    <p class="mt-2 text-lg font-bold">$${product.price.toLocaleString()}</p>
-                    <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
-                        Ver detalles
-                    </button>
                 </div>
-            </div>
-        `).join('');
+            `).join('');
+        }
     }
 }
 
@@ -101,8 +139,13 @@ function scrollProducts(category, amount) {
     productContainers[category].scrollBy({ left: amount, behavior: 'smooth' });
 }
 
-function openProductModal(productId, category) {
-    const product = products[category].find(p => p.id === productId);
+function openProductModal(productId, category, subCategory = null) {
+    let product;
+    if (subCategory) {
+        product = products[category][subCategory].find(p => p.id === productId);
+    } else {
+        product = products[category].find(p => p.id === productId);
+    }
     if (!product) return;
 
     const modalTitle = document.getElementById('productModalTitle');
@@ -124,7 +167,7 @@ function openProductModal(productId, category) {
                     <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
                 </div>
             </div>
-            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
+            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}', '${subCategory}')">
                 Agregar al carrito
             </button>
         </div>
@@ -144,8 +187,13 @@ function updateQuantity(change) {
     quantityInput.value = newQuantity;
 }
 
-function addToCart(productId, category) {
-    const product = products[category].find(p => p.id === productId);
+function addToCart(productId, category, subCategory = null) {
+    let product;
+    if (subCategory) {
+        product = products[category][subCategory].find(p => p.id === productId);
+    } else {
+        product = products[category].find(p => p.id === productId);
+    }
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);
@@ -392,6 +440,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
+
+    // Accordion functionality for textiles section
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            // Toggle active class
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+            
+            // Close other accordion items
+            accordionHeaders.forEach(otherHeader => {
+                if (otherHeader !== header) {
+                    otherHeader.classList.remove('active');
+                    otherHeader.nextElementSibling.classList.remove('active');
+                    otherHeader.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                }
+            });
+            
+            // Rotate icon
+            icon.style.transform = header.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    });
 });
 
 // Implementación del menú desplegable para la sección de tienda en el escritorio
@@ -432,5 +505,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

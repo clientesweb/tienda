@@ -31,7 +31,12 @@ exports.handler = async function(event, context) {
         ],
         installments: 3
       },
-      notification_url: 'https://monamour.netlify.app/.netlify/functions/webhook'
+      notification_url: 'https://monamour.netlify.app/.netlify/functions/webhook',
+      statement_descriptor: 'MON AMOUR TEXTIL',
+      external_reference: `ORDER-${Date.now()}`,
+      expires: true,
+      expiration_date_from: new Date().toISOString(),
+      expiration_date_to: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours from now
     };
 
     console.log('Creating preference with:', JSON.stringify(preference));

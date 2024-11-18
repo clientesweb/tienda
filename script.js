@@ -38,6 +38,7 @@ const heroImages = [
 let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
+let currentStep = 1;
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -228,6 +229,47 @@ function updateAdvertisingBanner() {
     advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
+function showStep(step) {
+    document.getElementById(`step${currentStep}`).classList.add('hidden');
+    document.getElementById(`step${step}`).classList.remove('hidden');
+    currentStep = step;
+
+    // Update stepper UI
+    for (let i = 1; i <= 3; i++) {
+        const stepElement = document.querySelector(`.flex.justify-between.mb-4 > div:nth-child(${i})`);
+        if (i === step) {
+            stepElement.querySelector('div').classList.remove('bg-gray-300', 'text-gray-600');
+            stepElement.querySelector('div').classList.add('bg-primary', 'text-white');
+        } else if (i < step) {
+            stepElement.querySelector('div').classList.remove('bg-gray-300', 'text-gray-600');
+            stepElement.querySelector('div').classList.add('bg-primary', 'text-white');
+        } else {
+            stepElement.querySelector('div').classList.remove('bg-primary', 'text-white');
+            stepElement.querySelector('div').classList.add('bg-gray-300', 'text-gray-600');
+        }
+    }
+}
+
+function searchShippingOptions() {
+    const codigoPostal = document.getElementById('codigoPostal').value;
+    const opcionesEnvio = document.getElementById('opcionesEnvio');
+    
+    // Simular una búsqueda de opciones de envío
+    setTimeout(() => {
+        opcionesEnvio.innerHTML = `
+            <div>
+                <input type="radio" id="envio1" name="envio" value="Envío estándar" required>
+                <label for="envio1">Envío estándar (3-5 días hábiles) - $500</label>
+            </div>
+            <div>
+                <input type="radio" id="envio2" name="envio" value="Envío express" required>
+                <label for="envio2">Envío express (1-2 días hábiles) - $800</label>
+            </div>
+        `;
+        opcionesEnvio.classList.remove('hidden');
+    }, 1000);
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -256,12 +298,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
 
-    document.getElementById('whatsappButton').addEventListener('click', () => {
-        window.open('https://wa.me/5493534786106', '_blank');
-    });
-
-    document.getElementById('closeWhatsappNotification').addEventListener('click', () => {
-        document.getElementById('whatsappNotification').classList.add('hidden');
+    document.getElementById('verCompra').addEventListener('click', () => {
+        document.getElementById('cartModal').classList.remove('hidden');
     });
 
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
@@ -278,10 +316,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutButton').addEventListener('click', function() {
         document.getElementById('cartModal').classList.add('hidden');
         document.getElementById('checkoutModal').classList.remove('hidden');
+        showStep(1);
     });
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    document.getElementById('buscarEnvio').addEventListener('click', searchShippingOptions);
+
+    document.getElementById('nextToPayment').addEventListener('click', () => showStep(2));
+    document.getElementById('nextToFinished').addEventListener('click', () => showStep(3));
+
+    document.getElementById('showTransferModal').addEventListener('click', () => {
+        document.getElementById('transferModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeTransferModal').addEventListener('click', () => {
+        document.getElementById('transferModal').classList.add('hidden');
     });
 
     updateBanner();
@@ -294,10 +346,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateAdvertisingBanner();
     setInterval(updateAdvertisingBanner, 3600000); // Update every hour
-
-    setTimeout(() => {
-        document.getElementById('whatsappNotification').classList.remove('hidden');
-    }, 10000);
 
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';

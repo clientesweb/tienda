@@ -95,7 +95,7 @@ const bannerMessages = [
 ];
 
 const heroImages = [
-    "img/Hero.png",
+    "img/Hero1.png",
     "img/hero2.png",
     "img/hero3.png"
 ];

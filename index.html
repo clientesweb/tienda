@@ -420,59 +420,164 @@
     </footer>
 
     <!-- Checkout Form Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
-        <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
-                <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
-                    <i class="fas fa-times h-5 w-5"></i>
-                </button>
+<div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+    <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
+        <!-- Logo centrado -->
+        <div class="text-center mb-6">
+            <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto">
+        </div>
+        
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
+            <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+                <i class="fas fa-times h-5 w-5"></i>
+            </button>
+        </div>
+        <form id="checkoutForm" action="https://formspree.io/f/xrbglzrk" method="POST" class="space-y-4">
+            <!-- Stepper -->
+            <div class="flex justify-between mb-4">
+                <div class="text-center">
+                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-2 step">1</div>
+                    <span class="text-sm">Entrega</span>
+                </div>
+                <div class="text-center">
+                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 step">2</div>
+                    <span class="text-sm">Pago</span>
+                </div>
+                <div class="text-center">
+                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2 step">3</div>
+                    <span class="text-sm">Finalizado</span>
+                </div>
             </div>
-            <form id="checkoutForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Apellido</label>
-                    <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
+
+            <!-- Step 1: Entrega -->
+            <div id="step1" class="step-content space-y-4">
+                <h3 class="text-lg font-semibold">Información de Contacto</h3>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Email</label>
                     <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+
+                <h3 class="text-lg font-semibold">Opciones de Envío</h3>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Código Postal</label>
+                    <div class="flex mt-1">
+                        <input type="text" id="postalCode" name="codigoPostal" required class="block w-full rounded-l-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <button type="button" id="searchPostalCode" class="bg-primary text-white px-4 rounded-r-md hover:bg-primary-dark">Buscar</button>
+                    </div>
+                </div>
+                <div id="shippingOptions" class="hidden space-y-2">
+                    <!-- Las opciones de envío se insertarán aquí dinámicamente -->
+                </div>
+
+                <h3 class="text-lg font-semibold">Datos del Destinatario</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                        <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">DNI</label>
+                    <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Teléfono</label>
                     <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
+
+                <h3 class="text-lg font-semibold">Domicilio del Destinatario</h3>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Código Postal</label>
-                    <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    <label class="block text-sm font-medium text-gray-700">Calle</label>
+                    <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Método de envío</label>
-                    <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar...</option>
-                    </select>
+                    <label class="block text-sm font-medium text-gray-700">Número</label>
+                    <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Método de pago</label>
-                    <select name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar...</option>
-                        <option value="mercadopago">Mercado Pago</option>
-                        <option value="transferencia">Transferencia</option>
-                        <option value="rapipago">Rapipago</option>
-                        <option value="pagofacil">Pago Fácil</option>
-                        <option value="efectivo">Efectivo</option>
-                    </select>
+                    <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
+                    <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                 </div>
-                <div id="mercadopago-button"></div>
-                <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Finalizar compra
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
+                    <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                    <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Provincia</label>
+                    <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+
+                <button type="button" id="nextToPayment" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                    Continuar al Pago
                 </button>
-            </form>
+            </div>
+
+            <!-- Step 2: Pago -->
+            <div id="step2" class="step-content hidden space-y-4">
+                <h3 class="text-lg font-semibold">Método de Pago</h3>
+                <div class="flex space-x-4">
+                    <!-- MercadoPago Checkout Pro Button -->
+                    <div id="wallet_container" class="flex-1"></div>
+                    <button type="button" id="showTransferModal" class="flex-1 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
+                        <i class="fas fa-university mr-2"></i>Transferencia
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Compra Finalizada -->
+            <div id="step3" class="step-content hidden space-y-4">
+                <h3 class="text-lg font-semibold text-center text-green-600">¡Compra Finalizada!</h3>
+                <p class="text-center">Gracias por tu compra. Recibirás un correo electrónico con los detalles de tu pedido.</p>
+                <button type="button" id="closeCheckout" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                    Cerrar
+                </button>
+            </div>
+
+            <!-- Formspree configuration -->
+            <input type="hidden" name="_subject" value="Nueva orden de compra - Mon Amour Textil">
+            <input type="hidden" name="_next" value="https://monamour.netlify.app/gracias">
+            <input type="hidden" name="_template" value="table">
+            
+            <!-- Hidden fields for cart items and total -->
+            <input type="hidden" name="cartItems" id="cartItemsInput">
+            <input type="hidden" name="cartTotal" id="cartTotalInput">
+        </form>
+    </div>
+</div>
+
+<!-- Transfer Modal -->
+<div id="transferModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+    <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold gradient-text">Datos Bancarios</h2>
+            <button id="closeTransferModal" class="text-gray-600 hover:text-primary">
+                <i class="fas fa-times h-5 w-5"></i>
+            </button>
+        </div>
+        <div class="space-y-4">
+            <p><strong>Banco:</strong> [Nombre del Banco]</p>
+            <p><strong>Titular:</strong> [Nombre del Titular]</p>
+            <p><strong>CBU:</strong> [Número de CBU]</p>
+            <p><strong>Alias:</strong> [Alias]</p>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Cargar Comprobante</label>
+                <input type="file" name="comprobante" accept="image/*" class="mt-1 block w-full">
+            </div>
+            <button type="button" id="submitTransfer" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                Enviar Comprobante
+            </button>
         </div>
     </div>
+</div>
 
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">

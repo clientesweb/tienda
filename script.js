@@ -440,53 +440,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
-
-    // Accordion functionality for textiles section
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const content = header.nextElementSibling;
-            const icon = header.querySelector('.accordion-icon');
-            
-            // Toggle active class
-            header.classList.toggle('active');
-            content.classList.toggle('active');
-            
-            // Close other accordion items
-            accordionHeaders.forEach(otherHeader => {
-                if (otherHeader !== header) {
-                    otherHeader.classList.remove('active');
-                    otherHeader.nextElementSibling.classList.remove('active');
-                    otherHeader.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
-                }
-            });
-            
-            // Rotate icon
-            icon.style.transform = header.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-        });
-    });
 });
 
 // Implementación del menú desplegable para la sección de tienda en el escritorio
 document.addEventListener('DOMContentLoaded', function() {
-    const shopLink = document.querySelector('nav a[href="#tienda"]');
-    const dropdown = document.createElement('div');
-    dropdown.className = 'absolute hidden bg-white border rounded-md shadow-lg mt-2 py-2 w-48';
-    dropdown.innerHTML = `
-        <a href="#velas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Velas</a>
-        <a href="#aromas" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Aromas</a>
-        <a href="#textiles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Textiles</a>
-        <a href="#ceramica" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerámica</a>
-    `;
-    
-    shopLink.parentNode.appendChild(dropdown);
+    const shopLink = document.querySelector('nav a[href="#textiles"]');
+    const dropdown = shopLink.nextElementSibling;
     
     shopLink.addEventListener('mouseenter', () => {
-        dropdown.classList.remove('hidden');
+        dropdown.classList.remove('opacity-0');
     });
     
-    shopLink.parentNode.addEventListener('mouseleave', () => {
-        dropdown.classList.add('hidden');
+    dropdown.addEventListener('mouseleave', () => {
+        dropdown.classList.add('opacity-0');
     });
 });
 
@@ -505,4 +471,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

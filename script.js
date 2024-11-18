@@ -278,7 +278,7 @@ function updateCheckoutStep(step) {
 
 // MercadoPago integration
 function initMercadoPago() {
-  const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
+  const mp = new MercadoPago('YOUR_PUBLIC_KEY');
   const bricksBuilder = mp.bricks();
 
   const renderCheckoutButton = async (bricksBuilder) => {
@@ -290,20 +290,26 @@ function initMercadoPago() {
         onReady: () => {
           console.log('Brick ready');
         },
-        onSubmit: () => {
-          // MercadoPago will handle the redirection
+        onSubmit: (cardFormData) => {
+          // Aquí no necesitamos hacer nada, MercadoPago manejará el envío
+          console.log('Payment submission started');
         },
         onError: (error) => {
           console.error('Brick error', error);
+          alert('Hubo un error al procesar el pago. Por favor, intenta de nuevo.');
         },
       },
     };
     
-    // Limpiar el contenedor antes de renderizar el botón
     const container = document.getElementById('wallet_container');
     container.innerHTML = '';
     
-    window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+    try {
+      window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+    } catch (error) {
+      console.error('Error al crear el botón de MercadoPago:', error);
+      alert('No se pudo iniciar el proceso de pago. Por favor, intenta de nuevo más tarde.');
+    }
   };
 
   renderCheckoutButton(bricksBuilder);
@@ -344,10 +350,14 @@ async function createPreference() {
     }
 
     const data = await response.json();
+    if (!data.id) {
+      throw new Error('Invalid preference ID received');
+    }
     return data.id;
   } catch (error) {
     console.error('Error creating preference:', error);
-    alert('Hubo un error al procesar tu pago. Por favor, intenta de nuevo.');
+    alert('Hubo un error al preparar el pago. Por favor, intenta de nuevo.');
+    throw error;
   }
 }
 
@@ -387,10 +397,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        // Si estamos en el paso de pago y MercadoPago está activo, no procesamos el formulario
+        if (currentStep === 2 && document.getElementById('wallet_container').children.length > 0) {
+          console.log('MercadoPago payment in progress');
+          return;
+        }
+
         const formData = new FormData(this);
-    
+
         // Agregar información del carrito a formData
         cart.forEach((item, index) => {
             formData.append(`item_${index}_name`, item.name);
@@ -399,13 +416,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         formData.append('total', cart.reduce((sum, item) => sum + item.price * item.quantity, 0));
 
-        fetch("https://formspree.io/f/xrbglzrk", {
-            method: "POST",
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(response => {
+        try {
+            const response = await fetch("https://formspree.io/f/xrbglzrk", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
             if (response.ok) {
                 alert('¡Gracias por tu compra! Te contactaremos pronto.');
                 document.getElementById('checkoutModal').classList.add('hidden');
@@ -413,17 +432,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 cart = [];
                 updateCartUI();
             } else {
-                response.json().then(data => {
-                    if (Object.hasOwn(data, 'errors')) {
-                        alert(data["errors"].map(error => error["message"]).join(", "));
-                    } else {
-                        alert("Oops! Hubo un problema al enviar el formulario");
-                    }
-                })
+                const data = await response.json();
+                if (Object.hasOwn(data, 'errors')) {
+                    alert(data["errors"].map(error => error["message"]).join(", "));
+                } else {
+                    alert("Oops! Hubo un problema al enviar el formulario");
+                }
             }
-        }).catch(error => {
+        } catch (error) {
+            console.error('Error:', error);
             alert("Oops! Hubo un problema al enviar el formulario");
-        });
+        }
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {

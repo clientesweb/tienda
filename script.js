@@ -247,8 +247,20 @@ function prepareCartData() {
         id: item.id,
         name: item.name,
         price: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        total: item.price * item.quantity
     })));
+}
+
+function validateForm() {
+    const requiredFields = document.querySelectorAll('#checkoutForm [required]');
+    for (let field of requiredFields) {
+        if (!field.value) {
+            alert(`Por favor, completa el campo ${field.name}`);
+            return false;
+        }
+    }
+    return true;
 }
 
 // Event Listeners
@@ -319,9 +331,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        if (!validateForm()) return;
 
         const formData = new FormData(this);
         formData.append('cartItems', prepareCartData());
+
+        // Log de los datos que se están enviando
+        console.log('Datos del formulario:', Object.fromEntries(formData));
 
         fetch(this.action, {
             method: 'POST',
@@ -331,16 +347,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(response => {
             if (response.ok) {
-                cart = [];
-                updateCartUI();
-                document.getElementById('checkoutModal').classList.add('hidden');
-                alert('¡Gracias por tu compra! Te enviaremos un correo con los detalles.');
+                return response.json();
             } else {
-                throw new Error('Error en el envío del formulario');
+                return response.text().then(text => {
+                    throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
+                });
             }
+        }).then(data => {
+            console.log('Respuesta exitosa de Formspree:', data);
+            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
+            initiateMercadoPagoPayment();
         }).catch(error => {
-            console.error('Error:', error);
-            alert('Hubo un problema al procesar tu pedido. Por favor, intenta de nuevo.');
+            console.error('Error detallado:', error);
+            alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
         });
     });
 

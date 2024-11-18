@@ -163,7 +163,49 @@
             <nav class="hidden lg:flex space-x-6">
                 <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
                 <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
-                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                <div class="relative group">
+                    <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                    <div class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                        <div class="py-1">
+                            <div class="accordion-item border-b border-accent">
+                                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                                    <h3 class="text-sm font-medium">Cortinas de baño</h3>
+                                    <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                                </div>
+                                <div class="accordion-content hidden bg-white">
+                                    <div class="p-4" id="cortinasBanoContainer"></div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-b border-accent">
+                                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                                    <h3 class="text-sm font-medium">Cortinas de interior</h3>
+                                    <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                                </div>
+                                <div class="accordion-content hidden bg-white">
+                                    <div class="p-4" id="cortinasInteriorContainer"></div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-b border-accent">
+                                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                                    <h3 class="text-sm font-medium">Cubre sommier</h3>
+                                    <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                                </div>
+                                <div class="accordion-content hidden bg-white">
+                                    <div class="p-4" id="cubreSommierContainer"></div>
+                                </div>
+                            </div>
+                            <div class="accordion-item border-b border-accent">
+                                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                                    <h3 class="text-sm font-medium">Accesorios</h3>
+                                    <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                                </div>
+                                <div class="accordion-content hidden bg-white">
+                                    <div class="p-4" id="accesoriosContainer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
             </nav>
 
@@ -202,7 +244,18 @@
                     <div class="accordion-content hidden mt-2 ml-4">
                         <a href="#velas" class="block py-2 hover:text-primary">Velas</a>
                         <a href="#aromas" class="block py-2 hover:text-primary">Aromas</a>
-                        <a href="#textiles" class="block py-2 hover:text-primary">Textiles</a>
+                        <div class="accordion">
+                            <div class="accordion-header flex justify-between items-center cursor-pointer">
+                                <span class="nav-link">Textiles</span>
+                                <i class="fas fa-chevron-down accordion-icon transition-transform duration-300"></i>
+                            </div>
+                            <div class="accordion-content hidden mt-2 ml-4">
+                                <a href="#cortinasBano" class="block py-2 hover:text-primary">Cortinas de baño</a>
+                                <a href="#cortinasInterior" class="block py-2 hover:text-primary">Cortinas de interior</a>
+                                <a href="#cubreSommier" class="block py-2 hover:text-primary">Cubre sommier</a>
+                                <a href="#accesorios" class="block py-2 hover:text-primary">Accesorios</a>
+                            </div>
+                        </div>
                         <a href="#ceramica" class="block py-2 hover:text-primary">Cerámica</a>
                     </div>
                 </div>
@@ -264,65 +317,6 @@
             <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text font-serif"></p>
         </div>
 
-        <!-- Updated Textiles Section with Accordion -->
-        <section id="textiles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">TEXTILES</h2>
-            
-            <!-- Textiles Accordion -->
-            <div class="max-w-4xl mx-auto mb-8">
-                <!-- Cortinas de baño -->
-                <div class="accordion-item border-b border-accent">
-                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
-                        <h3 class="text-lg font-serif">Cortinas de baño</h3>
-                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
-                    </div>
-                    <div class="accordion-content bg-white">
-                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cortinasBanoContainer">
-                            <!-- Products will be dynamically inserted here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cortinas de interior -->
-                <div class="accordion-item border-b border-accent">
-                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
-                        <h3 class="text-lg font-serif">Cortinas de interior</h3>
-                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
-                    </div>
-                    <div class="accordion-content bg-white">
-                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cortinasInteriorContainer">
-                            <!-- Products will be dynamically inserted here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cubre sommier -->
-                <div class="accordion-item border-b border-accent">
-                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
-                        <h3 class="text-lg font-serif">Cubre sommier</h3>
-                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
-                    </div>
-                    <div class="accordion-content bg-white">
-                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cubreSommierContainer">
-                            <!-- Products will be dynamically inserted here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Accesorios -->
-                <div class="accordion-item border-b border-accent">
-                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
-                        <h3 class="text-lg font-serif">Accesorios</h3>
-                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
-                    </div>
-                    <div class="accordion-content bg-white">
-                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="accesoriosContainer">
-                            <!-- Products will be dynamically inserted here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section id="ceramica" class="container mx-auto px-4 py-12">
             <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">CERÁMICA</h2>
@@ -580,49 +574,5 @@
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-iNVLMTwX3hsOUcQ8AicEBqjylwfiFJ.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto mb-4">
-            <div id="cartItems" class="space-y-4">
-                <!-- Cart items will be dynamically inserted here -->
-            </div>
-            <div class="border-t pt-4 mt-4">
-                <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
-            </div>
-            <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
-                Proceder al pago
-            </button>
-        </div>
-    </div>
-
-    <!-- Product Modal -->
-    <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="productModalTitle" class="text-xl font-bold gradient-text font-serif"></h2>
-                <button id="closeProductModal" class="text-taupe hover:text-primary">
-                    <i class="fas fa-times h-5 w-5"></i>
-                </button>
-            </div>
-            <div id="productModalContent">
-                <!-- Product details will be dynamically inserted here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- WhatsApp Button and Notification -->
-    <div class="fixed bottom-4 right-4 z-40">
-        <button id="whatsappButton" class="bg-[#25D366] hover:bg-[#20BA56] text-white rounded-full p-4 shadow-lg transition-colors">
-            <i class="fab fa-whatsapp h-6 w-6 whatsapp-logo"></i>
-        </button>
-        <div id="whatsappNotification" class="absolute bottom-full right-0 mb-2 bg-gradient-to-r from-primary to-secondary p-4 rounded-lg shadow-lg hidden w-64">
-            <p class="text-sm font-medium mb-2 text-white">¿Necesitas ayuda? ¡Contáctanos por WhatsApp!</p>
-            <button id="closeWhatsappNotification" class="text-sm text-white hover:text-gray-200 transition-colors">
-                Cerrar
-            </button>
-        </div>
-    </div>
-
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <script src="mercadopago.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-iNVLMTwX3hsOU
+<merged_code>

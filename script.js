@@ -84,8 +84,9 @@ const products = {
         price: 14000,
         image: "img/florero-luisa.jpg",
         description: "Pieza única de cerámica realizada y pintada a mano con forma de nube."
-    }
-];
+    },
+    ],
+};
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",

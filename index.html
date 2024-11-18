@@ -6,29 +6,29 @@
     <title>Mon Amour Textil - Decoración y Textiles de Hogar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#B8A088',
-                        secondary: '#8B7355',
-                        'primary-dark': '#A08B73',
-                        'secondary-dark': '#6B563E',
-                        cream: '#F5EFE6',
-                        ivory: '#FFF8EA'
+                        primary: '#8B7D6B',
+                        secondary: '#D2C6B2',
+                        'primary-dark': '#6A5F51',
+                        'secondary-dark': '#B1A48E',
+                        cream: '#F5F0E6',
+                        ivory: '#FFFDF7'
                     },
                     fontFamily: {
-                        'display': ['Playfair Display', 'serif'],
-                        'sans': ['Montserrat', 'sans-serif'],
+                        'sans': ['Roboto', 'sans-serif'],
+                        'serif': ['"Playfair Display"', 'serif'],
                     },
                 }
             }
         }
     </script>
     <style>
-        /* Existing styles */
+        /* Estilos existentes */
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
@@ -55,8 +55,8 @@
             width: 50px;
             height: 50px;
             border: 5px solid #f3f3f3;
-            border-top: 5px solid #B8A088;
-            border-right: 5px solid #8B7355;
+            border-top: 5px solid #8B7D6B;
+            border-right: 5px solid #D2C6B2;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -66,54 +66,14 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Typography styles */
-        h1, h2, h3, .font-display {
-            font-family: 'Playfair Display', serif;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* Accordion styles */
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .accordion-content.open {
-            max-height: 500px;
-        }
-
-        .accordion-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-button.open .accordion-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Existing gradient styles */
         .gradient-text {
-            background: linear-gradient(45deg, #B8A088, #8B7355);
+            background: linear-gradient(45deg, #8B7D6B, #D2C6B2);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .gradient-bg {
-            background: linear-gradient(45deg, #B8A088, #8B7355);
-        }
-
-        .gradient-icon {
-            background: linear-gradient(45deg, #B8A088, #8B7355);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        /* Existing animation styles */
+        /* Menu icon animation */
         .menu-icon {
             transition: transform 0.3s ease;
         }
@@ -121,6 +81,7 @@
             transform: rotate(90deg);
         }
 
+        /* Product card hover effects */
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -129,6 +90,7 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
+        /* WhatsApp logo animation */
         .whatsapp-logo {
             animation: pulse 2s infinite;
         }
@@ -184,9 +146,22 @@
         .slider-button.next {
             right: 0;
         }
+
+        /* Gradient background for advertising banner */
+        .gradient-bg {
+            background: linear-gradient(45deg, #8B7D6B, #D2C6B2);
+        }
+
+        /* Gradient icons */
+        .gradient-icon {
+            background: linear-gradient(45deg, #8B7D6B, #D2C6B2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
     </style>
 </head>
-<body class="flex min-h-screen flex-col bg-cream">
+<body class="flex min-h-screen flex-col font-sans">
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>
@@ -211,11 +186,10 @@
             </button>
 
             <nav class="hidden lg:flex space-x-6">
-                <a href="#" class="text-sm font-medium hover:text-primary">INICIO</a>
-                <a href="#" class="text-sm font-medium hover:text-primary">TIENDA</a>
-                <a href="#" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
-                <a href="#" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
-                <a href="#" class="text-sm font-medium hover:text-primary">CONTACTO</a>
+                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
+                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
+                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
             </nav>
 
             <a href="/" class="flex items-center justify-center flex-grow lg:flex-grow-0">
@@ -231,35 +205,20 @@
         </div>
     </header>
 
-    <!-- Mobile Menu with Accordion -->
+    <!-- Mobile Menu -->
     <div id="mobileMenu" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white h-full w-64 p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-display font-bold text-secondary">Menú</h2>
+                <h2 class="text-xl font-bold gradient-text font-serif">Menú</h2>
                 <button id="closeMobileMenu" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
             <nav class="flex flex-col space-y-4">
-                <a href="#" class="text-sm font-medium hover:text-primary">INICIO</a>
-                
-                <!-- Accordion Menu Item -->
-                <div class="accordion">
-                    <button class="accordion-button flex items-center justify-between w-full text-sm font-medium hover:text-primary">
-                        <span>TIENDA</span>
-                        <i class="fas fa-chevron-down accordion-icon"></i>
-                    </button>
-                    <div class="accordion-content pl-4">
-                        <a href="#velas" class="block py-2 text-sm hover:text-primary">VELAS</a>
-                        <a href="#aromas" class="block py-2 text-sm hover:text-primary">AROMAS</a>
-                        <a href="#textiles" class="block py-2 text-sm hover:text-primary">TEXTILES</a>
-                        <a href="#ceramica" class="block py-2 text-sm hover:text-primary">CERÁMICA</a>
-                    </div>
-                </div>
-                
-                <a href="#" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
-                <a href="#" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
-                <a href="#" class="text-sm font-medium hover:text-primary">CONTACTO</a>
+                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
+                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
+                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
             </nav>
         </div>
     </div>
@@ -272,14 +231,14 @@
 
         <!-- New Advertising Banner without background image -->
         <div class="gradient-bg p-6 text-center text-white">
-            <h2 class="text-2xl font-bold mb-2">¡Ofertas Especiales!</h2>
+            <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
             <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
             <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
         </div>
 
         <!-- Product Sections -->
         <section id="velas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">VELAS</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">VELAS</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('velas', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -294,7 +253,7 @@
         </section>
 
         <section id="aromas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">AROMAS</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">AROMAS</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('aromas', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -311,11 +270,11 @@
         <!-- New Advertising Banner -->
         <div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
             <div class="absolute inset-0 bg-black opacity-50"></div>
-            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text"></p>
+            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text font-serif"></p>
         </div>
 
         <section id="textiles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TEXTILES</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">TEXTILES</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -330,7 +289,7 @@
         </section>
 
         <section id="ceramica" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text">CERÁMICA</h2>
+            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">CERÁMICA</h2>
             <div class="product-slider-container">
                 <button class="slider-button prev" onclick="scrollProducts('ceramica', -300)">
                     <i class="fas fa-chevron-left"></i>
@@ -349,7 +308,7 @@
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-gray-800">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
+                        <h2 class="text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
                         <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
                     </div>
                     <div class="relative">
@@ -365,23 +324,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-truck text-4xl gradient-icon"></i>
+                <i class="fas fa-truck text-4xl gradient-icon"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">ENVÍO RÁPIDO</h3>
+                        <h3 class="text-xl font-bold mb-2 font-serif">ENVÍO RÁPIDO</h3>
                         <p class="text-gray-600">A toda Argentina</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
                             <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">COMPRA SEGURA</h3>
+                        <h3 class="text-xl font-bold mb-2 font-serif">COMPRA SEGURA</h3>
                         <p class="text-gray-600">Garantía 100%</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
                             <i class="fas fa-gift text-4xl gradient-icon"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">PROMOCIONES</h3>
+                        <h3 class="text-xl font-bold mb-2 font-serif">PROMOCIONES</h3>
                         <p class="text-gray-600">Aprovechá nuestras ofertas</p>
                     </div>
                 </div>
@@ -400,7 +359,7 @@
                     </p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Enlaces rápidos</h3>
+                    <h3 class="text-lg font-semibold mb-4 font-serif">Enlaces rápidos</h3>
                     <ul class="space-y-2">
                         <li><a href="#velas" class="text-sm text-gray-200 hover:text-white transition-colors">Velas</a></li>
                         <li><a href="#aromas" class="text-sm text-gray-200 hover:text-white transition-colors">Aromas</a></li>
@@ -409,7 +368,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Contacto</h3>
+                    <h3 class="text-lg font-semibold mb-4 font-serif">Contacto</h3>
                     <ul class="space-y-2">
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-map-marker-alt mr-2 h-4 w-4"></i>
@@ -425,12 +384,12 @@
                         </li>
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                            <a href="/cdn-cgi/l/email-protection#c1a8afa7ae81acaeafa0acaeb4b3b5a4b9b5a8adefa2aeac"><span class="__cf_email__" data-cfemail="c1a8afa7ae81acaeafa0acaeb4b3b5a4b9b5a8adefa2aeac">[email&#160;protected]</span></a>
+                            <a href="/cdn-cgi/l/email-protection#83eaede5ecc3eeecede2eeecf6f1f7e6fbf7eaefade0ecee"><span class="__cf_email__" data-cfemail="f49d9a929bb4999b9a95999b818680918c809d98da979b99">[email&#160;protected]</span></a>
                         </li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
+                    <h3 class="text-lg font-semibold mb-4 font-serif">Síguenos</h3>
                     <div class="flex space-x-4 mb-4">
                         <a href="#" class="text-gray-200 hover:text-white transition-colors">
                             <i class="fab fa-facebook h-6 w-6"></i>
@@ -442,7 +401,7 @@
                             <i class="fab fa-pinterest h-6 w-6"></i>
                         </a>
                     </div>
-                    <h4 class="text-sm font-semibold mb-2">Suscríbete a nuestro newsletter</h4>
+                    <h4 class="text-sm font-semibold mb-2 font-serif">Suscríbete a nuestro newsletter</h4>
                     <form class="flex flex-col sm:flex-row gap-2">
                         <input type="email" placeholder="Tu email" class="flex-grow px-3 py-2 text-gray-900 rounded-md focus:outline-none">
                         <button type="submit" class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">Suscribir</button>
@@ -450,7 +409,7 @@
                 </div>
             </div>
             <div class="mt-8 border-t border-gray-700 pt-8">
-                <h3 class="text-lg font-semibold mb-4">Políticas</h3>
+                <h3 class="text-lg font-semibold mb-4 font-serif">Políticas</h3>
                 <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Privacidad y Cookies</a></li>
                     <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Términos y Condiciones de Uso</a></li>
@@ -465,15 +424,16 @@
         </div>
     </footer>
 
-    <!-- Updated Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+<!-- Checkout Form Modal -->
+<div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
     <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
+            <h2 class="text-xl font-bold gradient-text font-serif">Finalizar Compra</h2>
             <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
                 <i class="fas fa-times h-5 w-5"></i>
             </button>
         </div>
+        <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto mb-4">
         <form id="checkoutForm" class="space-y-4" action="https://formspree.io/f/xrbglzrk" method="POST">
             <!-- Contacto -->
             <div>
@@ -483,7 +443,7 @@
 
             <!-- Opciones de envío -->
             <div>
-                <h3 class="text-lg font-medium text-gray-700 mb-2">Opciones de envío</h3>
+                <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Opciones de envío</h3>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Código postal</label>
                     <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
@@ -501,7 +461,7 @@
 
             <!-- Datos del destinatario -->
             <div>
-                <h3 class="text-lg font-medium text-gray-700 mb-2">Datos del destinatario</h3>
+                <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Datos del destinatario</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Nombre</label>
@@ -524,7 +484,7 @@
 
             <!-- Domicilio del destinatario -->
             <div>
-                <h3 class="text-lg font-medium text-gray-700 mb-2">Domicilio del destinatario</h3>
+                <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Domicilio del destinatario</h3>
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Calle</label>
                     <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
@@ -558,6 +518,9 @@
                     <option value="">Seleccionar...</option>
                     <option value="mercadopago">Mercado Pago</option>
                     <option value="transferencia">Transferencia</option>
+                    <option value="rapipago">Rapipago</option>
+                    <option value="pagofacil">Pago Fácil</option>
+                    <option value="efectivo">Efectivo</option>
                 </select>
             </div>
 
@@ -570,16 +533,18 @@
             </button>
         </form>
     </div>
+</div>
 
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
+                <h2 class="text-xl font-bold gradient-text font-serif">Carrito de Compras</h2>
                 <button id="closeCart" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
+            <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto mb-4">
             <div id="cartItems" class="space-y-4">
                 <!-- Cart items will be dynamically inserted here -->
             </div>
@@ -596,7 +561,7 @@
     <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
             <div class="flex justify-between items-center mb-4">
-                <h2 id="productModalTitle" class="text-xl font-bold gradient-text"></h2>
+                <h2 id="productModalTitle" class="text-xl font-bold gradient-text font-serif"></h2>
                 <button id="closeProductModal" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
@@ -620,11 +585,8 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <script src="merc
-
-adopago.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="mercadopago.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

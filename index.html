@@ -452,12 +452,12 @@
 <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
     <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold gradient-text">Finalizar Compra</h2>
+            <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-16 w-auto">
             <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
                 <i class="fas fa-times h-5 w-5"></i>
             </button>
         </div>
-        <form id="checkoutForm" class="space-y-4">
+        <form id="checkoutForm" action="https://formspree.io/f/your-formspree-id" method="POST" class="space-y-4">
             <!-- Stepper -->
             <div class="flex justify-between mb-4">
                 <div class="text-center">
@@ -486,9 +486,13 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Código Postal</label>
                     <div class="flex mt-1">
-                        <input type="text" name="codigoPostal" required class="block w-full rounded-l-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <button type="button" class="bg-primary text-white px-4 rounded-r-md hover:bg-primary-dark">Buscar</button>
+                        <input type="text" name="codigoPostal" id="codigoPostal" required class="block w-full rounded-l-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <button type="button" id="buscarEnvio" class="bg-primary text-white px-4 rounded-r-md hover:bg-primary-dark">Buscar</button>
                     </div>
+                </div>
+
+                <div id="opcionesEnvio" class="hidden space-y-2">
+                    <!-- Shipping options will be dynamically inserted here -->
                 </div>
 
                 <h3 class="text-lg font-semibold">Datos del Destinatario</h3>
@@ -562,7 +566,7 @@
             <!-- Step 3: Compra Finalizada -->
             <div id="step3" class="hidden space-y-4">
                 <h3 class="text-lg font-semibold text-center text-green-600">¡Compra Finalizada!</h3>
-                <p class="text-center">Gracias por tu compra. Recibirás un correo electrónico con los detalles de tu pedido.</p>
+                <p class="text-center">Gracias por tu compra. Recibirás un email con los detalles de tu pedido.</p>
                 <button type="button" id="closeCheckout" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
                     Cerrar
                 </button>
@@ -571,78 +575,50 @@
     </div>
 </div>
 
-<!-- Transfer Modal -->
-<div id="transferModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-    <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
+<!-- Cart Modal -->
+<div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+    <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold gradient-text">Datos Bancarios</h2>
-            <button id="closeTransferModal" class="text-gray-600 hover:text-primary">
+            <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
+            <button id="closeCart" class="text-gray-600 hover:text-primary">
                 <i class="fas fa-times h-5 w-5"></i>
             </button>
         </div>
-        <div class="space-y-4">
-            <p><strong>Banco:</strong> [Nombre del Banco]</p>
-            <p><strong>Titular:</strong> [Nombre del Titular]</p>
-            <p><strong>CBU:</strong> [Número de CBU]</p>
-            <p><strong>Alias:</strong> [Alias]</p>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Cargar Comprobante</label>
-                <input type="file" name="comprobante" accept="image/*" class="mt-1 block w-full">
-            </div>
-            <button type="button" id="submitTransfer" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                Enviar Comprobante
-            </button>
+        <div id="cartItems" class="space-y-4">
+            <!-- Cart items will be dynamically inserted here -->
         </div>
+        <div class="border-t pt-4 mt-4">
+            <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
+        </div>
+        <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
+            Proceder al pago
+        </button>
     </div>
 </div>
 
-<!-- Cart Modal -->
-<div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
- <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
-     <div class="flex justify-between items-center mb-4">
-         <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
-         <button id="closeCart" class="text-gray-600 hover:text-primary">
-             <i class="fas fa-times h-5 w-5"></i>
-         </button>
-     </div>
-     <div id="cartItems" class="space-y-4">
-         <!-- Cart items will be dynamically inserted here -->
-     </div>
-     <div class="border-t pt-4 mt-4">
-         <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
-     </div>
-     <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
-         Proceder al pago
-     </button>
- </div>
-</div>
+<!-- New "Ver mi compra" button -->
+<button id="verCompra" class="fixed bottom-20 right-4 z-40 bg-primary hover:bg-primary-dark text-white rounded-full p-4 shadow-lg transition-colors">
+    <i class="fas fa-shopping-cart mr-2"></i> Ver mi compra
+</button>
 
-<!-- Product Modal -->
-<div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
- <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
-     <div class="flex justify-between items-center mb-4">
-         <h2 id="productModalTitle" class="text-xl font-bold gradient-text"></h2>
-         <button id="closeProductModal" class="text-gray-600 hover:text-primary">
-             <i class="fas fa-times h-5 w-5"></i>
-         </button>
-     </div>
-     <div id="productModalContent">
-         <!-- Product details will be dynamically inserted here -->
-     </div>
- </div>
-</div>
+<!-- WhatsApp Button -->
+<a href="https://wa.me/5493534786106" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 right-4 z-40 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-colors">
+ <i class="fab fa-whatsapp text-2xl whatsapp-logo"></i>
+</a>
 
-<!-- WhatsApp Button and Notification -->
-<div class="fixed bottom-4 right-4 z-40">
- <button id="whatsappButton" class="bg-[#25D366] hover:bg-[#20BA56] text-white rounded-full p-4 shadow-lg transition-colors">
-     <i class="fab fa-whatsapp h-6 w-6 whatsapp-logo"></i>
- </button>
- <div id="whatsappNotification" class="absolute bottom-full right-0 mb-2 bg-gradient-to-r from-primary to-secondary p-4 rounded-lg shadow-lg hidden w-64">
-     <p class="text-sm font-medium mb-2 text-white">¿Necesitas ayuda? ¡Contáctanos por WhatsApp!</p>
-     <button id="closeWhatsappNotification" class="text-sm text-white hover:text-gray-200 transition-colors">
-         Cerrar
-     </button>
- </div>
+<!-- Transfer Modal -->
+<div id="transferModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
+    <div class="bg-white w-full max-w-md mx-auto mt-20 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold mb-4">Datos para Transferencia</h3>
+        <p><strong>Banco:</strong> Nombre del Banco</p>
+        <p><strong>Titular:</strong> Nombre del Titular</p>
+        <p><strong>CBU:</strong> 0000000000000000000000</p>
+        <p><strong>Alias:</strong> ALIAS.DE.LA.CUENTA</p>
+        <p class="mt-4">Una vez realizada la transferencia, por favor envía el comprobante a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8a1a6aea788bea9b8bdbba0a7b8bcbdabb9a5a9a6e6aba7a5">[email&#160;protected]</a></p>
+        <button id="closeTransferModal" class="mt-6 w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+            Cerrar
+        </button>
+    </div>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>

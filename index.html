@@ -12,12 +12,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#C5B7A6',
-                        secondary: '#E5DED4',
-                        accent: '#8A7B68',
-                        'primary-dark': '#A69985',
-                        cream: '#F5F0E6',
-                        ivory: '#FFFDF7'
+                        primary: '#D4C098',
+                        secondary: '#EAE3C9',
+                        accent: '#C8C2AC',
+                        'primary-dark': '#A6A18F',
+                        cream: '#F3ECD0',
+                        taupe: '#848071'
                     },
                     fontFamily: {
                         'sans': ['Montserrat', 'sans-serif'],
@@ -28,6 +28,15 @@
         }
     </script>
     <style>
+        .gradient-text {
+            background: linear-gradient(45deg, #D4C098, #EAE3C9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(45deg, #D4C098, #EAE3C9);
+        }
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
@@ -50,24 +59,15 @@
         .loader {
             width: 50px;
             height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #C5B7A6;
-            border-right: 5px solid #E5DED4;
+            border: 5px solid #F3ECD0;
+            border-top: 5px solid #D4C098;
+            border-right: 5px solid #EAE3C9;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        .gradient-text {
-            background: linear-gradient(45deg, #C5B7A6, #E5DED4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .gradient-bg {
-            background: linear-gradient(45deg, #C5B7A6, #E5DED4);
         }
         .menu-icon {
             transition: transform 0.3s ease;
@@ -80,7 +80,7 @@
         }
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(197, 183, 166, 0.1);
+            box-shadow: 0 10px 20px rgba(212, 192, 152, 0.1);
         }
         .whatsapp-logo {
             animation: pulse 2s infinite;
@@ -99,7 +99,7 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 10;
-            background: rgba(197, 183, 166, 0.9);
+            background: rgba(212, 192, 152, 0.9);
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -111,7 +111,7 @@
             transition: all 0.3s ease;
         }
         .slider-button:hover {
-            background: #C5B7A6;
+            background: #D4C098;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         .slider-button.prev {
@@ -120,15 +120,23 @@
         .slider-button.next {
             right: 0;
         }
-        .gradient-icon {
-            background: linear-gradient(45deg, #C5B7A6, #E5DED4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.active {
+            max-height: 1000px;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
         }
     </style>
 </head>
-<body class="flex min-h-screen flex-col font-sans bg-ivory">
+<body class="flex min-h-screen flex-col font-sans bg-cream">
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>
@@ -148,7 +156,7 @@
     <!-- Header -->
     <header class="border-b sticky top-0 bg-white z-50">
         <div class="container mx-auto flex items-center justify-between px-4 py-4">
-            <button id="mobileMenuButton" class="text-gray-600 hover:text-primary lg:hidden">
+            <button id="mobileMenuButton" class="text-taupe hover:text-primary lg:hidden">
                 <i class="fas fa-bars h-5 w-5 menu-icon"></i>
             </button>
 
@@ -164,7 +172,7 @@
             </a>
 
             <div class="flex items-center space-x-4">
-                <button id="cartButton" class="text-gray-600 hover:text-primary relative">
+                <button id="cartButton" class="text-taupe hover:text-primary relative">
                     <i class="fas fa-shopping-cart h-5 w-5"></i>
                     <span id="cartItemCount" class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs text-white hidden"></span>
                 </button>
@@ -256,18 +264,63 @@
             <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text font-serif"></p>
         </div>
 
+        <!-- Updated Textiles Section with Accordion -->
         <section id="textiles" class="container mx-auto px-4 py-12">
             <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">TEXTILES</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
-                    <!-- Products will be dynamically inserted here -->
+            
+            <!-- Textiles Accordion -->
+            <div class="max-w-4xl mx-auto mb-8">
+                <!-- Cortinas de baño -->
+                <div class="accordion-item border-b border-accent">
+                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                        <h3 class="text-lg font-serif">Cortinas de baño</h3>
+                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                    </div>
+                    <div class="accordion-content bg-white">
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cortinasBanoContainer">
+                            <!-- Products will be dynamically inserted here -->
+                        </div>
+                    </div>
                 </div>
-                <button class="slider-button next" onclick="scrollProducts('textiles', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+
+                <!-- Cortinas de interior -->
+                <div class="accordion-item border-b border-accent">
+                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                        <h3 class="text-lg font-serif">Cortinas de interior</h3>
+                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                    </div>
+                    <div class="accordion-content bg-white">
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cortinasInteriorContainer">
+                            <!-- Products will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cubre sommier -->
+                <div class="accordion-item border-b border-accent">
+                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                        <h3 class="text-lg font-serif">Cubre sommier</h3>
+                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                    </div>
+                    <div class="accordion-content bg-white">
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cubreSommierContainer">
+                            <!-- Products will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accesorios -->
+                <div class="accordion-item border-b border-accent">
+                    <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-white hover:bg-secondary">
+                        <h3 class="text-lg font-serif">Accesorios</h3>
+                        <i class="fas fa-chevron-down accordion-icon text-primary"></i>
+                    </div>
+                    <div class="accordion-content bg-white">
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="accesoriosContainer">
+                            <!-- Products will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -287,12 +340,12 @@
         </section>
 
         <!-- Featured Collection Section -->
-        <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
+        <section class="bg-gradient-to-r from-cream to-secondary py-16 mb-16">
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
-                        <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
+                        <h2 class="text-4xl font-bold text-taupe font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
+                        <p class="text-xl text-accent">TENDENCIAS 2024</p>
                     </div>
                     <div class="relative">
                         <img src="img/featured-collection.jpg" alt="Colección Destacada" class="w-full rounded-lg shadow-xl">
@@ -307,24 +360,24 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-truck text-4xl gradient-icon"></i>
+                            <i class="fas fa-truck text-4xl gradient-text"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2 font-serif">ENVÍO RÁPIDO</h3>
-                        <p class="text-gray-600">A toda Argentina</p>
+                        <p class="text-accent">A toda Argentina</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
+                            <i class="fas fa-shield-alt text-4xl gradient-text"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2 font-serif">COMPRA SEGURA</h3>
-                        <p class="text-gray-600">Garantía 100%</p>
+                        <p class="text-accent">Garantía 100%</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-gift text-4xl gradient-icon"></i>
+                            <i class="fas fa-gift text-4xl gradient-text"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2 font-serif">PROMOCIONES</h3>
-                        <p class="text-gray-600">Aprovechá nuestras ofertas</p>
+                        <p class="text-accent">Aprovechá nuestras ofertas</p>
                     </div>
                 </div>
             </div>
@@ -412,7 +465,7 @@
         <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold gradient-text font-serif">Finalizar Compra</h2>
-                <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+                <button id="closeCheckoutModal" class="text-taupe hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
@@ -420,23 +473,23 @@
             <form id="checkoutForm" class="space-y-4" action="https://formspree.io/f/xrbglzrk" method="POST">
                 <!-- Contacto -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    <label class="block text-sm font-medium text-taupe">Email</label>
+                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                 </div>
 
                 <!-- Opciones de envío -->
                 <div>
-                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Opciones de envío</h3>
+                    <h3 class="text-lg font-medium text-taupe mb-2 font-serif">Opciones de envío</h3>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Código postal</label>
-                        <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Código postal</label>
+                        <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
-                    <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
+                    <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-accent transition-colors">
                         Buscar opciones de envío
                     </button>
                     <div id="shippingOptions" class="mt-2 hidden">
-                        <label class="block text-sm font-medium text-gray-700">Método de envío</label>
-                        <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Método de envío</label>
+                        <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                             <option value="">Seleccionar...</option>
                         </select>
                     </div>
@@ -444,60 +497,60 @@
 
                 <!-- Datos del destinatario -->
                 <div>
-                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Datos del destinatario</h3>
+                    <h3 class="text-lg font-medium text-taupe mb-2 font-serif">Datos del destinatario</h3>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                            <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            <label class="block text-sm font-medium text-taupe">Nombre</label>
+                            <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Apellido</label>
-                            <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            <label class="block text-sm font-medium text-taupe">Apellido</label>
+                            <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                         </div>
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">DNI</label>
-                        <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">DNI</label>
+                        <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                        <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Teléfono</label>
+                        <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                 </div>
 
                 <!-- Domicilio del destinatario -->
                 <div>
-                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Domicilio del destinatario</h3>
+                    <h3 class="text-lg font-medium text-taupe mb-2 font-serif">Domicilio del destinatario</h3>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Calle</label>
-                        <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Calle</label>
+                        <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Número</label>
-                        <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Número</label>
+                        <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
-                        <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Piso (opcional)</label>
+                        <input type="text" name="piso" class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
-                        <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Dpto (opcional)</label>
+                        <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Ciudad</label>
-                        <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Ciudad</label>
+                        <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                     <div class="mt-2">
-                        <label class="block text-sm font-medium text-gray-700">Provincia</label>
-                        <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <label class="block text-sm font-medium text-taupe">Provincia</label>
+                        <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                     </div>
                 </div>
 
                 <!-- Método de pago -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Método de pago</label>
-                    <select name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    <label class="block text-sm font-medium text-taupe">Método de pago</label>
+                    <select name="pago" required class="mt-1 block w-full rounded-md border-accent shadow-sm focus:border-primary focus:ring-primary">
                         <option value="">Seleccionar...</option>
                         <option value="mercadopago">Mercado Pago</option>
                         <option value="transferencia">Transferencia</option>
@@ -522,10 +575,8 @@
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text font-serif">Car
-
-rito de Compras</h2>
-                <button id="closeCart" class="text-gray-600 hover:text-primary">
+                <h2 class="text-xl font-bold gradient-text font-serif">Carrito de Compras</h2>
+                <button id="closeCart" class="text-taupe hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
@@ -547,7 +598,7 @@ rito de Compras</h2>
         <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
             <div class="flex justify-between items-center mb-4">
                 <h2 id="productModalTitle" class="text-xl font-bold gradient-text font-serif"></h2>
-                <button id="closeProductModal" class="text-gray-600 hover:text-primary">
+                <button id="closeProductModal" class="text-taupe hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>

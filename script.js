@@ -95,9 +95,9 @@ const bannerMessages = [
 ];
 
 const heroImages = [
-    "img/Hero1.png",
-    "img/hero2.png",
-    "img/hero3.png"
+    "img/Cortinas.png",
+    "img/Ceramicas.png",
+    "img/Velas.png"
 ];
 
 // State

@@ -40,6 +40,9 @@ let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
 
+// Temporizador de seguridad para el preloader
+setTimeout(removePreloader, 5000); // 5 segundos como máximo
+
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
 const cartItemCountEl = document.getElementById('cartItemCount');
@@ -278,138 +281,151 @@ function closeBankTransferModal() {
     document.getElementById('bankTransferModal').classList.add('hidden');
 }
 
+function removePreloader() {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.display = 'none';
+    }
+}
+
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('closeBanner').addEventListener('click', () => {
-        document.getElementById('topBanner').classList.add('hidden');
-    });
+    try {
+        document.getElementById('closeBanner').addEventListener('click', () => {
+            document.getElementById('topBanner').classList.add('hidden');
+        });
 
-    document.getElementById('mobileMenuButton').addEventListener('click', () => {
-        const menuIcon = document.querySelector('.menu-icon');
-        menuIcon.classList.toggle('open');
-        document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
+        document.getElementById('mobileMenuButton').addEventListener('click', () => {
+            const menuIcon = document.querySelector('.menu-icon');
+            menuIcon.classList.toggle('open');
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
 
-    document.getElementById('closeMobileMenu').addEventListener('click', () => {
-        const menuIcon = document.querySelector('.menu-icon');
-        menuIcon.classList.remove('open');
-        document.getElementById('mobileMenu').classList.add('hidden');
-    });
+        document.getElementById('closeMobileMenu').addEventListener('click', () => {
+            const menuIcon = document.querySelector('.menu-icon');
+            menuIcon.classList.remove('open');
+            document.getElementById('mobileMenu').classList.add('hidden');
+        });
 
-    document.getElementById('cartButton').addEventListener('click', () => {
-        document.getElementById('cartModal').classList.remove('hidden');
-    });
+        document.getElementById('cartButton').addEventListener('click', () => {
+            document.getElementById('cartModal').classList.remove('hidden');
+        });
 
-    document.getElementById('closeCart').addEventListener('click', () => {
-        document.getElementById('cartModal').classList.add('hidden');
-    });
+        document.getElementById('closeCart').addEventListener('click', () => {
+            document.getElementById('cartModal').classList.add('hidden');
+        });
 
-    document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
+        document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
 
-    document.getElementById('whatsappButton').addEventListener('click', () => {
-        window.open('https://wa.me/5493534786106', '_blank');
-    });
+        document.getElementById('whatsappButton').addEventListener('click', () => {
+            window.open('https://wa.me/5493534786106', '_blank');
+        });
 
-    document.getElementById('closeWhatsappNotification').addEventListener('click', () => {
-        document.getElementById('whatsappNotification').classList.add('hidden');
-    });
+        document.getElementById('closeWhatsappNotification').addEventListener('click', () => {
+            document.getElementById('whatsappNotification').classList.add('hidden');
+        });
 
-    document.getElementById('searchShipping').addEventListener('click', () => {
-        const postalCode = document.getElementById('postalCode').value;
-        if (postalCode.length === 4) {
-            calculateShipping(postalCode)
-                .then(shippingOptions => {
-                    updateShippingOptions(shippingOptions);
-                    document.getElementById('shippingOptions').classList.remove('hidden');
-                    shippingCost = shippingOptions.standard.price;
-                    updateTotal();
-                });
-        } else {
-            alert('Por favor, ingrese un código postal válido.');
-        }
-    });
-
-    document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
-        updateTotal();
-    });
-
-    document.getElementById('checkoutButton').addEventListener('click', function() {
-        document.getElementById('cartModal').classList.add('hidden');
-        document.getElementById('checkoutModal').classList.remove('hidden');
-    });
-
-    document.getElementById('closeCheckoutModal').addEventListener('click', function() {
-        document.getElementById('checkoutModal').classList.add('hidden');
-    });
-
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (!validateForm()) return;
-
-        const formData = new FormData(this);
-        formData.append('cartItems', prepareCartData());
-
-        // Log de los datos que se están enviando
-        console.log('Datos del formulario:', Object.fromEntries(formData));
-
-        fetch(this.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
+        document.getElementById('searchShipping').addEventListener('click', () => {
+            const postalCode = document.getElementById('postalCode').value;
+            if (postalCode.length === 4) {
+                calculateShipping(postalCode)
+                    .then(shippingOptions => {
+                        updateShippingOptions(shippingOptions);
+                        document.getElementById('shippingOptions').classList.remove('hidden');
+                        shippingCost = shippingOptions.standard.price;
+                        updateTotal();
+                    });
             } else {
-                return response.text().then(text => {
-                    throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
-                });
-            }
-        }).then(data => {
-            console.log('Respuesta exitosa de Formspree:', data);
-            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
-            initiateMercadoPagoPayment();
-        }).catch(error => {
-            console.error('Error detallado:', error);
-            alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
-        });
-    });
-
-    // New event listeners for accordion and bank transfer modal
-    document.querySelectorAll('.accordion-button').forEach(button => {
-        button.addEventListener('click', () => toggleAccordion(button));
-    });
-
-    document.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
-        input.addEventListener('change', (e) => {
-            if (e.target.value === 'transfer') {
-                showBankTransferModal();
+                alert('Por favor, ingrese un código postal válido.');
             }
         });
-    });
 
-    document.getElementById('closeBankTransferModal').addEventListener('click', closeBankTransferModal);
+        document.getElementById('shippingMethod').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
+            updateTotal();
+        });
 
-    updateBanner();
-    setInterval(updateBanner, 5000);
+        document.getElementById('checkoutButton').addEventListener('click', function() {
+            document.getElementById('cartModal').classList.add('hidden');
+            document.getElementById('checkoutModal').classList.remove('hidden');
+        });
 
-    updateHero();
-    setInterval(updateHero, 5000);
+        document.getElementById('closeCheckoutModal').addEventListener('click', function() {
+            document.getElementById('checkoutModal').classList.add('hidden');
+        });
 
-    renderProducts();
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm()) return;
 
-    updateAdvertisingBanner();
-    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+            const formData = new FormData(this);
+            formData.append('cartItems', prepareCartData());
 
-    setTimeout(() => {
-        document.getElementById('whatsappNotification').classList.remove('hidden');
-    }, 10000);
+            // Log de los datos que se están enviando
+            console.log('Datos del formulario:', Object.fromEntries(formData));
 
-    // Remove preloader
-    document.getElementById('preloader').style.display = 'none';
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
+                    });
+                }
+            }).then(data => {
+                console.log('Respuesta exitosa de Formspree:', data);
+                // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
+                initiateMercadoPagoPayment();
+            }).catch(error => {
+                console.error('Error detallado:', error);
+                alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
+            });
+        });
+
+        // New event listeners for accordion and bank transfer modal
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => toggleAccordion(button));
+        });
+
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
+            input.addEventListener('change', (e) => {
+                if (e.target.value === 'transfer') {
+                    showBankTransferModal();
+                }
+            });
+        });
+
+        document.getElementById('closeBankTransferModal').addEventListener('click', closeBankTransferModal);
+
+        updateBanner();
+        setInterval(updateBanner, 5000);
+
+        updateHero();
+        setInterval(updateHero, 5000);
+
+        renderProducts();
+
+        updateAdvertisingBanner();
+        setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+
+        setTimeout(() => {
+            document.getElementById('whatsappNotification').classList.remove('hidden');
+        }, 10000);
+
+        // Llamar a removePreloader al final del evento DOMContentLoaded
+        removePreloader();
+    } catch (error) {
+        console.error('Error durante la carga del DOM:', error);
+        removePreloader(); // Asegurarse de que el preloader se elimine incluso si hay un error
+    }
 });
 
 // For demonstration purposes only (this won't work in a Node.js environment)

@@ -282,28 +282,36 @@ function initMercadoPago() {
   const bricksBuilder = mp.bricks();
 
   const renderCheckoutButton = async (bricksBuilder) => {
-    const settings = {
-      initialization: {
-        preferenceId: await createPreference(),
-      },
-      callbacks: {
-        onReady: () => {
-          console.log('Brick ready');
+    try {
+      const preferenceId = await createPreference();
+      console.log('Preference ID:', preferenceId);
+
+      const settings = {
+        initialization: {
+          preferenceId: preferenceId,
         },
-        onSubmit: () => {
-          // MercadoPago will handle the redirection
+        callbacks: {
+          onReady: () => {
+            console.log('Brick ready');
+          },
+          onSubmit: () => {
+            console.log('Payment submitted');
+          },
+          onError: (error) => {
+            console.error('Brick error', error);
+          },
         },
-        onError: (error) => {
-          console.error('Brick error', error);
-        },
-      },
-    };
+      };
     
-    // Limpiar el contenedor antes de renderizar el botón
-    const container = document.getElementById('wallet_container');
-    container.innerHTML = '';
+      const container = document.getElementById('wallet_container');
+      container.innerHTML = '';
     
-    window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+      window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+      console.log('Checkout button rendered successfully');
+    } catch (error) {
+      console.error('Error rendering checkout button:', error);
+      alert('Hubo un error al cargar el botón de pago. Por favor, intenta de nuevo.');
+    }
   };
 
   renderCheckoutButton(bricksBuilder);
@@ -340,7 +348,8 @@ async function createPreference() {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to create preference');
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to create preference');
     }
 
     const data = await response.json();
@@ -348,7 +357,15 @@ async function createPreference() {
   } catch (error) {
     console.error('Error creating preference:', error);
     alert('Hubo un error al procesar tu pago. Por favor, intenta de nuevo.');
+    throw error;
   }
+}
+
+function validateForm() {
+  const requiredFields = [
+    'nombre', 'apellido', 'email', 'telefono', 'calle', 'numero', 'codigoPostal', 'ciudad', 'provincia'
+  ];
+  return requiredFields.every(field => document.querySelector(`input[name="${field}"]`).value.trim() !== '');
 }
 
 // Event Listeners
@@ -486,12 +503,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
 });
-
-function validateForm() {
-  const requiredFields = [
-    'nombre', 'apellido', 'email', 'telefono', 'calle', 'numero', 'codigoPostal', 'ciudad', 'provincia'
-  ];
-  return requiredFields.every(field => document.querySelector(`input[name="${field}"]`).value.trim() !== '');
-}
 
 console.log("Script loaded successfully!");

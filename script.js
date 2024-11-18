@@ -1,7 +1,7 @@
 // Data
 const products = {
     velas: [
-        { id: 1, name: "Vitrè", price: 10700, image: "img/vitre.jpg", description: "Envase reutilizable de vidrio - 100 gr de cera de soja aromatizada" },
+        { id: 1, name: "Vitrè", price: 10700, image: "img/velas1.jpg", description: "Envase reutilizable de vidrio - 100 gr de cera de soja aromatizada" },
         { id: 2, name: "Conques", price: 9800, image: "img/conques.jpg", description: "Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada" },
         { id: 3, name: "Dinan", price: 15600, image: "img/dinan.jpg", description: "Envase reutilizable de vidrio con tapa . 200 gr de cera de soja aromatizada" },
         { id: 4, name: "Saignon", price: 53000, image: "img/saignon.jpg", description: "Velón suspendido en envase reutilizable de vidrio. 500 gr de cera de soja aromatizada" },

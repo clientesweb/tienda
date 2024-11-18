@@ -247,8 +247,20 @@ function prepareCartData() {
         id: item.id,
         name: item.name,
         price: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        total: item.price * item.quantity
     })));
+}
+
+function validateForm() {
+    const requiredFields = document.querySelectorAll('#checkoutForm [required]');
+    for (let field of requiredFields) {
+        if (!field.value) {
+            alert(`Por favor, completa el campo ${field.name}`);
+            return false;
+        }
+    }
+    return true;
 }
 
 // Event Listeners
@@ -343,23 +355,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
-            // Mostrar el paso 2 (pago con Mercado Pago)
-            document.getElementById('checkoutStep1').classList.add('hidden');
-            document.getElementById('checkoutStep2').classList.remove('hidden');
-            // Iniciar el proceso de pago con Mercado Pago
+            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
             initiateMercadoPagoPayment();
         }).catch(error => {
             console.error('Error detallado:', error);
             alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
         });
     });
-
-    // Agregar event listener para volver al paso 1
-    document.getElementById('backToStep1').addEventListener('click', function() {
-        document.getElementById('checkoutStep2').classList.add('hidden');
-        document.getElementById('checkoutStep1').classList.remove('hidden');
-    });
-
 
     updateBanner();
     setInterval(updateBanner, 5000);

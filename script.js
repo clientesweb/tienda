@@ -278,7 +278,7 @@ function updateCheckoutStep(step) {
 
 // MercadoPago integration
 function initMercadoPago() {
-  const mp = new MercadoPago('YOUR_PUBLIC_KEY');
+  const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
   const bricksBuilder = mp.bricks();
 
   const renderCheckoutButton = async (bricksBuilder) => {

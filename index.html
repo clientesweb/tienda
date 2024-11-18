@@ -206,19 +206,35 @@
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white h-full w-64 p-4">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text font-serif">Menú</h2>
-                <button id="closeMobileMenu" class="text-gray-600 hover:text-primary">
+    <div id="mobileMenu" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="bg-white h-full w-64 p-4 transform transition-transform duration-300 ease-in-out">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-serif">Menú</h2>
+                <button id="closeMobileMenu">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
             </div>
-            <nav class="flex flex-col space-y-4">
-                <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
-                <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
-                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
-                <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
+            
+            <nav class="space-y-4">
+                <a href="/" class="block nav-link">Inicio</a>
+                
+                <!-- Mobile accordion menu -->
+                <div class="accordion">
+                    <div class="accordion-header">
+                        <span class="nav-link">Tienda</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <a href="#velas" class="block p-3 hover:bg-cream">Velas</a>
+                        <a href="#aromas" class="block p-3 hover:bg-cream">Aromas</a>
+                        <a href="#textiles" class="block p-3 hover:bg-cream">Textiles</a>
+                        <a href="#ceramica" class="block p-3 hover:bg-cream">Cerámica</a>
+                    </div>
+                </div>
+                
+                <a href="/nosotros.html" class="block nav-link">Nosotros</a>
+                <a href="/cambios-devoluciones.html" class="block nav-link">Cambios y devoluciones</a>
+                <a href="/contacto.html" class="block nav-link">Contacto</a>
             </nav>
         </div>
     </div>

@@ -7,617 +7,632 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <script>
- tailwind.config = {
-     theme: {
-         extend: {
-             colors: {
-                 primary: '#D4C098',
-                 secondary: '#A6A18F',
-                 'primary-dark': '#C8C2AC',
-                 'secondary-dark': '#848071',
-                 cream: '#EAE3C9',
-                 ivory: '#F3ECD0'
-             }
-         }
-     }
- }
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                primary: '#D4C098',
+                secondary: '#A6A18F',
+                'primary-dark': '#C8C2AC',
+                'secondary-dark': '#848071',
+                cream: '#EAE3C9',
+                ivory: '#F3ECD0'
+            }
+        }
+    }
+}
 </script>
 <style>
- .scrollbar-hide::-webkit-scrollbar {
-     display: none;
- }
- .scrollbar-hide {
-     -ms-overflow-style: none;
-     scrollbar-width: none;
- }
- 
- /* Preloader */
- #preloader {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background: white;
-     z-index: 9999;
-     display: flex;
-     justify-content: center;
-     align-items: center;
- }
- 
- .loader {
-     width: 50px;
-     height: 50px;
-     border: 5px solid #f3f3f3;
-     border-top: 5px solid #D4C098;
-     border-right: 5px solid #A6A18F;
-     border-radius: 50%;
-     animation: spin 1s linear infinite;
- }
- 
- @keyframes spin {
-     0% { transform: rotate(0deg); }
-     100% { transform: rotate(360deg); }
- }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
- .gradient-text {
-     background: linear-gradient(45deg, #D4C098, #A6A18F);
-     -webkit-background-clip: text;
-     background-clip: text;
-     color: transparent;
- }
+/* Preloader */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
- /* Menu icon animation */
- .menu-icon {
-     transition: transform 0.3s ease;
- }
- .menu-icon.open {
-     transform: rotate(90deg);
- }
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #D4C098;
+    border-right: 5px solid #A6A18F;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
 
- /* Product card hover effects */
- .product-card {
-     transition: transform 0.3s ease, box-shadow 0.3s ease;
- }
- .product-card:hover {
-     transform: translateY(-5px);
-     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
- }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
- /* WhatsApp logo animation */
- .whatsapp-logo {
-     animation: pulse 2s infinite;
- }
+.gradient-text {
+    background: linear-gradient(45deg, #D4C098, #A6A18F);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 
- @keyframes pulse {
-     0% {
-         transform: scale(1);
-     }
-     50% {
-         transform: scale(1.1);
-     }
-     100% {
-         transform: scale(1);
-     }
- }
+/* Menu icon animation */
+.menu-icon {
+    transition: transform 0.3s ease;
+}
+.menu-icon.open {
+    transform: rotate(90deg);
+}
 
- /* Product slider styles */
- .product-slider {
-     scroll-behavior: smooth;
-     -webkit-overflow-scrolling: touch;
- }
+/* Product card hover effects */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
 
- .product-slider-container {
-     position: relative;
- }
+/* WhatsApp logo animation */
+.whatsapp-logo {
+    animation: pulse 2s infinite;
+}
 
- .slider-button {
-     position: absolute;
-     top: 50%;
-     transform: translateY(-50%);
-     z-index: 10;
-     background: rgba(255, 255, 255, 0.9);
-     border-radius: 50%;
-     width: 40px;
-     height: 40px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-     cursor: pointer;
-     transition: all 0.3s ease;
- }
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
- .slider-button:hover {
-     background: white;
-     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
- }
+/* Product slider styles */
+.product-slider {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
 
- .slider-button.prev {
-     left: 0;
- }
+.product-slider-container {
+    position: relative;
+}
 
- .slider-button.next {
-     right: 0;
- }
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
- /* New gradient background for advertising banner */
- .gradient-bg {
-     background: linear-gradient(45deg, #D4C098, #A6A18F);
- }
+.slider-button:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
- /* Gradient icons */
- .gradient-icon {
-     background: linear-gradient(45deg, #D4C098, #A6A18F);
-     -webkit-background-clip: text;
-     background-clip: text;
-     color: transparent;
- }
+.slider-button.prev {
+    left: 0;
+}
+
+.slider-button.next {
+    right: 0;
+}
+
+/* New gradient background for advertising banner */
+.gradient-bg {
+    background: linear-gradient(45deg, #D4C098, #A6A18F);
+}
+
+/* Gradient icons */
+.gradient-icon {
+    background: linear-gradient(45deg, #D4C098, #A6A18F);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 </style>
 </head>
 <body class="flex min-h-screen flex-col">
 <!-- Preloader -->
 <div id="preloader">
- <div class="loader"></div>
+<div class="loader"></div>
 </div>
 
 <!-- Top Banner -->
 <div id="topBanner" class="gradient-bg p-2 text-center text-white relative">
- <p class="text-sm">
-     <span id="bannerMessage"></span>
-     <a href="#" class="underline">COMPRAR AHORA</a>
- </p>
- <button id="closeBanner" class="absolute right-2 top-2 text-white hover:bg-primary-dark p-1">
-     <i class="fas fa-times h-4 w-4"></i>
- </button>
+<p class="text-sm">
+    <span id="bannerMessage"></span>
+    <a href="#" class="underline">COMPRAR AHORA</a>
+</p>
+<button id="closeBanner" class="absolute right-2 top-2 text-white hover:bg-primary-dark p-1">
+    <i class="fas fa-times h-4 w-4"></i>
+</button>
 </div>
 
 <!-- Header -->
 <header class="border-b sticky top-0 bg-white z-50">
- <div class="container mx-auto flex items-center justify-between px-4 py-4">
-     <button id="mobileMenuButton" class="text-gray-600 hover:text-primary lg:hidden">
-         <i class="fas fa-bars h-5 w-5 menu-icon"></i>
-     </button>
+<div class="container mx-auto flex items-center justify-between px-4 py-4">
+    <button id="mobileMenuButton" class="text-gray-600 hover:text-primary lg:hidden">
+        <i class="fas fa-bars h-5 w-5 menu-icon"></i>
+    </button>
 
-     <nav class="hidden lg:flex space-x-6">
-         <a href="/tienda" class="text-sm font-medium hover:text-primary">TIENDA</a>
-         <a href="/nosotros" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
-         <a href="/cambios-devoluciones" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
-         <a href="/contacto" class="text-sm font-medium hover:text-primary">CONTACTO</a>
-     </nav>
+    <nav class="hidden lg:flex space-x-6">
+        <a href="/tienda" class="text-sm font-medium hover:text-primary">TIENDA</a>
+        <a href="/nosotros" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
+        <a href="/cambios-devoluciones" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
+        <a href="/contacto" class="text-sm font-medium hover:text-primary">CONTACTO</a>
+    </nav>
 
-     <a href="/" class="flex items-center justify-center flex-grow lg:flex-grow-0">
-         <img src="img/logo.png" 
-              alt="Mon Amour Textil" 
-              class="h-20 w-auto">
-     </a>
+    <a href="/" class="flex items-center justify-center flex-grow lg:flex-grow-0">
+        <img src="img/logo.png" 
+             alt="Mon Amour Textil" 
+             class="h-20 w-auto">
+    </a>
 
-     <div class="flex items-center space-x-4">
-         <button id="cartButton" class="text-gray-600 hover:text-primary relative">
-             <i class="fas fa-shopping-cart h-5 w-5"></i>
-             <span id="cartItemCount" class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs text-white hidden"></span>
-         </button>
-     </div>
- </div>
+    <div class="flex items-center space-x-4">
+        <button id="cartButton" class="text-gray-600 hover:text-primary relative">
+            <i class="fas fa-shopping-cart h-5 w-5"></i>
+            <span id="cartItemCount" class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs text-white hidden"></span>
+        </button>
+    </div>
+</div>
 </header>
 
 <!-- Mobile Menu -->
 <div id="mobileMenu" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
- <div class="bg-white h-full w-64 p-4">
-     <div class="flex justify-between items-center mb-4">
-         <h2 class="text-xl font-bold gradient-text">Menú</h2>
-         <button id="closeMobileMenu" class="text-gray-600 hover:text-primary">
-             <i class="fas fa-times h-5 w-5"></i>
-         </button>
-     </div>
-     <nav class="flex flex-col space-y-4">
-         <a href="/tienda" class="text-sm font-medium hover:text-primary">TIENDA</a>
-         <a href="/nosotros" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
-         <a href="/cambios-devoluciones" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
-         <a href="/contacto" class="text-sm font-medium hover:text-primary">CONTACTO</a>
-     </nav>
- </div>
+<div class="bg-white h-full w-64 p-4">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold gradient-text">Menú</h2>
+        <button id="closeMobileMenu" class="text-gray-600 hover:text-primary">
+            <i class="fas fa-times h-5 w-5"></i>
+        </button>
+    </div>
+    <nav class="flex flex-col space-y-4">
+        <a href="/tienda" class="text-sm font-medium hover:text-primary">TIENDA</a>
+        <a href="/nosotros" class="text-sm font-medium hover:text-primary">NOSOTROS</a>
+        <a href="/cambios-devoluciones" class="text-sm font-medium hover:text-primary">CAMBIOS Y DEVOLUCIONES</a>
+        <a href="/contacto" class="text-sm font-medium hover:text-primary">CONTACTO</a>
+    </nav>
+</div>
 </div>
 
 <main>
- <!-- Hero Banner -->
- <div id="hero" class="relative h-[500px] w-full overflow-hidden">
-     <!-- Hero images will be dynamically inserted here -->
- </div>
+<!-- Hero Banner -->
+<div id="hero" class="relative h-[500px] w-full overflow-hidden">
+    <!-- Hero images will be dynamically inserted here -->
+</div>
 
- <!-- New Advertising Banner without background image -->
- <div class="gradient-bg p-6 text-center text-white">
-     <h2 class="text-2xl font-bold mb-2">¡Ofertas Especiales!</h2>
-     <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
-     <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
- </div>
+<!-- New Advertising Banner without background image -->
+<div class="gradient-bg p-6 text-center text-white">
+    <h2 class="text-2xl font-bold mb-2">¡Ofertas Especiales!</h2>
+    <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
+    <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
+</div>
 
- <!-- New Shop Section -->
- <section id="tienda" class="container mx-auto px-4 py-12">
-     <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TIENDA</h2>
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-         <!-- Categories -->
-         <div class="space-y-4">
-             <h3 class="font-semibold text-lg mb-4">Categorías</h3>
-             <ul class="space-y-2">
-                 <li><a href="#velas" class="hover:text-primary">Velas</a></li>
-                 <li><a href="#aromas" class="hover:text-primary">Aromas</a></li>
-                 <li><a href="#textiles" class="hover:text-primary">Textiles</a></li>
-                 <li><a href="#ceramica" class="hover:text-primary">Cerámica</a></li>
-             </ul>
-         </div>
+<!-- New Shop Section -->
+<section id="tienda" class="container mx-auto px-4 py-12">
+    <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TIENDA</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Categories -->
+        <div class="space-y-4">
+            <h3 class="font-semibold text-lg mb-4">Categorías</h3>
+            <ul class="space-y-2">
+                <li><a href="#velas" class="hover:text-primary">Velas</a></li>
+                <li><a href="#aromas" class="hover:text-primary">Aromas</a></li>
+                <li><a href="#textiles" class="hover:text-primary">Textiles</a></li>
+                <li><a href="#ceramica" class="hover:text-primary">Cerámica</a></li>
+            </ul>
+        </div>
 
-         <!-- Product Grid -->
-         <div class="col-span-1 md:col-span-3">
-             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                 <!-- Product cards will be dynamically inserted here -->
-             </div>
-         </div>
-     </div>
- </section>
+        <!-- Product Grid -->
+        <div class="col-span-1 md:col-span-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Product cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</section>
 
- <!-- Product Sections -->
- <section id="velas" class="container mx-auto px-4 py-12">
-     <h2 class="mb-8 text-center text-2xl font-bold gradient-text">VELAS</h2>
-     <div class="product-slider-container">
-         <button class="slider-button prev" onclick="scrollProducts('velas', -300)">
-             <i class="fas fa-chevron-left"></i>
-         </button>
-         <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="velasContainer">
-             <!-- Products will be dynamically inserted here -->
-         </div>
-         <button class="slider-button next" onclick="scrollProducts('velas', 300)">
-             <i class="fas fa-chevron-right"></i>
-         </button>
-     </div>
- </section>
+<!-- Product Sections -->
+<section id="velas" class="container mx-auto px-4 py-12">
+    <h2 class="mb-8 text-center text-2xl font-bold gradient-text">VELAS</h2>
+    <div class="product-slider-container">
+        <button class="slider-button prev" onclick="scrollProducts('velas', -300)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="velasContainer">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+        <button class="slider-button next" onclick="scrollProducts('velas', 300)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
 
- <section id="aromas" class="container mx-auto px-4 py-12">
-     <h2 class="mb-8 text-center text-2xl font-bold gradient-text">AROMAS</h2>
-     <div class="product-slider-container">
-         <button class="slider-button prev" onclick="scrollProducts('aromas', -300)">
-             <i class="fas fa-chevron-left"></i>
-         </button>
-         <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
-             <!-- Products will be dynamically inserted here -->
-         </div>
-         <button class="slider-button next" onclick="scrollProducts('aromas', 300)">
-             <i class="fas fa-chevron-right"></i>
-         </button>
-     </div>
- </section>
+<section id="aromas" class="container mx-auto px-4 py-12">
+    <h2 class="mb-8 text-center text-2xl font-bold gradient-text">AROMAS</h2>
+    <div class="product-slider-container">
+        <button class="slider-button prev" onclick="scrollProducts('aromas', -300)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+        <button class="slider-button next" onclick="scrollProducts('aromas', 300)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
 
- <!-- New Advertising Banner -->
- <div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
-     <div class="absolute inset-0 bg-black opacity-50"></div>
-     <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text"></p>
- </div>
+<!-- New Advertising Banner -->
+<div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text"></p>
+</div>
 
- <section id="textiles" class="container mx-auto px-4 py-12">
-     <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TEXTILES</h2>
-     <div class="product-slider-container">
-         <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
-             <i class="fas fa-chevron-left"></i>
-         </button>
-         <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
-             <!-- Products will be dynamically inserted here -->
-         </div>
-         <button class="slider-button next" onclick="scrollProducts('textiles', 300)">
-             <i class="fas fa-chevron-right"></i>
-         </button>
-     </div>
- </section>
+<section id="textiles" class="container mx-auto px-4 py-12">
+    <h2 class="mb-8 text-center text-2xl font-bold gradient-text">TEXTILES</h2>
+    <div class="product-slider-container">
+        <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+        <button class="slider-button next" onclick="scrollProducts('textiles', 300)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
 
- <section id="ceramica" class="container mx-auto px-4 py-12">
-     <h2 class="mb-8 text-center text-2xl font-bold gradient-text">CERÁMICA</h2>
-     <div class="product-slider-container">
-         <button class="slider-button prev" onclick="scrollProducts('ceramica', -300)">
-             <i class="fas fa-chevron-left"></i>
-         </button>
-         <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
-             <!-- Products will be dynamically inserted here -->
-         </div>
-         <button class="slider-button next" onclick="scrollProducts('ceramica', 300)">
-             <i class="fas fa-chevron-right"></i>
-         </button>
-     </div>
- </section>
+<section id="ceramica" class="container mx-auto px-4 py-12">
+    <h2 class="mb-8 text-center text-2xl font-bold gradient-text">CERÁMICA</h2>
+    <div class="product-slider-container">
+        <button class="slider-button prev" onclick="scrollProducts('ceramica', -300)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+        <button class="slider-button next" onclick="scrollProducts('ceramica', 300)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</section>
 
- <!-- Featured Collection Section -->
- <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
-     <div class="container mx-auto px-4">
-         <div class="grid md:grid-cols-2 gap-8 items-center">
-             <div class="space-y-6">
-                 <h2 class="text-4xl font-bold text-gray-800">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
-                 <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
-             </div>
-             <div class="relative">
-                 <img src="img/featured-collection.jpg" 
-                      alt="Colección Destacada" 
-                      class="w-full rounded-lg shadow-xl">
-             </div>
-         </div>
-     </div>
- </section>
+<!-- Featured Collection Section -->
+<section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
+    <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6">
+                <h2 class="text-4xl font-bold text-gray-800">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
+                <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
+            </div>
+            <div class="relative">
+                <img src="img/featured-collection.jpg" 
+                     alt="Colección Destacada" 
+                     class="w-full rounded-lg shadow-xl">
+            </div>
+        </div>
+    </div>
+</section>
 
- <!-- Features Section with Gradient Icons -->
- <section class="bg-white py-12 mb-16">
-     <div class="container mx-auto px-4">
-         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-             <div class="text-center">
-                 <div class="w-16 h-16 mx-auto mb-4">
-                     <i class="fas fa-truck text-4xl gradient-icon"></i>
-                 </div>
-                 <h3 class="text-xl font-bold mb-2">ENVÍO RÁPIDO</h3>
-                 <p class="text-gray-600">A toda Argentina</p>
-             </div>
-             <div class="text-center">
-                 <div class="w-16 h-16 mx-auto mb-4">
-                     <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
-                 </div>
-                 <h3 class="text-xl font-bold mb-2">COMPRA SEGURA</h3>
-                 <p class="text-gray-600">Garantía 100%</p>
-             </div>
-             <div class="text-center">
-                 <div class="w-16 h-16 mx-auto mb-4">
-                     <i class="fas fa-gift text-4xl gradient-icon"></i>
-                 </div>
-                 <h3 class="text-xl font-bold mb-2">PROMOCIONES</h3>
-                 <p class="text-gray-600">Aprovechá nuestras ofertas</p>
-             </div>
-         </div>
-     </div>
- </section>
+<!-- Features Section with Gradient Icons -->
+<section class="bg-white py-12 mb-16">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4">
+                    <i class="fas fa-truck text-4xl gradient-icon"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">ENVÍO RÁPIDO</h3>
+                <p class="text-gray-600">A toda Argentina</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">COMPRA SEGURA</h3>
+                <p class="text-gray-600">Garantía 100%</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4">
+                    <i class="fas fa-gift text-4xl gradient-icon"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">PROMOCIONES</h3>
+                <p class="text-gray-600">Aprovechá nuestras ofertas</p>
+            </div>
+        </div>
+    </div>
+</section>
 </main>
 
 <!-- Footer -->
 <footer class="gradient-bg text-white py-16">
- <div class="container mx-auto px-4">
-     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-         <div>
-             <img src="img/logo.png" 
-                  alt="Mon Amour Textil Logo" 
-                  class="h-20 w-auto mb-4">
-             <p class="text-sm text-gray-200">
-                 Textiles y decoración para tu hogar. Productos artesanales de alta calidad.
-             </p>
-         </div>
-         <div>
-             <h3 class="text-lg font-semibold mb-4">Enlaces rápidos</h3>
-             <ul class="space-y-2">
-                 <li><a href="#velas" class="text-sm text-gray-200 hover:text-white transition-colors">Velas</a></li>
-                 <li><a href="#aromas" class="text-sm text-gray-200 hover:text-white transition-colors">Aromas</a></li>
-                 <li><a href="#textiles" class="text-sm text-gray-200 hover:text-white transition-colors">Textiles</a></li>
-                 <li><a href="#ceramica" class="text-sm text-gray-200 hover:text-white transition-colors">Cerámica</a></li>
-             </ul>
-         </div>
-         <div>
-             <h3 class="text-lg font-semibold mb-4">Contacto</h3>
-             <ul class="space-y-2">
-                 <li class="flex items-center text-sm text-gray-200">
-                     <i class="fas fa-map-marker-alt mr-2 h-4 w-4"></i>
-                     Bell Ville, Argentina
-                 </li>
-                 <li class="flex items-center text-sm text-gray-200">
-                     <i class="fas fa-phone mr-2 h-4 w-4"></i>
-                     +54 9 353 478-6106
-                 </li>
-                 <li class="flex items-center text-sm text-gray-200">
-                     <i class="fab fa-whatsapp mr-2 h-4 w-4"></i>
-                     WhatsApp: +54 9 353 478-6106
-                 </li>
-                 <li class="flex items-center text-sm text-gray-200">
-                     <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                     <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01686f676e417760716472696e71757462746c606f2f626e6c">[email&#160;protected]</a>
-                 </li>
-             </ul>
-         </div>
-         <div>
-             <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
-             <div class="flex space-x-4 mb-4">
-                 <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                     <i class="fab fa-facebook h-6 w-6"></i>
-                 </a>
-                 <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                     <i class="fab fa-instagram h-6 w-6"></i>
-                 </a>
-                 <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                     <i class="fab fa-pinterest h-6 w-6"></i>
-                 </a>
-             </div>
-             <h4 class="text-sm font-semibold mb-2">Suscríbete a nuestro newsletter</h4>
-             <form class="flex flex-col sm:flex-row gap-2">
-                 <input type="email" placeholder="Tu email" class="flex-grow px-3 py-2 text-gray-900 rounded-md focus:outline-none">
-                 <button type="submit" class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">Suscribir</button>
-             </form>
-         </div>
-     </div>
-     <div class="mt-8 border-t border-gray-700 pt-8">
-         <h3 class="text-lg font-semibold mb-4">Políticas</h3>
-         <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
-             <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Privacidad y Cookies</a></li>
-             <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Términos y Condiciones de Uso</a></li>
-             <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Política de Garantía</a></li>
-             <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Envío</a></li>
-         </ul>
-     </div>
-     <div class="mt-8 text-center text-sm text-gray-200">
-         <p>© 2024 Mon Amour Textil. Todos los derechos reservados.</p>
-         <p class="mt-2">Powered by <a href="https://dualitydomain.com" class="hover:text-white transition-colors">Duality Domain</a></p>
-     </div>
- </div>
+<div class="container mx-auto px-4">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div>
+            <img src="img/logo.png" 
+                 alt="Mon Amour Textil Logo" 
+                 class="h-20 w-auto mb-4">
+            <p class="text-sm text-gray-200">
+                Textiles y decoración para tu hogar. Productos artesanales de alta calidad.
+            </p>
+        </div>
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Enlaces rápidos</h3>
+            <ul class="space-y-2">
+                <li><a href="#velas" class="text-sm text-gray-200 hover:text-white transition-colors">Velas</a></li>
+                <li><a href="#aromas" class="text-sm text-gray-200 hover:text-white transition-colors">Aromas</a></li>
+                <li><a href="#textiles" class="text-sm text-gray-200 hover:text-white transition-colors">Textiles</a></li>
+                <li><a href="#ceramica" class="text-sm text-gray-200 hover:text-white transition-colors">Cerámica</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Contacto</h3>
+            <ul class="space-y-2">
+                <li class="flex items-center text-sm text-gray-200">
+                    <i class="fas fa-map-marker-alt mr-2 h-4 w-4"></i>
+                    Bell Ville, Argentina
+                </li>
+                <li class="flex items-center text-sm text-gray-200">
+                    <i class="fas fa-phone mr-2 h-4 w-4"></i>
+                    +54 9 353 478-6106
+                </li>
+                <li class="flex items-center text-sm text-gray-200">
+                    <i class="fab fa-whatsapp mr-2 h-4 w-4"></i>
+                    WhatsApp: +54 9 353 478-6106
+                </li>
+                <li class="flex items-center text-sm text-gray-200">
+                    <i class="fas fa-envelope mr-2 h-4 w-4"></i>
+                    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="01686f676e417760716472696e71757462746c606f2f626e6c">[email&#160;protected]</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Síguenos</h3>
+            <div class="flex space-x-4 mb-4">
+                <a href="#" class="text-gray-200 hover:text-white transition-colors">
+                    <i class="fab fa-facebook h-6 w-6"></i>
+                </a>
+                <a href="#" class="text-gray-200 hover:text-white transition-colors">
+                    <i class="fab fa-instagram h-6 w-6"></i>
+                </a>
+                <a href="#" class="text-gray-200 hover:text-white transition-colors">
+                    <i class="fab fa-pinterest h-6 w-6"></i>
+                </a>
+            </div>
+            <h4 class="text-sm font-semibold mb-2">Suscríbete a nuestro newsletter</h4>
+            <form class="flex flex-col sm:flex-row gap-2">
+                <input type="email" placeholder="Tu email" class="flex-grow px-3 py-2 text-gray-900 rounded-md focus:outline-none">
+                <button type="submit" class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">Suscribir</button>
+            </form>
+        </div>
+    </div>
+    <div class="mt-8 border-t border-gray-700 pt-8">
+        <h3 class="text-lg font-semibold mb-4">Políticas</h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Privacidad y Cookies</a></li>
+            <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Términos y Condiciones de Uso</a></li>
+            <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Política de Garantía</a></li>
+            <li><a href="#" class="text-sm text-gray-200 hover:text-white transition-colors">Políticas de Envío</a></li>
+        </ul>
+    </div>
+    <div class="mt-8 text-center text-sm text-gray-200">
+        <p>© 2024 Mon Amour Textil. Todos los derechos reservados.</p>
+        <p class="mt-2">Powered by <a href="https://dualitydomain.com" class="hover:text-white transition-colors">Duality Domain</a></p>
+    </div>
+</div>
 </footer>
 
 <!-- Checkout Form Modal -->
 <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
-    <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
-        <div class="flex justify-between items-center mb-4">
-            <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-16 w-auto">
-            <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
-                <i class="fas fa-times h-5 w-5"></i>
-            </button>
-        </div>
-        <form id="checkoutForm" action="https://formspree.io/f/xrbglzrk" method="POST" class="space-y-4">
-            <!-- Stepper -->
-            <div class="flex justify-between mb-4">
-                <div class="text-center">
-                    <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-2">1</div>
-                    <span class="text-sm">Entrega</span>
-                </div>
-                <div class="text-center">
-                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2">2</div>
-                    <span class="text-sm">Pago</span>
-                </div>
-                <div class="text-center">
-                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2">3</div>
-                    <span class="text-sm">Finalizado</span>
-                </div>
-            </div>
+   <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
+       <div class="flex justify-between items-center mb-4">
+           <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-16 w-auto">
+           <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+               <i class="fas fa-times h-5 w-5"></i>
+           </button>
+       </div>
+       <form id="checkoutForm" action="https://formspree.io/f/xrbglzrk" method="POST" class="space-y-4">
+           <!-- Stepper -->
+           <div class="flex justify-between mb-4">
+               <div class="text-center">
+                   <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-2">1</div>
+                   <span class="text-sm">Entrega</span>
+               </div>
+               <div class="text-center">
+                   <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2">2</div>
+                   <span class="text-sm">Pago</span>
+               </div>
+               <div class="text-center">
+                   <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center mx-auto mb-2">3</div>
+                   <span class="text-sm">Finalizado</span>
+               </div>
+           </div>
 
-            <!-- Step 1: Entrega -->
-            <div id="step1" class="space-y-4">
-                <h3 class="text-lg font-semibold">Información de Contacto</h3>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
+           <!-- Step 1: Entrega -->
+           <div id="step1" class="space-y-4">
+               <h3 class="text-lg font-semibold">Información de Contacto</h3>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Email</label>
+                   <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
 
-                <h3 class="text-lg font-semibold">Opciones de Envío</h3>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Código Postal</label>
-                    <div class="flex mt-1">
-                        <input type="text" name="codigoPostal" id="codigoPostal" required class="block w-full rounded-l-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <button type="button" id="buscarEnvio" class="bg-primary text-white px-4 rounded-r-md hover:bg-primary-dark">Buscar</button>
-                    </div>
-                </div>
+               <h3 class="text-lg font-semibold">Opciones de Envío</h3>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Código Postal</label>
+                   <div class="flex mt-1">
+                       <input type="text" name="codigoPostal" id="codigoPostal" required class="block w-full rounded-l-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                       <button type="button" id="buscarEnvio" class="bg-primary text-white px-4 rounded-r-md hover:bg-primary-dark">Buscar</button>
+                   </div>
+               </div>
 
-                <div id="opcionesEnvio" class="hidden space-y-2">
-                    <!-- Shipping options will be dynamically inserted here -->
-                </div>
+               <div id="opcionesEnvio" class="hidden space-y-2">
+                   <!-- Shipping options will be dynamically inserted here -->
+               </div>
 
-                <h3 class="text-lg font-semibold">Datos del Destinatario</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Apellido</label>
-                        <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">DNI</label>
-                    <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                    <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
+               <h3 class="text-lg font-semibold">Datos del Destinatario</h3>
+               <div class="grid grid-cols-2 gap-4">
+                   <div>
+                       <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                       <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                   </div>
+                   <div>
+                       <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                       <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                   </div>
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">DNI</label>
+                   <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                   <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
 
-                <h3 class="text-lg font-semibold">Domicilio del Destinatario</h3>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Calle</label>
-                    <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Número</label>
-                    <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
-                    <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
-                    <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Ciudad</label>
-                    <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Provincia</label>
-                    <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
+               <h3 class="text-lg font-semibold">Domicilio del Destinatario</h3>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Calle</label>
+                   <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Número</label>
+                   <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
+                   <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
+                   <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                   <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
+               <div>
+                   <label class="block text-sm font-medium text-gray-700">Provincia</label>
+                   <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+               </div>
 
-                <button type="button" id="nextToPayment" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Continuar al Pago
-                </button>
-            </div>
+               <button type="button" id="nextToPayment" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                   Continuar al Pago
+               </button>
+           </div>
 
-            <!-- Step 2: Pago -->
-            <div id="step2" class="hidden space-y-4">
-                <h3 class="text-lg font-semibold">Método de Pago</h3>
-                <div class="flex space-x-4">
-                    <button type="button" class="flex-1 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                        <i class="fab fa-mercadopago mr-2"></i>Mercado Pago
-                    </button>
-                    <button type="button" id="showTransferModal" class="flex-1 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
-                        <i class="fas fa-university mr-2"></i>Transferencia
-                    </button>
-                </div>
+           <!-- Step 2: Pago -->
+           <div id="step2" class="hidden space-y-4">
+               <h3 class="text-lg font-semibold">Método de Pago</h3>
+               <div class="flex space-x-4">
+                   <button type="button" class="flex-1 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                       <i class="fab fa-mercadopago mr-2"></i>Mercado Pago
+                   </button>
+                   <button type="button" id="showTransferModal" class="flex-1 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
+                       <i class="fas fa-university mr-2"></i>Transferencia
+                   </button>
+               </div>
 
-                <button type="button" id="nextToFinished" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Finalizar Compra
-                </button>
-            </div>
+               <button type="button" id="nextToFinished" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                   Finalizar Compra
+               </button>
+           </div>
 
-            <!-- Step 3: Compra Finalizada -->
-            <div id="step3" class="hidden space-y-4">
-                <h3 class="text-lg font-semibold text-center text-green-600">¡Compra Finalizada!</h3>
-                <p class="text-center">Gracias por tu compra. Recibirás un email con los detalles de tu pedido.</p>
-                <button type="button" id="closeCheckout" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                    Cerrar
-                </button>
-            </div>
-        </form>
-    </div>
+           <!-- Step 3: Compra Finalizada -->
+           <div id="step3" class="hidden space-y-4">
+               <h3 class="text-lg font-semibold text-center text-green-600">¡Compra Finalizada!</h3>
+               <p class="text-center">Gracias por tu compra. Recibirás un email con los detalles de tu pedido.</p>
+               <button type="button" id="closeCheckout" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                   Cerrar
+               </button>
+           </div>
+       </form>
+   </div>
 </div>
 
 <!-- Cart Modal -->
 <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-    <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
-            <button id="closeCart" class="text-gray-600 hover:text-primary">
-                <i class="fas fa-times h-5 w-5"></i>
-            </button>
-        </div>
-        <div id="cartItems" class="space-y-4">
-            <!-- Cart items will be dynamically inserted here -->
-        </div>
-        <div class="border-t pt-4 mt-4">
-            <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
-        </div>
-        <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
-            Proceder al pago
-        </button>
-    </div>
+   <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
+       <div class="flex justify-between items-center mb-4">
+           <h2 class="text-xl font-bold gradient-text">Carrito de Compras</h2>
+           <button id="closeCart" class="text-gray-600 hover:text-primary">
+               <i class="fas fa-times h-5 w-5"></i>
+           </button>
+       </div>
+       <div id="cartItems" class="space-y-4">
+           <!-- Cart items will be dynamically inserted here -->
+       </div>
+       <div class="border-t pt-4 mt-4">
+           <p class="font-bold">Total: $<span id="cartTotal">0</span></p>
+       </div>
+       <button id="checkoutButton" class="w-full bg-primary text-white py-2 px-4 rounded mt-4 hover:bg-primary-dark">
+           Proceder al pago
+       </button>
+   </div>
 </div>
 
 <!-- New "Ver mi compra" button -->
 <button id="verCompra" class="fixed bottom-20 right-4 z-40 bg-primary hover:bg-primary-dark text-white rounded-full p-4 shadow-lg transition-colors">
-    <i class="fas fa-shopping-cart mr-2"></i> Ver mi compra
+   <i class="fas fa-shopping-cart mr-2"></i> Ver mi compra
 </button>
 
 <!-- WhatsApp Button -->
 <a href="https://wa.me/5493534786106" target="_blank" rel="noopener noreferrer" class="fixed bottom-4 right-4 z-40 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-colors">
- <i class="fab fa-whatsapp text-2xl whatsapp-logo"></i>
+<i class="fab fa-whatsapp text-2xl whatsapp-logo"></i>
 </a>
 
 <!-- Transfer Modal -->
 <div id="transferModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-    <div class="bg-white w-full max-w-md mx-auto mt-20 p-6 rounded-lg">
-        <h3 class="text-lg font-semibold mb-4">Datos para Transferencia</h3>
-        <p><strong>Banco:</strong> Nombre del Banco</p>
-        <p><strong>Titular:</strong> Nombre del Titular</p>
-        <p><strong>CBU:</strong> 0000000000000000000000</p>
-        <p><strong>Alias:</strong> ALIAS.DE.LA.CUENTA</p>
-        <p class="mt-4">Una vez realizada la transferencia, por favor envía el comprobante a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8a1a6aea788bea9b8bdbba0a7b8bcbdabb9a5a9a6e6aba7a5">[email&#160;protected]</a></p>
-        <button id="closeTransferModal" class="mt-6 w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-            Cerrar
-        </button>
+   <div class="bg-white w-full max-w-md mx-auto mt-20 p-6 rounded-lg">
+       <h3 class="text-lg font-semibold mb-4">Datos para Transferencia</h3>
+       <p><strong>Banco:</strong> Nombre del Banco</p>
+       <p><strong>Titular:</strong> Nombre del Titular</p>
+       <p><strong>CBU:</strong> 0000000000000000000000</p>
+       <p><strong>Alias:</strong> ALIAS.DE.LA.CUENTA</p>
+       <p class="mt-4">Una vez realizada la transferencia, por favor envía el comprobante a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c8a1a6aea788bea9b8bdbba0a7b8bcbdabb9a5a9a6e6aba7a5">[email&#160;protected]</a></p>
+       <button id="closeTransferModal" class="mt-6 w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+           Cerrar
+       </button>
+   </div>
+</div>
+
+<!-- Product Modal -->
+<div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+    <div class="bg-white w-full max-w-2xl mx-auto mt-10 mb-10 p-6 rounded-lg">
+        <div class="flex justify-between items-center mb-4">
+            <h2 id="productModalTitle" class="text-2xl font-bold gradient-text"></h2>
+            <button id="closeProductModal" class="text-gray-600 hover:text-primary">
+                <i class="fas fa-times h-5 w-5"></i>
+            </button>
+        </div>
+        <div id="productModalContent">
+            <!-- Product details will be dynamically inserted here -->
+        </div>
     </div>
 </div>
 

@@ -315,6 +315,8 @@ function removePreloader() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed");
+
     // Inicialización
     updateBanner();
     setInterval(updateBanner, 5000);
@@ -417,8 +419,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
-            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
-            initiateMercadoPagoPayment();
+            alert('¡Gracias por tu compra! Te contactaremos pronto para confirmar los detalles.');
+            cart = [];
+            updateCartUI();
+            document.getElementById('checkoutModal')?.classList.add('hidden');
         }).catch(error => {
             console.error('Error detallado:', error);
             alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
@@ -445,6 +449,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Remover el preloader
     removePreloader();
+
+    console.log("Initialization complete");
 });
 
-console.log("Script cargado completamente");
+console.log("Script loaded");

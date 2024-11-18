@@ -192,8 +192,8 @@ function createWhatsAppMessage(formData) {
     message += `- Nombre: ${formData.get('nombre')} ${formData.get('apellido')}\n`;
     message += `- Email: ${formData.get('email')}\n`;
     message += `- Teléfono: ${formData.get('telefono')}\n`;
-    message += `- Método de envío: ${formData.get('envio')}\n`;
-    message += `- Método de pago: ${formData.get('pago')}\n\n`;
+    message += `- Método de envío: ${formData.get('shippingOption')}\n`;
+    message += `- Método de pago: ${formData.get('paymentMethod')}\n\n`;
     
     message += "*Productos:*\n";
     cart.forEach(item => {
@@ -276,6 +276,53 @@ function updateCheckoutStep(step) {
     });
 }
 
+// MercadoPago integration
+function initMercadoPago() {
+    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
+    const bricksBuilder = mp.bricks();
+
+    const renderCheckoutButton = async (bricksBuilder) => {
+        const settings = {
+            initialization: {
+                amount: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+            },
+            callbacks: {
+                onReady: () => {
+                    console.log('Brick ready');
+                },
+                onSubmit: (cardFormData) => {
+                    // event to be triggered when the user clicks on the payButton
+                    return new Promise((resolve, reject) => {
+                        fetch("/process_payment", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(cardFormData)
+                        })
+                        .then((response) => response.json())
+                        .then((response) => {
+                            // If the promise resolves, the payment was successful
+                            resolve();
+                            updateCheckoutStep(3);
+                        })
+                        .catch((error) => {
+                            // If the promise rejects, there was an error
+                            reject();
+                        })
+                    });
+                },
+                onError: (error) => {
+                    console.error('Brick error', error);
+                },
+            },
+        };
+        window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+    };
+
+    renderCheckoutButton(bricksBuilder);
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -315,12 +362,33 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
-        const whatsappMessage = createWhatsAppMessage(formData);
-        window.open(`https://wa.me/5493534786106?text=${whatsappMessage}`, '_blank');
-        document.getElementById('checkoutModal').classList.add('hidden');
-        document.getElementById('cartModal').classList.add('hidden');
-        cart = [];
-        updateCartUI();
+        fetch("https://formspree.io/f/xrbglzrk", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                const whatsappMessage = createWhatsAppMessage(formData);
+                window.open(`https://wa.me/5493534786106?text=${whatsappMessage}`, '_blank');
+                document.getElementById('checkoutModal').classList.add('hidden');
+                document.getElementById('cartModal').classList.add('hidden');
+                cart = [];
+                updateCartUI();
+                alert('¡Gracias por tu compra! Te contactaremos pronto.');
+            } else {
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        alert(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        alert("Oops! Hubo un problema al enviar el formulario");
+                    }
+                })
+            }
+        }).catch(error => {
+            alert("Oops! Hubo un problema al enviar el formulario");
+        });
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {
@@ -337,11 +405,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('nextToPayment').addEventListener('click', function() {
         updateCheckoutStep(2);
-    });
-
-    document.getElementById('mercadoPagoButton').addEventListener('click', function() {
-        // Aquí iría la lógica para iniciar el pago con MercadoPago
-        console.log('Iniciando pago con MercadoPago');
+        initMercadoPago();
     });
 
     document.getElementById('showTransferModal').addEventListener('click', function() {
@@ -356,10 +420,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Aquí iría la lógica para procesar la transferencia
         console.log('Procesando transferencia');
         document.getElementById('transferModal').classList.add('hidden');
-        updateCheckoutStep(3);
-    });
-
-    document.getElementById('finishPurchase').addEventListener('click', function() {
         updateCheckoutStep(3);
     });
 
@@ -388,5 +448,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('preloader').style.display = 'none';
 });
 
-// For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

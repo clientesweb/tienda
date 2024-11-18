@@ -42,12 +42,50 @@ const products = {
         description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector."
     }
 ],
-    ceramica: [
-        { id: 10, name: "Juego de Tazas", price: 3800, image: "https://images.unsplash.com/photo-1614702799409-de3c4343e65b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Juego de tazas de cerámica artesanal." },
-        { id: 11, name: "Florero de Cerámica", price: 2900, image: "https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Florero de cerámica con diseño único." },
-        { id: 12, name: "Plato Decorativo", price: 2500, image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Plato decorativo de cerámica pintada a mano." },
-    ],
-};
+    ceramica : [
+    {
+        id: 10,
+        name: "Set de Mate Amelia",
+        price: 30800,
+        image: "img/set-mate-amelia.jpg",
+        description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro."
+    },
+    {
+        id: 11,
+        name: "Set Sophie",
+        price: 24000,
+        image: "img/set-sophie.jpg",
+        description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón."
+    },
+    {
+        id: 12,
+        name: "Fanal Lucia",
+        price: 12000,
+        image: "img/fanal-lucia.jpg",
+        description: "Pieza de cerámica única realizada y pintada a mano. Incluye: fanal y plato."
+    },
+    {
+        id: 13,
+        name: "Set Julieta",
+        price: 19400,
+        image: "img/set-julieta.jpg",
+        description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada."
+    },
+    {
+        id: 14,
+        name: "Mini Florero Lea",
+        price: 8000,
+        image: "img/mini-florero-lea.jpg",
+        description: "Pieza única de cerámica realizada y pintada a mano."
+    },
+    {
+        id: 15,
+        name: "Florero Luisa (forma de nube)",
+        price: 14000,
+        image: "img/florero-luisa.jpg",
+        description: "Pieza única de cerámica realizada y pintada a mano con forma de nube."
+    }
+];
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",

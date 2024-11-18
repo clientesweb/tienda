@@ -96,7 +96,7 @@ const bannerMessages = [
 
 const heroImages = [
     "img/Cortinas.png",
-    "img/Ceramicas.png",
+    "img/Ceramica.png",
     "img/Velas.png"
 ];
 

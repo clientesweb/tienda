@@ -278,49 +278,72 @@ function updateCheckoutStep(step) {
 
 // MercadoPago integration
 function initMercadoPago() {
-    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
-    const bricksBuilder = mp.bricks();
+  const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
+  const bricksBuilder = mp.bricks();
 
-    const renderCheckoutButton = async (bricksBuilder) => {
-        const settings = {
-            initialization: {
-                amount: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-            },
-            callbacks: {
-                onReady: () => {
-                    console.log('Brick ready');
-                },
-                onSubmit: (cardFormData) => {
-                    // event to be triggered when the user clicks on the payButton
-                    return new Promise((resolve, reject) => {
-                        fetch("/process_payment", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(cardFormData)
-                        })
-                        .then((response) => response.json())
-                        .then((response) => {
-                            // If the promise resolves, the payment was successful
-                            resolve();
-                            updateCheckoutStep(3);
-                        })
-                        .catch((error) => {
-                            // If the promise rejects, there was an error
-                            reject();
-                        })
-                    });
-                },
-                onError: (error) => {
-                    console.error('Brick error', error);
-                },
-            },
-        };
-        window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+  const renderCheckoutButton = async (bricksBuilder) => {
+    const settings = {
+      initialization: {
+        preferenceId: await createPreference(),
+      },
+      callbacks: {
+        onReady: () => {
+          console.log('Brick ready');
+        },
+        onSubmit: () => {
+          // You don't need to handle submission here as MercadoPago will redirect the user
+        },
+        onError: (error) => {
+          console.error('Brick error', error);
+        },
+      },
     };
+    window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
+  };
 
-    renderCheckoutButton(bricksBuilder);
+  renderCheckoutButton(bricksBuilder);
+}
+
+async function createPreference() {
+  const items = cart.map(item => ({
+    title: item.name,
+    unit_price: item.price,
+    quantity: item.quantity,
+  }));
+
+  const payer = {
+    name: document.querySelector('input[name="nombre"]').value,
+    surname: document.querySelector('input[name="apellido"]').value,
+    email: document.querySelector('input[name="email"]').value,
+    phone: {
+      number: document.querySelector('input[name="telefono"]').value
+    },
+    address: {
+      street_name: document.querySelector('input[name="calle"]').value,
+      street_number: document.querySelector('input[name="numero"]').value,
+      zip_code: document.querySelector('input[name="codigoPostal"]').value
+    }
+  };
+
+  try {
+    const response = await fetch('/.netlify/functions/create-preference', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items, payer }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create preference');
+    }
+
+    const data = await response.json();
+    return data.id;
+  } catch (error) {
+    console.error('Error creating preference:', error);
+    alert('Hubo un error al procesar tu pago. Por favor, intenta de nuevo.');
+  }
 }
 
 // Event Listeners
@@ -404,8 +427,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchPostalCode').addEventListener('click', searchPostalCode);
 
     document.getElementById('nextToPayment').addEventListener('click', function() {
+      if (validateForm()) {
         updateCheckoutStep(2);
         initMercadoPago();
+      } else {
+        alert('Por favor, completa todos los campos requeridos antes de continuar.');
+      }
     });
 
     document.getElementById('showTransferModal').addEventListener('click', function() {
@@ -447,5 +474,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
 });
+
+function validateForm() {
+  const requiredFields = [
+    'nombre', 'apellido', 'email', 'telefono', 'calle', 'numero', 'codigoPostal', 'ciudad', 'provincia'
+  ];
+  return requiredFields.every(field => document.querySelector(`input[name="${field}"]`).value.trim() !== '');
+}
 
 console.log("Script loaded successfully!");

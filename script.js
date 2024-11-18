@@ -19,7 +19,7 @@ const products = {
         { id: 5, name: "Aceite Esencial de Eucalipto", price: 1800, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Aceite esencial de eucalipto puro." },
         { id: 6, name: "Spray Ambiental Cítrico", price: 1500, image: "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Spray ambiental con aroma cítrico refrescante." },
     ],
-    textiles : [
+    textiles: [
     {
         id: 7,
         name: "Cortina Burdeos",
@@ -42,7 +42,7 @@ const products = {
         description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector."
     }
 ],
-    ceramica : [
+    ceramica: [
     {
         id: 10,
         name: "Set de Mate Amelia",

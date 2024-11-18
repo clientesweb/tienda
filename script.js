@@ -320,8 +320,8 @@ function initMercadoPago() {
 async function createPreference() {
   const items = cart.map(item => ({
     title: item.name,
-    unit_price: item.price,
-    quantity: item.quantity,
+    unit_price: Number(item.price),
+    quantity: Number(item.quantity),
   }));
 
   const payer = {
@@ -349,10 +349,11 @@ async function createPreference() {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to create preference');
+      throw new Error(errorData.details || 'Failed to create preference');
     }
 
     const data = await response.json();
+    console.log('Preference created:', data.id);
     return data.id;
   } catch (error) {
     console.error('Error creating preference:', error);

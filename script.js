@@ -291,13 +291,18 @@ function initMercadoPago() {
           console.log('Brick ready');
         },
         onSubmit: () => {
-          // You don't need to handle submission here as MercadoPago will redirect the user
+          // MercadoPago will handle the redirection
         },
         onError: (error) => {
           console.error('Brick error', error);
         },
       },
     };
+    
+    // Limpiar el contenedor antes de renderizar el botón
+    const container = document.getElementById('wallet_container');
+    container.innerHTML = '';
+    
     window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
   };
 
@@ -385,6 +390,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
+    
+        // Agregar información del carrito a formData
+        cart.forEach((item, index) => {
+            formData.append(`item_${index}_name`, item.name);
+            formData.append(`item_${index}_quantity`, item.quantity);
+            formData.append(`item_${index}_price`, item.price);
+        });
+        formData.append('total', cart.reduce((sum, item) => sum + item.price * item.quantity, 0));
+
         fetch("https://formspree.io/f/xrbglzrk", {
             method: "POST",
             body: formData,
@@ -393,13 +407,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(response => {
             if (response.ok) {
-                const whatsappMessage = createWhatsAppMessage(formData);
-                window.open(`https://wa.me/5493534786106?text=${whatsappMessage}`, '_blank');
+                alert('¡Gracias por tu compra! Te contactaremos pronto.');
                 document.getElementById('checkoutModal').classList.add('hidden');
                 document.getElementById('cartModal').classList.add('hidden');
                 cart = [];
                 updateCartUI();
-                alert('¡Gracias por tu compra! Te contactaremos pronto.');
             } else {
                 response.json().then(data => {
                     if (Object.hasOwn(data, 'errors')) {

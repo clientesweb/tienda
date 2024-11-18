@@ -38,7 +38,6 @@ const heroImages = [
 let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
-let shippingCost = 0;
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -156,8 +155,7 @@ function removeFromCart(productId) {
 
 function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal + shippingCost;
+    const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     cartItemCountEl.textContent = totalItems;
     cartItemCountEl.classList.toggle('hidden', totalItems === 0);
@@ -177,7 +175,7 @@ function updateCartUI() {
         </div>
     `).join('');
 
-    cartTotalEl.textContent = total.toLocaleString();
+    cartTotalEl.textContent = totalPrice.toLocaleString();
 }
 
 function formatPrice(price) {
@@ -187,38 +185,26 @@ function formatPrice(price) {
     }).format(price);
 }
 
-function calculateShipping(postalCode) {
-    // Simular una llamada a la API de Mercado Envíos
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const shippingOptions = {
-                standard: {
-                    name: "Estándar",
-                    price: 500,
-                    estimatedDelivery: '3-5 días hábiles'
-                },
-                express: {
-                    name: "Express",
-                    price: 800,
-                    estimatedDelivery: '1-2 días hábiles'
-                }
-            };
-            resolve(shippingOptions);
-        }, 1000);
+function createWhatsAppMessage(formData) {
+    let message = "🛒 *Nuevo Pedido - Mon Amour Textil*\n\n";
+    message += "*Datos del Cliente:*\n";
+    message += `- Nombre: ${formData.get('nombre')} ${formData.get('apellido')}\n`;
+    message += `- Email: ${formData.get('email')}\n`;
+    message += `- Teléfono: ${formData.get('telefono')}\n`;
+    message += `- Método de envío: ${formData.get('envio')}\n`;
+    message += `- Método de pago: ${formData.get('pago')}\n\n`;
+    
+    message += "*Productos:*\n";
+    cart.forEach(item => {
+        message += `- ${item.name}\n`;
+        message += `  Cantidad: ${item.quantity}\n`;
+        message += `  Precio: ${formatPrice(item.price)}\n`;
+        message += `  Subtotal: ${formatPrice(item.price * item.quantity)}\n\n`;
     });
-}
-
-function updateShippingOptions(shippingOptions) {
-    const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
-    `).join('');
-}
-
-function updateTotal() {
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const total = subtotal + shippingCost;
-    document.getElementById('cartTotal').textContent = formatPrice(total);
+    
+    message += `*Total: ${formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0))}*`;
+    
+    return encodeURIComponent(message);
 }
 
 function updateAdvertisingBanner() {
@@ -278,22 +264,15 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('postalCode').addEventListener('change', function() {
-        const postalCode = this.value;
-        if (postalCode.length === 4) {
-            calculateShipping(postalCode)
-                .then(shippingOptions => {
-                    updateShippingOptions(shippingOptions);
-                    shippingCost = shippingOptions.standard.price;
-                    updateTotal();
-                });
-        }
-    });
-
-    document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
-        updateTotal();
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const whatsappMessage = createWhatsAppMessage(formData);
+        window.open(`https://wa.me/5493534786106?text=${whatsappMessage}`, '_blank');
+        document.getElementById('checkoutModal').classList.add('hidden');
+        document.getElementById('cartModal').classList.add('hidden');
+        cart = [];
+        updateCartUI();
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {

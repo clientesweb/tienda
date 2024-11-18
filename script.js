@@ -263,6 +263,21 @@ function validateForm() {
     return true;
 }
 
+// New functions for accordion menu and bank transfer modal
+function toggleAccordion(button) {
+    button.classList.toggle('open');
+    const content = button.nextElementSibling;
+    content.classList.toggle('open');
+}
+
+function showBankTransferModal() {
+    document.getElementById('bankTransferModal').classList.remove('hidden');
+}
+
+function closeBankTransferModal() {
+    document.getElementById('bankTransferModal').classList.add('hidden');
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -362,6 +377,21 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
         });
     });
+
+    // New event listeners for accordion and bank transfer modal
+    document.querySelectorAll('.accordion-button').forEach(button => {
+        button.addEventListener('click', () => toggleAccordion(button));
+    });
+
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(input => {
+        input.addEventListener('change', (e) => {
+            if (e.target.value === 'transfer') {
+                showBankTransferModal();
+            }
+        });
+    });
+
+    document.getElementById('closeBankTransferModal').addEventListener('click', closeBankTransferModal);
 
     updateBanner();
     setInterval(updateBanner, 5000);

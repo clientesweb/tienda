@@ -1,9 +1,18 @@
 // Data
 const products = {
     velas: [
-        { id: 1, name: "Vela Aromática Lavanda", price: 2500, image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Vela aromática de lavanda para relajación." },
-        { id: 2, name: "Vela de Soja Vainilla", price: 2800, image: "https://images.unsplash.com/photo-1602178856955-35a35ca588b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Vela de soja con aroma a vainilla." },
-        { id: 3, name: "Set de Velas Decorativas", price: 3500, image: "https://images.unsplash.com/photo-1636103775596-3a519c4da522?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Set de velas decorativas para el hogar." },
+        { id: 1, name: "Vitrè", price: 10700, image: "img/vitre.jpg", description: "Envase reutilizable de vidrio - 100 gr de cera de soja aromatizada" },
+        { id: 2, name: "Conques", price: 9800, image: "img/conques.jpg", description: "Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada" },
+        { id: 3, name: "Dinan", price: 15600, image: "img/dinan.jpg", description: "Envase reutilizable de vidrio con tapa . 200 gr de cera de soja aromatizada" },
+        { id: 4, name: "Saignon", price: 53000, image: "img/saignon.jpg", description: "Velón suspendido en envase reutilizable de vidrio. 500 gr de cera de soja aromatizada" },
+        { id: 5, name: "Lottie pequeño", price: 6400, image: "img/lottie-pequeno.jpg", description: "Cuenco de 8cm de diámetro reutilizable de madera. 100 gr de cera de soja aromatizada" },
+        { id: 6, name: "Lottie mediano", price: 8400, image: "img/lottie-mediano.jpg", description: "Cuenco de 12 cm de diámetro reutilizable de madera . 200 gr de cera de soja aromatizada (doble pabilo)" },
+        { id: 7, name: "Jolie con flor", price: 7800, image: "img/jolie-con-flor.jpg", description: "Cuenco reutilizable de madera con 150gr. De cera de soja aromatizada" },
+        { id: 8, name: "Yanis pequeña x3", price: 7500, image: "img/yanis-pequena-x3.jpg", description: "Set de 3 velas Yanis pequeñas" },
+        { id: 9, name: "Teva x3", price: 10800, image: "img/teva-x3.jpg", description: "Set de 3 velas Teva" },
+        { id: 10, name: "Yanis grande", price: 5300, image: "img/yanis-grande.jpg", description: "Vela Yanis grande" },
+        { id: 11, name: "Bombones Marie", price: 2400, image: "img/bombones-marie.jpg", description: "5 mini bombones de cera de soja perfumados" },
+        { id: 12, name: "Sèlène x3", price: 11400, image: "img/selene-x3.jpg", description: "Set de 3 velas Sèlène" },
     ],
     aromas: [
         { id: 4, name: "Difusor de Aromas Floral", price: 3200, image: "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Difusor de aromas con esencia floral." },

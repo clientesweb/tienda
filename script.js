@@ -242,6 +242,15 @@ function updateAdvertisingBanner() {
     advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
+function prepareCartData() {
+    return JSON.stringify(cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity
+    })));
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -278,15 +287,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('whatsappNotification').classList.add('hidden');
     });
 
-    document.getElementById('postalCode').addEventListener('change', function() {
-        const postalCode = this.value;
+    document.getElementById('searchShipping').addEventListener('click', () => {
+        const postalCode = document.getElementById('postalCode').value;
         if (postalCode.length === 4) {
             calculateShipping(postalCode)
                 .then(shippingOptions => {
                     updateShippingOptions(shippingOptions);
+                    document.getElementById('shippingOptions').classList.remove('hidden');
                     shippingCost = shippingOptions.standard.price;
                     updateTotal();
                 });
+        } else {
+            alert('Por favor, ingrese un código postal válido.');
         }
     });
 
@@ -303,6 +315,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('closeCheckoutModal').addEventListener('click', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        formData.append('cartItems', prepareCartData());
+
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                cart = [];
+                updateCartUI();
+                document.getElementById('checkoutModal').classList.add('hidden');
+                alert('¡Gracias por tu compra! Te enviaremos un correo con los detalles.');
+            } else {
+                throw new Error('Error en el envío del formulario');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al procesar tu pedido. Por favor, intenta de nuevo.');
+        });
     });
 
     updateBanner();

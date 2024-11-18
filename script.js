@@ -272,6 +272,7 @@ function searchShippingOptions() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
     document.getElementById('closeBanner').addEventListener('click', () => {
         document.getElementById('topBanner').classList.add('hidden');
     });
@@ -346,10 +347,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateAdvertisingBanner();
     setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+});
 
-    // Remove preloader
+window.addEventListener('load', function() {
     document.getElementById('preloader').style.display = 'none';
 });
+
+setTimeout(function() {
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.style.display = 'none';
+        console.log('Preloader removed by timeout');
+    }
+}, 5000); // 5 segundos de tiempo máximo
 
 // For demonstration purposes only (this won't work in a Node.js environment)
 console.log("Script loaded successfully!");

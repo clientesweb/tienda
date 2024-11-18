@@ -83,6 +83,34 @@ function updateCheckoutStep(step) {
     });
 }
 
+// Función para enviar información a Formspree
+function sendFormspreeData() {
+    const form = document.getElementById('checkoutForm');
+    const formData = new FormData(form);
+
+    // Agregar los items del carrito y el total al formulario
+    formData.append('cartItems', JSON.stringify(cart));
+    formData.append('cartTotal', document.getElementById('cartTotal').textContent);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            console.log('Información enviada a Formspree exitosamente');
+            updateCheckoutStep(3);
+        } else {
+            throw new Error('Error al enviar la información a Formspree');
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo.');
+    });
+}
+
 // Evento para continuar al pago
 document.getElementById('nextToPayment').addEventListener('click', function(e) {
     e.preventDefault();
@@ -91,6 +119,7 @@ document.getElementById('nextToPayment').addEventListener('click', function(e) {
     const form = document.getElementById('checkoutForm');
     if (form.checkValidity()) {
         toggleLoadingIndicator(true);
+        sendFormspreeData(); // Enviar datos a Formspree
         createPreference()
             .then(preferenceId => {
                 createCheckoutButton(preferenceId);
@@ -104,21 +133,6 @@ document.getElementById('nextToPayment').addEventListener('click', function(e) {
     } else {
         form.reportValidity();
     }
-});
-
-// Evento para enviar el formulario a Formspree
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Agregar los items del carrito y el total al formulario
-    const cartItemsInput = document.getElementById('cartItemsInput');
-    const cartTotalInput = document.getElementById('cartTotalInput');
-    
-    cartItemsInput.value = JSON.stringify(cart);
-    cartTotalInput.value = document.getElementById('cartTotal').textContent;
-    
-    // Enviar el formulario
-    this.submit();
 });
 
 // Inicialización

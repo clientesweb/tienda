@@ -60,30 +60,68 @@ function createPreference() {
 
 // Función para mostrar y ocultar el indicador de carga
 function toggleLoadingIndicator(show) {
-    const button = document.getElementById('checkoutButton');
+    const button = document.getElementById('nextToPayment');
     if (show) {
         button.disabled = true;
         button.innerHTML = 'Procesando...';
     } else {
         button.disabled = false;
-        button.innerHTML = 'Finalizar compra';
+        button.innerHTML = 'Continuar al Pago';
     }
 }
 
-// Evento para iniciar el proceso de pago
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+// Función para actualizar el paso del checkout
+function updateCheckoutStep(step) {
+    document.querySelectorAll('.step-content').forEach((el, index) => {
+        el.classList.toggle('hidden', index + 1 !== step);
+    });
+    document.querySelectorAll('.step').forEach((el, index) => {
+        el.classList.toggle('bg-primary', index + 1 <= step);
+        el.classList.toggle('text-white', index + 1 <= step);
+        el.classList.toggle('bg-gray-300', index + 1 > step);
+        el.classList.toggle('text-gray-600', index + 1 > step);
+    });
+}
+
+// Evento para continuar al pago
+document.getElementById('nextToPayment').addEventListener('click', function(e) {
     e.preventDefault();
     
-    if (!checkoutButtonCreated) {
+    // Validar el formulario antes de continuar
+    const form = document.getElementById('checkoutForm');
+    if (form.checkValidity()) {
         toggleLoadingIndicator(true);
         createPreference()
             .then(preferenceId => {
                 createCheckoutButton(preferenceId);
+                updateCheckoutStep(2);
                 toggleLoadingIndicator(false);
             })
             .catch(error => {
                 console.error('Error al crear la preferencia:', error);
                 toggleLoadingIndicator(false);
             });
+    } else {
+        form.reportValidity();
     }
+});
+
+// Evento para enviar el formulario a Formspree
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Agregar los items del carrito y el total al formulario
+    const cartItemsInput = document.getElementById('cartItemsInput');
+    const cartTotalInput = document.getElementById('cartTotalInput');
+    
+    cartItemsInput.value = JSON.stringify(cart);
+    cartTotalInput.value = document.getElementById('cartTotal').textContent;
+    
+    // Enviar el formulario
+    this.submit();
+});
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', function() {
+    // Aquí puedes agregar cualquier inicialización adicional que necesites
 });

@@ -277,44 +277,43 @@ function updateCheckoutStep(step) {
 }
 
 // MercadoPago integration
-function initMercadoPago() {
-  const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
-  const bricksBuilder = mp.bricks();
+async function initMercadoPago() {
+  try {
+    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db');
+    const bricksBuilder = mp.bricks();
 
-  const renderCheckoutButton = async (bricksBuilder) => {
-    try {
-      const preferenceId = await createPreference();
-      console.log('Preference ID:', preferenceId);
-
+    const renderCheckoutButton = async (bricksBuilder) => {
       const settings = {
         initialization: {
-          preferenceId: preferenceId,
+          preferenceId: await createPreference(),
         },
         callbacks: {
           onReady: () => {
             console.log('Brick ready');
+            // Aquí puedes ocultar un indicador de carga si lo tienes
           },
           onSubmit: () => {
+            // Aquí puedes mostrar un indicador de carga
             console.log('Payment submitted');
           },
           onError: (error) => {
             console.error('Brick error', error);
+            alert('Hubo un error al procesar el pago. Por favor, intenta de nuevo.');
           },
         },
       };
-    
+      
       const container = document.getElementById('wallet_container');
       container.innerHTML = '';
-    
+      
       window.checkoutBrickController = await bricksBuilder.create('wallet', 'wallet_container', settings);
-      console.log('Checkout button rendered successfully');
-    } catch (error) {
-      console.error('Error rendering checkout button:', error);
-      alert('Hubo un error al cargar el botón de pago. Por favor, intenta de nuevo.');
-    }
-  };
+    };
 
-  renderCheckoutButton(bricksBuilder);
+    await renderCheckoutButton(bricksBuilder);
+  } catch (error) {
+    console.error('Error initializing MercadoPago:', error);
+    alert('No se pudo inicializar el pago. Por favor, recarga la página e intenta de nuevo.');
+  }
 }
 
 async function createPreference() {

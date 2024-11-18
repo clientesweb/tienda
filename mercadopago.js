@@ -1,40 +1,33 @@
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evitar que el formulario se envíe de inmediato
+// mercadopago.js
 
-    // Obtener los datos del formulario
-    const formData = new FormData(this);
-
-    // Enviar los datos a Formspree
-    fetch('https://formspree.io/f/xrbglzrk', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => {
-        if (response.ok) {
-            // Si la respuesta de Formspree es exitosa, continuar con la creación de la preferencia de pago
-            createPreference()
-                .then(preferenceId => {
-                    createCheckoutButton(preferenceId); // Crear el botón de Mercado Pago
-                    toggleLoadingIndicator(false); // Ocultar el indicador de carga
-                })
-                .catch(error => {
-                    console.error('Error al crear la preferencia:', error);
-                    toggleLoadingIndicator(false); // Ocultar el indicador de carga
-                });
-        } else {
-            // Si algo salió mal con Formspree, mostrar un mensaje de error
-            alert('Hubo un error al enviar los datos. Inténtalo de nuevo.');
-            toggleLoadingIndicator(false); // Ocultar el indicador de carga
-        }
-    })
-    .catch(error => {
-        alert('Hubo un error en la conexión. Inténtalo de nuevo.');
-        toggleLoadingIndicator(false); // Ocultar el indicador de carga
-    });
-
-    // Mostrar el indicador de carga mientras se espera la respuesta de Formspree
-    toggleLoadingIndicator(true);
+// Inicializar el objeto de Mercado Pago
+const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', {
+    locale: 'es-AR'
 });
+
+let checkoutButtonCreated = false;
+
+// Función para crear el botón de pago
+function createCheckoutButton(preferenceId) {
+    if (checkoutButtonCreated) {
+        document.getElementById('mercadopago-button').innerHTML = '';
+    }
+
+    const bricksBuilder = mp.bricks();
+
+    bricksBuilder.create("wallet", "mercadopago-button", {
+        initialization: {
+            preferenceId: preferenceId
+        },
+        callbacks: {
+            onError: (error) => console.error('Error en el pago:', error),
+            onReady: () => {
+                console.log('Botón de pago listo');
+                checkoutButtonCreated = true;
+            }
+        }
+    });
+}
 
 // Función para crear la preferencia de pago
 function createPreference() {
@@ -65,27 +58,6 @@ function createPreference() {
     .then(data => data.id);
 }
 
-// Función para crear el botón de pago
-function createCheckoutButton(preferenceId) {
-    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', {
-        locale: 'es-AR'
-    });
-
-    const bricksBuilder = mp.bricks();
-
-    bricksBuilder.create("wallet", "mercadopago-button", {
-        initialization: {
-            preferenceId: preferenceId
-        },
-        callbacks: {
-            onError: (error) => console.error('Error en el pago:', error),
-            onReady: () => {
-                console.log('Botón de pago listo');
-            }
-        }
-    });
-}
-
 // Función para mostrar y ocultar el indicador de carga
 function toggleLoadingIndicator(show) {
     const button = document.getElementById('checkoutButton');
@@ -97,3 +69,21 @@ function toggleLoadingIndicator(show) {
         button.innerHTML = 'Finalizar compra';
     }
 }
+
+// Evento para iniciar el proceso de pago
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (!checkoutButtonCreated) {
+        toggleLoadingIndicator(true);
+        createPreference()
+            .then(preferenceId => {
+                createCheckoutButton(preferenceId);
+                toggleLoadingIndicator(false);
+            })
+            .catch(error => {
+                console.error('Error al crear la preferencia:', error);
+                toggleLoadingIndicator(false);
+            });
+    }
+});

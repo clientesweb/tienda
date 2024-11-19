@@ -35,14 +35,14 @@ function createCheckoutButton(preferenceId) {
 
 // Función para crear la preferencia de pago
 function createPreference() {
-    const cartItemsInput = document.getElementById('cartItemsInput');
-    const items = JSON.parse(cartItemsInput.value);
+    const items = cart.map(item => ({
+        title: item.name,
+        unit_price: item.price,
+        quantity: item.quantity,
+    }));
 
     const shippingMethod = document.querySelector('input[name="shippingMethod"]:checked');
-    if (!shippingMethod) {
-        throw new Error('No se ha seleccionado un método de envío');
-    }
-    const shippingCost = parseInt(shippingMethod.dataset.cost);
+    const shippingCost = shippingMethod ? parseInt(shippingMethod.value) : 0;
 
     return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
@@ -68,7 +68,7 @@ function createPreference() {
 
 // Función para mostrar y ocultar el indicador de carga
 function toggleLoadingIndicator(show) {
-    const button = document.querySelector('#checkoutForm button[type="submit"]');
+    const button = document.querySelector('button[type="submit"]');
     if (show) {
         button.disabled = true;
         button.innerHTML = 'Procesando...';
@@ -93,7 +93,9 @@ function initiateMercadoPagoPayment() {
         });
 }
 
-// Exportar las funciones que se utilizarán en otros scripts
-export {
-    initiateMercadoPagoPayment
-};
+// Agregar el evento para iniciar el pago cuando se selecciona MercadoPago
+document.getElementById('paymentMethod').addEventListener('change', function() {
+    if (this.value === 'mercadopago') {
+        initiateMercadoPagoPayment();
+    }
+});

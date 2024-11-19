@@ -192,7 +192,8 @@ function updateCartUI() {
         </div>
     `).join('');
 
-    cartTotalEl.textContent = total.toLocaleString();
+    cartTotalEl.textContent = formatPrice(total);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
 }
 
 function formatPrice(price) {
@@ -210,12 +211,14 @@ function calculateShipping(postalCode) {
                 standard: {
                     name: "Estándar",
                     price: 500,
-                    estimatedDelivery: '3-5 días hábiles'
+                    estimatedDelivery: '3-5 días hábiles',
+                    logo: 'https://http2.mlstatic.com/frontend-assets/mp-shipping-frontend/assets/images/logos/logo-mercado-envios.svg'
                 },
                 express: {
                     name: "Express",
                     price: 800,
-                    estimatedDelivery: '1-2 días hábiles'
+                    estimatedDelivery: '1-2 días hábiles',
+                    logo: 'https://http2.mlstatic.com/frontend-assets/mp-shipping-frontend/assets/images/logos/logo-mercado-envios.svg'
                 }
             };
             resolve(shippingOptions);
@@ -226,7 +229,10 @@ function calculateShipping(postalCode) {
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
     shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">${option.name} - $${option.price} (${option.estimatedDelivery})</option>
+        <option value="${key}">
+            <img src="${option.logo}" alt="${option.name}" style="height: 20px; vertical-align: middle;">
+            ${option.name} - $${option.price} (${option.estimatedDelivery})
+        </option>
     `).join('');
 }
 
@@ -234,6 +240,7 @@ function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const total = subtotal + shippingCost;
     document.getElementById('cartTotal').textContent = formatPrice(total);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
 }
 
 function updateAdvertisingBanner() {
@@ -363,6 +370,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('checkoutModal').classList.add('hidden');
     });
 
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+        if (this.value === 'transferencia') {
+            document.getElementById('bankDetailsModal').classList.remove('hidden');
+            document.getElementById('mercadopago-button').classList.add('hidden');
+        } else if (this.value === 'mercadopago') {
+            document.getElementById('bankDetailsModal').classList.add('hidden');
+            document.getElementById('mercadopago-button').classList.remove('hidden');
+        }
+    });
+
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
         e.preventDefault();
         if (!validateForm()) return;
@@ -390,7 +407,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
             // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
-            initiateMercadoPagoPayment();
+            if (document.getElementById('paymentMethod').value === 'mercadopago') {
+                initiateMercadoPagoPayment();
+            } else {
+                alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
+            }
         }).catch(error => {
             console.error('Error detallado:', error);
             alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');

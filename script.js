@@ -51,6 +51,7 @@ let cart = [];
 let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
+let shippingOptions = {};
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -204,21 +205,33 @@ function formatPrice(price) {
 }
 
 function calculateShipping(postalCode) {
-    // Simular una llamada a la API de Mercado Envíos
     return new Promise((resolve) => {
         setTimeout(() => {
-            const shippingOptions = {
-                standard: {
-                    name: "Estándar",
-                    price: 500,
-                    estimatedDelivery: '3-5 días hábiles',
-                    logo: 'https://http2.mlstatic.com/frontend-assets/mp-shipping-frontend/assets/images/logos/logo-mercado-envios.svg'
+            shippingOptions = {
+                correoArgentinoDomicilio: {
+                    name: "Correo Argentino Envío a domicilio clásico",
+                    price: 9742,
+                    estimatedDelivery: '3 a 6 días hábiles (luego de ser despachado)',
+                    logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/correo-argentino-shipment-icon-Lk0cW7gu5xXw5o1TDUht0qHCPguHn4.png'
                 },
-                express: {
-                    name: "Express",
-                    price: 800,
-                    estimatedDelivery: '1-2 días hábiles',
-                    logo: 'https://http2.mlstatic.com/frontend-assets/mp-shipping-frontend/assets/images/logos/logo-mercado-envios.svg'
+                correoArgentinoSucursal: {
+                    name: "Correo Argentino Envío a sucursal",
+                    price: 6135,
+                    estimatedDelivery: '3 a 6 días hábiles (luego de ser despachado)',
+                    logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/correo-argentino-shipment-icon-Lk0cW7gu5xXw5o1TDUht0qHCPguHn4.png'
+                },
+                andreaniEstandar: {
+                    name: "Andreani Estandar Envío a domicilio",
+                    price: 10457.39,
+                    estimatedDelivery: '3-4 días hábiles (luego de ser despachado)',
+                    logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/descarga-3IKzLYo9d0C1H0FACUsSAZkuDgCuAi.svg'
+                },
+                retiroLocal: {
+                    name: "Retiro en local",
+                    price: 0,
+                    estimatedDelivery: 'Inmediato',
+                    logo: 'path/to/local-icon.png', // Reemplazar con la ruta correcta del ícono
+                    description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
                 }
             };
             resolve(shippingOptions);
@@ -230,14 +243,29 @@ function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
     shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
         <option value="${key}">
-            <img src="${option.logo}" alt="${option.name}" style="height: 20px; vertical-align: middle;">
-            ${option.name} - $${option.price} (${option.estimatedDelivery})
+            ${option.name} - ${option.price > 0 ? `$${option.price.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
         </option>
     `).join('');
 }
 
+function calculateShippingPrice(basePrice, itemCount) {
+    if (itemCount <= 1) {
+        return basePrice;
+    } else {
+        return basePrice * (1 + 0.28 * (itemCount - 1));
+    }
+}
+
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const shippingMethod = document.getElementById('shippingMethod').value;
+    const selectedShipping = shippingOptions[shippingMethod];
+    
+    if (selectedShipping) {
+        shippingCost = calculateShippingPrice(selectedShipping.price, itemCount);
+    }
+
     const total = subtotal + shippingCost;
     document.getElementById('cartTotal').textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
@@ -347,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(shippingOptions => {
                     updateShippingOptions(shippingOptions);
                     document.getElementById('shippingOptions').classList.remove('hidden');
-                    shippingCost = shippingOptions.standard.price;
+                    shippingCost = shippingOptions.correoArgentinoDomicilio.price;
                     updateTotal();
                 });
         } else {
@@ -356,9 +384,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
-        updateTotal();
+        const selectedOption = shippingOptions[this.value];
+        if (selectedOption) {
+            shippingCost = selectedOption.price;
+            updateTotal();
+        }
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {

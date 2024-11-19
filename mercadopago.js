@@ -35,13 +35,13 @@ function createCheckoutButton(preferenceId) {
 
 // Función para crear la preferencia de pago
 function createPreference() {
-    const items = cart.map(item => ({
-        title: item.name,
-        unit_price: item.price,
-        quantity: item.quantity,
-    }));
+    const cartItemsInput = document.getElementById('cartItemsInput');
+    const items = JSON.parse(cartItemsInput.value);
 
-    const shippingMethod = document.getElementById('shippingMethodContainer').querySelector('input[name="shippingMethod"]:checked');
+    const shippingMethod = document.querySelector('input[name="shippingMethod"]:checked');
+    if (!shippingMethod) {
+        throw new Error('No se ha seleccionado un método de envío');
+    }
     const shippingCost = parseInt(shippingMethod.dataset.cost);
 
     return fetch('/.netlify/functions/create-preference', {
@@ -93,22 +93,7 @@ function initiateMercadoPagoPayment() {
         });
 }
 
-// Escuchar cambios en el método de pago
-document.getElementById('paymentMethod').addEventListener('change', function(e) {
-    const mercadoPagoButton = document.getElementById('mercadopago-button');
-    if (e.target.value === 'mercadopago') {
-        mercadoPagoButton.style.display = 'block';
-        initiateMercadoPagoPayment();
-    } else {
-        mercadoPagoButton.style.display = 'none';
-    }
-});
-
-// Manejar el envío del formulario
-document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-    const paymentMethod = document.getElementById('paymentMethod').value;
-    if (paymentMethod === 'mercadopago') {
-        e.preventDefault(); // Prevenir el envío del formulario si se selecciona MercadoPago
-    }
-    // Para otros métodos de pago, el formulario se enviará normalmente
-});
+// Exportar las funciones que se utilizarán en otros scripts
+export {
+    initiateMercadoPagoPayment
+};

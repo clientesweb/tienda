@@ -41,8 +41,8 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    const shippingMethod = document.getElementById('shippingMethod');
-    const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
+    const shippingMethod = document.getElementById('shippingMethodContainer');
+    const selectedShipping = shippingMethod.options[shippingMethodContainer.selectedIndex];
     const shippingCost = parseInt(selectedShipping.textContent.match(/\$(\d+)/)[1]);
 
     return fetch('/.netlify/functions/create-preference', {

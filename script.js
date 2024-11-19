@@ -1,3 +1,5 @@
+import { initiateMercadoPagoPayment } from './mercadopago.js';
+
 // Data
 const products = {
     velas: [
@@ -374,23 +376,6 @@ function updateFreeShippingMessage() {
     }
 }
 
-// MercadoPago function
-function initMercadoPago(preferenceId) {
-    const mp = new MercadoPago('APP_USR-2be91fb1-5bdd-48df-906b-fe2eee5de0db', { // Replace TU_PUBLIC_KEY with your actual public key
-        locale: 'es-AR'
-    });
-
-    mp.checkout({
-        preference: {
-            id: preferenceId
-        },
-        render: {
-            container: '#mercadopago-button',
-            label: 'Pagar con MercadoPago',
-        }
-    });
-}
-
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
@@ -482,15 +467,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }).then(data => {
-            console.log('Respuesta exitosa del servidor:', data);
+            console.log('Respuesta exitosa de Formspree:', data);
             if (document.getElementById('paymentMethod').value === 'mercadopago') {
-                if (data.preferenceId) {
-                    initMercadoPago(data.preferenceId);
-                    document.getElementById('mercadopago-button').classList.remove('hidden');
-                } else {
-                    throw new Error('No se recibió el ID de preferencia de MercadoPago');
-                }
-            } else if (document.getElementById('paymentMethod').value === 'transferencia') {
+                initiateMercadoPagoPayment();
+            } else {
                 alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
             }
         }).catch(error => {
@@ -533,11 +513,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
-
-    // Agregar esto al final del evento DOMContentLoaded
-    const mercadoPagoScript = document.createElement('script');
-    mercadoPagoScript.src = "https://sdk.mercadopago.com/js/v2";
-    document.body.appendChild(mercadoPagoScript);
 });
 
 console.log("Script loaded successfully!");

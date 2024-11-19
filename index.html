@@ -12,12 +12,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#C5B7A6',
-                        secondary: '#E5DED4',
-                        accent: '#8A7B68',
-                        'primary-dark': '#A69985',
-                        cream: '#F5F0E6',
-                        ivory: '#FFFDF7'
+                        primary: '#D4C098',
+                        secondary: '#EAE3C9',
+                        accent: '#C8C2AC',
+                        'primary-dark': '#A6A18F',
+                        cream: '#F3ECD0',
+                        ivory: '#848071'
                     },
                     fontFamily: {
                         'sans': ['Montserrat', 'sans-serif'],
@@ -51,23 +51,14 @@
             width: 50px;
             height: 50px;
             border: 5px solid #f3f3f3;
-            border-top: 5px solid #C5B7A6;
-            border-right: 5px solid #E5DED4;
+            border-top: 5px solid #D4C098;
+            border-right: 5px solid #EAE3C9;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        .gradient-text {
-            background: linear-gradient(45deg, #C5B7A6, #E5DED4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .gradient-bg {
-            background: linear-gradient(45deg, #C5B7A6, #E5DED4);
         }
         .menu-icon {
             transition: transform 0.3s ease;
@@ -80,7 +71,7 @@
         }
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(197, 183, 166, 0.1);
+            box-shadow: 0 10px 20px rgba(212, 192, 152, 0.1);
         }
         .whatsapp-logo {
             animation: pulse 2s infinite;
@@ -94,48 +85,33 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            background: rgba(197, 183, 166, 0.9);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .hero-section {
+            width: 100%;
+            height: 1080px;
+            max-height: 100vh;
+            position: relative;
+            overflow: hidden;
         }
-        .slider-button:hover {
-            background: #C5B7A6;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        .hero-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .slider-button.prev {
-            left: 0;
-        }
-        .slider-button.next {
-            right: 0;
-        }
-        .gradient-icon {
-            background: linear-gradient(45deg, #C5B7A6, #E5DED4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+            }
         }
     </style>
 </head>
-<body class="flex min-h-screen flex-col font-sans bg-ivory">
+<body class="flex min-h-screen flex-col font-sans bg-cream">
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>
     </div>
 
     <!-- Top Banner -->
-    <div id="topBanner" class="gradient-bg p-2 text-center text-white relative">
+    <div id="topBanner" class="bg-primary p-2 text-center text-white relative">
         <p class="text-sm">
             <span id="bannerMessage"></span>
             <a href="#" class="underline">COMPRAR AHORA</a>
@@ -155,7 +131,18 @@
             <nav class="hidden lg:flex space-x-6">
                 <a href="#velas" class="text-sm font-medium hover:text-primary">VELAS</a>
                 <a href="#aromas" class="text-sm font-medium hover:text-primary">AROMAS</a>
-                <a href="#textiles" class="text-sm font-medium hover:text-primary">TEXTILES</a>
+                <div class="relative group">
+                    <a href="#textiles" class="text-sm font-medium hover:text-primary flex items-center">
+                        TEXTILES
+                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </a>
+                    <div class="absolute hidden group-hover:block w-48 bg-white shadow-lg rounded-md mt-2">
+                        <a href="#cortinas-bano" class="block px-4 py-2 text-sm hover:bg-secondary">Cortinas de baño</a>
+                        <a href="#cortinas-interior" class="block px-4 py-2 text-sm hover:bg-secondary">Cortinas de interior</a>
+                        <a href="#cubre-sommier" class="block px-4 py-2 text-sm hover:bg-secondary">Cubre sommier</a>
+                        <a href="#accesorios" class="block px-4 py-2 text-sm hover:bg-secondary">Accesorios</a>
+                    </div>
+                </div>
                 <a href="#ceramica" class="text-sm font-medium hover:text-primary">CERÁMICA</a>
             </nav>
 
@@ -194,7 +181,18 @@
                     <div class="accordion-content hidden mt-2 ml-4">
                         <a href="#velas" class="block py-2 hover:text-primary">Velas</a>
                         <a href="#aromas" class="block py-2 hover:text-primary">Aromas</a>
-                        <a href="#textiles" class="block py-2 hover:text-primary">Textiles</a>
+                        <div class="accordion">
+                            <div class="accordion-header flex justify-between items-center cursor-pointer py-2">
+                                <span class="nav-link">Textiles</span>
+                                <i class="fas fa-chevron-down accordion-icon transition-transform duration-300"></i>
+                            </div>
+                            <div class="accordion-content hidden mt-2 ml-4">
+                                <a href="#cortinas-bano" class="block py-2 hover:text-primary">Cortinas de baño</a>
+                                <a href="#cortinas-interior" class="block py-2 hover:text-primary">Cortinas de interior</a>
+                                <a href="#cubre-sommier" class="block py-2 hover:text-primary">Cubre sommier</a>
+                                <a href="#accesorios" class="block py-2 hover:text-primary">Accesorios</a>
+                            </div>
+                        </div>
                         <a href="#ceramica" class="block py-2 hover:text-primary">Cerámica</a>
                     </div>
                 </div>
@@ -208,7 +206,7 @@
 
     <main>
         <!-- Hero Banner -->
-        <div id="hero" class="relative w-full h-0 pb-[56.25%] overflow-hidden">
+        <div class="hero-section">
             <!-- Las imágenes se insertarán dinámicamente aquí -->
         </div>
 

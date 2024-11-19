@@ -230,7 +230,7 @@ function calculateShipping(postalCode) {
                     name: "Retiro en local",
                     price: 0,
                     estimatedDelivery: 'Inmediato',
-                    logo: 'path/to/local-icon.png', // Reemplazar con la ruta correcta del ícono
+                    logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/store-icon-NXKlvXVXUZLmXOZXxLODXVXXXXXXXX.png',
                     description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
                 }
             };
@@ -240,12 +240,31 @@ function calculateShipping(postalCode) {
 }
 
 function updateShippingOptions(shippingOptions) {
-    const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">
-            ${option.name} - ${option.price > 0 ? `$${option.price.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
-        </option>
+    const shippingContainer = document.getElementById('shippingMethodContainer');
+    shippingContainer.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
+        <div class="flex items-center space-x-4 p-2 border rounded">
+            <input type="radio" id="${key}" name="shippingMethod" value="${key}" class="form-radio">
+            <label for="${key}" class="flex items-center space-x-2 flex-grow">
+                <img src="${option.logo}" alt="${option.name}" class="h-8 w-auto">
+                <div>
+                    <p class="font-medium">${option.name}</p>
+                    <p class="text-sm text-gray-600">${option.price > 0 ? `$${option.price.toFixed(2)}` : 'Gratis'}</p>
+                    <p class="text-xs text-gray-500">${option.estimatedDelivery}</p>
+                </div>
+            </label>
+        </div>
     `).join('');
+
+    // Añadir event listeners a los nuevos radio buttons
+    document.querySelectorAll('input[name="shippingMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const selectedOption = shippingOptions[this.value];
+            if (selectedOption) {
+                shippingCost = calculateShippingPrice(selectedOption.price, cart.reduce((sum, item) => sum + item.quantity, 0));
+                updateTotal();
+            }
+        });
+    });
 }
 
 function calculateShippingPrice(basePrice, itemCount) {
@@ -259,11 +278,11 @@ function calculateShippingPrice(basePrice, itemCount) {
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const shippingMethod = document.getElementById('shippingMethod').value;
-    const selectedShipping = shippingOptions[shippingMethod];
+    const selectedShipping = document.querySelector('input[name="shippingMethod"]:checked');
     
     if (selectedShipping) {
-        shippingCost = calculateShippingPrice(selectedShipping.price, itemCount);
+        const shippingOption = shippingOptions[selectedShipping.value];
+        shippingCost = calculateShippingPrice(shippingOption.price, itemCount);
     }
 
     const total = subtotal + shippingCost;
@@ -380,14 +399,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         } else {
             alert('Por favor, ingrese un código postal válido.');
-        }
-    });
-
-    document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = shippingOptions[this.value];
-        if (selectedOption) {
-            shippingCost = selectedOption.price;
-            updateTotal();
         }
     });
 

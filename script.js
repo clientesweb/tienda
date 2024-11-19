@@ -1,6 +1,3 @@
-// Import the necessary function from mercadopago.js
-import { initiateMercadoPagoPayment } from './mercadopago.js';
-
 // Data
 const products = {
     velas: [
@@ -205,20 +202,6 @@ function updateCartUI() {
         const postalCode = document.getElementById('postalCode').value;
         calculateShipping(postalCode).then(updateShippingOptions);
     }
-
-    // Update the hidden input with cart data
-    updateCartItemsInput();
-}
-
-function updateCartItemsInput() {
-    const cartItemsInput = document.getElementById('cartItemsInput');
-    cartItemsInput.value = JSON.stringify(cart.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        total: item.price * item.quantity
-    })));
 }
 
 function formatPrice(price) {
@@ -275,7 +258,6 @@ function updateShippingOptions(shippingOptions) {
                    id="shipping_${key}" 
                    name="shippingMethod" 
                    value="${key}" 
-                   data-cost="${option.price}"
                    class="form-radio"
                    ${key === 'localPickup' ? 'checked' : ''}>
             <label for="shipping_${key}" class="flex-1">
@@ -299,7 +281,8 @@ function updateShippingOptions(shippingOptions) {
     // Add event listeners to radio buttons
     document.querySelectorAll('input[name="shippingMethod"]').forEach(radio => {
         radio.addEventListener('change', function() {
-            shippingCost = parseInt(this.dataset.cost);
+            const selectedOption = shippingOptions[this.value];
+            shippingCost = selectedOption.price;
             updateTotal();
         });
     });
@@ -339,6 +322,16 @@ function updateAdvertisingBanner() {
 
     advertisingMessage.textContent = message;
     advertisingBanner.style.backgroundImage = backgroundImage;
+}
+
+function prepareCartData() {
+    return JSON.stringify(cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        total: item.price * item.quantity
+    })));
 }
 
 function validateForm() {
@@ -451,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!validateForm()) return;
 
         const formData = new FormData(this);
-        formData.append('cartItems', document.getElementById('cartItemsInput').value);
+        formData.append('cartItems', prepareCartData());
 
         // Log de los datos que se están enviando
         console.log('Datos del formulario:', Object.fromEntries(formData));
@@ -472,14 +465,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            if (paymentMethod === 'mercadopago') {
+            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
+            if (document.getElementById('paymentMethod').value === 'mercadopago') {
                 initiateMercadoPagoPayment();
-            } else if (paymentMethod === 'transferencia') {
-                document.getElementById('bankDetailsModal').classList.remove('hidden');
-                alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
             } else {
-                alert('Gracias por tu compra. Te contactaremos pronto para coordinar el pago.');
+                alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
             }
         }).catch(error => {
             console.error('Error detallado:', error);

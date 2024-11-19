@@ -423,13 +423,12 @@
                 <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
                     Buscar opciones de envío
                 </button>
-                <div id="shippingOptions" class="mt-2 hidden">
-                    <label class="block text-sm font-medium text-gray-700">Método de envío</label>
-                    <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar...</option>
-                    </select>
-                </div>
-            </div>
+                <div id="shippingOptions" class="hidden mt-4">
+  <h3 class="text-lg font-semibold mb-2">Opciones de envío:</h3>
+  <div id="shippingMethodContainer" class="space-y-2">
+    <!-- Las opciones de envío se insertarán aquí dinámicamente -->
+  </div>
+</div>
 
             <!-- Datos del destinatario -->
             <div>

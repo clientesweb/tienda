@@ -102,6 +102,17 @@
                 height: 100vh;
             }
         }
+        .ad-slider {
+            overflow: hidden;
+        }
+        .ad-slide {
+            display: none;
+            animation: fadeInOut 5s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            20%, 80% { opacity: 1; }
+        }
     </style>
 </head>
 <body class="flex min-h-screen flex-col font-sans bg-cream">
@@ -210,77 +221,57 @@
             <!-- Las imágenes se insertarán dinámicamente aquí -->
         </div>
 
-        <!-- New Advertising Banner without background image -->
-        <div class="gradient-bg p-6 text-center text-white">
-            <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
-            <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
-            <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
+        <!-- New Advertising Banner with Slider -->
+        <div class="bg-primary p-6 text-center text-white ad-slider">
+            <div class="ad-slide">
+                <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
+                <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
+                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
+            </div>
+            <div class="ad-slide">
+                <h2 class="text-2xl font-bold mb-2 font-serif">Envío Gratis</h2>
+                <p class="text-lg mb-2">En compras superiores a $10,000.</p>
+                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Comprar Ahora</a>
+            </div>
+            <div class="ad-slide">
+                <h2 class="text-2xl font-bold mb-2 font-serif">Nueva Colección</h2>
+                <p class="text-lg mb-2">Descubre nuestras últimas novedades en decoración.</p>
+                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Explorar</a>
+            </div>
         </div>
 
         <!-- Product Sections -->
         <section id="velas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">VELAS</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('velas', -300)">
-                    <i class=""></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="velasContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('velas', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">VELAS</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="velasContainer">
+                <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
         <section id="aromas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">AROMAS</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('aromas', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('aromas', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">AROMAS</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
+                <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
         <!-- New Advertising Banner -->
         <div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
             <div class="absolute inset-0 bg-black opacity-50"></div>
-            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 gradient-text font-serif"></p>
+            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 text-white font-serif"></p>
         </div>
 
         <section id="textiles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">TEXTILES</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('textiles', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('textiles', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">TEXTILES</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
+                <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
         <section id="ceramica" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold gradient-text font-serif">CERÁMICA</h2>
-            <div class="product-slider-container">
-                <button class="slider-button prev" onclick="scrollProducts('ceramica', -300)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
-                    <!-- Products will be dynamically inserted here -->
-                </div>
-                <button class="slider-button next" onclick="scrollProducts('ceramica', 300)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CERÁMICA</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
+                <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
@@ -299,27 +290,27 @@
             </div>
         </section>
 
-        <!-- Features Section with Gradient Icons -->
+        <!-- Features Section with Icons -->
         <section class="bg-white py-12 mb-16">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-truck text-4xl gradient-icon"></i>
+                            <i class="fas fa-truck text-4xl text-primary"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2 font-serif">ENVÍO RÁPIDO</h3>
                         <p class="text-gray-600">A toda Argentina</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-shield-alt text-4xl gradient-icon"></i>
+                            <i class="fas fa-shield-alt text-4xl text-primary"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2 font-serif">COMPRA SEGURA</h3>
                         <p class="text-gray-600">Garantía 100%</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-gift text-4xl gradient-icon"></i>
+                            <i class="fas fa-gift text-4xl text-primary"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-2 font-serif">PROMOCIONES</h3>
                         <p class="text-gray-600">Aprovechá nuestras ofertas</p>
@@ -330,7 +321,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white py-16">
+    <footer class="bg-primary text-white py-16">
         <div class="container mx-auto px-4">
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
                 <div>
@@ -365,7 +356,7 @@
                         </li>
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                            <a href="mailto:info@monamourtextil.com">info@monamourtextil.com</a>
+                            <a href="/cdn-cgi/l/email-protection#b3daddd5dcf3dedcddd2dedcc6c1c7d6cbc7dadf9dd0dcde"><span class="__cf_email__" data-cfemail="4920272f26092426272824263c3b3d2c313d2025672a2624">[email&#160;protected]</span></a>
                         </li>
                     </ul>
                 </div>
@@ -409,7 +400,7 @@
     <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
         <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text font-serif">Finalizar Compra</h2>
+                <h2 class="text-xl font-bold text-primary font-serif">Finalizar Compra</h2>
                 <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
@@ -520,9 +511,7 @@
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white h-full w-full md:w-96 absolute right-0 p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold gradient-text font-serif">Car
-
-rito de Compras</h2>
+                <h2 class="text-xl font-bold text-primary font-serif">Carrito de Compras</h2>
                 <button id="closeCart" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
@@ -544,7 +533,7 @@ rito de Compras</h2>
     <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
         <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
             <div class="flex justify-between items-center mb-4">
-                <h2 id="productModalTitle" class="text-xl font-bold gradient-text font-serif"></h2>
+                <h2 id="productModalTitle" class="text-xl font-bold text-primary font-serif"></h2>
                 <button id="closeProductModal" class="text-gray-600 hover:text-primary">
                     <i class="fas fa-times h-5 w-5"></i>
                 </button>
@@ -560,7 +549,7 @@ rito de Compras</h2>
         <button id="whatsappButton" class="bg-[#25D366] hover:bg-[#20BA56] text-white rounded-full p-4 shadow-lg transition-colors">
             <i class="fab fa-whatsapp h-6 w-6 whatsapp-logo"></i>
         </button>
-        <div id="whatsappNotification" class="absolute bottom-full right-0 mb-2 bg-gradient-to-r from-primary to-secondary p-4 rounded-lg shadow-lg hidden w-64">
+        <div id="whatsappNotification" class="absolute bottom-full right-0 mb-2 bg-primary p-4 rounded-lg shadow-lg hidden w-64">
             <p class="text-sm font-medium mb-2 text-white">¿Necesitas ayuda? ¡Contáctanos por WhatsApp!</p>
             <button id="closeWhatsappNotification" class="text-sm text-white hover:text-gray-200 transition-colors">
                 Cerrar
@@ -568,7 +557,7 @@ rito de Compras</h2>
         </div>
     </div>
 
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="mercadopago.js"></script>
     <script src="script.js"></script>
 </body>

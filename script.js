@@ -374,32 +374,6 @@ function updateFreeShippingMessage() {
     }
 }
 
-// Nuevas funciones para la integración de Mercado Pago
-function toggleLoadingIndicator(show) {
-    const button = document.getElementById('checkoutButton');
-    if (show) {
-        button.disabled = true;
-        button.innerHTML = 'Procesando...';
-    } else {
-        button.disabled = false;
-        button.innerHTML = 'Finalizar compra';
-    }
-}
-
-function initiateMercadoPagoPayment() {
-    toggleLoadingIndicator(true);
-    createPreference()
-        .then(preferenceId => {
-            createCheckoutButton(preferenceId);
-            toggleLoadingIndicator(false);
-        })
-        .catch(error => {
-            console.error('Error al crear la preferencia:', error);
-            toggleLoadingIndicator(false);
-            alert('Hubo un problema al iniciar el proceso de pago. Por favor, intenta de nuevo.');
-        });
-}
-
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {

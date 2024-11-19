@@ -41,9 +41,9 @@ const bannerMessages = [
 ];
 
 const heroImages = [
-    "img/heroceramic.png",
-    "img/velashero.png",
-    "img/Cortinas.png"
+    "img/hero.png",
+    "img/hero2.png",
+    "img/hero3.png"
 ];
 
 // State
@@ -279,13 +279,13 @@ function updateAdvertisingBanner() {
 
     if (currentHour >= 6 && currentHour < 12) {
         message = "¡Oferta matutina! 15% de descuento en todas las velas aromáticas";
-        backgroundImage = "url('https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('img/mañana.png')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('img/tarde.png')";
     } else {
         message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
-        backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
+        backgroundImage = "url('img/noche.png')";
     }
 
     advertisingMessage.textContent = message;

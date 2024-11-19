@@ -41,8 +41,9 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    const shippingMethod = document.querySelector('input[name="shippingMethod"]:checked');
-    const shippingCost = shippingMethod ? parseInt(shippingMethod.value) : 0;
+    const shippingMethod = document.getElementById('shippingMethod');
+    const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
+    const shippingCost = parseInt(selectedShipping.textContent.match(/\$(\d+)/)[1]);
 
     return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
@@ -66,31 +67,32 @@ function createPreference() {
     .then(data => data.id);
 }
 
+// Función para mostrar y ocultar el indicador de carga
+function toggleLoadingIndicator(show) {
+    const button = document.getElementById('checkoutButton');
+    if (show) {
+        button.disabled = true;
+        button.innerHTML = 'Procesando...';
+    } else {
+        button.disabled = false;
+        button.innerHTML = 'Finalizar compra';
+    }
+}
+
 // Función para iniciar el proceso de pago con Mercado Pago
 function initiateMercadoPagoPayment() {
+    toggleLoadingIndicator(true);
     createPreference()
         .then(preferenceId => {
             createCheckoutButton(preferenceId);
+            toggleLoadingIndicator(false);
         })
         .catch(error => {
             console.error('Error al crear la preferencia:', error);
+            toggleLoadingIndicator(false);
             alert('Hubo un problema al iniciar el proceso de pago. Por favor, intenta de nuevo.');
         });
 }
 
-// Agregar el evento para iniciar el pago cuando se selecciona MercadoPago
-document.getElementById('paymentMethod').addEventListener('change', function() {
-    if (this.value === 'mercadopago') {
-        initiateMercadoPagoPayment();
-    }
-});
-
-// Asegurarse de que el botón de MercadoPago se oculte cuando se selecciona otro método de pago
-document.getElementById('paymentMethod').addEventListener('change', function() {
-    const mercadoPagoButton = document.getElementById('mercadopago-button');
-    if (this.value === 'mercadopago') {
-        mercadoPagoButton.style.display = 'block';
-    } else {
-        mercadoPagoButton.style.display = 'none';
-    }
-});
+// No es necesario agregar un event listener aquí, ya que el proceso de pago
+// se iniciará desde el script principal después de la presentación exitosa de Formspree.

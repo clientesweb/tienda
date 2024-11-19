@@ -4,6 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Amour Textil - Decoración y Textiles de Hogar</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Mon Amour Textil ofrece una exquisita selección de textiles y decoración para el hogar. Descubre nuestras velas, aromas, textiles y cerámica de alta calidad.">
+    <meta name="keywords" content="textiles, decoración, hogar, velas, aromas, cerámica, Mon Amour Textil">
+    <meta name="author" content="Mon Amour Textil">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.monamourtextil.com/">
+    <meta property="og:title" content="Mon Amour Textil - Decoración y Textiles de Hogar">
+    <meta property="og:description" content="Descubre nuestra exquisita selección de textiles y decoración para el hogar. Velas, aromas, textiles y cerámica de alta calidad.">
+    <meta property="og:image" content="https://www.monamourtextil.com/img/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.monamourtextil.com/">
+    <meta property="twitter:title" content="Mon Amour Textil - Decoración y Textiles de Hogar">
+    <meta property="twitter:description" content="Descubre nuestra exquisita selección de textiles y decoración para el hogar. Velas, aromas, textiles y cerámica de alta calidad.">
+    <meta property="twitter:image" content="https://www.monamourtextil.com/img/twitter-image.jpg">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#D4C098">
+    <meta name="msapplication-TileColor" content="#D4C098">
+    <meta name="theme-color" content="#D4C098">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -87,19 +116,22 @@
         }
         .hero-section {
             width: 100%;
-            height: 1080px;
-            max-height: 100vh;
+            height: 0;
+            padding-top: 56.25%; /* Mantiene la relación de aspecto 16:9 */
             position: relative;
             overflow: hidden;
         }
         .hero-section img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        @media (max-width: 768px) {
+        @media (min-aspect-ratio: 16/9) {
             .hero-section {
-                height: 100vh;
+                padding-top: 56.25vw; /* Mantiene la altura máxima en pantallas más anchas */
             }
         }
         .ad-slider {
@@ -217,9 +249,9 @@
 
     <main>
         <!-- Hero Banner -->
-<div id="hero" class="relative w-full h-0 pb-[56.25%] overflow-hidden">
-    <!-- Las imágenes se insertarán dinámicamente aquí -->
-</div>
+        <div id="hero" class="relative w-full h-0 pb-[56.25%] overflow-hidden">
+            <!-- Las imágenes se insertarán dinámicamente aquí -->
+        </div>
 
         <!-- New Advertising Banner with Slider -->
         <div class="bg-primary p-6 text-center text-white ad-slider">
@@ -356,7 +388,7 @@
                         </li>
                         <li class="flex items-center text-sm text-gray-200">
                             <i class="fas fa-envelope mr-2 h-4 w-4"></i>
-                            <a href="/cdn-cgi/l/email-protection#b3daddd5dcf3dedcddd2dedcc6c1c7d6cbc7dadf9dd0dcde"><span class="__cf_email__" data-cfemail="4920272f26092426272824263c3b3d2c313d2025672a2624">[email&#160;protected]</span></a>
+                            <a href="mailto:info@monamourtextil.com">info@monamourtextil.com</a>
                         </li>
                     </ul>
                 </div>
@@ -397,121 +429,121 @@
     </footer>
 
     <!-- Checkout Form Modal -->
-<div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
-    <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-primary font-serif">Finalizar Compra</h2>
-            <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
-                <i class="fas fa-times h-5 w-5"></i>
-            </button>
-        </div>
-        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-iNVLMTwX3hsOUcQ8AicEBqjylwfiFJ.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto mb-4">
-        <form id="checkoutForm" class="space-y-4" action="https://formspree.io/f/mqaklprq" method="POST">
-            <!-- Contacto -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-            </div>
-
-            <!-- Opciones de envío -->
-            <div>
-                <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Opciones de envío</h3>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Código postal</label>
-                    <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
-                    Buscar opciones de envío
+    <div id="checkoutModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+        <div class="bg-white w-full max-w-md mx-auto mt-10 mb-10 p-6 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-primary font-serif">Finalizar Compra</h2>
+                <button id="closeCheckoutModal" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-times h-5 w-5"></i>
                 </button>
-                <div id="shippingOptions" class="mt-2 hidden">
-                    <label class="block text-sm font-medium text-gray-700">Método de envío</label>
-                    <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+            </div>
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-iNVLMTwX3hsOUcQ8AicEBqjylwfiFJ.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto mb-4">
+            <form id="checkoutForm" class="space-y-4" action="https://formspree.io/f/mqaklprq" method="POST">
+                <!-- Contacto -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                </div>
+
+                <!-- Opciones de envío -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Opciones de envío</h3>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Código postal</label>
+                        <input type="text" id="postalCode" name="postalCode" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <button type="button" id="searchShipping" class="mt-2 bg-secondary text-white py-2 px-4 rounded hover:bg-secondary-dark transition-colors">
+                        Buscar opciones de envío
+                    </button>
+                    <div id="shippingOptions" class="mt-2 hidden">
+                        <label class="block text-sm font-medium text-gray-700">Método de envío</label>
+                        <select id="shippingMethod" name="shippingMethod" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            <option value="">Seleccionar...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Datos del destinatario -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Datos del destinatario</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                            <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Apellido</label>
+                            <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">DNI</label>
+                        <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                </div>
+
+                <!-- Domicilio del destinatario -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Domicilio del destinatario</h3>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Calle</label>
+                        <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Número</label>
+                        <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
+                        <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
+                        <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Ciudad</label>
+                        <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                    <div class="mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Provincia</label>
+                        <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                    </div>
+                </div>
+
+                <!-- Método de pago -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Método de pago</label>
+                    <select id="paymentMethod" name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
                         <option value="">Seleccionar...</option>
+                        <option value="transferencia">Transferencia (20% de descuento)</option>
+                        <option value="mercadopago">MercadoPago</option>
                     </select>
                 </div>
-            </div>
 
-            <!-- Datos del destinatario -->
-            <div>
-                <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Datos del destinatario</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input type="text" name="nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Apellido</label>
-                        <input type="text" name="apellido" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    </div>
-                </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">DNI</label>
-                    <input type="text" name="dni" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">Teléfono</label>
-                    <input type="tel" name="telefono" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-            </div>
+                <!-- Campo oculto para los datos del carrito -->
+                <input type="hidden" name="cartItems" id="cartItemsInput">
 
-            <!-- Domicilio del destinatario -->
-            <div>
-                <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Domicilio del destinatario</h3>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Calle</label>
-                    <input type="text" name="calle" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                <div id="bankDetailsModal" class="hidden mt-4 p-4 border border-gray-300 rounded-lg">
+                    <h4 class="font-bold mb-2">Datos bancarios para transferencia:</h4>
+                    <p>Banco: [Nombre del Banco]</p>
+                    <p>Titular: [Nombre del Titular]</p>
+                    <p>CBU: [Número de CBU]</p>
+                    <p>CUIT: [Número de CUIT]</p>
+                    <p class="mt-2 font-bold">Total con 20% de descuento: $<span id="discountedTotal"></span></p>
                 </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">Número</label>
-                    <input type="text" name="numero" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">Piso (opcional)</label>
-                    <input type="text" name="piso" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">Dpto (opcional)</label>
-                    <input type="text" name="dpto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">Ciudad</label>
-                    <input type="text" name="ciudad" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-                <div class="mt-2">
-                    <label class="block text-sm font-medium text-gray-700">Provincia</label>
-                    <input type="text" name="provincia" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                </div>
-            </div>
 
-            <!-- Método de pago -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Método de pago</label>
-                <select id="paymentMethod" name="pago" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    <option value="">Seleccionar...</option>
-                    <option value="transferencia">Transferencia (20% de descuento)</option>
-                    <option value="mercadopago">MercadoPago</option>
-                </select>
-            </div>
-
-            <!-- Campo oculto para los datos del carrito -->
-            <input type="hidden" name="cartItems" id="cartItemsInput">
-
-            <div id="bankDetailsModal" class="hidden mt-4 p-4 border border-gray-300 rounded-lg">
-                <h4 class="font-bold mb-2">Datos bancarios para transferencia:</h4>
-                <p>Banco: [Nombre del Banco]</p>
-                <p>Titular: [Nombre del Titular]</p>
-                <p>CBU: [Número de CBU]</p>
-                <p>CUIT: [Número de CUIT]</p>
-                <p class="mt-2 font-bold">Total con 20% de descuento: $<span id="discountedTotal"></span></p>
-            </div>
-
-            <div id="mercadopago-button"></div>
-            <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
-                Finalizar compra
-            </button>
-        </form>
+                <div id="mercadopago-button"></div>
+                <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">
+                    Finalizar compra
+                </button>
+            </form>
+        </div>
     </div>
-</div>
 
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
@@ -563,7 +595,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="mercadopago.js"></script>
     <script src="script.js"></script>
 </body>

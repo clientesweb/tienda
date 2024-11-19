@@ -1,5 +1,3 @@
-import { initiateMercadoPagoPayment } from './mercadopago.js';
-
 // Data
 const products = {
     velas: [

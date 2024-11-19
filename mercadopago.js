@@ -41,9 +41,8 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    const shippingMethod = document.getElementById('shippingMethodContainer');
-    const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
-    const shippingCost = parseInt(selectedShipping.textContent.match(/\$(\d+)/)[1]);
+    const shippingMethod = document.getElementById('shippingMethodContainer').querySelector('input[name="shippingMethod"]:checked');
+    const shippingCost = parseInt(shippingMethod.dataset.cost);
 
     return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
@@ -69,7 +68,7 @@ function createPreference() {
 
 // Función para mostrar y ocultar el indicador de carga
 function toggleLoadingIndicator(show) {
-    const button = document.getElementById('checkoutButton');
+    const button = document.querySelector('#checkoutForm button[type="submit"]');
     if (show) {
         button.disabled = true;
         button.innerHTML = 'Procesando...';
@@ -94,5 +93,22 @@ function initiateMercadoPagoPayment() {
         });
 }
 
-// No es necesario agregar un event listener aquí, ya que el proceso de pago
-// se iniciará desde el script principal después de la presentación exitosa de Formspree.
+// Escuchar cambios en el método de pago
+document.getElementById('paymentMethod').addEventListener('change', function(e) {
+    const mercadoPagoButton = document.getElementById('mercadopago-button');
+    if (e.target.value === 'mercadopago') {
+        mercadoPagoButton.style.display = 'block';
+        initiateMercadoPagoPayment();
+    } else {
+        mercadoPagoButton.style.display = 'none';
+    }
+});
+
+// Manejar el envío del formulario
+document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    if (paymentMethod === 'mercadopago') {
+        e.preventDefault(); // Prevenir el envío del formulario si se selecciona MercadoPago
+    }
+    // Para otros métodos de pago, el formulario se enviará normalmente
+});

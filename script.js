@@ -58,7 +58,7 @@ const bannerMessageEl = document.getElementById('bannerMessage');
 const cartItemCountEl = document.getElementById('cartItemCount');
 const cartItemsEl = document.getElementById('cartItems');
 const cartTotalEl = document.getElementById('cartTotal');
-const heroEl = document.querySelector('.hero-section');
+const heroEl = document.getElementById('hero');
 const productContainers = {
     velas: document.getElementById('velasContainer'),
     aromas: document.getElementById('aromasContainer'),
@@ -76,7 +76,7 @@ function updateHero() {
     const img = document.createElement('img');
     img.src = heroImages[currentHeroImage];
     img.alt = "Hero image";
-    img.className = "w-full h-full object-cover";
+    img.className = "absolute top-0 left-0 w-full h-full object-cover";
     
     heroEl.innerHTML = '';
     heroEl.appendChild(img);
@@ -230,7 +230,7 @@ function calculateShipping(postalCode) {
                     name: "Retiro en local",
                     price: 0,
                     estimatedDelivery: 'Inmediato',
-                    logo: 'path/to/local-icon.png', // Reemplazar con la ruta correcta del ícono
+                    logo: 'path/to/local-icon.png',
                     description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
                 }
             };

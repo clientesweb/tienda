@@ -195,6 +195,8 @@ function updateCartUI() {
     cartTotalEl.textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
 
+    updateFreeShippingMessage();
+
     // Update shipping options if they're visible
     if (!document.getElementById('shippingOptions').classList.contains('hidden')) {
         const postalCode = document.getElementById('postalCode').value;
@@ -210,14 +212,12 @@ function formatPrice(price) {
 }
 
 function calculateShipping(postalCode) {
-    // Calculate base shipping costs based on cart quantity
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const quantityMultiplier = itemCount > 1 ? 1.28 : 1; // 28% increase for additional items
-
+    const quantityMultiplier = itemCount > 1 ? 1.28 : 1;
     const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const isFreeShipping = cartTotal >= 150000;
 
-    const shippingOptions = {
+    return {
         correoArgentinoDomicilio: {
             name: "Correo Argentino - Envío a domicilio",
             basePrice: 9742,
@@ -245,20 +245,14 @@ function calculateShipping(postalCode) {
             price: 0,
             estimatedDelivery: 'Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs',
             address: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba',
-            logo: '/store-icon.png' // Asume que tienes un ícono de tienda
+            logo: '/store-icon.png'
         }
     };
-
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(shippingOptions);
-        }, 1000);
-    });
 }
 
 function updateShippingOptions(shippingOptions) {
-    const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
+    const shippingMethodContainer = document.getElementById('shippingMethodContainer');
+    shippingMethodContainer.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
         <div class="flex items-center space-x-3 p-2 border rounded mb-2 ${key === 'localPickup' ? 'bg-green-50' : ''}">
             <input type="radio" 
                    id="shipping_${key}" 
@@ -297,6 +291,9 @@ function updateShippingOptions(shippingOptions) {
     const defaultOption = shippingOptions.localPickup;
     shippingCost = defaultOption.price;
     updateTotal();
+
+    // Show shipping options
+    document.getElementById('shippingOptions').classList.remove('hidden');
 }
 
 function updateTotal() {
@@ -367,6 +364,16 @@ function nextAdSlide() {
     showAdSlide(currentAdSlide);
 }
 
+function updateFreeShippingMessage() {
+    const freeShippingMessage = document.getElementById('freeShippingMessage');
+    const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    if (cartTotal >= 150000) {
+        freeShippingMessage.classList.remove('hidden');
+    } else {
+        freeShippingMessage.classList.add('hidden');
+    }
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('closeBanner').addEventListener('click', () => {
@@ -406,18 +413,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchShipping').addEventListener('click', () => {
         const postalCode = document.getElementById('postalCode').value;
         if (postalCode.length === 4) {
-            // Show loading state
-            document.getElementById('shippingOptions').innerHTML = `
-                <div class="flex justify-center items-center p-4">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                </div>
-            `;
-            document.getElementById('shippingOptions').classList.remove('hidden');
-
-            calculateShipping(postalCode)
-                .then(shippingOptions => {
-                    updateShippingOptions(shippingOptions);
-                });
+            const shippingOptions = calculateShipping(postalCode);
+            updateShippingOptions(shippingOptions);
         } else {
             alert('Por favor, ingrese un código postal válido de 4 dígitos.');
         }

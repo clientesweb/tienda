@@ -66,29 +66,14 @@ function createPreference() {
     .then(data => data.id);
 }
 
-// Función para mostrar y ocultar el indicador de carga
-function toggleLoadingIndicator(show) {
-    const button = document.querySelector('button[type="submit"]');
-    if (show) {
-        button.disabled = true;
-        button.innerHTML = 'Procesando...';
-    } else {
-        button.disabled = false;
-        button.innerHTML = 'Finalizar compra';
-    }
-}
-
 // Función para iniciar el proceso de pago con Mercado Pago
 function initiateMercadoPagoPayment() {
-    toggleLoadingIndicator(true);
     createPreference()
         .then(preferenceId => {
             createCheckoutButton(preferenceId);
-            toggleLoadingIndicator(false);
         })
         .catch(error => {
             console.error('Error al crear la preferencia:', error);
-            toggleLoadingIndicator(false);
             alert('Hubo un problema al iniciar el proceso de pago. Por favor, intenta de nuevo.');
         });
 }
@@ -97,5 +82,15 @@ function initiateMercadoPagoPayment() {
 document.getElementById('paymentMethod').addEventListener('change', function() {
     if (this.value === 'mercadopago') {
         initiateMercadoPagoPayment();
+    }
+});
+
+// Asegurarse de que el botón de MercadoPago se oculte cuando se selecciona otro método de pago
+document.getElementById('paymentMethod').addEventListener('change', function() {
+    const mercadoPagoButton = document.getElementById('mercadopago-button');
+    if (this.value === 'mercadopago') {
+        mercadoPagoButton.style.display = 'block';
+    } else {
+        mercadoPagoButton.style.display = 'none';
     }
 });

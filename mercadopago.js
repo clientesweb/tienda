@@ -41,9 +41,8 @@ function createPreference() {
         quantity: item.quantity,
     }));
 
-    const shippingMethod = document.getElementById('shippingMethod');
-    const selectedShipping = shippingMethod.options[shippingMethod.selectedIndex];
-    const shippingCost = parseInt(selectedShipping.textContent.match(/\$(\d+)/)[1]);
+    const shippingMethod = document.querySelector('input[name="shippingMethod"]:checked');
+    const shippingCost = shippingMethod ? parseInt(shippingMethod.value) : 0;
 
     return fetch('/.netlify/functions/create-preference', {
         method: 'POST',
@@ -69,7 +68,7 @@ function createPreference() {
 
 // Función para mostrar y ocultar el indicador de carga
 function toggleLoadingIndicator(show) {
-    const button = document.getElementById('checkoutButton');
+    const button = document.querySelector('#checkoutForm button[type="submit"]');
     if (show) {
         button.disabled = true;
         button.innerHTML = 'Procesando...';
@@ -94,5 +93,7 @@ function initiateMercadoPagoPayment() {
         });
 }
 
-// No es necesario agregar un event listener aquí, ya que el proceso de pago
-// se iniciará desde el script principal después de la presentación exitosa de Formspree.
+// Exportar las funciones necesarias
+window.createCheckoutButton = createCheckoutButton;
+window.createPreference = createPreference;
+window.initiateMercadoPagoPayment = initiateMercadoPagoPayment;

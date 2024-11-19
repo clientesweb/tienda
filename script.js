@@ -36,7 +36,7 @@ const products = {
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
-    "Envíos gratis en compras superiores a $10000",
+    "Envíos gratis en compras superiores a $150000",
     "¡Ofertas especiales en velas aromáticas!"
 ];
 
@@ -194,6 +194,12 @@ function updateCartUI() {
 
     cartTotalEl.textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
+
+    // Update shipping options if they're visible
+    if (!document.getElementById('shippingOptions').classList.contains('hidden')) {
+        const postalCode = document.getElementById('postalCode').value;
+        calculateShipping(postalCode).then(updateShippingOptions);
+    }
 }
 
 function formatPrice(price) {
@@ -204,23 +210,47 @@ function formatPrice(price) {
 }
 
 function calculateShipping(postalCode) {
-    // Simular una llamada a la API de Mercado Envíos
+    // Calculate base shipping costs based on cart quantity
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const quantityMultiplier = itemCount > 1 ? 1.28 : 1; // 28% increase for additional items
+
+    const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const isFreeShipping = cartTotal >= 150000;
+
+    const shippingOptions = {
+        correoArgentinoDomicilio: {
+            name: "Correo Argentino - Envío a domicilio",
+            basePrice: 9742,
+            price: isFreeShipping ? 0 : Math.round(9742 * quantityMultiplier),
+            estimatedDelivery: '3 a 6 días hábiles (luego de ser despachado)',
+            logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/correo-argentino-shipment-icon-8GUXiKa8V4UTQcWaKonbpSsa3z5POO.png'
+        },
+        correoArgentinoSucursal: {
+            name: "Correo Argentino - Envío a sucursal",
+            basePrice: 6135,
+            price: isFreeShipping ? 0 : Math.round(6135 * quantityMultiplier),
+            estimatedDelivery: '3 a 6 días hábiles (luego de ser despachado)',
+            logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/correo-argentino-shipment-icon-8GUXiKa8V4UTQcWaKonbpSsa3z5POO.png'
+        },
+        andreani: {
+            name: "Andreani Estándar - Envío a domicilio",
+            basePrice: 10457.39,
+            price: isFreeShipping ? 0 : Math.round(10457.39 * quantityMultiplier),
+            estimatedDelivery: '3-4 días hábiles (luego de ser despachado)',
+            logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/descarga-WfDd3v9B8nAlhpCOzrt1aIwICvaqCY.svg'
+        },
+        localPickup: {
+            name: "Retiro en tienda",
+            basePrice: 0,
+            price: 0,
+            estimatedDelivery: 'Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs',
+            address: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba',
+            logo: '/store-icon.png' // Asume que tienes un ícono de tienda
+        }
+    };
+
     return new Promise((resolve) => {
         setTimeout(() => {
-            const shippingOptions = {
-                standard: {
-                    name: "Estándar",
-                    price: 500,
-                    estimatedDelivery: '3-5 días hábiles',
-                    logo: 'https://http2.mlstatic.com/frontend-assets/mp-shipping-frontend/assets/images/logos/logo-mercado-envios.svg'
-                },
-                express: {
-                    name: "Express",
-                    price: 800,
-                    estimatedDelivery: '1-2 días hábiles',
-                    logo: 'https://http2.mlstatic.com/frontend-assets/mp-shipping-frontend/assets/images/logos/logo-mercado-envios.svg'
-                }
-            };
             resolve(shippingOptions);
         }, 1000);
     });
@@ -229,11 +259,44 @@ function calculateShipping(postalCode) {
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
     shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">
-            <img src="${option.logo}" alt="${option.name}" style="height: 20px; vertical-align: middle;">
-            ${option.name} - $${option.price} (${option.estimatedDelivery})
-        </option>
+        <div class="flex items-center space-x-3 p-2 border rounded mb-2 ${key === 'localPickup' ? 'bg-green-50' : ''}">
+            <input type="radio" 
+                   id="shipping_${key}" 
+                   name="shippingMethod" 
+                   value="${key}" 
+                   class="form-radio"
+                   ${key === 'localPickup' ? 'checked' : ''}>
+            <label for="shipping_${key}" class="flex-1">
+                <div class="flex items-center space-x-2">
+                    <img src="${option.logo}" 
+                         alt="${option.name}" 
+                         class="h-6 object-contain">
+                    <span class="font-medium">${option.name}</span>
+                </div>
+                <div class="text-sm text-gray-600">
+                    ${option.price === 0 ? 'Gratis' : `$${option.price.toLocaleString()}`}
+                </div>
+                <div class="text-sm text-gray-500">
+                    ${option.estimatedDelivery}
+                    ${option.address ? `<br>${option.address}` : ''}
+                </div>
+            </label>
+        </div>
     `).join('');
+
+    // Add event listeners to radio buttons
+    document.querySelectorAll('input[name="shippingMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const selectedOption = shippingOptions[this.value];
+            shippingCost = selectedOption.price;
+            updateTotal();
+        });
+    });
+
+    // Set initial shipping cost
+    const defaultOption = shippingOptions.localPickup;
+    shippingCost = defaultOption.price;
+    updateTotal();
 }
 
 function updateTotal() {
@@ -256,7 +319,7 @@ function updateAdvertisingBanner() {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
         backgroundImage = "url('https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     } else {
-        message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
+        message = "¡Oferta nocturna! Envío gratis en compras superiores a $150000";
         backgroundImage = "url('https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')";
     }
 
@@ -343,22 +406,21 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchShipping').addEventListener('click', () => {
         const postalCode = document.getElementById('postalCode').value;
         if (postalCode.length === 4) {
+            // Show loading state
+            document.getElementById('shippingOptions').innerHTML = `
+                <div class="flex justify-center items-center p-4">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+            `;
+            document.getElementById('shippingOptions').classList.remove('hidden');
+
             calculateShipping(postalCode)
                 .then(shippingOptions => {
                     updateShippingOptions(shippingOptions);
-                    document.getElementById('shippingOptions').classList.remove('hidden');
-                    shippingCost = shippingOptions.standard.price;
-                    updateTotal();
                 });
         } else {
-            alert('Por favor, ingrese un código postal válido.');
+            alert('Por favor, ingrese un código postal válido de 4 dígitos.');
         }
-    });
-
-    document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        shippingCost = parseInt(selectedOption.textContent.match(/\$(\d+)/)[1]);
-        updateTotal();
     });
 
     document.getElementById('checkoutButton').addEventListener('click', function() {

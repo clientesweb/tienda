@@ -212,14 +212,12 @@ function formatPrice(price) {
 }
 
 function calculateShipping(postalCode) {
-    // Calculate base shipping costs based on cart quantity
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const quantityMultiplier = itemCount > 1 ? 1.28 : 1; // 28% increase for additional items
-
+    const quantityMultiplier = itemCount > 1 ? 1.28 : 1;
     const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const isFreeShipping = cartTotal >= 150000;
 
-    const shippingOptions = {
+    return {
         correoArgentinoDomicilio: {
             name: "Correo Argentino - Envío a domicilio",
             basePrice: 9742,
@@ -247,15 +245,9 @@ function calculateShipping(postalCode) {
             price: 0,
             estimatedDelivery: 'Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs',
             address: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba',
-            logo: '/store-icon.png' // Asume que tienes un ícono de tienda
+            logo: '/store-icon.png'
         }
     };
-
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(shippingOptions);
-        }, 1000);
-    });
 }
 
 function updateShippingOptions(shippingOptions) {
@@ -300,7 +292,7 @@ function updateShippingOptions(shippingOptions) {
     shippingCost = defaultOption.price;
     updateTotal();
 
-    // Show shipping options and hide loading indicator
+    // Show shipping options
     document.getElementById('shippingOptions').classList.remove('hidden');
 }
 
@@ -421,19 +413,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchShipping').addEventListener('click', () => {
         const postalCode = document.getElementById('postalCode').value;
         if (postalCode.length === 4) {
-            // Show loading state
-            const shippingOptions = document.getElementById('shippingOptions');
-            shippingOptions.classList.remove('hidden');
-            shippingOptions.innerHTML = `
-                <div class="flex justify-center items-center p-4">
-                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                </div>
-            `;
-
-            calculateShipping(postalCode)
-                .then(shippingOptions => {
-                    updateShippingOptions(shippingOptions);
-                });
+            const shippingOptions = calculateShipping(postalCode);
+            updateShippingOptions(shippingOptions);
         } else {
             alert('Por favor, ingrese un código postal válido de 4 dígitos.');
         }

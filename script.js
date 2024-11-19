@@ -464,43 +464,44 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('mercadopago-button').classList.remove('hidden');
         }
     });
+
     document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (!validateForm()) return;
+        e.preventDefault();
+        if (!validateForm()) return;
 
-    const formData = new FormData(this);
-    formData.append('cartItems', prepareCartData());
+        const formData = new FormData(this);
+        formData.append('cartItems', prepareCartData());
 
-    // Log de los datos que se están enviando
-    console.log('Datos del formulario:', Object.fromEntries(formData));
+        // Log de los datos que se están enviando
+        console.log('Datos del formulario:', Object.fromEntries(formData));
 
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return response.text().then(text => {
-                throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
-            });
-        }
-    }).then(data => {
-        console.log('Respuesta exitosa de Formspree:', data);
-        // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
-        if (document.getElementById('paymentMethod').value === 'mercadopago') {
-            window.initiateMercadoPagoPayment();
-        } else {
-            alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
-        }
-    }).catch(error => {
-        console.error('Error detallado:', error);
-        alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.text().then(text => {
+                    throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
+                });
+            }
+        }).then(data => {
+            console.log('Respuesta exitosa de Formspree:', data);
+            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
+            if (document.getElementById('paymentMethod').value === 'mercadopago') {
+                initiateMercadoPagoPayment();
+            } else {
+                alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
+            }
+        }).catch(error => {
+            console.error('Error detallado:', error);
+            alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
+        });
     });
-});
 
     updateBanner();
     setInterval(updateBanner, 5000);

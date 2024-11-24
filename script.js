@@ -87,20 +87,26 @@ function updateHero() {
 function renderProducts() {
     for (const [category, productList] of Object.entries(products)) {
         if (productContainers[category]) {
-            productContainers[category].innerHTML = productList.map(product => `
-                <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-4">
-                        <div class="relative mb-4 aspect-square">
-                            <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+            productContainers[category].innerHTML = productList.map(product => {
+                const discountedPrice = product.price * 0.9; // Apply 10% discount
+                return `
+                    <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4">
+                            <div class="relative mb-4 aspect-square">
+                                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+                            </div>
+                            <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
+                            <p class="mt-2 text-lg font-bold">
+                                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                                $${discountedPrice.toLocaleString()}
+                            </p>
+                            <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                                Ver detalles
+                            </button>
                         </div>
-                        <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                        <p class="mt-2 text-lg font-bold">$${product.price.toLocaleString()}</p>
-                        <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
-                            Ver detalles
-                        </button>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
     }
 }
@@ -108,6 +114,8 @@ function renderProducts() {
 function openProductModal(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
+
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
 
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
@@ -119,7 +127,10 @@ function openProductModal(productId, category) {
                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
             </div>
             <p class="text-gray-600">${product.description}</p>
-            <p class="text-lg font-bold">$${product.price.toLocaleString()}</p>
+            <p class="text-lg font-bold">
+                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                $${discountedPrice.toLocaleString()}
+            </p>
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
                 <div class="flex items-center">
@@ -153,12 +164,13 @@ function addToCart(productId, category) {
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
     const existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, quantity });
+        cart.push({ ...product, price: discountedPrice, quantity });
     }
 
     updateCartUI();

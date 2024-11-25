@@ -14,9 +14,9 @@
     { "id": 12, "name": "Sèlène x3", "price": 11400, "image": "img/selene-x3.jpg", "description": "Set de 3 velas Sèlène" }
   ],
   "aromas": [
-    { "id": 13, "name": "Difusor de Aromas Floral", "price": 3200, "image": "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", "description": "Difusor de aromas con esencia floral." },
-    { "id": 14, "name": "Aceite Esencial de Eucalipto", "price": 1800, "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", "description": "Aceite esencial de eucalipto puro." },
-    { "id": 15, "name": "Spray Ambiental Cítrico", "price": 1500, "image": "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", "description": "Spray ambiental con aroma cítrico refrescante." }
+    { "id": 13, "name": "Claire", "price": 9360, "image": "img/claire.jpg", "description": "Spray textil de 250cc" },
+    { "id": 14, "name": "Difusor Pauline", "price": 15000, "image": "img/difusor-pauline.jpg", "description": "Envase reutilizable de vidrio con 250cc. Incluye seis varillas." },
+    { "id": 15, "name": "Anais", "price": 3760, "image": "img/anais.jpg", "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard." }
   ],
   "ceramica": [
     { "id": 19, "name": "Set de Mate Amelia", "price": 30800, "image": "img/set-mate-amelia.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro." },
@@ -32,16 +32,24 @@
     { "id": 18, "name": "Cortina Niza", "price": 60775, "image": "img/cortina-niza.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." }
   ],
   "accesorios": [
-    { "id": 25, "name": "Colgador de Toallas", "price": 5000, "image": "img/colgador-toallas.jpg", "description": "Colgador de toallas de madera, diseño rústico." },
-    { "id": 26, "name": "Portavelas Decorativo", "price": 3500, "image": "img/portavelas-decorativo.jpg", "description": "Portavelas de cristal con detalles dorados." }
+    { "id": 25, "name": "Cubre Lavarropas Merci", "price": 34400, "image": "img/cubre-lavarropas-merci.jpg", "description": "Funda para lavarropas confeccionado en una tela super resistente. Apto para lavarropas de carga frontal (6 y 8 kg). No obstruye su funcionamiento ni tablero. Medidas: 82cm de alto x 62cm de ancho x 62cm de profundidad. Por medidas espéciales comunicarse por WhatsApp o mensaje privado." },
+    { "id": 26, "name": "Bolsita Organizadora Paix", "price": 6400, "image": "img/bolsita-organizadora-paix.jpg", "description": "Bolsita confeccionada en 100% algodón con volados y puntillas. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para su uso. Medidas: 29cm de ancho x 24cm de largo." },
+    { "id": 27, "name": "Bolsita Organizadora Liberte", "price": 6400, "image": "img/bolsita-organizadora-liberte.jpg", "description": "Bolsita confeccionada en 100% algodón con volados y puntillas. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para su uso. Medidas: 23cm de ancho x 30cm de largo." },
+    { "id": 28, "name": "Cuenco Pequeño Amour", "price": 2800, "image": "img/cuenco-pequeno-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 13cm de diámetro x 12cm de alto." },
+    { "id": 29, "name": "Cuenco Mediano Amour", "price": 3600, "image": "img/cuenco-mediano-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 15 cm de diámetro x 13cm de alto." },
+    { "id": 30, "name": "Cuenco Grande Amour", "price": 4400, "image": "img/cuenco-grande-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 17cm de diámetro x 14 de alto." }
   ],
   "cubre_sommier": [
-    { "id": 27, "name": "Cubre Sommier King", "price": 45000, "image": "img/cubre-sommier-king.jpg", "description": "Cubre sommier para cama King, 100% algodón, color blanco." },
-    { "id": 28, "name": "Cubre Sommier Queen", "price": 40000, "image": "img/cubre-sommier-queen.jpg", "description": "Cubre sommier para cama Queen, 100% algodón, color beige." }
+    { "id": 31, "name": "Cubresomier Maison Twin", "price": 53200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L." },
+    { "id": 32, "name": "Cubresomier Maison King", "price": 65100, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L." },
+    { "id": 33, "name": "Cubresomier Maison Queen", "price": 63200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L." },
+    { "id": 34, "name": "Cubresomier Maison 1 Plaza", "price": 49600, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L." },
+    { "id": 35, "name": "Cubresomier Maison 2 Plazas", "price": 57600, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L." },
+    { "id": 36, "name": "Cubresomier Maison Super King", "price": 71200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L." }
   ],
   "cortinas_interior": [
-    { "id": 29, "name": "Cortina Interior Lino", "price": 35000, "image": "img/cortina-interior-lino.jpg", "description": "Cortina de interior de lino, 140x230cm, color natural." },
-    { "id": 30, "name": "Cortina Interior Blackout", "price": 42000, "image": "img/cortina-interior-blackout.jpg", "description": "Cortina de interior con blackout, 140x230cm, color gris." }
+    { "id": 37, "name": "Cortina Interior Lino", "price": 35000, "image": "img/cortina-interior-lino.jpg", "description": "Cortina de interior de lino, 140x230cm, color natural." },
+    { "id": 38, "name": "Cortina Interior Blackout", "price": 42000, "image": "img/cortina-interior-blackout.jpg", "description": "Cortina de interior con blackout, 140x230cm, color gris." }
   ]
 }
 

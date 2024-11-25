@@ -69,6 +69,7 @@ function renderProducts() {
         const container = document.getElementById(`${category}Container`);
         if (container && products[category]) {
             container.innerHTML = products[category].map(product => {
+                const discountedPrice = product.price * 0.9; // Apply 10% discount
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="p-4">
@@ -77,7 +78,8 @@ function renderProducts() {
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
                             <p class="mt-2 text-lg font-bold">
-                                $${product.price.toLocaleString()}
+                                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                                $${discountedPrice.toLocaleString()}
                             </p>
                             <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
                                 Ver detalles
@@ -94,6 +96,8 @@ function openProductModal(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
 
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
+
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
 
@@ -105,7 +109,8 @@ function openProductModal(productId, category) {
             </div>
             <p class="text-gray-600">${product.description}</p>
             <p class="text-lg font-bold">
-                $${product.price.toLocaleString()}
+                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                $${discountedPrice.toLocaleString()}
             </p>
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
@@ -140,12 +145,13 @@ function addToCart(productId, category) {
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
     const existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, quantity });
+        cart.push({ ...product, price: discountedPrice, quantity });
     }
 
     updateCartUI();
@@ -160,6 +166,14 @@ function removeFromCart(productId) {
 function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    
+    // Recalculate shipping cost
+    const shippingMethod = document.getElementById('shippingMethod').value;
+    const selectedShipping = shippingOptions[shippingMethod];
+    if (selectedShipping) {
+        shippingCost = calculateShippingPrice(selectedShipping.price, totalItems);
+    }
+    
     const total = subtotal + shippingCost;
 
     cartItemCountEl.textContent = totalItems;
@@ -182,6 +196,9 @@ function updateCartUI() {
 
     cartTotalEl.textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
+    
+    // Update shipping cost display
+    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
 }
 
 function formatPrice(price) {
@@ -256,6 +273,7 @@ function updateTotal() {
     const total = subtotal + shippingCost;
     document.getElementById('cartTotal').textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
+    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
 }
 
 function updateAdvertisingBanner() {
@@ -310,7 +328,7 @@ function showAdSlide(index) {
             slide.style.display = 'block';
         } else {
             slide.style.display = 'none';
-        }
+}
     });
 }
 
@@ -347,8 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
 
-    
-document.getElementById('whatsappButton').addEventListener('click', () => {
+    document.getElementById('whatsappButton').addEventListener('click', () => {
         window.open('https://wa.me/5493534786106', '_blank');
     });
 
@@ -363,7 +380,8 @@ document.getElementById('whatsappButton').addEventListener('click', () => {
                 .then(shippingOptions => {
                     updateShippingOptions(shippingOptions);
                     document.getElementById('shippingOptions').classList.remove('hidden');
-                    shippingCost = shippingOptions.correoArgentinoDomicilio.price;
+                    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+                    shippingCost = calculateShippingPrice(shippingOptions.correoArgentinoDomicilio.price, itemCount);
                     updateTotal();
                 });
         } else {
@@ -374,7 +392,8 @@ document.getElementById('whatsappButton').addEventListener('click', () => {
     document.getElementById('shippingMethod').addEventListener('change', function() {
         const selectedOption = shippingOptions[this.value];
         if (selectedOption) {
-            shippingCost = calculateShippingPrice(selectedOption.price, cart.reduce((sum, item) => sum + item.quantity, 0));
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            shippingCost = calculateShippingPrice(selectedOption.price, itemCount);
             updateTotal();
         }
     });

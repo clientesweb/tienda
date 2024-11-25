@@ -1,38 +1,10 @@
-// Data
-const products = {
-    velas: [
-        { id: 1, name: "Vitrè", price: 10700, image: "img/velas1.png", description: "Envase reutilizable de vidrio - 100 gr de cera de soja aromatizada" },
-        { id: 2, name: "Conques", price: 9800, image: "img/conques.jpg", description: "Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada" },
-        { id: 3, name: "Dinan", price: 15600, image: "img/dinan.jpg", description: "Envase reutilizable de vidrio con tapa . 200 gr de cera de soja aromatizada" },
-        { id: 4, name: "Saignon", price: 53000, image: "img/saignon.jpg", description: "Velón suspendido en envase reutilizable de vidrio. 500 gr de cera de soja aromatizada" },
-        { id: 5, name: "Lottie pequeño", price: 6400, image: "img/lottie-pequeno.jpg", description: "Cuenco de 8cm de diámetro reutilizable de madera. 100 gr de cera de soja aromatizada" },
-        { id: 6, name: "Lottie mediano", price: 8400, image: "img/lottie-mediano.jpg", description: "Cuenco de 12 cm de diámetro reutilizable de madera . 200 gr de cera de soja aromatizada (doble pabilo)" },
-        { id: 7, name: "Jolie con flor", price: 7800, image: "img/jolie-con-flor.jpg", description: "Cuenco reutilizable de madera con 150gr. De cera de soja aromatizada" },
-        { id: 8, name: "Yanis pequeña x3", price: 7500, image: "img/yanis-pequena-x3.jpg", description: "Set de 3 velas Yanis pequeñas" },
-        { id: 9, name: "Teva x3", price: 10800, image: "img/teva-x3.jpg", description: "Set de 3 velas Teva" },
-        { id: 10, name: "Yanis grande", price: 5300, image: "img/yanis-grande.jpg", description: "Vela Yanis grande" },
-        { id: 11, name: "Bombones Marie", price: 2400, image: "img/bombones-marie.jpg", description: "5 mini bombones de cera de soja perfumados" },
-        { id: 12, name: "Sèlène x3", price: 11400, image: "img/selene-x3.jpg", description: "Set de 3 velas Sèlène" },
-    ],
-    aromas: [
-        { id: 13, name: "Difusor de Aromas Floral", price: 3200, image: "https://images.unsplash.com/photo-1602178231289-a1e8e7f4c320?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Difusor de aromas con esencia floral." },
-        { id: 14, name: "Aceite Esencial de Eucalipto", price: 1800, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Aceite esencial de eucalipto puro." },
-        { id: 15, name: "Spray Ambiental Cítrico", price: 1500, image: "https://images.unsplash.com/photo-1616011462185-0b493ddf0515?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80", description: "Spray ambiental con aroma cítrico refrescante." },
-    ],
-    textiles: [
-        { id: 16, name: "Cortina Burdeos", price: 75200, image: "img/cortina-burdeos.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Lazos para atar al barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar." },
-        { id: 17, name: "Cortina Marsella", price: 60775, image: "img/cortina-marsella.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." },
-        { id: 18, name: "Cortina Niza", price: 60775, image: "img/cortina-niza.jpg", description: "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." }
-    ],
-    ceramica: [
-        { id: 19, name: "Set de Mate Amelia", price: 30800, image: "img/set-mate-amelia.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro." },
-        { id: 20, name: "Set Sophie", price: 24000, image: "img/set-sophie.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón." },
-        { id: 21, name: "Fanal Lucia", price: 12000, image: "img/fanal-lucia.jpg", description: "Pieza de cerámica única realizada y pintada a mano. Incluye: fanal y plato." },
-        { id: 22, name: "Set Julieta", price: 19400, image: "img/set-julieta.jpg", description: "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada." },
-        { id: 23, name: "Mini Florero Lea", price: 8000, image: "img/mini-florero-lea.jpg", description: "Pieza única de cerámica realizada y pintada a mano." },
-        { id: 24, name: "Florero Luisa (forma de nube)", price: 14000, image: "img/florero-luisa.jpg", description: "Pieza única de cerámica realizada y pintada a mano con forma de nube." },
-    ],
-};
+// State
+let products = {};
+let cart = [];
+let currentBanner = 0;
+let currentHeroImage = 0;
+let shippingCost = 0;
+let shippingOptions = {};
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
@@ -46,13 +18,6 @@ const heroImages = [
     "img/hero3.png"
 ];
 
-// State
-let cart = [];
-let currentBanner = 0;
-let currentHeroImage = 0;
-let shippingCost = 0;
-let shippingOptions = {};
-
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
 const cartItemCountEl = document.getElementById('cartItemCount');
@@ -62,11 +27,24 @@ const heroEl = document.getElementById('hero');
 const productContainers = {
     velas: document.getElementById('velasContainer'),
     aromas: document.getElementById('aromasContainer'),
-    textiles: document.getElementById('textilesContainer'),
     ceramica: document.getElementById('ceramicaContainer'),
+    textiles: document.getElementById('textilesContainer'),
+    accesorios: document.getElementById('accesoriosContainer'),
+    cubre_sommier: document.getElementById('cubre_sommierContainer'),
+    cortinas_interior: document.getElementById('cortinas_interiorContainer')
 };
 
 // Functions
+async function loadProducts() {
+    try {
+        const response = await fetch('products.json');
+        products = await response.json();
+        renderProducts();
+    } catch (error) {
+        console.error('Error loading products:', error);
+    }
+}
+
 function updateBanner() {
     bannerMessageEl.textContent = bannerMessages[currentBanner];
     currentBanner = (currentBanner + 1) % bannerMessages.length;
@@ -85,9 +63,12 @@ function updateHero() {
 }
 
 function renderProducts() {
-    for (const [category, productList] of Object.entries(products)) {
-        if (productContainers[category]) {
-            productContainers[category].innerHTML = productList.map(product => {
+    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior'];
+    
+    categories.forEach(category => {
+        const container = document.getElementById(`${category}Container`);
+        if (container && products[category]) {
+            container.innerHTML = products[category].map(product => {
                 const discountedPrice = product.price * 0.9; // Apply 10% discount
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
@@ -108,7 +89,7 @@ function renderProducts() {
                 `;
             }).join('');
         }
-    }
+    });
 }
 
 function openProductModal(productId, category) {
@@ -133,7 +114,8 @@ function openProductModal(productId, category) {
             </p>
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
-                <div class="flex items-center">
+                <div class="
+flex items-center">
                     <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
                     <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
                     <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
@@ -460,13 +442,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    loadProducts();
     updateBanner();
     setInterval(updateBanner, 5000);
 
     updateHero();
     setInterval(updateHero, 5000);
-
-    renderProducts();
 
     updateAdvertisingBanner();
     setInterval(updateAdvertisingBanner, 3600000); // Update every hour
@@ -497,3 +478,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+

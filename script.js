@@ -69,7 +69,6 @@ function renderProducts() {
         const container = document.getElementById(`${category}Container`);
         if (container && products[category]) {
             container.innerHTML = products[category].map(product => {
-                const discountedPrice = product.price * 0.9; // Apply 10% discount
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="p-4">
@@ -78,8 +77,7 @@ function renderProducts() {
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
                             <p class="mt-2 text-lg font-bold">
-                                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                                $${discountedPrice.toLocaleString()}
+                                $${product.price.toLocaleString()}
                             </p>
                             <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
                                 Ver detalles
@@ -96,8 +94,6 @@ function openProductModal(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
 
-    const discountedPrice = product.price * 0.9; // Apply 10% discount
-
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
 
@@ -109,13 +105,11 @@ function openProductModal(productId, category) {
             </div>
             <p class="text-gray-600">${product.description}</p>
             <p class="text-lg font-bold">
-                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                $${discountedPrice.toLocaleString()}
+                $${product.price.toLocaleString()}
             </p>
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
-                <div class="
-flex items-center">
+                <div class="flex items-center">
                     <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
                     <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
                     <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
@@ -146,13 +140,12 @@ function addToCart(productId, category) {
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);
-    const discountedPrice = product.price * 0.9; // Apply 10% discount
     const existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, price: discountedPrice, quantity });
+        cart.push({ ...product, quantity });
     }
 
     updateCartUI();
@@ -354,7 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
 
-    document.getElementById('whatsappButton').addEventListener('click', () => {
+    
+document.getElementById('whatsappButton').addEventListener('click', () => {
         window.open('https://wa.me/5493534786106', '_blank');
     });
 
@@ -380,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('shippingMethod').addEventListener('change', function() {
         const selectedOption = shippingOptions[this.value];
         if (selectedOption) {
-            shippingCost = selectedOption.price;
+            shippingCost = calculateShippingPrice(selectedOption.price, cart.reduce((sum, item) => sum + item.quantity, 0));
             updateTotal();
         }
     });

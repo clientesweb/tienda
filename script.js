@@ -65,7 +65,7 @@ function updateHero() {
 
 function renderProducts() {
     const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'cortinas_gasa'];
-    
+
     categories.forEach(category => {
         const container = productContainers[category];
         if (container && products[category]) {
@@ -73,11 +73,13 @@ function renderProducts() {
                 const discountedPrice = product.price * 0.9; // Apply 10% discount
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
-                        <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                            10% OFF
-                        </div>
                         <div class="p-4">
                             <div class="relative mb-4 aspect-square">
+                                <!-- Updated discount tag with custom colors -->
+                                <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
+                                    style="background-color: #A6A18F; color: #848071;">
+                                    10% OFF
+                                </div>
                                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>

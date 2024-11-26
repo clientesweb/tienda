@@ -201,10 +201,12 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    updateTotal();
+    updateTransferModal(); // Actualiza el modal de transferencia
 }
 
 function formatPrice(price) {
@@ -212,19 +214,6 @@ function formatPrice(price) {
         style: 'currency',
         currency: 'ARS'
     }).format(price);
-}
-
-function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
-  if (itemCount <= 1) {
-    return baseShippingCost;
-  } else {
-    const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
-    return baseShippingCost + additionalCost;
-  }
-}
-
-function calculateShippingPrice(basePrice, itemCount) {
-  return calculateShippingCost(basePrice, itemCount);
 }
 
 function calculateShipping(postalCode) {
@@ -264,33 +253,47 @@ function calculateShipping(postalCode) {
 
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">
-            ${option.name} - ${option.price > 0 ? `$${option.price.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
-        </option>
-    `).join('');
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => {
+        const updatedPrice = calculateShippingCost(option.price, itemCount);
+        return `
+            <option value="${key}">
+                ${option.name} - ${updatedPrice > 0 ? `$${updatedPrice.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
+            </option>
+        `;
+    }).join('');
+}
+
+function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
+  if (itemCount <= 1) {
+    return baseShippingCost;
+  } else {
+    const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
+    return baseShippingCost + additionalCost;
+  }
 }
 
 function updateTotal() {
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const shippingMethod = document.getElementById('shippingMethod').value;
-  const selectedShipping = shippingOptions[shippingMethod];
-  
-  if (selectedShipping) {
-    shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
-  }
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const shippingMethod = document.getElementById('shippingMethod').value;
+    const selectedShipping = shippingOptions[shippingMethod];
+    
+    if (selectedShipping) {
+        shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
+    }
 
-  const total = subtotal + shippingCost;
-  document.getElementById('cartTotal').textContent = formatPrice(total);
-  document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
-  document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    const total = subtotal + shippingCost;
+    document.getElementById('cartTotal').textContent = formatPrice(total);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    updateTransferModal(); // Actualiza el modal de transferencia
 }
 
 function updateAdvertisingBanner() {
     const advertisingBanner = document.getElementById('advertisingBanner');
     const advertisingMessage = document.getElementById('advertisingMessage');
-const currentHour = new Date().getHours();
+    const currentHour = new Date().getHours();
     let message, backgroundImage;
 
     if (currentHour >= 6 && currentHour < 12) {
@@ -323,7 +326,7 @@ function validateForm() {
     for (let field of requiredFields) {
         if (!field.value) {
             alert(`Por favor, completa el campo ${field.name}`);
-            return false;
+return false;
         }
     }
     return true;
@@ -390,7 +393,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateShippingOptions(shippingOptions);
                     document.getElementById('shippingOptions').classList.remove('hidden');
                     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-                    shippingCost = calculateShippingCost(shippingOptions.correoArgentinoDomicilio.price, itemCount);
+                    const selectedShippingMethod = document.getElementById('shippingMethod').value;
+                    shippingCost = calculateShippingCost(shippingOptions[selectedShippingMethod].price, itemCount);
                     updateTotal();
                 });
         } else {
@@ -419,8 +423,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('paymentMethod').addEventListener('change', function() {
         if (this.value === 'transferencia') {
             document.getElementById('bankDetailsModal').classList.remove('hidden');
-            updateTransferModal(); // Llamamos a la función aquí
             document.getElementById('mercadopago-button').classList.add('hidden');
+            updateTransferModal(); // Actualiza el contenido del modal de transferencia
         } else if (this.value === 'mercadopago') {
             document.getElementById('bankDetailsModal').classList.add('hidden');
             document.getElementById('mercadopago-button').classList.remove('hidden');
@@ -503,19 +507,66 @@ document.addEventListener('DOMContentLoaded', function() {
 console.log("Script loaded successfully!");
 
 function updateTransferModal() {
-    // Agrega aquí la lógica para actualizar el modal de transferencia
-    // Por ejemplo, podrías mostrar información adicional sobre la transferencia bancaria
-    const bankDetails = document.getElementById('bankDetails');
-    bankDetails.innerHTML = `
-        <p><strong>Banco:</strong> Banco Supervielle</p>
-        <p><strong>CBU:</strong> 0270131420043724900058</p>
-        <p><strong>Alias:</strong> MON.AMOUR.TEXTIL</p>
-        <p><strong>Titular:</strong> Virginia Olivero</p>
+    const modalContent = document.getElementById('bankDetailsModalContent');
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = subtotal * 0.1; // 10% de descuento
+    const total = subtotal + shippingCost - discount;
+
+    let content = `
+        <h3 class="text-lg font-bold mb-4">Detalles del pedido</h3>
+        <div class="space-y-2">
+            <h4 class="font-semibold">Productos:</h4>
+            <ul class="list-disc pl-5">
     `;
+
+    cart.forEach(item => {
+        content += `
+            <li>${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
+        `;
+    });
+
+    content += `
+            </ul>
+            <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>${formatPrice(subtotal)}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Costo de envío:</span>
+                <span>${formatPrice(shippingCost)}</span>
+            </div>
+            <div class="flex justify-between text-green-600">
+                <span>Descuento (10%):</span>
+                <span>-${formatPrice(discount)}</span>
+            </div>
+            <div class="flex justify-between font-bold text-lg">
+                <span>Total:</span>
+                <span>${formatPrice(total)}</span>
+            </div>
+        </div>
+        <div class="mt-6">
+            <h4 class="font-semibold mb-2">Datos bancarios para la transferencia:</h4>
+            <p>Banco: [Nombre del Banco]</p>
+            <p>Titular: [Nombre del Titular]</p>
+            <p>CBU: [Número de CBU]</p>
+            <p>CUIT/CUIL: [Número de CUIT/CUIL]</p>
+        </div>
+        <p class="mt-4 text-sm text-gray-600">
+            Por favor, realiza la transferencia por el monto total de ${formatPrice(total)} y envía el comprobante a [correo electrónico o número de WhatsApp].
+        </p>
+    `;
+
+    modalContent.innerHTML = content;
 }
 
-function initiateMercadoPagoPayment() {
-    // Agrega aquí la lógica para iniciar el proceso de pago con Mercado Pago
-    alert('Iniciando pago con Mercado Pago...');
-}
-
+// Actualiza la función que maneja el cambio de método de pago
+document.getElementById('paymentMethod').addEventListener('change', function() {
+    if (this.value === 'transferencia') {
+        document.getElementById('bankDetailsModal').classList.remove('hidden');
+        document.getElementById('mercadopago-button').classList.add('hidden');
+        updateTransferModal(); // Actualiza el contenido del modal de transferencia
+    } else if (this.value === 'mercadopago') {
+        document.getElementById('bankDetailsModal').classList.add('hidden');
+        document.getElementById('mercadopago-button').classList.remove('hidden');
+    }
+});

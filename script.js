@@ -32,7 +32,8 @@ const productContainers = {
     accesorios: document.getElementById('accesoriosContainer'),
     cubre_sommier: document.getElementById('cubre_sommierContainer'),
     cortinas_interior: document.getElementById('cortinas_interiorContainer'),
-    cortinas_gasa: document.getElementById('cortinas_gasaContainer')
+    esencias_velas: document.getElementById('esenciasVelasContainer'),
+    esencias_spray_difusores: document.getElementById('esenciasSprayDifusoresContainer')
 };
 
 // Functions
@@ -64,7 +65,7 @@ function updateHero() {
 }
 
 function renderProducts() {
-    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'cortinas_gasa'];
+    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior'];
 
     categories.forEach(category => {
         const container = productContainers[category];
@@ -75,7 +76,6 @@ function renderProducts() {
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="p-4">
                             <div class="relative mb-4 aspect-square">
-                                <!-- Updated discount tag with custom colors -->
                                 <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
                                     style="background-color: #D4C098; color: #848071;">
                                     10% OFF
@@ -96,6 +96,41 @@ function renderProducts() {
             }).join('');
         }
     });
+
+    // Render esencias for velas
+    const esenciasVelasContainer = document.getElementById('esenciasVelasContainer');
+    if (esenciasVelasContainer && products.esencias_velas) {
+        esenciasVelasContainer.innerHTML = products.esencias_velas.map(esencia => `
+            <div class="bg-white p-4 rounded-lg shadow">
+                <p class="text-center font-medium">${esencia}</p>
+            </div>
+        `).join('');
+    }
+
+    // Render esencias for spray and difusores
+    const esenciasSprayDifusoresContainer = document.getElementById('esenciasSprayDifusoresContainer');
+    if (esenciasSprayDifusoresContainer && products.esencias_spray_difusores) {
+        esenciasSprayDifusoresContainer.innerHTML = products.esencias_spray_difusores.map(esencia => `
+            <div class="bg-white p-4 rounded-lg shadow">
+                <p class="text-center font-medium">${esencia}</p>
+            </div>
+        `).join('');
+    }
+
+    // Render cortinas_gasa_info
+    if (products.cortinas_gasa_info) {
+        document.getElementById('cortinasGasaMaterial').textContent = products.cortinas_gasa_info.material;
+        document.getElementById('cortinasGasaColor').textContent = products.cortinas_gasa_info.color;
+        document.getElementById('cortinasGasaTiempoConfeccion').textContent = products.cortinas_gasa_info.tiempo_confeccion;
+        
+        document.getElementById('cortinasGasaCaracteristicas').innerHTML = products.cortinas_gasa_info.caracteristicas.map(item => `
+            <li>${item}</li>
+        `).join('');
+        
+        document.getElementById('cortinasGasaRecomendaciones').innerHTML = products.cortinas_gasa_info.recomendaciones.map(item => `
+            <li>${item}</li>
+        `).join('');
+    }
 }
 
 function openProductModal(productId, category) {
@@ -201,12 +236,12 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
     updateTotal();
-    updateTransferModal(); // Actualiza el modal de transferencia
+    updateTransferModal();
 }
 
 function formatPrice(price) {
@@ -285,9 +320,9 @@ function updateTotal() {
 
     const total = subtotal + shippingCost;
     document.getElementById('cartTotal').textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
-    updateTransferModal(); // Actualiza el modal de transferencia
+    updateTransferModal();
 }
 
 function updateAdvertisingBanner() {
@@ -326,7 +361,7 @@ function validateForm() {
     for (let field of requiredFields) {
         if (!field.value) {
             alert(`Por favor, completa el campo ${field.name}`);
-return false;
+            return false;
         }
     }
     return true;
@@ -347,6 +382,60 @@ function showAdSlide(index) {
 function nextAdSlide() {
     currentAdSlide = (currentAdSlide + 1) % adSlides.length;
     showAdSlide(currentAdSlide);
+}
+
+function updateTransferModal() {
+    const modalContent = document.getElementById('bankDetailsModalContent');
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = subtotal * 0.1; // 10% de descuento
+    const total = subtotal + shippingCost - discount;
+
+    let content = `
+        <h3 class="text-lg font-bold mb-4">Detalles del pedido</h3>
+        <div class="space-y-2">
+            <h4 class="font-semibold">Productos:</h4>
+            <ul class="list-disc pl-5">
+    `;
+
+    cart.forEach(item => {
+        content += `
+            <li>${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
+        `;
+    });
+
+    content += `
+            </ul>
+            <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>${formatPrice(subtotal)}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Costo de envío:</span>
+                <span>${formatPrice(shippingCost)}</span>
+            </div>
+            <div class="flex justify-between text-green-600">
+                <span>Descuento (10%):</span>
+                <span>-${formatPrice(discount)}</span>
+            </div>
+            <div class="flex justify-between font-bold text-lg">
+                <span>Total:</span>
+                <span>${formatPrice(total)}</span>
+            </div>
+        </div>
+        <div class="mt-6">
+            <h4 class="font-semibold mb-2">Datos bancarios para la transferencia:</h4>
+            <p>Banco: Banco Supervielle</p>
+            <p>Titular: Virginia Olivero</p>
+            <p>CBU: 0270131420043724900058</p>
+            <p>CUIT: 27-37092938-1</p>
+            <p>Alias: MON.AMOUR.TEXTIL</p>
+        </div>
+        <p class="mt-4 text-sm text-gray-600">
+            Por favor, realiza la transferencia por el monto total de ${formatPrice(total)} y envía el comprobante a [correo electrónico o número de WhatsApp].
+        </p>
+    `;
+
+    modalContent.innerHTML = content;
 }
 
 // Event Listeners
@@ -424,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.value === 'transferencia') {
             document.getElementById('bankDetailsModal').classList.remove('hidden');
             document.getElementById('mercadopago-button').classList.add('hidden');
-            updateTransferModal(); // Actualiza el contenido del modal de transferencia
+            updateTransferModal();
         } else if (this.value === 'mercadopago') {
             document.getElementById('bankDetailsModal').classList.add('hidden');
             document.getElementById('mercadopago-button').classList.remove('hidden');
@@ -438,7 +527,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(this);
         formData.append('cartItems', prepareCartData());
 
-        // Log de los datos que se están enviando
         console.log('Datos del formulario:', Object.fromEntries(formData));
 
         fetch(this.action, {
@@ -457,7 +545,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
-            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
             if (document.getElementById('paymentMethod').value === 'mercadopago') {
                 initiateMercadoPagoPayment();
             } else {
@@ -477,17 +564,15 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateHero, 5000);
 
     updateAdvertisingBanner();
-    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+    setInterval(updateAdvertisingBanner, 3600000);
 
     setTimeout(() => {
         document.getElementById('whatsappNotification').classList.remove('hidden');
     }, 10000);
 
-    // Iniciar el slider automático para el banner de publicidad
     showAdSlide(currentAdSlide);
-    setInterval(nextAdSlide, 5000); // Cambiar cada 5 segundos
+    setInterval(nextAdSlide, 5000);
 
-    // Implementación del menú acordeón para dispositivos móviles
     const accordionHeaders = document.querySelectorAll('.accordion-header');
     
     accordionHeaders.forEach(header => {
@@ -500,73 +585,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Remove preloader
     document.getElementById('preloader').style.display = 'none';
 });
 
 console.log("Script loaded successfully!");
-
-function updateTransferModal() {
-    const modalContent = document.getElementById('bankDetailsModalContent');
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = subtotal * 0.1; // 10% de descuento
-    const total = subtotal + shippingCost - discount;
-
-    let content = `
-        <h3 class="text-lg font-bold mb-4">Detalles del pedido</h3>
-        <div class="space-y-2">
-            <h4 class="font-semibold">Productos:</h4>
-            <ul class="list-disc pl-5">
-    `;
-
-    cart.forEach(item => {
-        content += `
-            <li>${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
-        `;
-    });
-
-    content += `
-            </ul>
-            <div class="flex justify-between">
-                <span>Subtotal:</span>
-                <span>${formatPrice(subtotal)}</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Costo de envío:</span>
-                <span>${formatPrice(shippingCost)}</span>
-            </div>
-            <div class="flex justify-between text-green-600">
-                <span>Descuento (10%):</span>
-                <span>-${formatPrice(discount)}</span>
-            </div>
-            <div class="flex justify-between font-bold text-lg">
-                <span>Total:</span>
-                <span>${formatPrice(total)}</span>
-            </div>
-        </div>
-        <div class="mt-6">
-            <h4 class="font-semibold mb-2">Datos bancarios para la transferencia:</h4>
-            <p>Banco: [Nombre del Banco]</p>
-            <p>Titular: [Nombre del Titular]</p>
-            <p>CBU: [Número de CBU]</p>
-            <p>CUIT/CUIL: [Número de CUIT/CUIL]</p>
-        </div>
-        <p class="mt-4 text-sm text-gray-600">
-            Por favor, realiza la transferencia por el monto total de ${formatPrice(total)} y envía el comprobante a [correo electrónico o número de WhatsApp].
-        </p>
-    `;
-
-    modalContent.innerHTML = content;
-}
-
-// Actualiza la función que maneja el cambio de método de pago
-document.getElementById('paymentMethod').addEventListener('change', function() {
-    if (this.value === 'transferencia') {
-        document.getElementById('bankDetailsModal').classList.remove('hidden');
-        document.getElementById('mercadopago-button').classList.add('hidden');
-        updateTransferModal(); // Actualiza el contenido del modal de transferencia
-    } else if (this.value === 'mercadopago') {
-        document.getElementById('bankDetailsModal').classList.add('hidden');
-        document.getElementById('mercadopago-button').classList.remove('hidden');
-    }
-});

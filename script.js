@@ -112,49 +112,74 @@ function renderProducts() {
     });
 }
 
-function showProductModal(productId, category) {
+function openProductModal(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
 
-    const modal = document.getElementById('productModal');
-    const modalContent = modal.querySelector('.modal-content');
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
+    const scentOptions = category === 'velas' ? products.esencias_velas : 
+                         category === 'aromas' ? products.esencias_spray_difusores : 
+                         null;
 
+    const modalTitle = document.getElementById('productModalTitle');
+    const modalContent = document.getElementById('productModalContent');
+
+    modalTitle.textContent = product.name;
+    
     let additionalInfo = '';
-    if (product.category === 'cortinas' && product.cortinas_gasa_info) {
+    if (category === 'cortinas_interior' && product.cortinas_gasa_info) {
+        const info = product.cortinas_gasa_info;
         additionalInfo = `
             <div class="mt-4">
-                <h4 class="text-lg font-semibold mb-2">Información adicional:</h4>
-                <p><strong>Tipo de tela:</strong> ${product.cortinas_gasa_info.tipo_tela}</p>
-                <p><strong>Medidas disponibles:</strong> ${product.cortinas_gasa_info.medidas_disponibles.join(', ')}</p>
-                <p><strong>Colores disponibles:</strong> ${product.cortinas_gasa_info.colores_disponibles.join(', ')}</p>
+                <h4 class="font-semibold">Información adicional:</h4>
+                <p>Material: ${info.material}</p>
+                <p>Color: ${info.color}</p>
+                <p>Tiempo de confección: ${info.tiempo_confeccion}</p>
+                <h5 class="font-semibold mt-2">Características:</h5>
+                <ul class="list-disc pl-5">
+                    ${info.caracteristicas.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+                <h5 class="font-semibold mt-2">Recomendaciones:</h5>
+                <ul class="list-disc pl-5">
+                    ${info.recomendaciones.map(r => `<li>${r}</li>`).join('')}
+                </ul>
             </div>
         `;
     }
 
     modalContent.innerHTML = `
-        <h2 class="text-2xl font-bold mb-4">${product.name}</h2>
-        <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover mb-4">
-        <p class="text-gray-600 mb-4">${product.description}</p>
-        <p class="text-xl font-bold mb-4">$${product.price.toLocaleString()}</p>
-        ${additionalInfo}
-        <div class="flex items-center mb-4">
-            <button onclick="updateQuantity(-1)" class="bg-gray-200 px-2 py-1 rounded-l">-</button>
-            <input type="number" id="quantity" value="1" min="1" class="w-16 text-center border-t border-b border-gray-200">
-            <button onclick="updateQuantity(1)" class="bg-gray-200 px-2 py-1 rounded-r">+</button>
-        </div>
-        ${product.category === 'velas' ? `
-            <div class="mb-4">
-                <label for="scent" class="block mb-2">Aroma:</label>
-                <select id="scent" class="w-full p-2 border rounded">
-                    ${product.scents.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
-                </select>
+        <div class="grid gap-4 py-4">
+            <div class="relative h-64 w-full">
+                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
             </div>
-        ` : ''}
-        <button onclick="addToCart(${product.id}, '${category}')" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark">Agregar al carrito</button>
+            <p class="text-gray-600">${product.description}</p>
+            <p class="text-lg font-bold">
+                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                $${discountedPrice.toLocaleString()}
+            </p>
+            ${scentOptions ? `
+                <div>
+                    <label for="scent" class="block text-sm font-medium text-gray-700">Aroma</label>
+                    <select id="scent" name="scent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option value="">Seleccionar aroma</option>
+                        ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+                    </select>
+                </div>
+            ` : ''}
+            <div class="flex items-center justify-between">
+                <label for="quantity" class="text-sm font-medium">Cantidad:</label>
+                <div class="flex items-center">
+                    <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
+                    <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
+                    <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                </div>
+            </div>
+            ${additionalInfo}
+            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
+                Agregar al carrito
+            </button>
+        </div>
     `;
-
-    modal.classList.remove('hidden');
-}
 
     document.getElementById('productModal').classList.remove('hidden');
 }

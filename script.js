@@ -77,7 +77,7 @@ function renderProducts() {
                             <div class="relative mb-4 aspect-square">
                                 <!-- Updated discount tag with custom colors -->
                                 <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
-                                    style="background-color: #A6A18F; color: #848071;">
+                                    style="background-color: #D4C098; color: #848071;">
                                     10% OFF
                                 </div>
                                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">

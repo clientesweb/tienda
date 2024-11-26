@@ -15,105 +15,75 @@
     { "id": 13, "name": "Apagavela fleur", "price": 2800, "image": "img/apagavela-fleur.jpg", "description": "Apagavela color plata con mango labrado y dije colgante. Medidas: 7cm de largo y aprox 1cm el capuchon. Diferentes modelos" }
   ],
   "aromas": [
-    { "id": 13, "name": "Claire", "price": 9360, "image": "img/claire.jpg", "description": "Spray textil de 250cc" },
-    { "id": 14, "name": "Difusor Pauline", "price": 15000, "image": "img/difusor-pauline.jpg", "description": "Envase reutilizable de vidrio con 250cc. Incluye seis varillas." },
-    { "id": 15, "name": "Anais", "price": 3760, "image": "img/difusor-anais.jpg", "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard." }
+    { "id": 14, "name": "Claire", "price": 9360, "image": "img/claire.jpg", "description": "Spray textil de 250cc" },
+    { "id": 15, "name": "Difusor Pauline", "price": 15000, "image": "img/difusor-pauline.jpg", "description": "Envase reutilizable de vidrio con 250cc. Incluye seis varillas." },
+    { "id": 16, "name": "Anais", "price": 3760, "image": "img/difusor-anais.jpg", "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard." }
   ],
   "ceramica": [
-    {
-      "id": 1,
-      "name": "Florero Luisa",
-      "price": 16100,
-      "image": "img/florero-luisa.jpg",
-      "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 15 cm de alto x 11 cm de diámetro"
-    },
-    {
-      "id": 2,
-      "name": "Set Julieta",
-      "price": 22310,
-      "image": "img/set-julieta.jpg",
-      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada. Medidas: Tazón: 11 cm diámetro x 8cm de alto, Plato: 16cm de largo x 12cm de ancho"
-    },
-    {
-      "id": 3,
-      "name": "Mini Florero Lea",
-      "price": 9200,
-      "image": "img/mini-florero-lea.jpg",
-      "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 12 cm de alto"
-    },
-    {
-      "id": 4,
-      "name": "Fanal Lucia",
-      "price": 13800,
-      "image": "img/fanal-lucia.jpg",
-      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: fanal y plato. Medidas: Fanal: 10cm de alto x 8cm de diámetro, Plato: 12 cm de diámetro"
-    },
-    {
-      "id": 5,
-      "name": "Florero Chloe",
-      "price": 20470,
-      "image": "img/florero-chloe.jpg",
-      "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 13 cm de alto x 13 cm de diámetro"
-    },
-    {
-      "id": 6,
-      "name": "Set de Mate Amelia",
-      "price": 35420,
-      "image": "img/set-mate-amelia.jpg",
-      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera con tapa y bandeja. Medidas: Mate: 11 cm de alto, Azucarera: 9cm de alto x 9cm de diámetro, Bandeja: 22cm de diámetro"
-    },
-    {
-      "id": 7,
-      "name": "Set Sophie",
-      "price": 27600,
-      "image": "img/set-sophie.jpg",
-      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón. Medidas: Taza: 9 cm de diámetro x 11 de alto, Plato corazón: 17cm de largo x 21cm de ancho." }
+    { "id": 17, "name": "Florero Luisa", "price": 16100, "image": "img/florero-luisa.jpg", "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 15 cm de alto x 11 cm de diámetro" },
+    { "id": 18, "name": "Set Julieta", "price": 22310, "image": "img/set-julieta.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada. Medidas: Tazón: 11 cm diámetro x 8cm de alto, Plato: 16cm de largo x 12cm de ancho" },
+    { "id": 19, "name": "Mini Florero Lea", "price": 9200, "image": "img/mini-florero-lea.jpg", "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 12 cm de alto" },
+    { "id": 20, "name": "Fanal Lucia", "price": 13800, "image": "img/fanal-lucia.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: fanal y plato. Medidas: Fanal: 10cm de alto x 8cm de diámetro, Plato: 12 cm de diámetro" },
+    { "id": 21, "name": "Florero Chloe", "price": 20470, "image": "img/florero-chloe.jpg", "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 13 cm de alto x 13 cm de diámetro" },
+    { "id": 22, "name": "Set de Mate Amelia", "price": 35420, "image": "img/set-mate-amelia.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera con tapa y bandeja. Medidas: Mate: 11 cm de alto, Azucarera: 9cm de alto x 9cm de diámetro, Bandeja: 22cm de diámetro" },
+    { "id": 23, "name": "Set Sophie", "price": 27600, "image": "img/set-sophie.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón. Medidas: Taza: 9 cm de diámetro x 11 de alto, Plato corazón: 17cm de largo x 21cm de ancho" }
   ],
   "textiles": [
-    { "id": 16, "name": "Cortina Burdeos", "price": 75200, "image": "img/cortina-burdeos.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Lazos para atar al barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar." },
-    { "id": 17, "name": "Cortina Marsella", "price": 60775, "image": "img/cortina-marsella.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." },
-    { "id": 18, "name": "Cortina Niza", "price": 60775, "image": "img/cortina-niza.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Opcional: lazos para atar al barral u ojales para gancho. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar. No incluye protector." }
+    { "id": 24, "name": "Paris", "price": 65550, "image": "img/cortina-paris.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntillas. Medidas: 180cm x 180 cm. Opcional: lazos para atar al barral u ojales pasa ganchos. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para colgar. No incluye protector. Por medidas especiales comunicarse por WhatsApp o mensaje privado." },
+    { "id": 25, "name": "Burdeos", "price": 78550, "image": "img/cortina-burdeos.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntillas. Medidas: 180cm x 180 cm. Opcional: lazos para atar al barral u ojales pasa ganchos. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para colgar. No incluye protector. Por medidas especiales comunicarse por WhatsApp o mensaje privado." },
+    { "id": 26, "name": "Niza", "price": 65550, "image": "img/cortina-niza.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntillas. Medidas: 180cm x 180 cm. Opcional: lazos para atar al barral u ojales pasa ganchos. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para colgar. No incluye protector. Por medidas especiales comunicarse por WhatsApp o mensaje privado." },
+    { "id": 27, "name": "Marsella", "price": 71500, "image": "img/cortina-marsella.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntillas. Medidas: 180cm x 180 cm. Opcional: lazos para atar al barral u ojales pasa ganchos. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para colgar. No incluye protector. Por medidas especiales comunicarse por WhatsApp o mensaje privado." }
   ],
   "accesorios": [
-    { "id": 25, "name": "Cubre Lavarropas Merci", "price": 34400, "image": "img/cubre-lavarropas-merci.jpg", "description": "Funda para lavarropas confeccionado en una tela super resistente. Apto para lavarropas de carga frontal (6 y 8 kg). No obstruye su funcionamiento ni tablero. Medidas: 82cm de alto x 62cm de ancho x 62cm de profundidad. Por medidas espéciales comunicarse por WhatsApp o mensaje privado." },
-    { "id": 26, "name": "Bolsita Organizadora Paix", "price": 6400, "image": "img/bolsita-organizadora-paix.jpg", "description": "Bolsita confeccionada en 100% algodón con volados y puntillas. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para su uso. Medidas: 29cm de ancho x 24cm de largo." },
-    { "id": 27, "name": "Bolsita Organizadora Liberte", "price": 6400, "image": "img/bolsita-organizadora-liberte.jpg", "description": "Bolsita confeccionada en 100% algodón con volados y puntillas. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para su uso. Medidas: 23cm de ancho x 30cm de largo." },
-    { "id": 28, "name": "Cuenco Pequeño Amour", "price": 2800, "image": "img/cuenco-pequeno-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 13cm de diámetro x 12cm de alto." },
-    { "id": 29, "name": "Cuenco Mediano Amour", "price": 3600, "image": "img/cuenco-mediano-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 15 cm de diámetro x 13cm de alto." },
-    { "id": 30, "name": "Cuenco Grande Amour", "price": 4400, "image": "img/cuenco-grande-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 17cm de diámetro x 14 de alto." }
+    { "id": 28, "name": "Cubre Lavarropas Merci", "price": 34400, "image": "img/cubre-lavarropas-merci.jpg", "description": "Funda para lavarropas confeccionado en una tela super resistente. Apto para lavarropas de carga frontal (6 y 8 kg). No obstruye su funcionamiento ni tablero. Medidas: 82cm de alto x 62cm de ancho x 62cm de profundidad. Por medidas espéciales comunicarse por WhatsApp o mensaje privado." },
+    { "id": 29, "name": "Bolsita Organizadora Paix", "price": 6400, "image": "img/bolsita-organizadora-paix.jpg", "description": "Bolsita confeccionada en 100% algodón con volados y puntillas. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para su uso. Medidas: 29cm de ancho x 24cm de largo." },
+    { "id": 30, "name": "Bolsita Organizadora Liberte", "price": 6400, "image": "img/bolsita-organizadora-liberte.jpg", "description": "Bolsita confeccionada en 100% algodón con volados y puntillas. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas, listas para su uso. Medidas: 23cm de ancho x 30cm de largo." },
+    { "id": 31, "name": "Cuenco Pequeño Amour", "price": 2800, "image": "img/cuenco-pequeno-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 13cm de diámetro x 12cm de alto." },
+    { "id": 32, "name": "Cuenco Mediano Amour", "price": 3600, "image": "img/cuenco-mediano-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 15 cm de diámetro x 13cm de alto." },
+    { "id": 33, "name": "Cuenco Grande Amour", "price": 4400, "image": "img/cuenco-grande-amour.jpg", "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 17cm de diámetro x 14 de alto." }
   ],
   "cubre_sommier": [
-    { "id": 31, "name": "Cubresomier Maison Twin", "price": 53200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L." },
-    { "id": 32, "name": "Cubresomier Maison King", "price": 65100, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L." },
-    { "id": 33, "name": "Cubresomier Maison Queen", "price": 63200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L." },
-    { "id": 34, "name": "Cubresomier Maison 1 Plaza", "price": 49600, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L." },
-    { "id": 35, "name": "Cubresomier Maison 2 Plazas", "price": 57600, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L." },
-    { "id": 36, "name": "Cubresomier Maison Super King", "price": 71200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L." },
-    { "id": 37, "name": "Cubresomier LUXE Twin", "price": 69200, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.", "originalPrice": 86500 },
-    { "id": 38, "name": "Cubresomier LUXE King", "price": 80960, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.", "originalPrice": 101200 },
-    { "id": 39, "name": "Cubresomier LUXE Queen", "price": 79200, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.", "originalPrice": 99000 },
-    { "id": 40,
-      "name": "Cubresomier LUXE 1 Plaza",
-      "price": 65600,
-      "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.",
-      "originalPrice": 82000
-    },
-    { "id": 41, "name": "Cubresomier LUXE 2 Plazas", "price": 73600, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.", "originalPrice": 92000 },
-    { "id": 42, "name": "Cubresomier LUXE Super King", "price": 87200, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.", "originalPrice": 109000 },
-    { "id": 43, "name": "Cubresomier TISSU Twin", "price": 63750, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.", "originalPrice": 76500 },
-    { "id": 44, "name": "Cubresomier TISSU King", "price": 76000, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.", "originalPrice": 91200 },
-    { "id": 45, "name": "Cubresomier TISSU Queen", "price": 71200, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.", "originalPrice": 89000 },
-    { "id": 46, "name": "Cubresomier TISSU 1 Plaza", "price": 57600, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.", "originalPrice": 72000 },
-    { "id": 47, "name": "Cubresomier TISSU 2 Plazas", "price": 65600, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.", "originalPrice": 82000 },
-    { "id": 48, "name": "Cubresomier TISSU Super King", "price": 79000, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.", "originalPrice": 99000 }
+    { "id": 34, "name": "Cubresomier Maison Twin", "price": 53200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L." },
+    { "id": 35, "name": "Cubresomier Maison King", "price": 65100, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L." },
+    { "id": 36, "name": "Cubresomier Maison Queen", "price": 63200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L." },
+    { "id": 37, "name": "Cubresomier Maison 1 Plaza", "price": 49600, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L." },
+    { "id": 38, "name": "Cubresomier Maison 2 Plazas", "price": 57600, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L." },
+    { "id": 39, "name": "Cubresomier Maison Super King", "price": 71200, "image": "img/cubresomier-maison.jpg", "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L." },
+    { "id": 40, "name": "Cubresomier LUXE Twin", "price": 69200, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.", "originalPrice": 86500 },
+    { "id": 41, "name": "Cubresomier LUXE King", "price": 80960, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.", "originalPrice": 101200 },
+    { "id": 42, "name": "Cubresomier LUXE Queen", "price": 79200, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.", "originalPrice": 99000 },
+    { "id": 43, "name": "Cubresomier LUXE 1 Plaza", "price": 65600, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.", "originalPrice": 82000 },
+    { "id": 44, "name": "Cubresomier LUXE 2 Plazas", "price": 73600, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.", "originalPrice": 92000 },
+    { "id": 45, "name": "Cubresomier LUXE Super King", "price": 87200, "image": "img/cubresomier-luxe.jpg", "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.", "originalPrice": 109000 },
+    { "id": 46, "name": "Cubresomier TISSU Twin", "price": 63750, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.", "originalPrice": 76500 },
+    { "id": 47, "name": "Cubresomier TISSU King", "price": 76000, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.", "originalPrice": 91200 },
+    { "id": 48, "name": "Cubresomier TISSU Queen", "price": 71200, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.", "originalPrice": 89000 },
+    { "id": 49, "name": "Cubresomier TISSU 1 Plaza", "price": 57600, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.", "originalPrice": 72000 },
+    { "id": 50, "name": "Cubresomier TISSU 2 Plazas", "price": 65600, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.", "originalPrice": 82000 },
+    { "id": 51, "name": "Cubresomier TISSU Super King", "price": 79000, "image": "img/cubresomier-tissu.jpg", "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.", "originalPrice": 99000 }
   ],
   "cortinas_interior": [
-    { "id": 49, "name": "Cortinas de Gasa 140cm x 210cm", "price": 42400, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.10m de alto.", "originalPrice": 53000 },
-    { "id": 50, "name": "Cortinas de Gasa 140cm x 230cm", "price": 46640, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.30m de alto.", "originalPrice": 58300 },
-    { "id": 51, "name": "Cortinas de Gasa 140cm x 250cm", "price": 51680, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.50m de alto.", "originalPrice": 64600 },
-    { "id": 52, "name": "Cortinas de Gasa 200cm x 210cm", "price": 49920, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2.10m de alto.", "originalPrice": 62400 },
-    { "id": 53, "name": "Cortinas de Gasa 200cm x 230cm", "price": 55040, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2.30m de alto.", "originalPrice": 68800 },
-    { "id": 54, "name": "Cortinas de Gasa 200cm x 250cm", "price": 60560, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2.50m de alto.", "originalPrice": 75700 }
-  ]
+    { "id": 52, "name": "Cortinas de Gasa 140cm x 210cm", "price": 53000, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.10m de alto." },
+    { "id": 53, "name": "Cortinas de Gasa 140cm x 230cm", "price": 58300, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.30m de alto." },
+    { "id": 54, "name": "Cortinas de Gasa 140cm x 250cm", "price": 64600, "image": "img/cortinas-gasa.jpg", "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.50m de alto." }
+  ],
+  "cortinas_gasa_info": {
+    "material": "100% algodón",
+    "color": "Crudo",
+    "tiempo_confeccion": "5 / 7 días hábiles",
+    "caracteristicas": [
+      "El precio corresponde al juego de 2 paños de 140 cm de ancho",
+      "Elegir la altura de acuerdo a la medida desde el barral al piso y si queres súmale 10 o 15 cm para el arrastre",
+      "Las medidas son aproximadas, puede haber una diferencia de +/- 10 cm",
+      "Son livianas y tienen una hermosa caída. Visten tus ventanas y a la vez permiten el paso de la luz",
+      "Pasa barral oculto",
+      "Hechas a mano con mucho cuidado en los detalles",
+      "Son lavadas antes y después de su confección",
+      "Se entregan planchadas y perfumadas listas para colgar"
+    ],
+    "recomendaciones": [
+      "Medí el ancho de tu ventana y la altura desde el barral al piso",
+      "Estas medidas se adaptan a ventanas de hasta 1.60 m de ancho aprox. (para que tengan frunce y no queden tirantes)"
+    ]
+  }
 }

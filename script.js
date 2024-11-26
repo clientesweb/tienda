@@ -8,7 +8,7 @@ let shippingOptions = {};
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
-    "Envíos gratis en compras superiores a $10000",
+    "Envíos gratis en compras superiores a $150000",
     "¡Ofertas especiales en velas aromáticas!"
 ];
 
@@ -283,13 +283,13 @@ function updateAdvertisingBanner() {
     let message, backgroundImage;
 
     if (currentHour >= 6 && currentHour < 12) {
-        message = "¡Oferta matutina! 15% de descuento en todas las velas aromáticas";
+        message = "¡Oferta matutina! 10% de descuento en todas las velas aromáticas";
         backgroundImage = "url('img/mañana.png')";
     } else if (currentHour >= 12 && currentHour < 18) {
         message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
         backgroundImage = "url('img/tarde.png')";
     } else {
-        message = "¡Oferta nocturna! Envío gratis en compras superiores a $8000";
+        message = "¡Oferta nocturna! Envío gratis en compras superiores a $150000";
         backgroundImage = "url('img/noche.png')";
     }
 

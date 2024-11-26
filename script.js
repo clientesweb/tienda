@@ -125,6 +125,28 @@ function openProductModal(productId, category) {
     const modalContent = document.getElementById('productModalContent');
 
     modalTitle.textContent = product.name;
+    
+    let additionalInfo = '';
+    if (category === 'cortinas_interior' && product.cortinas_gasa_info) {
+        const info = product.cortinas_gasa_info;
+        additionalInfo = `
+            <div class="mt-4">
+                <h4 class="font-semibold">Información adicional:</h4>
+                <p>Material: ${info.material}</p>
+                <p>Color: ${info.color}</p>
+                <p>Tiempo de confección: ${info.tiempo_confeccion}</p>
+                <h5 class="font-semibold mt-2">Características:</h5>
+                <ul class="list-disc pl-5">
+                    ${info.caracteristicas.map(c => `<li>${c}</li>`).join('')}
+                </ul>
+                <h5 class="font-semibold mt-2">Recomendaciones:</h5>
+                <ul class="list-disc pl-5">
+                    ${info.recomendaciones.map(r => `<li>${r}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
     modalContent.innerHTML = `
         <div class="grid gap-4 py-4">
             <div class="relative h-64 w-full">
@@ -152,6 +174,7 @@ function openProductModal(productId, category) {
                     <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
                 </div>
             </div>
+            ${additionalInfo}
             <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
                 Agregar al carrito
             </button>

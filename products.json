@@ -111,6 +111,20 @@
       "price": 18170,
       "image": "img/lottie-grande.jpg",
       "description": "Cuenco de 16cm de diámetro reutilizable de madera con 400 gr de cera de soja aromatizada"
+    },
+    {
+      "id": 17,
+      "name": "Vela Caroline",
+      "price": 8740,
+      "image": "img/vela-caroline.jpg",
+      "description": "Vela de cera de soja aromatizada x 3"
+    },
+    {
+      "id": 18,
+      "name": "Jolie con flor",
+      "price": 8970,
+      "image": "img/jolie-con-flor.jpg",
+      "description": "Cuenco reutilizable de madera con 150 gr de cera de soja aromatizada"
     }
   ],
   "esencias_velas": [
@@ -209,8 +223,17 @@
       "price": 27600,
       "image": "img/set-sophie.jpg",
       "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón. Medidas: Taza: 9 cm de diámetro x 11 de alto, Plato corazón: 17cm de largo x 21cm de ancho"
+    },
+    {
+      "id": 24,
+      "name": "Set Julieta",
+      "price": 22310,
+      "image": "img/set-julieta.jpg",
+      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada. Medidas: Tazón: 11 cm diámetro x 8cm de alto, Plato: 16cm de largo x 12cm de ancho"
     }
-  ],
+  ]
+}
+{
   "textiles": [
     {
       "id": 24,
@@ -446,6 +469,27 @@
       "price": 64600,
       "image": "img/cortinas-gasa.jpg",
       "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.50m de alto."
+    },
+    {
+      "id": 55,
+      "name": "Cortinas de Gasa 2m x 2,10m",
+      "price": 62400,
+      "image": "img/cortinas-gasa.jpg",
+      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2,10m de alto."
+    },
+    {
+      "id": 56,
+      "name": "Cortinas de Gasa 2m x 2,30m",
+      "price": 68800,
+      "image": "img/cortinas-gasa.jpg",
+      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2,30m de alto."
+    },
+    {
+      "id": 57,
+      "name": "Cortinas de Gasa 2m x 2,50m",
+      "price": 75700,
+      "image": "img/cortinas-gasa.jpg",
+      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2,50m de alto."
     }
   ],
   "cortinas_gasa_info": {
@@ -453,7 +497,7 @@
     "color": "Crudo",
     "tiempo_confeccion": "5 / 7 días hábiles",
     "caracteristicas": [
-      "El precio corresponde al juego de 2 paños de 140 cm de ancho",
+      "El precio corresponde al juego de 2 paños de 2 m de ancho",
       "Elegir la altura de acuerdo a la medida desde el barral al piso y si queres súmale 10 o 15 cm para el arrastre",
       "Las medidas son aproximadas, puede haber una diferencia de +/- 10 cm",
       "Son livianas y tienen una hermosa caída. Visten tus ventanas y a la vez permiten el paso de la luz",
@@ -464,7 +508,7 @@
     ],
     "recomendaciones": [
       "Medí el ancho de tu ventana y la altura desde el barral al piso",
-      "Estas medidas se adaptan a ventanas de hasta 1.60 m de ancho aprox. (para que tengan frunce y no queden tirantes)"
+      "Estas medidas se adaptan a ventanas de hasta 2.40 m de ancho aprox. (para que tengan frunce y no queden tirantes)"
     ]
   }
 }

@@ -16,7 +16,7 @@
   "aromas": [
     { "id": 13, "name": "Claire", "price": 9360, "image": "img/claire.jpg", "description": "Spray textil de 250cc" },
     { "id": 14, "name": "Difusor Pauline", "price": 15000, "image": "img/difusor-pauline.jpg", "description": "Envase reutilizable de vidrio con 250cc. Incluye seis varillas." },
-    { "id": 15, "name": "Anais", "price": 3760, "image": "img/anais.jpg", "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard." }
+    { "id": 15, "name": "Anais", "price": 3760, "image": "img/difusor-anais.jpg", "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard." }
   ],
   "ceramica": [
     { "id": 19, "name": "Set de Mate Amelia", "price": 30800, "image": "img/set-mate-amelia.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro." },

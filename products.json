@@ -1,8 +1,8 @@
 {
   "velas": [
     { "id": 1, "name": "Vitrè", "price": 12300, "image": "img/velas1.png", "description": "Envase reutilizable de vidrio - 100 gr de cera de soja aromatizada" },
-    { "id": 2, "name": "Conques", "price": 11270, "image": "img/conques.jpg", "description": "Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada" },
-    { "id": 3, "name": "Dinan", "price": 17940, "image": "img/dinan.jpg", "description": "Envase reutilizable de vidrio con tapa . 200 gr de cera de soja aromatizada" },
+    { "id": 2, "name": "Conques", "price": 11270, "image": "img/dinan.jpg", "description": "Envase reutilizable de vidrio con tapa - 70 gr de cera de soja aromatizada" },
+    { "id": 3, "name": "Dinan", "price": 17940, "image": "img/conques.jpg", "description": "Envase reutilizable de vidrio con tapa . 200 gr de cera de soja aromatizada" },
     { "id": 4, "name": "Saignon", "price": 60950, "image": "img/saignon.jpg", "description": "Velón suspendido en envase reutilizable de vidrio. 500 gr de cera de soja aromatizada" },
     { "id": 5, "name": "Lottie pequeño", "price": 7360, "image": "img/lottie-pequeno.jpg", "description": "Cuenco de 8cm de diámetro reutilizable de madera. 100 gr de cera de soja aromatizada" },
     { "id": 6, "name": "Lottie mediano", "price": 9660, "image": "img/lottie-mediano.jpg", "description": "Cuenco de 12 cm de diámetro reutilizable de madera . 200 gr de cera de soja aromatizada (doble pabilo)" },

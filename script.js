@@ -312,7 +312,7 @@ function updateTotal() {
     }
 
     const total = subtotal + shippingCost;
-    document.getElementById('cartTotal').textContent = formatPrice(total);
+document.getElementById('cartTotal').textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
     updateTransferModal(); // Actualiza el modal de transferencia
@@ -514,41 +514,113 @@ document.addEventListener('DOMContentLoaded', function() {
                     const selectedShippingMethod = document.getElementById('shippingMethod').value;
                     shippingCost = calculateShippingCost(shippingOptions[selectedShippingMethod].price, itemCount);
                     updateTotal();
-                })
-                .catch(error => {
-                    console.error('Error al calcular el envío:', error);
                 });
         } else {
-            alert('Por favor, ingrese un código postal válido de 4 dígitos.');
+            alert('Por favor, ingrese un código postal válido.');
         }
     });
 
-    document.getElementById('shippingMethod').addEventListener('change', updateTotal);
-
-    document.getElementById('checkoutForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        if (validateForm()) {
-            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            if (paymentMethod === 'transferencia') {
-                updateTransferModal();
-                // Descarga los detalles del pedido (implementación pendiente)
-            }
-            // Aquí puedes agregar la lógica para procesar el pago y finalizar la compra
+    document.getElementById('shippingMethod').addEventListener('change', function() {
+        const selectedOption = shippingOptions[this.value];
+        if (selectedOption) {
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            shippingCost = calculateShippingCost(selectedOption.price, itemCount);
+            updateTotal();
         }
+    });
+
+    document.getElementById('checkoutButton').addEventListener('click', function() {
+        document.getElementById('cartModal').classList.add('hidden');
+        document.getElementById('checkoutModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeCheckoutModal').addEventListener('click', function() {
+        document.getElementById('checkoutModal').classList.add('hidden');
+    });
+
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+        if (this.value === 'transferencia') {
+            document.getElementById('bankDetailsModal').classList.remove('hidden');
+            document.getElementById('mercadopago-button').classList.add('hidden');
+            updateTransferModal(); // Actualiza el contenido del modal de transferencia
+        } else if (this.value === 'mercadopago') {
+            document.getElementById('bankDetailsModal').classList.add('hidden');
+            document.getElementById('mercadopago-button').classList.remove('hidden');
+        }
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        const formData = new FormData(this);
+        formData.append('cartItems', prepareCartData());
+
+        // Log de los datos que se están enviando
+        console.log('Datos del formulario:', Object.fromEntries(formData));
+
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.text().then(text => {
+                    throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
+                });
+            }
+        }).then(data => {
+            console.log('Respuesta exitosa de Formspree:', data);
+            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
+            if (document.getElementById('paymentMethod').value === 'mercadopago') {
+                initiateMercadoPagoPayment();
+            } else {
+                alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
+            }
+        }).catch(error => {
+            console.error('Error detallado:', error);
+            alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
+        });
     });
 
     loadProducts();
+    updateBanner();
     setInterval(updateBanner, 5000);
-    setInterval(updateHero, 10000);
-    setInterval(updateAdvertisingBanner, 3600000); // Actualiza cada hora
-    setInterval(nextAdSlide, 5000); // Cambia el slide cada 5 segundos
-});
 
-// Inicialización
-updateBanner();
-updateHero();
-updateAdvertisingBanner();
-showAdSlide(0);
+    updateHero();
+    setInterval(updateHero, 5000);
+
+    updateAdvertisingBanner();
+    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+
+    setTimeout(() => {
+        document.getElementById('whatsappNotification').classList.remove('hidden');
+    }, 10000);
+
+    // Iniciar el slider automático para el banner de publicidad
+    showAdSlide(currentAdSlide);
+    setInterval(nextAdSlide, 5000); // Cambiar cada 5 segundos
+
+    // Implementación del menú acordeón para dispositivos móviles
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('.accordion-icon');
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        });
+    });
+
+    // Remove preloader
+    document.getElementById('preloader').style.display = 'none';
+});
 
 console.log("Script loaded successfully!");
 

@@ -205,6 +205,7 @@ function updateCartUI() {
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    updateTotal();
 }
 
 function formatPrice(price) {
@@ -251,11 +252,15 @@ function calculateShipping(postalCode) {
 
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => `
-        <option value="${key}">
-            ${option.name} - ${option.price > 0 ? `$${option.price.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
-        </option>
-    `).join('');
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => {
+        const updatedPrice = calculateShippingCost(option.price, itemCount);
+        return `
+            <option value="${key}">
+                ${option.name} - ${updatedPrice > 0 ? `$${updatedPrice.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
+            </option>
+        `;
+    }).join('');
 }
 
 function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
@@ -386,7 +391,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateShippingOptions(shippingOptions);
                     document.getElementById('shippingOptions').classList.remove('hidden');
                     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-                    shippingCost = calculateShippingCost(shippingOptions.correoArgentinoDomicilio.price, itemCount);
+                    const selectedShippingMethod = document.getElementById('shippingMethod').value;
+                    shippingCost = calculateShippingCost(shippingOptions[selectedShippingMethod].price, itemCount);
                     updateTotal();
                 });
         } else {

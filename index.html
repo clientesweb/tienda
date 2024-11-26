@@ -274,14 +274,6 @@
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
-        <!-- Add this section after the "velas" section -->
-<section id="esencias_velas" class="container mx-auto px-4 py-12">
-    <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">ESENCIAS PARA VELAS</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="esenciasVelasContainer">
-        <!-- Esencias will be dynamically inserted here -->
-    </div>
-</section>
-
 
         <section id="aromas" class="container mx-auto px-4 py-12">
             <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">AROMAS</h2>
@@ -289,15 +281,7 @@
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
-        
-    <!-- Add this section after the "aromas" section -->
-<section id="esencias_spray_difusores" class="container mx-auto px-4 py-12">
-    <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">ESENCIAS PARA SPRAY Y DIFUSORES</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="esenciasSprayDifusoresContainer">
-        <!-- Esencias will be dynamically inserted here -->
-    </div>
-</section>
-
+    
         <section id="ceramica" class="container mx-auto px-4 py-12">
             <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CERÁMICA</h2>
             <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
@@ -341,20 +325,7 @@
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
-        <!-- Add this section after the "cortinas_interior" section -->
-<section id="cortinas_gasa_info" class="container mx-auto px-4 py-12 bg-secondary">
-    <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">INFORMACIÓN SOBRE CORTINAS DE GASA</h2>
-    <div class="max-w-3xl mx-auto">
-        <p class="mb-4"><strong>Material:</strong> <span id="cortinasGasaMaterial"></span></p>
-        <p class="mb-4"><strong>Color:</strong> <span id="cortinasGasaColor"></span></p>
-        <p class="mb-4"><strong>Tiempo de confección:</strong> <span id="cortinasGasaTiempoConfeccion"></span></p>
-        <h3 class="text-xl font-bold mb-2">Características:</h3>
-        <ul class="list-disc pl-5 mb-4" id="cortinasGasaCaracteristicas"></ul>
-        <h3 class="text-xl font-bold mb-2">Recomendaciones:</h3>
-        <ul class="list-disc pl-5" id="cortinasGasaRecomendaciones"></ul>
-    </div>
-</section>
-
+        
         <!-- New Advertising Banner with Slider -->
         <div class="bg-primary p-6 text-center text-white ad-slider">
             <div class="ad-slide">
@@ -577,10 +548,18 @@
                     </select>
                 </div>
 
-               <!-- Reemplaza el campo oculto y el modal de detalles bancarios con esto -->
-<div id="cartDetails" class="mt-4 p-4 border border-gray-300 rounded-lg">
-    <!-- El contenido se llenará dinámicamente con JavaScript -->
-</div>
+                <!-- Campo oculto para los datos del carrito -->
+                <input type="hidden" name="cartItems" id="cartItemsInput">
+
+                <div id="bankDetailsModal" class="hidden mt-4 p-4 border border-gray-300 rounded-lg">
+                    <h4 class="font-bold mb-2">Datos bancarios para transferencia:</h4>
+                    <p>Banco: Banco Supervielle</p>
+                    <p>Titular: Virginia Olivero</p>
+                    <p>CBU: 0270131420043724900058</p>
+                    <p>CUIT: 27-37092938-1</p>
+                    <p>Alias: MON.AMOUR.TEXTIL</p>
+                    <p class="mt-2 font-bold">Total con 10% de descuento: $<span id="discountedTotal"></span></p>
+                </div>
 
                 <div id="mercadopago-button"></div>
                 <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors">

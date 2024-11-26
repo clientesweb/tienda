@@ -31,7 +31,8 @@ const productContainers = {
     textiles: document.getElementById('textilesContainer'),
     accesorios: document.getElementById('accesoriosContainer'),
     cubre_sommier: document.getElementById('cubre_sommierContainer'),
-    cortinas_interior: document.getElementById('cortinas_interiorContainer')
+    cortinas_interior: document.getElementById('cortinas_interiorContainer'),
+    cortinas_gasa: document.getElementById('cortinas_gasaContainer')
 };
 
 // Functions
@@ -63,92 +64,36 @@ function updateHero() {
 }
 
 function renderProducts() {
-    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior'];
+    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'cortinas_gasa'];
 
     categories.forEach(category => {
         const container = productContainers[category];
         if (container && products[category]) {
-            container.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4">${category.replace(/_/g, ' ').toUpperCase()}</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    ${products[category].map(product => {
-                        const discountedPrice = product.price * 0.9; // Apply 10% discount
-                        return `
-                            <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
-                                <div class="p-4">
-                                    <div class="relative mb-4 aspect-square">
-                                        <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
-                                            style="background-color: #D4C098; color: #848071;">
-                                            10% OFF
-                                        </div>
-                                        <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
-                                    </div>
-                                    <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                                    <p class="mt-2 text-lg font-bold">
-                                        <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                                        $${discountedPrice.toLocaleString()}
-                                    </p>
-                                    <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
-                                        Ver detalles
-                                    </button>
+            container.innerHTML = products[category].map(product => {
+                const discountedPrice = product.price * 0.9; // Apply 10% discount
+                return `
+                    <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
+                        <div class="p-4">
+                            <div class="relative mb-4 aspect-square">
+                                <!-- Updated discount tag with custom colors -->
+                                <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
+                                    style="background-color: #D4C098; color: #848071;">
+                                    10% OFF
                                 </div>
+                                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                             </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-
-            // Añadir la renderización de esencias_velas dentro de la categoría 'velas'
-            if (category === 'velas' && products.esencias_velas) {
-                container.innerHTML += `
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold mb-4">Esencias disponibles para velas:</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            ${products.esencias_velas.map(esencia => `
-                                <div class="bg-white p-4 rounded-lg shadow">
-                                    <p class="text-center font-medium">${esencia}</p>
-                                </div>
-                            `).join('')}
+                            <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
+                            <p class="mt-2 text-lg font-bold">
+                                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                                $${discountedPrice.toLocaleString()}
+                            </p>
+                            <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                                Ver detalles
+                            </button>
                         </div>
                     </div>
                 `;
-            }
-
-            // Añadir la renderización de esencias_spray_difusores dentro de la categoría 'aromas'
-            if (category === 'aromas' && products.esencias_spray_difusores) {
-                container.innerHTML += `
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold mb-4">Esencias disponibles para sprays y difusores:</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            ${products.esencias_spray_difusores.map(esencia => `
-                                <div class="bg-white p-4 rounded-lg shadow">
-                                    <p class="text-center font-medium">${esencia}</p>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Añadir la información de cortinas_gasa_info dentro de la categoría 'cortinas_interior'
-            if (category === 'cortinas_interior' && products.cortinas_gasa_info) {
-                container.innerHTML += `
-                    <div class="mt-8 bg-white p-6 rounded-lg shadow">
-                        <h3 class="text-xl font-semibold mb-4">Información sobre cortinas de gasa:</h3>
-                        <p><strong>Material:</strong> ${products.cortinas_gasa_info.material}</p>
-                        <p><strong>Color:</strong> ${products.cortinas_gasa_info.color}</p>
-                        <p><strong>Tiempo de confección:</strong> ${products.cortinas_gasa_info.tiempo_confeccion}</p>
-                        <h4 class="font-semibold mt-4 mb-2">Características:</h4>
-                        <ul class="list-disc pl-5">
-                            ${products.cortinas_gasa_info.caracteristicas.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                        <h4 class="font-semibold mt-4 mb-2">Recomendaciones:</h4>
-                        <ul class="list-disc pl-5">
-                            ${products.cortinas_gasa_info.recomendaciones.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-            }
+            }).join('');
         }
     });
 }
@@ -256,12 +201,12 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
     updateTotal();
-    updateCartDetails();
+    updateTransferModal(); // Actualiza el modal de transferencia
 }
 
 function formatPrice(price) {
@@ -297,8 +242,7 @@ function calculateShipping(postalCode) {
                     name: "Retiro en local",
                     price: 0,
                     estimatedDelivery: 'Inmediato',
-                    logo: 'path/to
-/local-icon.png',
+                    logo: 'path/to/local-icon.png',
                     description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
                 }
             };
@@ -341,9 +285,9 @@ function updateTotal() {
 
     const total = subtotal + shippingCost;
     document.getElementById('cartTotal').textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
-    updateCartDetails();
+    updateTransferModal(); // Actualiza el modal de transferencia
 }
 
 function updateAdvertisingBanner() {
@@ -367,50 +311,14 @@ function updateAdvertisingBanner() {
     advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
-function updateCartDetails() {
-    const cartDetailsContainer = document.getElementById('cartDetails');
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = subtotal * 0.1; // 10% discount
-    const total = subtotal + shippingCost - discount;
-
-    let cartDetailsHTML = `
-        <h3 class="text-lg font-bold mb-4">Detalles del pedido</h3>
-        <div class="space-y-2">
-            <h4 class="font-semibold">Productos:</h4>
-            <ul class="list-disc pl-5">
-    `;
-
-    cart.forEach(item => {
-        cartDetailsHTML += `
-            <li>${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
-        `;
-    });
-
-    cartDetailsHTML += `
-            </ul>
-            <div class="flex justify-between">
-                <span>Subtotal:</span>
-                <span>${formatPrice(subtotal)}</span>
-            </div>
-            <div class="flex justify-between">
-                <span>Costo de envío:</span>
-                <span>${formatPrice(shippingCost)}</span>
-            </div>
-            <div class="flex justify-between text-green-600">
-                <span>Descuento (10%):</span>
-                <span>-${formatPrice(discount)}</span>
-            </div>
-            <div class="flex justify-between font-bold text-lg">
-                <span>Total:</span>
-                <span>${formatPrice(total)}</span>
-            </div>
-        </div>
-    `;
-
-    cartDetailsContainer.innerHTML = cartDetailsHTML;
-
-    // Update hidden input with cart data
-    document.getElementById('cartItemsInput').value = JSON.stringify(cart);
+function prepareCartData() {
+    return JSON.stringify(cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        total: item.price * item.quantity
+    })));
 }
 
 function validateForm() {
@@ -418,10 +326,27 @@ function validateForm() {
     for (let field of requiredFields) {
         if (!field.value) {
             alert(`Por favor, completa el campo ${field.name}`);
-            return false;
+return false;
         }
     }
     return true;
+}
+
+// Implementación del slider automático para el banner de publicidad
+let currentAdSlide = 0;
+const adSlides = document.querySelectorAll('.ad-slide');
+
+function showAdSlide(index) {
+    adSlides.forEach((slide, i) => {
+        if (i === index) slide.style.display = 'block';
+        else
+            slide.style.display = 'none';
+    });
+}
+
+function nextAdSlide() {
+    currentAdSlide = (currentAdSlide + 1) % adSlides.length;
+    showAdSlide(currentAdSlide);
 }
 
 // Event Listeners
@@ -499,6 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.value === 'transferencia') {
             document.getElementById('bankDetailsModal').classList.remove('hidden');
             document.getElementById('mercadopago-button').classList.add('hidden');
+            updateTransferModal(); // Actualiza el contenido del modal de transferencia
         } else if (this.value === 'mercadopago') {
             document.getElementById('bankDetailsModal').classList.add('hidden');
             document.getElementById('mercadopago-button').classList.remove('hidden');
@@ -510,8 +436,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!validateForm()) return;
 
         const formData = new FormData(this);
-        formData.append('cartItems', JSON.stringify(cart));
+        formData.append('cartItems', prepareCartData());
 
+        // Log de los datos que se están enviando
         console.log('Datos del formulario:', Object.fromEntries(formData));
 
         fetch(this.action, {
@@ -530,6 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
+            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
             if (document.getElementById('paymentMethod').value === 'mercadopago') {
                 initiateMercadoPagoPayment();
             } else {
@@ -549,12 +477,17 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateHero, 5000);
 
     updateAdvertisingBanner();
-    setInterval(updateAdvertisingBanner, 3600000);
+    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
 
     setTimeout(() => {
         document.getElementById('whatsappNotification').classList.remove('hidden');
     }, 10000);
 
+    // Iniciar el slider automático para el banner de publicidad
+    showAdSlide(currentAdSlide);
+    setInterval(nextAdSlide, 5000); // Cambiar cada 5 segundos
+
+    // Implementación del menú acordeón para dispositivos móviles
     const accordionHeaders = document.querySelectorAll('.accordion-header');
     
     accordionHeaders.forEach(header => {
@@ -567,8 +500,73 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Remove preloader
     document.getElementById('preloader').style.display = 'none';
 });
 
 console.log("Script loaded successfully!");
 
+function updateTransferModal() {
+    const modalContent = document.getElementById('bankDetailsModalContent');
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = subtotal * 0.1; // 10% de descuento
+    const total = subtotal + shippingCost - discount;
+
+    let content = `
+        <h3 class="text-lg font-bold mb-4">Detalles del pedido</h3>
+        <div class="space-y-2">
+            <h4 class="font-semibold">Productos:</h4>
+            <ul class="list-disc pl-5">
+    `;
+
+    cart.forEach(item => {
+        content += `
+            <li>${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
+        `;
+    });
+
+    content += `
+            </ul>
+            <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>${formatPrice(subtotal)}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Costo de envío:</span>
+                <span>${formatPrice(shippingCost)}</span>
+            </div>
+            <div class="flex justify-between text-green-600">
+                <span>Descuento (10%):</span>
+                <span>-${formatPrice(discount)}</span>
+            </div>
+            <div class="flex justify-between font-bold text-lg">
+                <span>Total:</span>
+                <span>${formatPrice(total)}</span>
+            </div>
+        </div>
+        <div class="mt-6">
+            <h4 class="font-semibold mb-2">Datos bancarios para la transferencia:</h4>
+            <p>Banco: [Nombre del Banco]</p>
+            <p>Titular: [Nombre del Titular]</p>
+            <p>CBU: [Número de CBU]</p>
+            <p>CUIT/CUIL: [Número de CUIT/CUIL]</p>
+        </div>
+        <p class="mt-4 text-sm text-gray-600">
+            Por favor, realiza la transferencia por el monto total de ${formatPrice(total)} y envía el comprobante a [correo electrónico o número de WhatsApp].
+        </p>
+    `;
+
+    modalContent.innerHTML = content;
+}
+
+// Actualiza la función que maneja el cambio de método de pago
+document.getElementById('paymentMethod').addEventListener('change', function() {
+    if (this.value === 'transferencia') {
+        document.getElementById('bankDetailsModal').classList.remove('hidden');
+        document.getElementById('mercadopago-button').classList.add('hidden');
+        updateTransferModal(); // Actualiza el contenido del modal de transferencia
+    } else if (this.value === 'mercadopago') {
+        document.getElementById('bankDetailsModal').classList.add('hidden');
+        document.getElementById('mercadopago-button').classList.remove('hidden');
+    }
+});

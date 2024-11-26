@@ -177,7 +177,7 @@ function updateCartUI() {
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     if (selectedShipping) {
-        shippingCost = calculateShippingPrice(selectedShipping.price, totalItems);
+        shippingCost = calculateShippingCost(selectedShipping.price, totalItems);
     }
     
     const total = subtotal + shippingCost;
@@ -258,12 +258,13 @@ function updateShippingOptions(shippingOptions) {
     `).join('');
 }
 
-function calculateShippingPrice(basePrice, itemCount) {
-    if (itemCount <= 1) {
-        return basePrice;
-    } else {
-        return basePrice * (1 + 0.28 * (itemCount - 1));
-    }
+function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
+  if (itemCount <= 1) {
+    return baseShippingCost;
+  } else {
+    const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
+    return baseShippingCost + additionalCost;
+  }
 }
 
 function updateTotal() {
@@ -273,7 +274,7 @@ function updateTotal() {
     const selectedShipping = shippingOptions[shippingMethod];
     
     if (selectedShipping) {
-        shippingCost = calculateShippingPrice(selectedShipping.price, itemCount);
+        shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
     }
 
     const total = subtotal + shippingCost;
@@ -318,7 +319,7 @@ function validateForm() {
     for (let field of requiredFields) {
         if (!field.value) {
             alert(`Por favor, completa el campo ${field.name}`);
-            return false;
+return false;
         }
     }
     return true;
@@ -385,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateShippingOptions(shippingOptions);
                     document.getElementById('shippingOptions').classList.remove('hidden');
                     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-                    shippingCost = calculateShippingPrice(shippingOptions.correoArgentinoDomicilio.price, itemCount);
+                    shippingCost = calculateShippingCost(shippingOptions.correoArgentinoDomicilio.price, itemCount);
                     updateTotal();
                 });
         } else {
@@ -397,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedOption = shippingOptions[this.value];
         if (selectedOption) {
             const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            shippingCost = calculateShippingPrice(selectedOption.price, itemCount);
+            shippingCost = calculateShippingCost(selectedOption.price, itemCount);
             updateTotal();
         }
     });
@@ -495,3 +496,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+

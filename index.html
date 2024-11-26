@@ -252,25 +252,20 @@
         <div id="hero" class="relative w-full h-0 pb-[56.25%] overflow-hidden">
             <!-- Las imágenes se insertarán dinámicamente aquí -->
         </div>
-
-        <!-- New Advertising Banner with Slider -->
-        <div class="bg-primary p-6 text-center text-white ad-slider">
-            <div class="ad-slide">
-                <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
-                <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
-                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
+        <!-- Featured Collection Section -->
+        <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6">
+                        <h2 class="text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
+                        <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
+                    </div>
+                    <div class="relative">
+                        <img src="img/banner.png" alt="Colección Destacada" class="w-full rounded-lg shadow-xl">
+                    </div>
+                </div>
             </div>
-            <div class="ad-slide">
-                <h2 class="text-2xl font-bold mb-2 font-serif">Envío Gratis</h2>
-                <p class="text-lg mb-2">En compras superiores a $150,000.</p>
-                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Comprar Ahora</a>
-            </div>
-            <div class="ad-slide">
-                <h2 class="text-2xl font-bold mb-2 font-serif">Nueva Colección</h2>
-                <p class="text-lg mb-2">Descubre nuestras últimas novedades en decoración.</p>
-                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Explorar</a>
-            </div>
-        </div>
+        </section>
 
         <!-- Product Sections -->
         <section id="velas" class="container mx-auto px-4 py-12">
@@ -283,6 +278,13 @@
         <section id="aromas" class="container mx-auto px-4 py-12">
             <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">AROMAS</h2>
             <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </section>
+    
+        <section id="ceramica" class="container mx-auto px-4 py-12">
+            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CERÁMICA</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
@@ -300,12 +302,7 @@
             </div>
         </section>
 
-        <section id="ceramica" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CERÁMICA</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
-                <!-- Products will be dynamically inserted here -->
-            </div>
-        </section>
+        
 
         <!-- New sections for Accesorios, Cubre sommier, and Cortinas de interior -->
         <section id="accesorios" class="container mx-auto px-4 py-12">
@@ -328,22 +325,25 @@
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
-
-
-        <!-- Featured Collection Section -->
-        <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
-            <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
-                        <p class="text-xl text-gray-600">TENDENCIAS 2024</p>
-                    </div>
-                    <div class="relative">
-                        <img src="img/banner.png" alt="Colección Destacada" class="w-full rounded-lg shadow-xl">
-                    </div>
-                </div>
+        
+        <!-- New Advertising Banner with Slider -->
+        <div class="bg-primary p-6 text-center text-white ad-slider">
+            <div class="ad-slide">
+                <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
+                <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
+                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
             </div>
-        </section>
+            <div class="ad-slide">
+                <h2 class="text-2xl font-bold mb-2 font-serif">Envío Gratis</h2>
+                <p class="text-lg mb-2">En compras superiores a $150,000.</p>
+                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Comprar Ahora</a>
+            </div>
+            <div class="ad-slide">
+                <h2 class="text-2xl font-bold mb-2 font-serif">Nueva Colección</h2>
+                <p class="text-lg mb-2">Descubre nuestras últimas novedades en decoración.</p>
+                <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Explorar</a>
+            </div>
+        </div>
 
         <!-- Features Section with Icons -->
         <section class="bg-white py-12 mb-16">

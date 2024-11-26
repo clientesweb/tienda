@@ -11,7 +11,8 @@
     { "id": 9, "name": "Teva x3", "price": 10800, "image": "img/teva-x3.jpg", "description": "Set de 3 velas Teva" },
     { "id": 10, "name": "Yanis grande", "price": 5300, "image": "img/yanis-grande.jpg", "description": "Vela Yanis grande" },
     { "id": 11, "name": "Bombones Marie", "price": 2760, "image": "img/bombones-marie.jpg", "description": "5 mini bombones de cera de soja perfumados" },
-    { "id": 12, "name": "Sèlène x3", "price": 4370, "image": "img/selene-x3.jpg", "description": "Set de 3 velas Sèlène" }
+    { "id": 12, "name": "Sèlène x3", "price": 4370, "image": "img/selene-x3.jpg", "description": "Set de 3 velas Sèlène" },
+    { "id": 13, "name": "Apagavela fleur", "price": 2800, "image": "img/apagavela-fleur.jpg", "description": "Apagavela color plata con mango labrado y dije colgante. Medidas: 7cm de largo y aprox 1cm el capuchon. Diferentes modelos" }
   ],
   "aromas": [
     { "id": 13, "name": "Claire", "price": 9360, "image": "img/claire.jpg", "description": "Spray textil de 250cc" },
@@ -19,12 +20,54 @@
     { "id": 15, "name": "Anais", "price": 3760, "image": "img/difusor-anais.jpg", "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard." }
   ],
   "ceramica": [
-    { "id": 19, "name": "Set de Mate Amelia", "price": 30800, "image": "img/set-mate-amelia.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera y plato de 22cm de diámetro." },
-    { "id": 20, "name": "Set Sophie", "price": 24000, "image": "img/set-sophie.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón." },
-    { "id": 21, "name": "Fanal Lucia", "price": 12000, "image": "img/fanal-lucia.jpg", "description": "Pieza de cerámica única realizada y pintada a mano. Incluye: fanal y plato." },
-    { "id": 22, "name": "Set Julieta", "price": 19400, "image": "img/set-julieta.jpg", "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada." },
-    { "id": 23, "name": "Mini Florero Lea", "price": 8000, "image": "img/mini-florero-lea.jpg", "description": "Pieza única de cerámica realizada y pintada a mano." },
-    { "id": 24, "name": "Florero Luisa (forma de nube)", "price": 14000, "image": "img/florero-luisa.jpg", "description": "Pieza única de cerámica realizada y pintada a mano con forma de nube." }
+    {
+      "id": 1,
+      "name": "Florero Luisa",
+      "price": 16100,
+      "image": "img/florero-luisa.jpg",
+      "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 15 cm de alto x 11 cm de diámetro"
+    },
+    {
+      "id": 2,
+      "name": "Set Julieta",
+      "price": 22310,
+      "image": "img/set-julieta.jpg",
+      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: tazón y plato tostada. Medidas: Tazón: 11 cm diámetro x 8cm de alto, Plato: 16cm de largo x 12cm de ancho"
+    },
+    {
+      "id": 3,
+      "name": "Mini Florero Lea",
+      "price": 9200,
+      "image": "img/mini-florero-lea.jpg",
+      "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 12 cm de alto"
+    },
+    {
+      "id": 4,
+      "name": "Fanal Lucia",
+      "price": 13800,
+      "image": "img/fanal-lucia.jpg",
+      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: fanal y plato. Medidas: Fanal: 10cm de alto x 8cm de diámetro, Plato: 12 cm de diámetro"
+    },
+    {
+      "id": 5,
+      "name": "Florero Chloe",
+      "price": 20470,
+      "image": "img/florero-chloe.jpg",
+      "description": "Pieza de cerámica única realizada y pintada a mano. Medidas: 13 cm de alto x 13 cm de diámetro"
+    },
+    {
+      "id": 6,
+      "name": "Set de Mate Amelia",
+      "price": 35420,
+      "image": "img/set-mate-amelia.jpg",
+      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: mate, azucarera con tapa y bandeja. Medidas: Mate: 11 cm de alto, Azucarera: 9cm de alto x 9cm de diámetro, Bandeja: 22cm de diámetro"
+    },
+    {
+      "id": 7,
+      "name": "Set Sophie",
+      "price": 27600,
+      "image": "img/set-sophie.jpg",
+      "description": "Piezas de cerámica únicas realizadas y pintadas a mano. Incluye: taza y plato corazón. Medidas: Taza: 9 cm de diámetro x 11 de alto, Plato corazón: 17cm de largo x 21cm de ancho." }
   ],
   "textiles": [
     { "id": 16, "name": "Cortina Burdeos", "price": 75200, "image": "img/cortina-burdeos.jpg", "description": "Cortina de baño confeccionada en 100% algodón con volados y puntilla. Mide 180x180 cm. Lazos para atar al barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar." },

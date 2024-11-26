@@ -303,12 +303,12 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const
+itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
-    if (
-selectedShipping) {
+    if (selectedShipping) {
         shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
     }
 
@@ -361,7 +361,6 @@ function validateForm() {
     }
     return true;
 }
-
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -463,11 +462,11 @@ CUIT/CUIL: 27-37092938-1
     // Add functionality to download purchase details
     document.getElementById('downloadPurchaseDetails').addEventListener('click', function() {
         const purchaseDetails = generatePurchaseDetails();
-        const blob = new Blob([purchaseDetails], { type: 'text/plain' });
+        const blob = new Blob([purchaseDetails], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'detalles_compra.txt';
+        a.download = 'detalles_compra.pdf';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -480,24 +479,62 @@ function generatePurchaseDetails() {
     const discount = subtotal * 0.1; // 10% discount
     const total = subtotal + shippingCost - discount;
 
-    let details = 'Detalles de la compra:\n\n';
-    details += 'Productos:\n';
-    cart.forEach(item => {
-        details += `${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}\n`;
-    });
-    details += `\nSubtotal: ${formatPrice(subtotal)}\n`;
-    details += `Costo de envío: ${formatPrice(shippingCost)}\n`;
-    details += `Descuento (10%): -${formatPrice(discount)}\n`;
-    details += `Total: ${formatPrice(total)}\n\n`;
-    details += 'Datos bancarios para la transferencia:\n';
-    details += 'Banco: Banco Supervielle\n';
-    details += 'Titular: Virginia Olivero\n';
-    details += 'CTA: CA ARS 131-4372490-5\n';
-    details += 'CBU: 0270131420043724900058\n';
-    details += 'ALIAS: MON.AMOUR.TEXTIL\n';
-    details += 'CUIT/CUIL: 27-37092938-1\n';
+    const doc = new jsPDF();
+    
+    // Add logo
+    const logoImg = new Image();
+    logoImg.src = 'path/to/your/logo.png'; // Replace with your logo path
+    doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
 
-    return details;
+    // Add title
+    doc.setFontSize(22);
+    doc.setTextColor(33, 150, 243); // Primary color
+    doc.text('Detalles de la compra', 105, 40, null, null, 'center');
+
+    // Add content
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    let yPos = 60;
+
+    doc.text('Productos:', 10, yPos);
+    yPos += 10;
+
+    cart.forEach(item => {
+        doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
+        yPos += 7;
+    });
+
+    yPos += 10;
+    doc.text(`Subtotal: ${formatPrice(subtotal)}`, 10, yPos);
+    yPos += 7;
+    doc.text(`Costo de envío: ${formatPrice(shippingCost)}`, 10, yPos);
+    yPos += 7;
+    doc.setTextColor(0, 128, 0); // Green color for discount
+    doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
+    yPos += 7;
+    doc.setTextColor(33, 150, 243); // Primary color for total
+    doc.setFontSize(14);
+    doc.text(`Total: ${formatPrice(total)}`, 10, yPos);
+
+    yPos += 20;
+    doc.setFontSize(16);
+    doc.setTextColor(0);
+    doc.text('Datos bancarios para la transferencia:', 10, yPos);
+    yPos += 10;
+    doc.setFontSize(12);
+    doc.text('Banco: Banco Supervielle', 10, yPos);
+    yPos += 7;
+    doc.text('Titular: Virginia Olivero', 10, yPos);
+    yPos += 7;
+    doc.text('CTA: CA ARS 131-4372490-5', 10, yPos);
+    yPos += 7;
+    doc.text('CBU: 0270131420043724900058', 10, yPos);
+    yPos += 7;
+    doc.text('ALIAS: MON.AMOUR.TEXTIL', 10, yPos);
+    yPos += 7;
+    doc.text('CUIT/CUIL: 27-37092938-1', 10, yPos);
+
+    return doc.output();
 }
 
 // Implementación del slider automático para el banner de publicidad
@@ -569,9 +606,11 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Por favor, ingrese un código postal válido.');
         }
     });
-document.getElementById('shippingMethod').addEventListener('change', function() {
+
+    document.getElementById('shippingMethod').addEventListener('change', function() {
         const selectedOption = shippingOptions[this.value];
-        if (selectedOption) {
+        
+if (selectedOption) {
             const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             shippingCost = calculateShippingCost(selectedOption.price, itemCount);
             updateTotal();
@@ -628,11 +667,11 @@ document.getElementById('shippingMethod').addEventListener('change', function() 
             } else {
                 // Trigger the download of purchase details
                 const purchaseDetails = generatePurchaseDetails();
-                const blob = new Blob([purchaseDetails], { type: 'text/plain' });
+                const blob = new Blob([purchaseDetails], { type: 'application/pdf' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'detalles_compra.txt';
+                a.download = 'detalles_compra.pdf';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);

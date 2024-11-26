@@ -31,7 +31,8 @@ const productContainers = {
     textiles: document.getElementById('textilesContainer'),
     accesorios: document.getElementById('accesoriosContainer'),
     cubre_sommier: document.getElementById('cubre_sommierContainer'),
-    cortinas_interior: document.getElementById('cortinas_interiorContainer')
+    cortinas_interior: document.getElementById('cortinas_interiorContainer'),
+    cortinas_gasa: document.getElementById('cortinas_gasaContainer')
 };
 
 // Functions
@@ -63,15 +64,15 @@ function updateHero() {
 }
 
 function renderProducts() {
-    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior'];
+    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'cortinas_gasa'];
     
     categories.forEach(category => {
-        const container = document.getElementById(`${category}Container`);
+        const container = productContainers[category];
         if (container && products[category]) {
             container.innerHTML = products[category].map(product => {
                 const discountedPrice = product.price * 0.9; // Apply 10% discount
                 return `
-                    <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
                             10% OFF
                         </div>
@@ -327,11 +328,9 @@ const adSlides = document.querySelectorAll('.ad-slide');
 
 function showAdSlide(index) {
     adSlides.forEach((slide, i) => {
-        if (i === index) {
-            slide.style.display = 'block';
-        } else {
+        if (i === index) slide.style.display = 'block';
+        else
             slide.style.display = 'none';
-        }
     });
 }
 

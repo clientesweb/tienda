@@ -234,7 +234,7 @@ function updateCartUI() {
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
     updateTotal();
-    updateTransferModal(); // Actualiza el modal de transferencia
+    updateTransferModal();
 }
 
 function formatPrice(price) {
@@ -307,15 +307,16 @@ function updateTotal() {
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
-    if (selectedShipping) {
+    if (
+selectedShipping) {
         shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
     }
 
     const total = subtotal + shippingCost;
-document.getElementById('cartTotal').textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    document.getElementById('cartTotal').textContent = formatPrice(total);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
-    updateTransferModal(); // Actualiza el modal de transferencia
+    updateTransferModal();
 }
 
 function updateAdvertisingBanner() {
@@ -346,7 +347,7 @@ function prepareCartData() {
         price: item.price,
         quantity: item.quantity,
         total: item.price * item.quantity,
-        scent: item.scent // Add scent to cart data
+        scent: item.scent
     })));
 }
 
@@ -403,10 +404,12 @@ function updateTransferModal() {
             <div class="mt-8 p-4 bg-gray-100 rounded-lg">
                 <h4 class="font-semibold text-lg mb-4">Datos bancarios para la transferencia:</h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <p><span class="font-medium">Banco:</span> Banco de la Nación Argentina</p>
-                    <p><span class="font-medium">Titular:</span> Mon Amour Textil S.R.L.</p>
-                    <p><span class="font-medium">CBU:</span> 0110000000000000000000</p>
-                    <p><span class="font-medium">CUIT:</span> 00-00000000-0</p>
+                    <p><span class="font-medium">Banco:</span> Banco Supervielle</p>
+                    <p><span class="font-medium">Titular:</span> Virginia Olivero</p>
+                    <p><span class="font-medium">CTA:</span> CA ARS 131-4372490-5</p>
+                    <p><span class="font-medium">CBU:</span> 0270131420043724900058</p>
+                    <p><span class="font-medium">ALIAS:</span> MON.AMOUR.TEXTIL</p>
+                    <p><span class="font-medium">CUIT/CUIL:</span> 27-37092938-1</p>
                 </div>
                 <button id="copyBankDetails" class="mt-4 bg-secondary text-white px-4 py-2 rounded hover:bg-secondary-dark transition-colors">
                     Copiar datos bancarios
@@ -427,6 +430,9 @@ function updateTransferModal() {
                         Enviar por WhatsApp
                     </a>
                 </div>
+                <button id="downloadPurchaseDetails" class="mt-6 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary-dark transition-colors">
+                    Descargar detalles de la compra
+                </button>
             </div>
         </div>
     `;
@@ -434,20 +440,64 @@ function updateTransferModal() {
     modalContent.innerHTML = content;
     modalContent.classList.remove('hidden');
 
-    // Agregar funcionalidad para copiar datos bancarios
+    // Add functionality to copy bank details without showing an alert
     document.getElementById('copyBankDetails').addEventListener('click', function() {
         const bankDetails = `
-Banco: Banco de la Nación Argentina
-Titular: Mon Amour Textil S.R.L.
-CBU: 0110000000000000000000
-CUIT: 00-00000000-0
+Banco: Banco Supervielle
+Titular: Virginia Olivero
+CTA: CA ARS 131-4372490-5
+CBU: 0270131420043724900058
+ALIAS: MON.AMOUR.TEXTIL
+CUIT/CUIL: 27-37092938-1
         `.trim();
         navigator.clipboard.writeText(bankDetails).then(() => {
-            alert('Datos bancarios copiados al portapapeles');
+            this.textContent = 'Datos copiados';
+            setTimeout(() => {
+                this.textContent = 'Copiar datos bancarios';
+            }, 2000);
         }).catch(err => {
             console.error('Error al copiar: ', err);
         });
     });
+
+    // Add functionality to download purchase details
+    document.getElementById('downloadPurchaseDetails').addEventListener('click', function() {
+        const purchaseDetails = generatePurchaseDetails();
+        const blob = new Blob([purchaseDetails], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'detalles_compra.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+}
+
+function generatePurchaseDetails() {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = subtotal * 0.1; // 10% discount
+    const total = subtotal + shippingCost - discount;
+
+    let details = 'Detalles de la compra:\n\n';
+    details += 'Productos:\n';
+    cart.forEach(item => {
+        details += `${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}\n`;
+    });
+    details += `\nSubtotal: ${formatPrice(subtotal)}\n`;
+    details += `Costo de envío: ${formatPrice(shippingCost)}\n`;
+    details += `Descuento (10%): -${formatPrice(discount)}\n`;
+    details += `Total: ${formatPrice(total)}\n\n`;
+    details += 'Datos bancarios para la transferencia:\n';
+    details += 'Banco: Banco Supervielle\n';
+    details += 'Titular: Virginia Olivero\n';
+    details += 'CTA: CA ARS 131-4372490-5\n';
+    details += 'CBU: 0270131420043724900058\n';
+    details += 'ALIAS: MON.AMOUR.TEXTIL\n';
+    details += 'CUIT/CUIL: 27-37092938-1\n';
+
+    return details;
 }
 
 // Implementación del slider automático para el banner de publicidad
@@ -519,8 +569,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Por favor, ingrese un código postal válido.');
         }
     });
-
-    document.getElementById('shippingMethod').addEventListener('change', function() {
+document.getElementById('shippingMethod').addEventListener('change', function() {
         const selectedOption = shippingOptions[this.value];
         if (selectedOption) {
             const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -542,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.value === 'transferencia') {
             document.getElementById('bankDetailsModal').classList.remove('hidden');
             document.getElementById('mercadopago-button').classList.add('hidden');
-            updateTransferModal(); // Actualiza el contenido del modal de transferencia
+            updateTransferModal();
         } else if (this.value === 'mercadopago') {
             document.getElementById('bankDetailsModal').classList.add('hidden');
             document.getElementById('mercadopago-button').classList.remove('hidden');
@@ -556,7 +605,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(this);
         formData.append('cartItems', prepareCartData());
 
-        // Log de los datos que se están enviando
         console.log('Datos del formulario:', Object.fromEntries(formData));
 
         fetch(this.action, {
@@ -575,11 +623,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }).then(data => {
             console.log('Respuesta exitosa de Formspree:', data);
-            // Aquí llamamos a la función para iniciar el proceso de pago con Mercado Pago
             if (document.getElementById('paymentMethod').value === 'mercadopago') {
                 initiateMercadoPagoPayment();
             } else {
-                alert('Gracias por tu compra. Por favor, realiza la transferencia según los datos proporcionados.');
+                // Trigger the download of purchase details
+                const purchaseDetails = generatePurchaseDetails();
+                const blob = new Blob([purchaseDetails], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'detalles_compra.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                alert('Gracias por tu compra. Los detalles de la compra se han descargado automáticamente.');
             }
         }).catch(error => {
             console.error('Error detallado:', error);

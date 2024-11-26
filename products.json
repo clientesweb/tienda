@@ -113,6 +113,19 @@
       "description": "Cuenco de 16cm de diámetro reutilizable de madera con 400 gr de cera de soja aromatizada"
     }
   ],
+  "esencias_velas": [
+    "Coco",
+    "Jazmín",
+    "Lavanda",
+    "Limón",
+    "Sandia",
+    "Cherry",
+    "Mango & maracuya",
+    "Vainilla & caramelo",
+    "Azediña",
+    "Rosa",
+    "Café"
+  ],
   "aromas": [
     {
       "id": 14,
@@ -135,6 +148,17 @@
       "image": "img/difusor-anais.jpg",
       "description": "Envase de vidrio colgante con cordón. Ideal para auto o placard."
     }
+  ],
+  "esencias_spray_difusores": [
+    "Naranja & pimienta",
+    "Hawai",
+    "Coniglio",
+    "Wanama",
+    "Peonias",
+    "Pomelo",
+    "Cítrico",
+    "Tilo & bamboo",
+    "Lavanda"
   ],
   "ceramica": [
     {

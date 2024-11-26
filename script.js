@@ -71,11 +71,24 @@ function renderProducts() {
         if (container && products[category]) {
             container.innerHTML = products[category].map(product => {
                 const discountedPrice = product.price * 0.9; // Apply 10% discount
+                const scentOptions = category === 'velas' ? products.esencias_velas : 
+                                     category === 'aromas' ? products.esencias_spray_difusores : 
+                                     null;
+                
+                let scentSelect = '';
+                if (scentOptions) {
+                    scentSelect = `
+                        <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
+                            <option value="">Seleccionar aroma</option>
+                            ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+                        </select>
+                    `;
+                }
+
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="p-4">
                             <div class="relative mb-4 aspect-square">
-                                <!-- Updated discount tag with custom colors -->
                                 <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
                                     style="background-color: #D4C098; color: #848071;">
                                     10% OFF
@@ -87,6 +100,7 @@ function renderProducts() {
                                 <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
                                 $${discountedPrice.toLocaleString()}
                             </p>
+                            ${scentSelect}
                             <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
                                 Ver detalles
                             </button>
@@ -103,6 +117,9 @@ function openProductModal(productId, category) {
     if (!product) return;
 
     const discountedPrice = product.price * 0.9; // Apply 10% discount
+    const scentOptions = category === 'velas' ? products.esencias_velas : 
+                         category === 'aromas' ? products.esencias_spray_difusores : 
+                         null;
 
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
@@ -118,6 +135,15 @@ function openProductModal(productId, category) {
                 <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
                 $${discountedPrice.toLocaleString()}
             </p>
+            ${scentOptions ? `
+                <div>
+                    <label for="scent" class="block text-sm font-medium text-gray-700">Aroma</label>
+                    <select id="scent" name="scent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                        <option value="">Seleccionar aroma</option>
+                        ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+                    </select>
+                </div>
+            ` : ''}
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
                 <div class="flex items-center">
@@ -152,20 +178,21 @@ function addToCart(productId, category) {
 
     const quantity = parseInt(document.getElementById('quantity').value);
     const discountedPrice = product.price * 0.9; // Apply 10% discount
-    const existingItem = cart.find(item => item.id === product.id);
+    const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
+    const existingItem = cart.find(item => item.id === product.id && item.scent === scent);
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, price: discountedPrice, quantity });
+        cart.push({ ...product, price: discountedPrice, quantity, scent });
     }
 
     updateCartUI();
     closeProductModal();
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+function removeFromCart(productId, scent) {
+    cart = cart.filter(item => !(item.id === productId && item.scent === scent));
     updateCartUI();
 }
 
@@ -192,9 +219,10 @@ function updateCartUI() {
                 <div>
                     <p class="font-medium font-serif">${item.name}</p>
                     <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
+                    ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
                 </div>
             </div>
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id})">
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}')">
                 <i class="fas fa-trash h-4 w-4"></i>
             </button>
         </div>
@@ -317,7 +345,8 @@ function prepareCartData() {
         name: item.name,
         price: item.price,
         quantity: item.quantity,
-        total: item.price * item.quantity
+        total: item.price * item.quantity,
+        scent: item.scent // Add scent to cart data
     })));
 }
 

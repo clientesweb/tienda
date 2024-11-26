@@ -72,6 +72,9 @@ function renderProducts() {
                 const discountedPrice = product.price * 0.9; // Apply 10% discount
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                            10% OFF
+                        </div>
                         <div class="p-4">
                             <div class="relative mb-4 aspect-square">
                                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
@@ -328,7 +331,7 @@ function showAdSlide(index) {
             slide.style.display = 'block';
         } else {
             slide.style.display = 'none';
-}
+        }
     });
 }
 
@@ -491,4 +494,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
-

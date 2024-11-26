@@ -201,7 +201,7 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
@@ -284,7 +284,7 @@ function updateTotal() {
 
     const total = subtotal + shippingCost;
     document.getElementById('cartTotal').textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.8);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
 }
 

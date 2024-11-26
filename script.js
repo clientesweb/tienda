@@ -206,6 +206,7 @@ function updateCartUI() {
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
     updateTotal();
+    updateTransferModal(); // Actualiza el modal de transferencia
 }
 
 function formatPrice(price) {
@@ -286,6 +287,7 @@ function updateTotal() {
     document.getElementById('cartTotal').textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    updateTransferModal(); // Actualiza el modal de transferencia
 }
 
 function updateAdvertisingBanner() {
@@ -422,6 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (this.value === 'transferencia') {
             document.getElementById('bankDetailsModal').classList.remove('hidden');
             document.getElementById('mercadopago-button').classList.add('hidden');
+            updateTransferModal(); // Actualiza el contenido del modal de transferencia
         } else if (this.value === 'mercadopago') {
             document.getElementById('bankDetailsModal').classList.add('hidden');
             document.getElementById('mercadopago-button').classList.remove('hidden');
@@ -502,4 +505,69 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+
+function updateTransferModal() {
+    const modalContent = document.getElementById('bankDetailsModalContent');
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = subtotal * 0.1; // 10% de descuento
+    const total = subtotal + shippingCost - discount;
+
+    let content = `
+        <h3 class="text-lg font-bold mb-4">Detalles del pedido</h3>
+        <div class="space-y-2">
+            <h4 class="font-semibold">Productos:</h4>
+            <ul class="list-disc pl-5">
+    `;
+
+    cart.forEach(item => {
+        content += `
+            <li>${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
+        `;
+    });
+
+    content += `
+            </ul>
+            <div class="flex justify-between">
+                <span>Subtotal:</span>
+                <span>${formatPrice(subtotal)}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Costo de envío:</span>
+                <span>${formatPrice(shippingCost)}</span>
+            </div>
+            <div class="flex justify-between text-green-600">
+                <span>Descuento (10%):</span>
+                <span>-${formatPrice(discount)}</span>
+            </div>
+            <div class="flex justify-between font-bold text-lg">
+                <span>Total:</span>
+                <span>${formatPrice(total)}</span>
+            </div>
+        </div>
+        <div class="mt-6">
+            <h4 class="font-semibold mb-2">Datos bancarios para la transferencia:</h4>
+            <p>Banco: [Nombre del Banco]</p>
+            <p>Titular: [Nombre del Titular]</p>
+            <p>CBU: [Número de CBU]</p>
+            <p>CUIT/CUIL: [Número de CUIT/CUIL]</p>
+        </div>
+        <p class="mt-4 text-sm text-gray-600">
+            Por favor, realiza la transferencia por el monto total de ${formatPrice(total)} y envía el comprobante a [correo electrónico o número de WhatsApp].
+        </p>
+    `;
+
+    modalContent.innerHTML = content;
+}
+
+// Actualiza la función que maneja el cambio de método de pago
+document.getElementById('paymentMethod').addEventListener('change', function() {
+    if (this.value === 'transferencia') {
+        document.getElementById('bankDetailsModal').classList.remove('hidden');
+        document.getElementById('mercadopago-button').classList.add('hidden');
+        updateTransferModal(); // Actualiza el contenido del modal de transferencia
+    } else if (this.value === 'mercadopago') {
+        document.getElementById('bankDetailsModal').classList.add('hidden');
+        document.getElementById('mercadopago-button').classList.remove('hidden');
+    }
+});
 

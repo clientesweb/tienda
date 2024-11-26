@@ -112,12 +112,6 @@
       "image": "img/lottie-grande.jpg",
       "description": "Cuenco de 16cm de diámetro reutilizable de madera con 400 gr de cera de soja aromatizada"
     }
-    "id": 17,
-      "name": "Vela Caroline",
-      "price": 8740,
-      "image": "img/caroline.jpg",
-      "description": "vela de cera soja aromatizada x3"
-    }
   ],
   "esencias_velas": [
     "Coco",

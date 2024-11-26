@@ -183,7 +183,6 @@ function openProductModal(productId, category) {
 
     document.getElementById('productModal').classList.remove('hidden');
 }
-
 function closeProductModal() {
     document.getElementById('productModal').classList.add('hidden');
 }
@@ -252,7 +251,7 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
@@ -326,8 +325,7 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const
-itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
@@ -384,6 +382,7 @@ function validateForm() {
     }
     return true;
 }
+
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -510,11 +509,6 @@ function generatePurchaseDetails() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        // Add logo
-        // const logoImg = new Image();
-        // logoImg.src = 'path/to/your/logo.png'; // Replace with your logo path
-        // doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
-
         // Add title
         doc.setFontSize(22);
         doc.setTextColor(33, 150, 243); // Primary color
@@ -763,4 +757,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
-

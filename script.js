@@ -126,35 +126,41 @@ function openProductModal(productId, category) {
 
     modalTitle.textContent = product.name;
     modalContent.innerHTML = `
-        <div class="grid gap-4 py-4">
-            <div class="relative h-64 w-full">
-                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+        <div class="flex flex-col md:flex-row md:space-x-6">
+            <div class="md:w-1/2">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-auto object-contain rounded-lg shadow-md">
             </div>
-            <p class="text-gray-600">${product.description}</p>
-            <p class="text-lg font-bold">
-                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                $${discountedPrice.toLocaleString()}
-            </p>
-            ${scentOptions ? `
+            <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col justify-between">
                 <div>
-                    <label for="scent" class="block text-sm font-medium text-gray-700">Aroma</label>
-                    <select id="scent" name="scent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar aroma</option>
-                        ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
-                    </select>
+                    <p class="text-gray-600 mb-4">${product.description}</p>
+                    <p class="text-2xl font-bold mb-4">
+                        <span class="line-through text-gray-500 mr-2">$${product.price.toLocaleString()}</span>
+                        <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
+                    </p>
+                    ${scentOptions ? `
+                        <div class="mb-4">
+                            <label for="scent" class="block text-sm font-medium text-gray-700 mb-2">Aroma</label>
+                            <select id="scent" name="scent" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                                <option value="">Seleccionar aroma</option>
+                                ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+                            </select>
+                        </div>
+                    ` : ''}
                 </div>
-            ` : ''}
-            <div class="flex items-center justify-between">
-                <label for="quantity" class="text-sm font-medium">Cantidad:</label>
-                <div class="flex items-center">
-                    <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
-                    <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
-                    <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="quantity" class="text-sm font-medium text-gray-700">Cantidad:</label>
+                        <div class="flex items-center">
+                            <button class="bg-gray-200 px-3 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
+                            <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
+                            <button class="bg-gray-200 px-3 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold" onclick="addToCart(${product.id}, '${category}')">
+                        Agregar al carrito
+                    </button>
                 </div>
             </div>
-            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
-                Agregar al carrito
-            </button>
         </div>
     `;
 

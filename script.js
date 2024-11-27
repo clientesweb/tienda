@@ -125,17 +125,6 @@ function openProductModal(productId, category) {
     const modalContent = document.getElementById('productModalContent');
 
     modalTitle.textContent = product.name;
-    
-    let additionalInfo = '';
-    if (category === 'cortinas_interior' && product.cortinas_gasa_info) {
-        additionalInfo = `
-            <div class="mt-4">
-                <h4 class="font-semibold">Información adicional:</h4>
-                <p>${product.cortinas_gasa_info}</p>
-            </div>
-        `;
-    }
-
     modalContent.innerHTML = `
         <div class="grid gap-4 py-4">
             <div class="relative h-64 w-full">
@@ -155,7 +144,6 @@ function openProductModal(productId, category) {
                     </select>
                 </div>
             ` : ''}
-            ${additionalInfo}
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
                 <div class="flex items-center">
@@ -290,6 +278,7 @@ function calculateShipping(postalCode) {
         }, 1000);
     });
 }
+
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -314,7 +303,8 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const
+itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
@@ -371,7 +361,6 @@ function validateForm() {
     }
     return true;
 }
-
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -498,6 +487,11 @@ function generatePurchaseDetails() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
+        // Add logo
+        // const logoImg = new Image();
+        // logoImg.src = 'path/to/your/logo.png'; // Replace with your logo path
+        // doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
+
         // Add title
         doc.setFontSize(22);
         doc.setTextColor(33, 150, 243); // Primary color
@@ -530,8 +524,7 @@ function generatePurchaseDetails() {
 
         yPos += 20;
         doc.setFontSize(16);
-        doc.setText
-(0);
+        doc.setTextColor(0);
         doc.text('Datos bancarios para la transferencia:', 10, yPos);
         yPos += 10;
         doc.setFontSize(12);

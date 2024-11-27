@@ -47,20 +47,24 @@ async function loadProducts() {
 }
 
 function updateBanner() {
-    bannerMessageEl.textContent = bannerMessages[currentBanner];
-    currentBanner = (currentBanner + 1) % bannerMessages.length;
+    if (bannerMessageEl) {
+        bannerMessageEl.textContent = bannerMessages[currentBanner];
+        currentBanner = (currentBanner + 1) % bannerMessages.length;
+    }
 }
 
 function updateHero() {
-    const img = document.createElement('img');
-    img.src = heroImages[currentHeroImage];
-    img.alt = "Hero image";
-    img.className = "absolute top-0 left-0 w-full h-full object-cover";
-    
-    heroEl.innerHTML = '';
-    heroEl.appendChild(img);
-    
-    currentHeroImage = (currentHeroImage + 1) % heroImages.length;
+    if (heroEl) {
+        const img = document.createElement('img');
+        img.src = heroImages[currentHeroImage];
+        img.alt = "Hero image";
+        img.className = "absolute top-0 left-0 w-full h-full object-cover";
+        
+        heroEl.innerHTML = '';
+        heroEl.appendChild(img);
+        
+        currentHeroImage = (currentHeroImage + 1) % heroImages.length;
+    }
 }
 
 function renderProducts() {
@@ -124,71 +128,86 @@ function openProductModal(productId, category) {
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
 
-    modalTitle.textContent = product.name;
-    modalContent.innerHTML = `
-        <div class="grid gap-4 py-4">
-            <div class="relative h-64 w-full">
-                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
-            </div>
-            <p class="text-gray-600">${product.description}</p>
-            <p class="text-lg font-bold">
-                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                $${discountedPrice.toLocaleString()}
-            </p>
-            ${scentOptions ? `
-                <div>
-                    <label for="scent" class="block text-sm font-medium text-gray-700">Aroma</label>
-                    <select id="scent" name="scent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                        <option value="">Seleccionar aroma</option>
-                        ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
-                    </select>
+    if (modalTitle && modalContent) {
+        modalTitle.textContent = product.name;
+        modalContent.innerHTML = `
+            <div class="grid gap-4 py-4">
+                <div class="relative h-64 w-full">
+                    <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                 </div>
-            ` : ''}
-            <div class="flex items-center justify-between">
-                <label for="quantity" class="text-sm font-medium">Cantidad:</label>
-                <div class="flex items-center">
-                    <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
-                    <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
-                    <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                <p class="text-gray-600">${product.description}</p>
+                <p class="text-lg font-bold">
+                    <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                    $${discountedPrice.toLocaleString()}
+                </p>
+                ${scentOptions ? `
+                    <div>
+                        <label for="scent" class="block text-sm font-medium text-gray-700">Aroma</label>
+                        <select id="scent" name="scent" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            <option value="">Seleccionar aroma</option>
+                            ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+                        </select>
+                    </div>
+                ` : ''}
+                <div class="flex items-center justify-between">
+                    <label for="quantity" class="text-sm font-medium">Cantidad:</label>
+                    <div class="flex items-center">
+                        <button class="bg-gray-200 px-2 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
+                        <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
+                        <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
+                    </div>
                 </div>
+                <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
+                    Agregar al carrito
+                </button>
             </div>
-            <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
-                Agregar al carrito
-            </button>
-        </div>
-    `;
+        `;
 
-    document.getElementById('productModal').classList.remove('hidden');
+        const productModal = document.getElementById('productModal');
+        if (productModal) {
+            productModal.classList.remove('hidden');
+        }
+    }
 }
 
 function closeProductModal() {
-    document.getElementById('productModal').classList.add('hidden');
+    const productModal = document.getElementById('productModal');
+    if (productModal) {
+        productModal.classList.add('hidden');
+    }
 }
 
 function updateQuantity(change) {
     const quantityInput = document.getElementById('quantity');
-    let newQuantity = parseInt(quantityInput.value) + change;
-    if (newQuantity < 1) newQuantity = 1;
-    quantityInput.value = newQuantity;
+    if (quantityInput) {
+        let newQuantity = parseInt(quantityInput.value) + change;
+        if (newQuantity < 1) newQuantity = 1;
+        quantityInput.value = newQuantity;
+    }
 }
 
 function addToCart(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
 
-    const quantity = parseInt(document.getElementById('quantity').value);
-    const discountedPrice = product.price * 0.9; // Apply 10% discount
-    const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
-    const existingItem = cart.find(item => item.id === product.id && item.scent === scent);
+    const quantityInput = document.getElementById('quantity');
+    const scentSelect = document.getElementById('scent');
 
-    if (existingItem) {
-        existingItem.quantity += quantity;
-    } else {
-        cart.push({ ...product, price: discountedPrice, quantity, scent });
+    if (quantityInput) {
+        const quantity = parseInt(quantityInput.value);
+        const discountedPrice = product.price * 0.9; // Apply 10% discount
+        const scent = scentSelect ? scentSelect.value : null;
+        const existingItem = cart.find(item => item.id === product.id && item.scent === scent);
+
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.push({ ...product, price: discountedPrice, quantity, scent });
+        }
+
+        updateCartUI();
+        closeProductModal();
     }
-
-    updateCartUI();
-    closeProductModal();
 }
 
 function removeFromCart(productId, scent) {
@@ -201,38 +220,53 @@ function updateCartUI() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     
     // Recalculate shipping cost
-    const shippingMethod = document.getElementById('shippingMethod').value;
-    const selectedShipping = shippingOptions[shippingMethod];
-    if (selectedShipping) {
-        shippingCost = calculateShippingCost(selectedShipping.price, totalItems);
+    const shippingMethod = document.getElementById('shippingMethod');
+    if (shippingMethod) {
+        const selectedShipping = shippingOptions[shippingMethod.value];
+        if (selectedShipping) {
+            shippingCost = calculateShippingCost(selectedShipping.price, totalItems);
+        }
     }
     
     const total = subtotal + shippingCost;
 
-    cartItemCountEl.textContent = totalItems;
-    cartItemCountEl.classList.toggle('hidden', totalItems === 0);
+    if (cartItemCountEl) {
+        cartItemCountEl.textContent = totalItems;
+        cartItemCountEl.classList.toggle('hidden', totalItems === 0);
+    }
 
-    cartItemsEl.innerHTML = cart.map(item => `
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
-                <div>
-                    <p class="font-medium font-serif">${item.name}</p>
-                    <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
-                    ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
+    if (cartItemsEl) {
+        cartItemsEl.innerHTML = cart.map(item => `
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+                    <div>
+                        <p class="font-medium font-serif">${item.name}</p>
+                        <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
+                        ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
+                    </div>
                 </div>
+                <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}')">
+                    <i class="fas fa-trash h-4 w-4"></i>
+                </button>
             </div>
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}')">
-                <i class="fas fa-trash h-4 w-4"></i>
-            </button>
-        </div>
-    `).join('');
+        `).join('');
+    }
 
-    cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    if (cartTotalEl) {
+        cartTotalEl.textContent = formatPrice(total);
+    }
+
+    const discountedTotalEl = document.getElementById('discountedTotal');
+    if (discountedTotalEl) {
+        discountedTotalEl.textContent = formatPrice(total * 0.9);
+    }
     
-    // Update shipping cost display
-    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    const shippingCostEl = document.getElementById('shippingCost');
+    if (shippingCostEl) {
+        shippingCostEl.textContent = formatPrice(shippingCost);
+    }
+
     updateTotal();
     updateTransferModal();
 }
@@ -281,15 +315,17 @@ function calculateShipping(postalCode) {
 
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => {
-        const updatedPrice = calculateShippingCost(option.price, itemCount);
-        return `
-            <option value="${key}">
-                ${option.name} - ${updatedPrice > 0 ? `$${updatedPrice.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
-            </option>
-        `;
-    }).join('');
+    if (shippingSelect) {
+        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        shippingSelect.innerHTML = Object.entries(shippingOptions).map(([key, option]) => {
+            const updatedPrice = calculateShippingCost(option.price, itemCount);
+            return `
+                <option value="${key}">
+                    ${option.name} - ${updatedPrice > 0 ? `$${updatedPrice.toFixed(2)}` : 'Gratis'} (${option.estimatedDelivery})
+                </option>
+            `;
+        }).join('');
+    }
 }
 
 function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
@@ -303,41 +339,49 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const
-itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const shippingMethod = document.getElementById('shippingMethod').value;
-    const selectedShipping = shippingOptions[shippingMethod];
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const shippingMethod = document.getElementById('shippingMethod');
     
-    if (selectedShipping) {
-        shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
+    if (shippingMethod) {
+        const selectedShipping = shippingOptions[shippingMethod.value];
+        if (selectedShipping) {
+            shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
+        }
     }
 
     const total = subtotal + shippingCost;
-    document.getElementById('cartTotal').textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
-    document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    const cartTotalEl = document.getElementById('cartTotal');
+    const discountedTotalEl = document.getElementById('discountedTotal');
+    const shippingCostEl = document.getElementById('shippingCost');
+
+    if (cartTotalEl) cartTotalEl.textContent = formatPrice(total);
+    if (discountedTotalEl) discountedTotalEl.textContent = formatPrice(total * 0.9);
+    if (shippingCostEl) shippingCostEl.textContent = formatPrice(shippingCost);
+    
     updateTransferModal();
 }
 
 function updateAdvertisingBanner() {
     const advertisingBanner = document.getElementById('advertisingBanner');
     const advertisingMessage = document.getElementById('advertisingMessage');
-    const currentHour = new Date().getHours();
-    let message, backgroundImage;
+    if (advertisingBanner && advertisingMessage) {
+        const currentHour = new Date().getHours();
+        let message, backgroundImage;
 
-    if (currentHour >= 6 && currentHour < 12) {
-        message = "¡Oferta matutina! 10% de descuento en todas las velas aromáticas";
-        backgroundImage = "url('img/mañana.png')";
-    } else if (currentHour >= 12 && currentHour < 18) {
-        message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
-        backgroundImage = "url('img/tarde.png')";
-    } else {
-        message = "¡Oferta nocturna! Envío gratis en compras superiores a $150000";
-        backgroundImage = "url('img/noche.png')";
+        if (currentHour >= 6 && currentHour < 12) {
+            message = "¡Oferta matutina! 10% de descuento en todas las velas aromáticas";
+            backgroundImage = "url('img/mañana.png')";
+        } else if (currentHour >= 12 && currentHour < 18) {
+            message = "¡Especial de la tarde! Compra un textil y lleva el segundo a mitad de precio";
+            backgroundImage = "url('img/tarde.png')";
+        } else {
+            message = "¡Oferta nocturna! Envío gratis en compras superiores a $150000";
+            backgroundImage = "url('img/noche.png')";
+        }
+
+        advertisingMessage.textContent = message;
+        advertisingBanner.style.backgroundImage = backgroundImage;
     }
-
-    advertisingMessage.textContent = message;
-    advertisingBanner.style.backgroundImage = backgroundImage;
 }
 
 function prepareCartData() {
@@ -361,8 +405,11 @@ function validateForm() {
     }
     return true;
 }
+
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
+    if (!modalContent) return;
+
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const discount = subtotal * 0.1; // 10% discount
     const total = subtotal + shippingCost - discount;
@@ -440,42 +487,48 @@ function updateTransferModal() {
     modalContent.classList.remove('hidden');
 
     // Add functionality to copy bank details without showing an alert
-    document.getElementById('copyBankDetails').addEventListener('click', function() {
-        const bankDetails = `
+    const copyBankDetailsButton = document.getElementById('copyBankDetails');
+    if (copyBankDetailsButton) {
+        copyBankDetailsButton.addEventListener('click', function() {
+            const bankDetails = `
 Banco: Banco Supervielle
 Titular: Virginia Olivero
 CTA: CA ARS 131-4372490-5
 CBU: 0270131420043724900058
 ALIAS: MON.AMOUR.TEXTIL
 CUIT/CUIL: 27-37092938-1
-        `.trim();
-        navigator.clipboard.writeText(bankDetails).then(() => {
-            this.textContent = 'Datos copiados';
-            setTimeout(() => {
-                this.textContent = 'Copiar datos bancarios';
-            }, 2000);
-        }).catch(err => {
-            console.error('Error al copiar: ', err);
+            `.trim();
+            navigator.clipboard.writeText(bankDetails).then(() => {
+                this.textContent = 'Datos copiados';
+                setTimeout(() => {
+                    this.textContent = 'Copiar datos bancarios';
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
         });
-    });
+    }
 
     // Add functionality to download purchase details
-    document.getElementById('downloadPurchaseDetails').addEventListener('click', function() {
-        try {
-            const purchaseDetails = generatePurchaseDetails();
-            const url = URL.createObjectURL(purchaseDetails);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'detalles_compra.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error al descargar los detalles de la compra:', error);
-            alert('Hubo un problema al generar los detalles de la compra. Por favor, intenta de nuevo.');
-        }
-    });
+    const downloadPurchaseDetailsButton = document.getElementById('downloadPurchaseDetails');
+    if (downloadPurchaseDetailsButton) {
+        downloadPurchaseDetailsButton.addEventListener('click', function() {
+            try {
+                const purchaseDetails = generatePurchaseDetails();
+                const url = URL.createObjectURL(purchaseDetails);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'detalles_compra.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error al descargar los detalles de la compra:', error);
+                alert('Hubo un problema al generar los detalles de la compra. Por favor, intenta de nuevo.');
+            }
+        });
+    }
 }
 
 function generatePurchaseDetails() {
@@ -487,20 +540,15 @@ function generatePurchaseDetails() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        // Add logo
-        // const logoImg = new Image();
-        // logoImg.src = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-iNVLMTwX3hsOUcQ8AicEBqjylwfiFJ.png'; // Replace with your logo path
-        // doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
-
         // Add title
         doc.setFontSize(22);
         doc.setTextColor(33, 150, 243); // Primary color
-        doc.text('Detalles de la compra', 105, 40, null, null, 'center');
+        doc.text('Detalles de la compra', 105, 20, null, null, 'center');
 
         // Add content
         doc.setFontSize(12);
         doc.setTextColor(0);
-        let yPos = 60;
+        let yPos = 40;
 
         doc.text('Productos:', 10, yPos);
         yPos += 10;
@@ -568,140 +616,198 @@ function nextAdSlide() {
 document.addEventListener('DOMContentLoaded', function() {
     // Verifica si jsPDF está disponible
     if (typeof window.jspdf === 'undefined') {
-        return; // No hace nada si jsPDF no está disponible
+        console.warn('jsPDF no está disponible. Algunas funciones pueden no estar operativas.');
     }
 
-    document.getElementById('closeBanner').addEventListener('click', () => {
-        document.getElementById('topBanner').classList.add('hidden');
-    });
+    // Inicializar el menú móvil
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMobileMenu = document.getElementById('closeMobileMenu');
 
-    document.getElementById('mobileMenuButton').addEventListener('click', () => {
-        const menuIcon = document.querySelector('.menu-icon');
-        menuIcon.classList.toggle('open');
-        document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
-
-    document.getElementById('closeMobileMenu').addEventListener('click', () => {
-        const menuIcon = document.querySelector('.menu-icon');
-        menuIcon.classList.remove('open');
-        document.getElementById('mobileMenu').classList.add('hidden');
-    });
-
-    document.getElementById('cartButton').addEventListener('click', () => {
-        document.getElementById('cartModal').classList.remove('hidden');
-    });
-
-    document.getElementById('closeCart').addEventListener('click', () => {
-        document.getElementById('cartModal').classList.add('hidden');
-    });
-
-    document.getElementById('closeProductModal').addEventListener('click', closeProductModal);
-
-    document.getElementById('whatsappButton').addEventListener('click', () => {
-        window.open('https://wa.me/5493534786106', '_blank');
-    });
-
-    document.getElementById('closeWhatsappNotification').addEventListener('click', () => {
-        document.getElementById('whatsappNotification').classList.add('hidden');
-    });
-
-    document.getElementById('searchShipping').addEventListener('click', () => {
-        const postalCode = document.getElementById('postalCode').value;
-        if (postalCode.length === 4) {
-            calculateShipping(postalCode)
-                .then(shippingOptions => {
-                    updateShippingOptions(shippingOptions);
-                    document.getElementById('shippingOptions').classList.remove('hidden');
-                    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-                    const selectedShippingMethod = document.getElementById('shippingMethod').value;
-                    shippingCost = calculateShippingCost(shippingOptions[selectedShippingMethod].price, itemCount);
-                    updateTotal();
-                });
-        } else {
-            alert('Por favor, ingrese un código postal válido.');
-        }
-    });
-
-    document.getElementById('shippingMethod').addEventListener('change', function() {
-        const selectedOption = shippingOptions[this.value];
-        
-        if (selectedOption) {
-            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            shippingCost = calculateShippingCost(selectedOption.price, itemCount);
-            updateTotal();
-        }
-    });
-
-    document.getElementById('checkoutButton').addEventListener('click', function() {
-        document.getElementById('cartModal').classList.add('hidden');
-        document.getElementById('checkoutModal').classList.remove('hidden');
-    });
-
-    document.getElementById('closeCheckoutModal').addEventListener('click', function() {
-        document.getElementById('checkoutModal').classList.add('hidden');
-    });
-
-    document.getElementById('paymentMethod').addEventListener('change', function() {
-        if (this.value === 'transferencia') {
-            document.getElementById('bankDetailsModal').classList.remove('hidden');
-            document.getElementById('mercadopago-button').classList.add('hidden');
-            updateTransferModal();
-        } else if (this.value === 'mercadopago') {
-            document.getElementById('bankDetailsModal').classList.add('hidden');
-            document.getElementById('mercadopago-button').classList.remove('hidden');
-        }
-    });
-
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (!validateForm()) return;
-
-        const formData = new FormData(this);
-        formData.append('cartItems', prepareCartData());
-
-        console.log('Datos del formulario:', Object.fromEntries(formData));
-
-        fetch(this.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return response.text().then(text => {
-                    throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
-                });
-            }
-        }).then(data => {
-            console.log('Respuesta exitosa de Formspree:', data);
-            if (document.getElementById('paymentMethod').value === 'mercadopago') {
-                initiateMercadoPagoPayment();
-            } else {
-                // Trigger the download of purchase details
-                try {
-                    const purchaseDetails = generatePurchaseDetails();
-                    const url = URL.createObjectURL(purchaseDetails);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'detalles_compra.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                } catch (error) {
-                    console.error('Error al descargar los detalles de la compra:', error);
-                    alert('Hubo un problema al generar los detalles de la compra. Por favor, intenta de nuevo.');
-                }
-                alert('Gracias por tu compra. Los detalles de la compra se han descargado automáticamente.');
-            }
-        }).catch(error => {
-            console.error('Error detallado:', error);
-            alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
+    if (mobileMenuButton && mobileMenu && closeMobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            const menuIcon = document.querySelector('.menu-icon');
+            if (menuIcon) menuIcon.classList.toggle('open');
+            mobileMenu.classList.toggle('hidden');
         });
-    });
+
+        closeMobileMenu.addEventListener('click', () => {
+            const menuIcon = document.querySelector('.menu-icon');
+            if (menuIcon) menuIcon.classList.remove('open');
+            mobileMenu.classList.add('hidden');
+        });
+    }
+
+    // Otros event listeners
+    const closeBanner = document.getElementById('closeBanner');
+    if (closeBanner) {
+        closeBanner.addEventListener('click', () => {
+            const topBanner = document.getElementById('topBanner');
+            if (topBanner) topBanner.classList.add('hidden');
+        });
+    }
+
+    const cartButton = document.getElementById('cartButton');
+    const cartModal = document.getElementById('cartModal');
+    if (cartButton && cartModal) {
+        cartButton.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+        });
+    }
+
+    const closeCart = document.getElementById('closeCart');
+    if (closeCart && cartModal) {
+        closeCart.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+        });
+    }
+
+    const closeProductModal = document.getElementById('closeProductModal');
+    if (closeProductModal) {
+        closeProductModal.addEventListener('click', () => {
+            const productModal = document.getElementById('productModal');
+            if (productModal) productModal.classList.add('hidden');
+        });
+    }
+
+    const whatsappButton = document.getElementById('whatsappButton');
+    if (whatsappButton) {
+        whatsappButton.addEventListener('click', () => {
+            window.open('https://wa.me/5493534786106', '_blank');
+        });
+    }
+
+    const closeWhatsappNotification = document.getElementById('closeWhatsappNotification');
+    const whatsappNotification = document.getElementById('whatsappNotification');
+    if (closeWhatsappNotification && whatsappNotification) {
+        closeWhatsappNotification.addEventListener('click', () => {
+            whatsappNotification.classList.add('hidden');
+        });
+    }
+
+    const searchShipping = document.getElementById('searchShipping');
+    if (searchShipping) {
+        searchShipping.addEventListener('click', () => {
+            const postalCode = document.getElementById('postalCode');
+            if (postalCode && postalCode.value.length === 4) {
+                calculateShipping(postalCode.value)
+                    .then(shippingOptions => {
+                        updateShippingOptions(shippingOptions);
+                        const shippingOptionsEl = document.getElementById('shippingOptions');
+                        if (shippingOptionsEl) shippingOptionsEl.classList.remove('hidden');
+                        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+                        const shippingMethod = document.getElementById('shippingMethod');
+                        if (shippingMethod) {
+                            const selectedShippingMethod = shippingMethod.value;
+                            shippingCost = calculateShippingCost(shippingOptions[selectedShippingMethod].price, itemCount);
+                            updateTotal();
+                        }
+                    });
+            } else {
+                alert('Por favor, ingrese un código postal válido.');
+            }
+        });
+    }
+
+    const shippingMethod = document.getElementById('shippingMethod');
+    if (shippingMethod) {
+        shippingMethod.addEventListener('change', function() {
+            const selectedOption = shippingOptions[this.value];
+            
+            if (selectedOption) {
+                const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+                shippingCost = calculateShippingCost(selectedOption.price, itemCount);
+                updateTotal();
+            }
+        });
+    }
+
+    const checkoutButton = document.getElementById('checkoutButton');
+    const cartModal = document.getElementById('cartModal');
+    const checkoutModal = document.getElementById('checkoutModal');
+    if (checkoutButton && cartModal && checkoutModal) {
+        checkoutButton.addEventListener('click', function() {
+            cartModal.classList.add('hidden');
+            checkoutModal.classList.remove('hidden');
+        });
+    }
+
+    const closeCheckoutModal = document.getElementById('closeCheckoutModal');
+    if (closeCheckoutModal && checkoutModal) {
+        closeCheckoutModal.addEventListener('click', function() {
+            checkoutModal.classList.add('hidden');
+        });
+    }
+
+    const paymentMethod = document.getElementById('paymentMethod');
+    const bankDetailsModal = document.getElementById('bankDetailsModal');
+    const mercadopagoButton = document.getElementById('mercadopago-button');
+    if (paymentMethod && bankDetailsModal && mercadopagoButton) {
+        paymentMethod.addEventListener('change', function() {
+            if (this.value === 'transferencia') {
+                bankDetailsModal.classList.remove('hidden');
+                mercadopagoButton.classList.add('hidden');
+                updateTransferModal();
+            } else if (this.value === 'mercadopago') {
+                bankDetailsModal.classList.add('hidden');
+                mercadopagoButton.classList.remove('hidden');
+            }
+        });
+    }
+
+    const checkoutForm = document.getElementById('checkoutForm');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validateForm()) return;
+
+            const formData = new FormData(this);
+            formData.append('cartItems', prepareCartData());
+
+            console.log('Datos del formulario:', Object.fromEntries(formData));
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return response.text().then(text => {
+                        throw new Error(`Error en el envío del formulario: ${response.status} ${response.statusText}\n${text}`);
+                    });
+                }
+            }).then(data => {
+                console.log('Respuesta exitosa de Formspree:', data);
+                if (document.getElementById('paymentMethod').value === 'mercadopago') {
+                    initiateMercadoPagoPayment();
+                } else {
+                    // Trigger the download of purchase details
+                    try {
+                        const purchaseDetails = generatePurchaseDetails();
+                        const url = URL.createObjectURL(purchaseDetails);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'detalles_compra.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    } catch (error) {
+                        console.error('Error al descargar los detalles de la compra:', error);
+                        alert('Hubo un problema al generar los detalles de la compra. Por favor, intenta de nuevo.');
+                    }
+                    alert('Gracias por tu compra. Los detalles de la compra se han descargado automáticamente.');
+                }
+            }).catch(error => {
+                console.error('Error detallado:', error);
+                alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
+            });
+        });
+    }
 
     loadProducts();
     updateBanner();
@@ -714,7 +820,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateAdvertisingBanner, 3600000); // Update every hour
 
     setTimeout(() => {
-        document.getElementById('whatsappNotification').classList.remove('hidden');
+        const whatsappNotification = document.getElementById('whatsappNotification');
+        if (whatsappNotification) whatsappNotification.classList.remove('hidden');
     }, 10000);
 
     // Iniciar el slider automático para el banner de publicidad
@@ -729,13 +836,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const content = this.nextElementSibling;
             const icon = this.querySelector('.accordion-icon');
             
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
+            if (content && icon) {
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            }
         });
     });
 
     // Remove preloader
-    document.getElementById('preloader').style.display = 'none';
+    const preloader = document.getElementById('preloader');
+    if (preloader) preloader.style.display = 'none';
 });
 
 console.log("Script loaded successfully!");

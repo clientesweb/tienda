@@ -271,7 +271,7 @@ function calculateShipping(postalCode) {
                     price: 0,
                     estimatedDelivery: 'Inmediato',
                     logo: 'path/to/local-icon.png',
-                    description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
+                    description: 'Tienda Mon Amour - San Juan 1020, Villa Maria, Córdoba - 09:00 - 19:00 hs.'
                 }
             };
             resolve(shippingOptions);

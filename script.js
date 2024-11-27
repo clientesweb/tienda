@@ -489,7 +489,7 @@ function generatePurchaseDetails() {
         
         // Add logo
         // const logoImg = new Image();
-        // logoImg.src = 'path/to/your/logo.png'; // Replace with your logo path
+        // logoImg.src = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-iNVLMTwX3hsOUcQ8AicEBqjylwfiFJ.png'; // Replace with your logo path
         // doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
 
         // Add title
@@ -568,8 +568,7 @@ function nextAdSlide() {
 document.addEventListener('DOMContentLoaded', function() {
     // Verifica si jsPDF está disponible
     if (typeof window.jspdf === 'undefined') {
-        console.error('jsPDF no está cargado correctamente');
-        alert('Hubo un problema al cargar algunas dependencias. Por favor, recarga la página.');
+        return; // No hace nada si jsPDF no está disponible
     }
 
     document.getElementById('closeBanner').addEventListener('click', () => {

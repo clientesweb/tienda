@@ -5,7 +5,6 @@ let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
 let shippingOptions = {};
-let intervals = [];
 
 const bannerMessages = [
     "¡Nueva colección de textiles disponible!",
@@ -44,7 +43,6 @@ async function loadProducts() {
         renderProducts();
     } catch (error) {
         console.error('Error loading products:', error);
-        alert('Hubo un problema al cargar los productos. Por favor, recarga la página.');
     }
 }
 
@@ -273,7 +271,7 @@ function calculateShipping(postalCode) {
                     price: 0,
                     estimatedDelivery: 'Inmediato',
                     logo: 'path/to/local-icon.png',
-                    description: 'Tienda Mon Amour - San Juan 1020, Villa Maria, Córdoba - 09:00 - 19:00 hs.'
+                    description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
                 }
             };
             resolve(shippingOptions);
@@ -305,7 +303,8 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const
+itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
@@ -362,7 +361,6 @@ function validateForm() {
     }
     return true;
 }
-
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -422,7 +420,7 @@ function updateTransferModal() {
                 </p>
                 <p class="text-gray-700 mb-6">Envía el comprobante por uno de estos medios:</p>
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <a href="mailto:monamourtextiloficial@gmail.com" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors flex items-center">
+                    <a href="mailto:info@monamourtextil.com" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
                         Enviar por Email
                     </a>
@@ -480,159 +478,73 @@ CUIT/CUIL: 27-37092938-1
     });
 }
 
-// Función para cargar jsPDF dinámicamente
-function loadJsPDF() {
-  return new Promise((resolve, reject) => {
-    if (window.jspdf) {
-      resolve(window.jspdf);
-    } else {
-      const script = document.createElement('script');
-      script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-      script.onload = () => resolve(window.jspdf);
-      script.onerror = () => reject(new Error('Failed to load jsPDF'));
-      document.head.appendChild(script);
-    }
-  });
-}
+function generatePurchaseDetails() {
+    try {
+        const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const discount = subtotal * 0.1; // 10% discount
+        const total = subtotal + shippingCost - discount;
 
-// Modificar la función generatePurchaseDetails para cargar jsPDF dinámicamente
-async function generatePurchaseDetails() {
-  try {
-    const jspdf = await loadJsPDF();
-    if (!jspdf) {
-      throw new Error('jsPDF no pudo ser cargado');
-    }
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Add logo
+        // const logoImg = new Image();
+        // logoImg.src = 'path/to/your/logo.png'; // Replace with your logo path
+        // doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
 
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = subtotal * 0.1; // 10% discount
-    const total = subtotal + shippingCost - discount;
+        // Add title
+        doc.setFontSize(22);
+        doc.setTextColor(33, 150, 243); // Primary color
+        doc.text('Detalles de la compra', 105, 40, null, null, 'center');
 
-    const { jsPDF } = jspdf;
-    const doc = new jsPDF();
-    
-    // Add title
-    doc.setFontSize(22);
-    doc.setTextColor(33, 150, 243); // Primary color
-    doc.text('Detalles de la compra', 105, 40, null, null, 'center');
+        // Add content
+        doc.setFontSize(12);
+        doc.setTextColor(0);
+        let yPos = 60;
 
-    // Add content
-    doc.setFontSize(12);
-    doc.setTextColor(0);
-    let yPos = 60;
+        doc.text('Productos:', 10, yPos);
+        yPos += 10;
 
-    doc.text('Productos:', 10, yPos);
-    yPos += 10;
+        cart.forEach(item => {
+            doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
+            yPos += 7;
+        });
 
-    cart.forEach(item => {
-        doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
+        yPos += 10;
+        doc.text(`Subtotal: ${formatPrice(subtotal)}`, 10, yPos);
         yPos += 7;
-    });
+        doc.text(`Costo de envío: ${formatPrice(shippingCost)}`, 10, yPos);
+        yPos += 7;
+        doc.setTextColor(0, 128, 0); // Green color for discount
+        doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
+        yPos += 7;
+        doc.setTextColor(33, 150, 243); // Primary color for total
+        doc.setFontSize(14);
+        doc.text(`Total: ${formatPrice(total)}`, 10, yPos);
 
-    yPos += 10;
-    doc.text(`Subtotal: ${formatPrice(subtotal)}`, 10, yPos);
-    yPos += 7;
-    doc.text(`Costo de envío: ${formatPrice(shippingCost)}`, 10, yPos);
-    yPos += 7;
-    doc.setTextColor(0, 128, 0); // Green color for discount
-    doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
-    yPos += 7;
-    doc.setTextColor(33, 150, 243); // Primary color for total
-    doc.setFontSize(14);
-    doc.text(`Total: ${formatPrice(total)}`, 10, yPos);
+        yPos += 20;
+        doc.setFontSize(16);
+        doc.setTextColor(0);
+        doc.text('Datos bancarios para la transferencia:', 10, yPos);
+        yPos += 10;
+        doc.setFontSize(12);
+        doc.text('Banco: Banco Supervielle', 10, yPos);
+        yPos += 7;
+        doc.text('Titular: Virginia Olivero', 10, yPos);
+        yPos += 7;
+        doc.text('CTA: CA ARS 131-4372490-5', 10, yPos);
+        yPos += 7;
+        doc.text('CBU: 0270131420043724900058', 10, yPos);
+        yPos += 7;
+        doc.text('ALIAS: MON.AMOUR.TEXTIL', 10, yPos);
+        yPos += 7;
+        doc.text('CUIT/CUIL: 27-37092938-1', 10, yPos);
 
-    yPos += 20;
-    doc.setFontSize(16);
-    doc.setTextColor(0);
-    doc.text('Datos bancarios para la transferencia:', 10, yPos);
-    yPos += 10;
-    doc.setFontSize(12);
-    doc.text('Banco: Banco Supervielle', 10, yPos);
-    yPos += 7;
-    doc.text('Titular: Virginia Olivero', 10, yPos);
-    yPos += 7;
-    doc.text('CTA: CA ARS 131-4372490-5', 10, yPos);
-    yPos += 7;
-    doc.text('CBU: 0270131420043724900058', 10, yPos);
-    yPos += 7;
-    doc.text('ALIAS: MON.AMOUR.TEXTIL', 10, yPos);
-    yPos += 7;
-    doc.text('CUIT/CUIL: 27-37092938-1', 10, yPos);
-
-    return doc.output('blob');
-  } catch (error) {
-    console.error('Error al generar el PDF:', error);
-    throw error;
-  }
-}
-
-// Navigation function
-function navigateTo(page) {
-    // Clear all intervals
-    intervals.forEach(clearInterval);
-    intervals = [];
-
-    // Load the new page content
-    fetch(page)
-        .then(response => response.text())
-        .then(html => {
-            document.body.innerHTML = html;
-            initializePage();
-        })
-        .catch(error => {
-            console.error('Error navigating to page:', error);
-            alert('Hubo un problema al cargar la página. Por favor, intenta de nuevo.');
-        });
-}
-
-// Page initialization function
-function initializePage() {
-    loadProducts();
-    updateBanner();
-    intervals.push(setInterval(updateBanner, 5000));
-
-    updateHero();
-    intervals.push(setInterval(updateHero, 5000));
-
-    updateAdvertisingBanner();
-    intervals.push(setInterval(updateAdvertisingBanner, 3600000)); // Update every hour
-
-    setTimeout(() => {
-        const whatsappNotification = document.getElementById('whatsappNotification');
-        if (whatsappNotification) {
-            whatsappNotification.classList.remove('hidden');
-        }
-    }, 10000);
-
-    // Iniciar el slider automático para el banner de publicidad
-    showAdSlide(currentAdSlide);
-    intervals.push(setInterval(nextAdSlide, 5000)); // Cambiar cada 5 segundos
-
-    // Implementación del menú acordeón para dispositivos móviles
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-    
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            const icon = this.querySelector('.accordion-icon');
-            
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        });
-    });
-
-    // Remove preloader
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.style.display = 'none';
+        return doc.output('blob');
+    } catch (error) {
+        console.error('Error al generar el PDF:', error);
+        throw error;
     }
-
-    // Add event listeners for navigation
-    document.querySelectorAll('a[href^="/"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            navigateTo(this.getAttribute('href'));
-        });
-    });
 }
 
 // Implementación del slider automático para el banner de publicidad
@@ -654,6 +566,12 @@ function nextAdSlide() {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Verifica si jsPDF está disponible
+    if (typeof window.jspdf === 'undefined') {
+        console.error('jsPDF no está cargado correctamente');
+        alert('Hubo un problema al cargar algunas dependencias. Por favor, recarga la página.');
+    }
+
     document.getElementById('closeBanner').addEventListener('click', () => {
         document.getElementById('topBanner').classList.add('hidden');
     });
@@ -786,7 +704,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    initializePage();
+    loadProducts();
+    updateBanner();
+    setInterval(updateBanner, 5000);
+
+    updateHero();
+    setInterval(updateHero, 5000);
+
+    updateAdvertisingBanner();
+    setInterval(updateAdvertisingBanner, 3600000); // Update every hour
+
+    setTimeout(() => {
+        document.getElementById('whatsappNotification').classList.remove('hidden');
+    }, 10000);
+
+    // Iniciar el slider automático para el banner de publicidad
+    showAdSlide(currentAdSlide);
+    setInterval(nextAdSlide, 5000); // Cambiar cada 5 segundos
+
+    // Implementación del menú acordeón para dispositivos móviles
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('.accordion-icon');
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        });
+    });
+
+    // Remove preloader
+    document.getElementById('preloader').style.display = 'none';
 });
 
 console.log("Script loaded successfully!");
+

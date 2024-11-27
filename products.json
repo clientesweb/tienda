@@ -295,14 +295,14 @@
       "id": 32,
       "name": "Cuenco Mediano Amour",
       "price": 4500,
-      "image": "img/cuenco-mediano-amour.jpg",
+      "image": "img/cuenco-pequeno-amour.jpg",
       "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 15 cm de diámetro x 13cm de alto."
     },
     {
       "id": 33,
       "name": "Cuenco Grande Amour",
       "price": 5500,
-      "image": "img/cuenco-grande-amour.jpg",
+      "image": "img/cuenco-pequeno-amour.jpg",
       "description": "Cuenco confeccionado en 100% algodón con volados y puntillas. Llevan tela doble para mayor sostén. No encogen: son lavadas antes y después de su confección. Medidas: 17cm de diámetro x 14 de alto."
     }
   ],

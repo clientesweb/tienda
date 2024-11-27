@@ -606,19 +606,21 @@
     </div>
 
     <!-- Product Modal -->
-    <div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white w-full max-w-md mx-auto mt-20 p-4 rounded-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="productModalTitle" class="text-xl font-bold text-primary font-serif"></h2>
+<div id="productModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white w-full max-w-4xl rounded-lg shadow-xl overflow-hidden">
+            <div class="flex justify-between items-center p-6 border-b">
+                <h2 id="productModalTitle" class="text-2xl font-bold text-primary font-serif"></h2>
                 <button id="closeProductModal" class="text-gray-600 hover:text-primary">
-                    <i class="fas fa-times h-5 w-5"></i>
+                    <i class="fas fa-times h-6 w-6"></i>
                 </button>
             </div>
-            <div id="productModalContent">
+            <div id="productModalContent" class="p-6 max-h-[calc(100vh-200px)] overflow-y-auto">
                 <!-- Product details will be dynamically inserted here -->
             </div>
         </div>
     </div>
+</div>
 
     <!-- WhatsApp Button and Notification -->
     <div class="fixed bottom-4 right-4 z-40">

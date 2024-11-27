@@ -575,6 +575,10 @@ function generatePurchaseDetails() {
         doc.setTextColor(0);
         doc.text('Datos bancarios para la transferencia:', 10, yPos);
         yPos += 10;
+
+
+
+```javascript
         doc.setFontSize(12);
         doc.text('Banco: Banco Supervielle', 10, yPos);
         yPos += 7;
@@ -723,16 +727,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const checkoutButton = document.getElementById('checkoutButton');
-    const cartModal = document.getElementById('cartModal');
-    const checkoutModal = document.getElementById('checkoutModal');
-    if (checkoutButton && cartModal && checkoutModal) {
+    if (checkoutButton && cartModal) {
         checkoutButton.addEventListener('click', function() {
             cartModal.classList.add('hidden');
-            checkoutModal.classList.remove('hidden');
+            const checkoutModal = document.getElementById('checkoutModal');
+            if (checkoutModal) checkoutModal.classList.remove('hidden');
         });
     }
 
     const closeCheckoutModal = document.getElementById('closeCheckoutModal');
+    const checkoutModal = document.getElementById('checkoutModal');
     if (closeCheckoutModal && checkoutModal) {
         closeCheckoutModal.addEventListener('click', function() {
             checkoutModal.classList.add('hidden');

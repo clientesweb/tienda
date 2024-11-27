@@ -128,21 +128,10 @@ function openProductModal(productId, category) {
     
     let additionalInfo = '';
     if (category === 'cortinas_interior' && product.cortinas_gasa_info) {
-        const info = product.cortinas_gasa_info;
         additionalInfo = `
             <div class="mt-4">
                 <h4 class="font-semibold">Información adicional:</h4>
-                <p>Material: ${info.material}</p>
-                <p>Color: ${info.color}</p>
-                <p>Tiempo de confección: ${info.tiempo_confeccion}</p>
-                <h5 class="font-semibold mt-2">Características:</h5>
-                <ul class="list-disc pl-5">
-                    ${info.caracteristicas.map(c => `<li>${c}</li>`).join('')}
-                </ul>
-                <h5 class="font-semibold mt-2">Recomendaciones:</h5>
-                <ul class="list-disc pl-5">
-                    ${info.recomendaciones.map(r => `<li>${r}</li>`).join('')}
-                </ul>
+                <p>${product.cortinas_gasa_info}</p>
             </div>
         `;
     }
@@ -166,6 +155,7 @@ function openProductModal(productId, category) {
                     </select>
                 </div>
             ` : ''}
+            ${additionalInfo}
             <div class="flex items-center justify-between">
                 <label for="quantity" class="text-sm font-medium">Cantidad:</label>
                 <div class="flex items-center">
@@ -174,7 +164,6 @@ function openProductModal(productId, category) {
                     <button class="bg-gray-200 px-2 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
                 </div>
             </div>
-            ${additionalInfo}
             <button class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="addToCart(${product.id}, '${category}')">
                 Agregar al carrito
             </button>
@@ -183,6 +172,7 @@ function openProductModal(productId, category) {
 
     document.getElementById('productModal').classList.remove('hidden');
 }
+
 function closeProductModal() {
     document.getElementById('productModal').classList.add('hidden');
 }
@@ -251,7 +241,7 @@ function updateCartUI() {
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
@@ -300,7 +290,6 @@ function calculateShipping(postalCode) {
         }, 1000);
     });
 }
-
 function updateShippingOptions(shippingOptions) {
     const shippingSelect = document.getElementById('shippingMethod');
     const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -541,7 +530,8 @@ function generatePurchaseDetails() {
 
         yPos += 20;
         doc.setFontSize(16);
-        doc.setTextColor(0);
+        doc.setText
+(0);
         doc.text('Datos bancarios para la transferencia:', 10, yPos);
         yPos += 10;
         doc.setFontSize(12);
@@ -757,3 +747,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+

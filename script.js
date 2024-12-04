@@ -49,24 +49,32 @@ async function loadProducts() {
         const products1 = await response1.json();
         const products2 = await response2.json();
         
-        // Combinar los productos de ambos archivos
+        // Combine products from both files
         products = {
             ...products1,
             ...products2.products
         };
 
-        // Asegurarse de que todas las categorías estén presentes y sean arrays
-        Object.keys(products).forEach(category => {
-            if (!Array.isArray(products[category])) {
+        // Ensure all categories are present and are arrays
+        const allCategories = [
+            'velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 
+            'cubre_sommier', 'cortinas_interior', 'manteles', 'almohadones', 
+            'caminos_de_mesa', 'box'
+        ];
+
+        allCategories.forEach(category => {
+            if (!products[category]) {
                 products[category] = [];
+            } else if (!Array.isArray(products[category])) {
+                products[category] = [products[category]];
             }
         });
 
-        console.log('Productos cargados:', products);
+        console.log('Products loaded:', products);
 
         renderProducts();
     } catch (error) {
-        console.error('Error al cargar los productos:', error);
+        console.error('Error loading products:', error);
     } finally {
         document.getElementById('preloader').style.display = 'none';
     }
@@ -136,53 +144,46 @@ function renderProducts() {
 }
 
 function openProductModal(productId, category) {
-    console.log('Abriendo modal para el producto:', productId, 'en la categoría:', category);
-    console.log('Todos los productos:', products);
-
-    let product;
-    // Buscar el producto en todas las categorías si no se encuentra en la categoría especificada
-    if (products[category] && Array.isArray(products[category])) {
-        product = products[category].find(p => p.id === productId);
-        console.log('Producto encontrado en la categoría especificada:', product);
-    }
-    if (!product) {
-        console.log('Producto no encontrado en la categoría especificada, buscando en todas las categorías');
-        for (let cat in products) {
-            if (Array.isArray(products[cat])) {
-                product = products[cat].find(p => p.id === productId);
-                if (product) {
-                    category = cat;
-                    console.log('Producto encontrado en la categoría:', cat);
-                    break;
-                }
-            }
-        }
-    }
-    if (!product) {
-        console.error('Producto no encontrado:', productId);
-        return;
-    }
-
+    console.log('Opening modal for product:', productId, 'in category:', category);
+    
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
+
+    let product;
+    // Search for the product in all categories
+    for (let cat in products) {
+        if (Array.isArray(products[cat])) {
+            product = products[cat].find(p => p.id == productId);
+            if (product) {
+                category = cat;
+                console.log('Product found in category:', cat);
+                break;
+            }
+        }
+    }
+
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
 
     modalTitle.textContent = product.name;
 
     let sizeOptions = '';
     let priceDisplay = '';
 
-    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'manteles') {
+    if (product.sizes) {
         sizeOptions = `
             <div class="mb-4">
                 <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Medida</label>
                 <select id="size" name="size" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
                     <option value="">Seleccionar medida</option>
-                    ${product.sizes ? product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('') : ''}
+                    ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
                 </select>
             </div>
         `;
-        priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...(product.sizes ? product.sizes.map(s => s.price) : [product.price])).toLocaleString()}</p>`;
+        priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>`;
     } else {
         const discountedPrice = product.price * 0.9; // Apply 10% discount
         priceDisplay = `
@@ -235,7 +236,7 @@ function openProductModal(productId, category) {
     `;
 
     modal.classList.remove('hidden');
-    console.log('Modal mostrado');
+    console.log('Modal displayed');
 }
 
 function closeProductModal() {

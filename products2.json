@@ -1,94 +1,131 @@
 {
-  "almohadones": [
-    {
-      "id": "alm001",
-      "name": "Almohadón Floral Vintage",
-      "description": "Almohadón decorativo con estampado floral vintage, perfecto para dar un toque de elegancia a tu sofá o cama.",
-      "price": 4500,
-      "image": "img/almohadones/floral-vintage.jpg"
-    },
-    {
-      "id": "alm002",
-      "name": "Almohadón Geométrico Moderno",
-      "description": "Almohadón con diseño geométrico moderno en tonos neutros, ideal para espacios contemporáneos.",
-      "price": 4200,
-      "image": "img/almohadones/geometrico-moderno.jpg"
-    },
-    {
-      "id": "alm003",
-      "name": "Almohadón de Terciopelo Liso",
-      "description": "Lujoso almohadón de terciopelo liso, disponible en varios colores para combinar con tu decoración.",
-      "price": 5000,
-      "image": "img/almohadones/terciopelo-liso.jpg"
-    }
-  ],
-  "caminos_de_mesa": [
-    {
-      "id": "cdm001",
-      "name": "Camino de Mesa Bordado",
-      "description": "Elegante camino de mesa con delicados bordados florales, perfecto para ocasiones especiales.",
-      "price": 3800,
-      "image": "img/caminos-de-mesa/bordado-floral.jpg"
-    },
-    {
-      "id": "cdm002",
-      "name": "Camino de Mesa de Lino Natural",
-      "description": "Camino de mesa de lino natural con bordes deshilachados para un look rústico y sofisticado.",
-      "price": 3500,
-      "image": "img/caminos-de-mesa/lino-natural.jpg"
-    },
-    {
-      "id": "cdm003",
-      "name": "Camino de Mesa Estampado Geométrico",
-      "description": "Moderno camino de mesa con estampado geométrico en tonos neutros, ideal para mesas contemporáneas.",
-      "price": 3200,
-      "image": "img/caminos-de-mesa/geometrico.jpg"
-    }
-  ],
-  "manteles": [
-    {
-      "id": "man001",
-      "name": "Mantel de Lino Blanco",
-      "description": "Clásico mantel de lino blanco, perfecto para cualquier ocasión y fácil de combinar con diferentes decoraciones.",
-      "price": 8500,
-      "image": "img/manteles/lino-blanco.jpg"
-    },
-    {
-      "id": "man002",
-      "name": "Mantel Estampado Provenzal",
-      "description": "Colorido mantel con estampado provenzal, ideal para dar un toque alegre y acogedor a tu mesa.",
-      "price": 7800,
-      "image": "img/manteles/provenzal.jpg"
-    },
-    {
-      "id": "man003",
-      "name": "Mantel Antimanchas Liso",
-      "description": "Práctico mantel antimanchas en varios colores lisos, perfecto para el uso diario y fácil de limpiar.",
-      "price": 6500,
-      "image": "img/manteles/antimanchas-liso.jpg"
-    }
-  ],
-  "box": [
-    {
-      "id": "box001",
-      "name": "Box Desayuno Romántico",
-      "description": "Set completo para un desayuno romántico, incluye mantel individual, servilletas, taza y plato decorativo.",
-      "price": 12000,
-      "image": "img/box/desayuno-romantico.jpg"
-    },
-    {
-      "id": "box002",
-      "name": "Box Textil Baño",
-      "description": "Conjunto de textiles para baño que incluye toallas, alfombra y cortina de ducha a juego.",
-      "price": 15000,
-      "image": "img/box/textil-bano.jpg"
-    },
-    {
-      "id": "box003",
-      "name": "Box Decoración Salón",
-      "description": "Set de decoración para salón con almohadones, manta y vela aromática coordinados.",
-      "price": 18000,
-      "image": "img/box/decoracion-salon.jpg"
-    }
-  ]
+  "products": {
+    "manteles": [
+      {
+        "id": "man001",
+        "name": "Mantel Utopie",
+        "description": "Mantel confeccionado en lienzo, con volados doble en el mismo género y gasa. Color crudo. Hecho a mano con mucho cuidado en los detalles. No encoge: todos nuestros manteles son lavados antes y después de su confección. Se entregan planchados y perfumados listos para poner en tu mesa.",
+        "image": "img/manteles/utopie.jpg",
+        "sizes": [
+          { "name": "Cuadrado 150x150m", "price": 42760 },
+          { "name": "Cuadrado 180x180m", "price": 54740 },
+          { "name": "Cuadrado 2x2m", "price": 67920 },
+          { "name": "Redondo 150m diámetro", "price": 42760 },
+          { "name": "Redondo 180m diámetro", "price": 54740 },
+          { "name": "Rectangular 150x180m", "price": 50160 },
+          { "name": "Rectangular 150x2m", "price": 54740 },
+          { "name": "Rectangular 150x250m", "price": 61600 },
+          { "name": "Rectangular 150x3m", "price": 70730 }
+        ]
+      },
+      {
+        "id": "man002",
+        "name": "Mantel Espoir",
+        "description": "Mantel confeccionado en lienzo y volados en gasa. Hecho a mano con mucho cuidado en los detalles. No encoge: todos nuestros manteles son lavados antes y después de su confección. Se entregan planchados y perfumados listos para poner en tu mesa.",
+        "image": "img/manteles/espoir.jpg",
+        "sizes": [
+          { "name": "Cuadrado 150x150m", "price": 41480 },
+          { "name": "Cuadrado 180x180m", "price": 53100 },
+          { "name": "Cuadrado 2x2m", "price": 65890 },
+          { "name": "Redondo 150m diámetro", "price": 41480 },
+          { "name": "Redondo 180m diámetro", "price": 53100 },
+          { "name": "Rectangular 150x180m", "price": 48700 },
+          { "name": "Rectangular 150x2m", "price": 53100 },
+          { "name": "Rectangular 150x250m", "price": 59800 },
+          { "name": "Rectangular 150x3m", "price": 68650 }
+        ]
+      }
+    ],
+    "almohadones": [
+      {
+        "id": "alm001",
+        "name": "Funda de Almohadón Bonjour",
+        "description": "Funda de almohadón de 45 x 45 cm. Tiene volados en gasa y detalles en lentejuelas. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno",
+        "price": 15510,
+        "image": "img/almohadones/bonjour.jpg"
+      },
+      {
+        "id": "alm002",
+        "name": "Funda de Almohadón Oui",
+        "description": "Funda de almohadón de 45 x 45 cm. Tiene volados en gasa y detalles en lentejuelas. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno",
+        "price": 17710,
+        "image": "img/almohadones/oui.jpg"
+      },
+      {
+        "id": "alm003",
+        "name": "Funda de Almohadón De Rien",
+        "description": "Funda de almohadón de 45 x 45 cm. Funda de almohadón clásica. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno",
+        "price": 13400,
+        "image": "img/almohadones/de-rien.jpg"
+      },
+      {
+        "id": "alm004",
+        "name": "Funda de Almohadón Etoile",
+        "description": "Funda almohadón 50 x 50 cm. Funda clásica, con puntilla de borlas alrededor. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno.",
+        "price": 17000,
+        "image": "img/almohadones/etoile.jpg"
+      }
+    ],
+    "caminos_de_mesa": [
+      {
+        "id": "cdm001",
+        "name": "Camino de Mesa Bordado",
+        "description": "Elegante camino de mesa con delicados bordados florales, perfecto para ocasiones especiales.",
+        "price": 3800,
+        "image": "img/caminos-de-mesa/bordado-floral.jpg"
+      },
+      {
+        "id": "cdm002",
+        "name": "Camino de Mesa de Lino Natural",
+        "description": "Camino de mesa de lino natural con bordes deshilachados para un look rústico y sofisticado.",
+        "price": 3500,
+        "image": "img/caminos-de-mesa/lino-natural.jpg"
+      },
+      {
+        "id": "cdm003",
+        "name": "Camino de Mesa Estampado Geométrico",
+        "description": "Moderno camino de mesa con estampado geométrico en tonos neutros, ideal para mesas contemporáneas.",
+        "price": 3200,
+        "image": "img/caminos-de-mesa/geometrico.jpg"
+      }
+    ],
+    "box": [
+      {
+        "id": "box001",
+        "name": "Box 1: Textil + Aroma + Vela",
+        "description": "Caminito de mesa + Spray textil + Vela Jolie + Apagavela",
+        "price": 34000,
+        "image": "img/box/box1.jpg"
+      },
+      {
+        "id": "box002",
+        "name": "Box 2: Textil + Aroma + Vela",
+        "description": "Caminito de mesa + Difusor + Vela Vitre + Apagavela",
+        "price": 39800,
+        "image": "img/box/box2.jpg"
+      },
+      {
+        "id": "box003",
+        "name": "Box 3: Textil + Aroma + Cerámica",
+        "description": "Caminito de mesa + Difusor + Florerito Lea",
+        "price": 34500,
+        "image": "img/box/box3.jpg"
+      },
+      {
+        "id": "box004",
+        "name": "Box 4: Textil + Aroma + Vela",
+        "description": "Caminito de mesa + Difusor + Vela Selene + Apagavela",
+        "price": 33250,
+        "image": "img/box/box4.jpg"
+      },
+      {
+        "id": "box005",
+        "name": "Box 5: Textil + Aroma + Vela",
+        "description": "Caminito de mesa + Difusor + Vela Lottie Mediano + Apagavela",
+        "price": 37600,
+        "image": "img/box/box5.jpg"
+      }
+    ]
+  }
 }
+

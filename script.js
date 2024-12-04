@@ -99,7 +99,7 @@ function renderProducts() {
                 }
 
                 let sizeSelect = '';
-                if (category === 'cubre_sommier' || category === 'cortinas_interior') {
+                if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
                     sizeSelect = `
                         <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
                             <option value="">Seleccionar medida</option>
@@ -119,7 +119,7 @@ function renderProducts() {
                                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                            ${category === 'cubre_sommier' || category === 'cortinas_interior' ? 
+                            ${category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles' ? 
                                 `<p class="mt-2 text-sm text-gray-500">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>` :
                                 `<p class="mt-2 text-lg font-bold">
                                     <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
@@ -151,7 +151,7 @@ function openProductModal(productId, category) {
     let sizeOptions = '';
     let priceDisplay = '';
 
-    if (category === 'cubre_sommier' || category === 'cortinas_interior') {
+    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
         sizeOptions = `
             <div class="mb-4">
                 <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Medida</label>
@@ -236,7 +236,7 @@ function addToCart(productId, category) {
     const size = document.getElementById('size') ? document.getElementById('size').value : null;
 
     let price;
-    if (category === 'cubre_sommier' || category === 'cortinas_interior') {
+    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
         const selectedSize = product.sizes.find(s => s.name === size);
         if (!selectedSize) {
             alert('Por favor, selecciona una medida.');
@@ -263,8 +263,8 @@ function addToCart(productId, category) {
     closeProductModal();
 }
 
-function removeFromCart(productId, scent) {
-    cart = cart.filter(item => !(item.id === productId && item.scent === scent));
+function removeFromCart(productId, scent, size) {
+    cart = cart.filter(item => !(item.id === productId && item.scent === scent && item.size === size));
     updateCartUI();
 }
 
@@ -292,16 +292,17 @@ function updateCartUI() {
                     <p class="font-medium font-serif">${item.name}</p>
                     <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
                     ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
+                    ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
                 </div>
             </div>
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}')">
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}', '${item.size}')">
                 <i class="fas fa-trash h-4 w-4"></i>
             </button>
         </div>
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
@@ -419,7 +420,8 @@ function prepareCartData() {
         price: item.price,
         quantity: item.quantity,
         total: item.price * item.quantity,
-        scent: item.scent
+        scent: item.scent,
+        size: item.size
     })));
 }
 
@@ -807,6 +809,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Remove preloader
+    document.getElementById('preloader').style.display = 'none';
+});
+
+console.log("Script loaded successfully!");
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
 });

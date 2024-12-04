@@ -104,10 +104,12 @@ function renderProductPrice(product, category) {
     const minPrice = Math.min(...product.sizes.map(s => s.price));
     return `<p class="mt-2 text-sm text-gray-500">Desde $${minPrice.toLocaleString()}</p>`;
   } else {
+    const price = product.price;
+    const discountedPrice = price * 0.9;
     return `
       <p class="mt-2 text-lg font-bold">
-        <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-        $${(product.price * 0.9).toLocaleString()}
+        <span class="line-through text-gray-500">$${price.toLocaleString()}</span>
+        $${discountedPrice.toLocaleString()}
       </p>
     `;
   }
@@ -151,6 +153,7 @@ function openProductModal(productId, category) {
 
   let sizeOptions = '';
   let priceDisplay = '';
+  let scentOptions = '';
 
   if (product.sizes) {
     sizeOptions = `
@@ -164,18 +167,28 @@ function openProductModal(productId, category) {
     `;
     priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>`;
   } else {
-    const discountedPrice = product.price * 0.9;
+    const price = product.price;
+    const discountedPrice = price * 0.9;
     priceDisplay = `
       <p class="text-2xl font-bold mb-4">
-        <span class="line-through text-gray-500 mr-2">$${product.price.toLocaleString()}</span>
+        <span class="line-through text-gray-500 mr-2">$${price.toLocaleString()}</span>
         <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
       </p>
     `;
   }
 
-  const scentOptions = category === 'velas' ? products.esencias_velas : 
-                       category === 'aromas' ? products.esencias_spray_difusores : 
-                       null;
+  if (category === 'velas' || category === 'aromas') {
+    const scents = category === 'velas' ? products.esencias_velas : products.esencias_spray_difusores;
+    scentOptions = `
+      <div class="mb-4">
+        <label for="scent" class="block text-sm font-medium text-gray-700 mb-2">Aroma</label>
+        <select id="scent" name="scent" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+          <option value="">Seleccionar aroma</option>
+          ${scents.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+        </select>
+      </div>
+    `;
+  }
 
   modalContent.innerHTML = `
     <div class="flex flex-col md:flex-row md:space-x-6">
@@ -187,15 +200,7 @@ function openProductModal(productId, category) {
           <p class="text-gray-600 mb-4">${product.description}</p>
           ${priceDisplay}
           ${sizeOptions}
-          ${scentOptions ? `
-            <div class="mb-4">
-              <label for="scent" class="block text-sm font-medium text-gray-700 mb-2">Aroma</label>
-              <select id="scent" name="scent" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
-                <option value="">Seleccionar aroma</option>
-                ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
-              </select>
-            </div>
-          ` : ''}
+          ${scentOptions}
         </div>
         <div>
           <div class="flex items-center justify-between mb-4">
@@ -249,6 +254,11 @@ function addToCart(productId, category) {
     price = product.price * 0.9; // Apply 10% discount
   }
 
+  if ((category === 'velas' || category === 'aromas') && !scent) {
+    alert('Por favor, selecciona un aroma.');
+    return;
+  }
+
   const existingItem = cart.find(item => 
     item.id === product.id && 
     item.scent === scent &&
@@ -258,7 +268,7 @@ function addToCart(productId, category) {
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ ...product, price, quantity, scent, size });
+    cart.push({ ...product, price, quantity, scent, size, category });
   }
 
   updateCartUI();

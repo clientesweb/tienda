@@ -53,7 +53,6 @@ async function loadProducts() {
   } catch (error) {
     console.error('Error loading products:', error);
   } finally {
-    // Asegúrate de que el preloader se oculte siempre, incluso si hay un error
     document.getElementById('preloader').style.display = 'none';
   }
 }
@@ -98,7 +97,7 @@ function renderProducts() {
                 }
 
                 let sizeSelect = '';
-                if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
+                if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'manteles') {
                     sizeSelect = `
                         <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
                             <option value="">Seleccionar medida</option>
@@ -118,7 +117,7 @@ function renderProducts() {
                                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                            ${category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles' ? 
+                            ${category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'manteles' ? 
                                 `<p class="mt-2 text-sm text-gray-500">Desde $${Math.min(...(product.sizes ? product.sizes.map(s => s.price) : [product.price])).toLocaleString()}</p>` :
                                 `<p class="mt-2 text-lg font-bold">
                                     <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
@@ -150,7 +149,7 @@ function openProductModal(productId, category) {
     let sizeOptions = '';
     let priceDisplay = '';
 
-    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
+    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'manteles') {
         sizeOptions = `
             <div class="mb-4">
                 <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Medida</label>
@@ -235,7 +234,7 @@ function addToCart(productId, category) {
     const size = document.getElementById('size') ? document.getElementById('size').value : null;
 
     let price;
-    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
+    if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'manteles') {
         const selectedSize = product.sizes ? product.sizes.find(s => s.name === size) : null;
         if (!selectedSize) {
             alert('Por favor, selecciona una medida.');
@@ -294,7 +293,7 @@ function updateCartUI() {
                     ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
                 </div>
             </div>
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}', '${item.size}')">
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}')">
                 <i class="fas fa-trash h-4 w-4"></i>
             </button>
         </div>
@@ -560,11 +559,6 @@ function generatePurchaseDetails() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
-        // Add logo
-        // const logoImg = new Image();
-        // logoImg.src = 'path/to/your/logo.png'; // Replace with your logo path
-        // doc.addImage(logoImg, 'PNG', 10, 10, 40, 40);
-
         // Add title
         doc.setFontSize(22);
         doc.setTextColor(33, 150, 243); // Primary color
@@ -813,3 +807,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+

@@ -307,49 +307,143 @@
     }
   ],
   "cubre_sommier": [
-  {
-    "id": 34,
-    "name": "Cubresomier Maison",
-    "price": 62000,
-    "image": "img/cubresomier-maison.jpg",
-    "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm.",
-    "sizes": [
-      {"name": "1 Plaza", "dimensions": "0.90 A x 1.90 L", "price": 62000},
-      {"name": "2 Plazas", "dimensions": "1.40 x 1.90 M L", "price": 72000},
-      {"name": "Twin", "dimensions": "1 M A x 2 M L", "price": 66500},
-      {"name": "Queen", "dimensions": "1.60 M A x 2 M L", "price": 79900},
-      {"name": "King", "dimensions": "1.80 M A x 2 M L", "price": 81300},
-      {"name": "Super King", "dimensions": "2 M A x 2 M L", "price": 89000}
-    ]
-  },
-  {
-    "id": 40,
-    "name": "Cubresomier LUXE",
-    "price": 82000,
-    "image": "img/cubresomier-luxe.jpg",
-    "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm.",
-    "sizes": [
-      {"name": "1 Plaza", "dimensions": "0.90 A x 1.90 L", "price": 82000},
-      {"name": "2 Plazas", "dimensions": "1.40 x 1.90 M L", "price": 92000},
-      {"name": "Twin", "dimensions": "1 M A x 2 M L", "price": 86500},
-      {"name": "Queen", "dimensions": "1.60 M A x 2 M L", "price": 99000},
-      {"name": "King", "dimensions": "1.80 M A x 2 M L", "price": 101200},
-      {"name": "Super King", "dimensions": "2 M A x 2 M L", "price": 109000}
-    ]
-  },
-  {
-    "id": 46,
-    "name": "Cubresomier TISSU",
-    "price": 72000,
-    "image": "img/cubresomier-tissu.jpg",
-    "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm.",
-    "sizes": [
-      {"name": "1 Plaza", "dimensions": "0.90 A x 1.90 L", "price": 72000},
-      {"name": "2 Plazas", "dimensions": "1.40 x 1.90 M L", "price": 82000},
-      {"name": "Twin", "dimensions": "1 M A x 2 M L", "price": 76500},
-      {"name": "Queen", "dimensions": "1.60 M A x 2 M L", "price": 89000},
-      {"name": "King", "dimensions": "1.80 M A x 2 M L", "price": 91200},
-      {"name": "Super King", "dimensions": "2 M A x 2 M L", "price": 99000}
+    {
+      "id": 34,
+      "name": "Cubresomier Maison Twin",
+      "price": 66500,
+      "image": "img/cubresomier-maison.jpg",
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L."
+    },
+    {
+      "id": 35,
+      "name": "Cubresomier Maison King",
+      "price": 81300,
+      "image": "img/cubresomier-maison.jpg",
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L."
+    },
+    {
+      "id": 36,
+      "name": "Cubresomier Maison Queen",
+      "price": 79900,
+      "image": "img/cubresomier-maison.jpg",
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L."
+    },
+    {
+      "id": 37,
+      "name": "Cubresomier Maison 1 Plaza",
+      "price": 62000,
+      "image": "img/cubresomier-maison.jpg",
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L."
+    },
+    {
+      "id": 38,
+      "name": "Cubresomier Maison 2 Plazas",
+      "price": 72000,
+      "image": "img/cubresomier-maison.jpg",
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L."
+    },
+    {
+      "id": 39,
+      "name": "Cubresomier Maison Super King",
+      "price": 89000,
+      "image": "img/cubresomier-maison.jpg",
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L."
+    },
+    {
+      "id": 40,
+      "name": "Cubresomier LUXE Twin",
+      "price": 86500,
+      "image": "img/cubresomier-luxe.jpg",
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.",
+      "originalPrice": 86500
+    },
+    {
+      "id": 41,
+      "name": "Cubresomier LUXE King",
+      "price": 101200,
+      "image": "img/cubresomier-luxe.jpg",
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.",
+      "originalPrice": 101200
+    },
+    {
+      "id": 42,
+      "name": "Cubresomier LUXE Queen",
+      "price": 99000,
+      "image": "img/cubresomier-luxe.jpg",
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.",
+      "originalPrice": 99000
+    },
+    {
+      "id": 43,
+      "name": "Cubresomier LUXE 1 Plaza",
+      "price": 82000,
+      "image": "img/cubresomier-luxe.jpg",
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.",
+      "originalPrice": 82000
+    },
+    {
+      "id": 44,
+      "name": "Cubresomier LUXE 2 Plazas",
+      "price": 92000,
+      "image": "img/cubresomier-luxe.jpg",
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.",
+      "originalPrice": 92000
+    },
+    {
+      "id": 45,
+      "name": "Cubresomier LUXE Super King",
+      "price": 109000,
+      "image": "img/cubresomier-luxe.jpg",
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.",
+      "originalPrice": 109000
+    },
+    {
+      "id": 46,
+      "name": "Cubresomier TISSU Twin",
+      "price": 76500,
+      "image": "img/cubresomier-tissu.jpg",
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.",
+      "originalPrice": 76500
+    },
+    {
+      "id": 47,
+      "name": "Cubresomier TISSU King",
+      "price": 91200,
+      "image": "img/cubresomier-tissu.jpg",
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.",
+      "originalPrice": 91200
+    },
+    {
+      "id": 48,
+      "name": "Cubresomier TISSU Queen",
+      "price": 89000,
+      "image": "img/cubresomier-tissu.jpg",
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.",
+      "originalPrice": 89000
+    },
+    {
+      "id": 49,
+      "name": "Cubresomier TISSU 1 Plaza",
+      "price": 72000,
+      "image": "img/cubresomier-tissu.jpg",
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.",
+      "originalPrice": 72000
+    },
+    {
+      "id": 50,
+      "name": "Cubresomier TISSU 2 Plazas",
+      "price": 82000,
+      "image": "img/cubresomier-tissu.jpg",
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.",
+      "originalPrice": 82000
+    },
+    {
+      "id": 51,
+      "name": "Cubresomier TISSU Super King",
+      "price": 99000,
+      "image": "img/cubresomier-tissu.jpg",
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.",
+      "originalPrice": 99000
     }
   ],
   "cortinas_interior": [

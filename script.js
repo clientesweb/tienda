@@ -235,7 +235,7 @@ function updateQuantity(change) {
 }
 
 function addToCart(productId, category) {
-  const product = products[category].find(p => p.id === productId);
+  const product = products[category].find(p => p.id == productId);
   if (!product) return;
 
   const quantity = parseInt(document.getElementById('quantity').value);
@@ -256,6 +256,11 @@ function addToCart(productId, category) {
 
   if ((category === 'velas' || category === 'aromas') && !scent) {
     alert('Por favor, selecciona un aroma.');
+    return;
+  }
+
+  if (product.sizes && !size) {
+    alert('Por favor, selecciona una medida.');
     return;
   }
 

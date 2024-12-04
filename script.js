@@ -136,35 +136,36 @@ function renderProducts() {
 }
 
 function openProductModal(productId, category) {
-    console.log('Opening modal for product:', productId, 'in category:', category);
-    
-    const modal = document.getElementById('productModal');
-    const modalTitle = document.getElementById('productModalTitle');
-    const modalContent = document.getElementById('productModalContent');
+    console.log('Abriendo modal para el producto:', productId, 'en la categoría:', category);
+    console.log('Todos los productos:', products);
 
     let product;
     // Buscar el producto en todas las categorías si no se encuentra en la categoría especificada
     if (products[category] && Array.isArray(products[category])) {
         product = products[category].find(p => p.id === productId);
-        console.log('Product found in specified category:', product);
+        console.log('Producto encontrado en la categoría especificada:', product);
     }
     if (!product) {
-        console.log('Product not found in specified category, searching in all categories');
+        console.log('Producto no encontrado en la categoría especificada, buscando en todas las categorías');
         for (let cat in products) {
             if (Array.isArray(products[cat])) {
                 product = products[cat].find(p => p.id === productId);
                 if (product) {
                     category = cat;
-                    console.log('Product found in category:', cat);
+                    console.log('Producto encontrado en la categoría:', cat);
                     break;
                 }
             }
         }
     }
     if (!product) {
-        console.error('Product not found:', productId);
+        console.error('Producto no encontrado:', productId);
         return;
     }
+
+    const modal = document.getElementById('productModal');
+    const modalTitle = document.getElementById('productModalTitle');
+    const modalContent = document.getElementById('productModalContent');
 
     modalTitle.textContent = product.name;
 
@@ -234,7 +235,7 @@ function openProductModal(productId, category) {
     `;
 
     modal.classList.remove('hidden');
-    console.log('Modal displayed');
+    console.log('Modal mostrado');
 }
 
 function closeProductModal() {
@@ -401,12 +402,12 @@ function updateShippingOptions(shippingOptions) {
 }
 
 function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
-  if (itemCount <= 1) {
-    return baseShippingCost;
-  } else {
-    const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
-    return baseShippingCost + additionalCost;
-  }
+    if (itemCount <= 1) {
+        return baseShippingCost;
+    } else {
+        const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
+        return baseShippingCost + additionalCost;
+    }
 }
 
 function updateTotal() {

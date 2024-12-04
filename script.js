@@ -32,14 +32,23 @@ const productContainers = {
     accesorios: document.getElementById('accesoriosContainer'),
     cubre_sommier: document.getElementById('cubre_sommierContainer'),
     cortinas_interior: document.getElementById('cortinas_interiorContainer'),
-    cortinas_gasa: document.getElementById('cortinas_gasaContainer')
+    cortinas_gasa: document.getElementById('cortinas_gasaContainer'),
+    almohadones: document.getElementById('almohadonesContainer'),
+    caminos_de_mesa: document.getElementById('caminos_de_mesaContainer'),
+    manteles: document.getElementById('mantelesContainer'),
+    box: document.getElementById('boxContainer')
 };
 
 // Functions
 async function loadProducts() {
     try {
-        const response = await fetch('products.json');
-        products = await response.json();
+        const [response1, response2] = await Promise.all([
+            fetch('products.json'),
+            fetch('products2.json')
+        ]);
+        const products1 = await response1.json();
+        const products2 = await response2.json();
+        products = { ...products1, ...products2 };
         renderProducts();
     } catch (error) {
         console.error('Error loading products:', error);
@@ -64,7 +73,7 @@ function updateHero() {
 }
 
 function renderProducts() {
-    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior'];
+    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'almohadones', 'caminos_de_mesa', 'manteles', 'box'];
 
     categories.forEach(category => {
         const container = productContainers[category];
@@ -583,7 +592,8 @@ function generatePurchaseDetails() {
 
         yPos += 20;
         doc.setFontSize(16);
-        doc.setTextColor(0);
+        doc.<continuation_point>
+setTextColor(0);
         doc.text('Datos bancarios para la transferencia:', 10, yPos);
         yPos += 10;
         doc.setFontSize(12);
@@ -799,3 +809,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+

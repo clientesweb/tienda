@@ -41,33 +41,35 @@ const productContainers = {
 
 // Functions
 async function loadProducts() {
-  try {
-    const [response1, response2] = await Promise.all([
-      fetch('products.json'),
-      fetch('products2.json')
-    ]);
-    const products1 = await response1.json();
-    const products2 = await response2.json();
-    
-    // Combinar los productos de ambos archivos
-    products = {
-      ...products1,
-      ...products2.products
-    };
+    try {
+        const [response1, response2] = await Promise.all([
+            fetch('products.json'),
+            fetch('products2.json')
+        ]);
+        const products1 = await response1.json();
+        const products2 = await response2.json();
+        
+        // Combinar los productos de ambos archivos
+        products = {
+            ...products1,
+            ...products2.products
+        };
 
-    // Asegurarse de que todas las categorías estén presentes
-    Object.keys(products).forEach(category => {
-      if (!Array.isArray(products[category])) {
-        products[category] = [];
-      }
-    });
+        // Asegurarse de que todas las categorías estén presentes y sean arrays
+        Object.keys(products).forEach(category => {
+            if (!Array.isArray(products[category])) {
+                products[category] = [];
+            }
+        });
 
-    renderProducts();
-  } catch (error) {
-    console.error('Error loading products:', error);
-  } finally {
-    document.getElementById('preloader').style.display = 'none';
-  }
+        console.log('Productos cargados:', products);
+
+        renderProducts();
+    } catch (error) {
+        console.error('Error al cargar los productos:', error);
+    } finally {
+        document.getElementById('preloader').style.display = 'none';
+    }
 }
 
 function updateBanner() {
@@ -151,23 +153,32 @@ function renderProducts() {
 }
 
 function openProductModal(productId, category) {
+    console.log('Abriendo modal para el producto:', productId, 'en la categoría:', category);
+    console.log('Todos los productos:', products);
+
     let product;
     // Buscar el producto en todas las categorías si no se encuentra en la categoría especificada
-    if (products[category]) {
+    if (products[category] && Array.isArray(products[category])) {
         product = products[category].find(p => p.id === productId);
+        console.log('Producto encontrado en la categoría especificada:', product);
     }
     if (!product) {
+        console.log('Producto no encontrado en la categoría especificada, buscando en todas las categorías');
         for (let cat in products) {
             if (Array.isArray(products[cat])) {
                 product = products[cat].find(p => p.id === productId);
                 if (product) {
                     category = cat;
+                    console.log('Producto encontrado en la categoría:', cat);
                     break;
                 }
             }
         }
     }
-    if (!product) return;
+    if (!product) {
+        console.error('Producto no encontrado:', productId);
+        return;
+    }
 
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
@@ -239,7 +250,9 @@ function openProductModal(productId, category) {
         </div>
     `;
 
+    console.log('Contenido del modal establecido');
     document.getElementById('productModal').classList.remove('hidden');
+    console.log('Modal mostrado');
 }
 
 function closeProductModal() {
@@ -255,7 +268,7 @@ function updateQuantity(change) {
 
 function addToCart(productId, category) {
     let product;
-    if (products[category]) {
+    if (products[category] && Array.isArray(products[category])) {
         product = products[category].find(p => p.id === productId);
     }
     if (!product) {

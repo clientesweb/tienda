@@ -48,7 +48,20 @@ async function loadProducts() {
     ]);
     const products1 = await response1.json();
     const products2 = await response2.json();
-    products = { ...products1, ...products2.products };
+    
+    // Combinar los productos de ambos archivos
+    products = {
+      ...products1,
+      ...products2.products
+    };
+
+    // Asegurarse de que todas las categorías estén presentes
+    Object.keys(products).forEach(category => {
+      if (!Array.isArray(products[category])) {
+        products[category] = [];
+      }
+    });
+
     renderProducts();
   } catch (error) {
     console.error('Error loading products:', error);
@@ -138,7 +151,22 @@ function renderProducts() {
 }
 
 function openProductModal(productId, category) {
-    const product = products[category].find(p => p.id === productId);
+    let product;
+    // Buscar el producto en todas las categorías si no se encuentra en la categoría especificada
+    if (products[category]) {
+        product = products[category].find(p => p.id === productId);
+    }
+    if (!product) {
+        for (let cat in products) {
+            if (Array.isArray(products[cat])) {
+                product = products[cat].find(p => p.id === productId);
+                if (product) {
+                    category = cat;
+                    break;
+                }
+            }
+        }
+    }
     if (!product) return;
 
     const modalTitle = document.getElementById('productModalTitle');
@@ -226,7 +254,21 @@ function updateQuantity(change) {
 }
 
 function addToCart(productId, category) {
-    const product = products[category].find(p => p.id === productId);
+    let product;
+    if (products[category]) {
+        product = products[category].find(p => p.id === productId);
+    }
+    if (!product) {
+        for (let cat in products) {
+            if (Array.isArray(products[cat])) {
+                product = products[cat].find(p => p.id === productId);
+                if (product) {
+                    category = cat;
+                    break;
+                }
+            }
+        }
+    }
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);

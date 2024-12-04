@@ -69,68 +69,45 @@ function renderProducts() {
     categories.forEach(category => {
         const container = productContainers[category];
         if (container && products[category]) {
-            if (category === 'cubre_sommier' || category === 'cortinas_interior') {
-                container.innerHTML = products[category].map(product => {
-                    return `
-                        <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
-                            <div class="p-4">
-                                <div class="relative mb-4 aspect-square">
-                                    <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
-                                </div>
-                                <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                                <p class="mt-2 text-lg font-bold">Desde $${product.price.toLocaleString()}</p>
-                                <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
-                                    <option value="">Seleccionar medida</option>
-                                    ${product.sizes.map(size => `<option value="${size.price}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
-                                </select>
-                                <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
-                                    Ver detalles
-                                </button>
-                            </div>
-                        </div>
+            container.innerHTML = products[category].map(product => {
+                const discountedPrice = product.price * 0.9; // Apply 10% discount
+                const scentOptions = category === 'velas' ? products.esencias_velas : 
+                                     category === 'aromas' ? products.esencias_spray_difusores : 
+                                     null;
+                
+                let scentSelect = '';
+                if (scentOptions) {
+                    scentSelect = `
+                        <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
+                            <option value="">Seleccionar aroma</option>
+                            ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
+                        </select>
                     `;
-                }).join('');
-            } else {
-                container.innerHTML = products[category].map(product => {
-                    const discountedPrice = product.price * 0.9; // Apply 10% discount
-                    const scentOptions = category === 'velas' ? products.esencias_velas : 
-                                         category === 'aromas' ? products.esencias_spray_difusores : 
-                                         null;
-                    
-                    let scentSelect = '';
-                    if (scentOptions) {
-                        scentSelect = `
-                            <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
-                                <option value="">Seleccionar aroma</option>
-                                ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
-                            </select>
-                        `;
-                    }
+                }
 
-                    return `
-                        <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
-                            <div class="p-4">
-                                <div class="relative mb-4 aspect-square">
-                                    <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
-                                        style="background-color: #D4C098; color: #848071;">
-                                        10% OFF
-                                    </div>
-                                    <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+                return `
+                    <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
+                        <div class="p-4">
+                            <div class="relative mb-4 aspect-square">
+                                <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
+                                    style="background-color: #D4C098; color: #848071;">
+                                    10% OFF
                                 </div>
-                                <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                                <p class="mt-2 text-lg font-bold">
-                                    <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                                    $${discountedPrice.toLocaleString()}
-                                </p>
-                                ${scentSelect}
-                                <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
-                                    Ver detalles
-                                </button>
+                                <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                             </div>
+                            <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
+                            <p class="mt-2 text-lg font-bold">
+                                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                                $${discountedPrice.toLocaleString()}
+                            </p>
+                            ${scentSelect}
+                            <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                                Ver detalles
+                            </button>
                         </div>
-                    `;
-                }).join('');
-            }
+                    </div>
+                `;
+            }).join('');
         }
     });
 }
@@ -139,107 +116,57 @@ function openProductModal(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
 
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
+    const scentOptions = category === 'velas' ? products.esencias_velas : 
+                         category === 'aromas' ? products.esencias_spray_difusores : 
+                         null;
+
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
 
     modalTitle.textContent = product.name;
-
-    if (category === 'cubre_sommier' || category === 'cortinas_interior') {
-        modalContent.innerHTML = `
-            <div class="flex flex-col md:flex-row md:space-x-6">
-                <div class="md:w-1/2">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-auto object-contain rounded-lg shadow-md">
-                </div>
-                <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col justify-between">
-                    <div>
-                        <p class="text-gray-600 mb-4">${product.description}</p>
-                        <p class="text-2xl font-bold mb-4">Desde $${product.price.toLocaleString()}</p>
+    modalContent.innerHTML = `
+        <div class="flex flex-col md:flex-row md:space-x-6">
+            <div class="md:w-1/2">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-auto object-contain rounded-lg shadow-md">
+            </div>
+            <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col justify-between">
+                <div>
+                    <p class="text-gray-600 mb-4">${product.description}</p>
+                    <p class="text-2xl font-bold mb-4">
+                        <span class="line-through text-gray-500 mr-2">$${product.price.toLocaleString()}</span>
+                        <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
+                    </p>
+                    ${scentOptions ? `
                         <div class="mb-4">
-                            <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Medida</label>
-                            <select id="size" name="size" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
-                                <option value="">Seleccionar medida</option>
-                                ${product.sizes.map(size => `<option value="${size.price}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
+                            <label for="scent" class="block text-sm font-medium text-gray-700 mb-2">Aroma</label>
+                            <select id="scent" name="scent" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                                <option value="">Seleccionar aroma</option>
+                                ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
                             </select>
                         </div>
-                        ${category === 'cortinas_interior' ? `
-                            <div class="mt-4">
-                                <h4 class="font-semibold mb-2">Características:</h4>
-                                <ul class="list-disc pl-5">
-                                    ${product.caracteristicas.map(carac => `<li>${carac}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div class="mt-4">
-                                <h4 class="font-semibold mb-2">Recomendaciones:</h4>
-                                <ul class="list-disc pl-5">
-                                    ${product.recomendaciones.map(rec => `<li>${rec}</li>`).join('')}
-                                </ul>
-                            </div>
-                        ` : ''}
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <label for="quantity" class="text-sm font-medium text-gray-700">Cantidad:</label>
-                            <div class="flex items-center">
-                                <button class="bg-gray-200 px-3 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
-                                <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
-                                <button class="bg-gray-200 px-3 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
-                            </div>
+                    ` : ''}
+                </div>
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <label for="quantity" class="text-sm font-medium text-gray-700">Cantidad:</label>
+                        <div class="flex items-center">
+                            <button class="bg-gray-200 px-3 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
+                            <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
+                            <button class="bg-gray-200 px-3 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
                         </div>
-                        <button class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold" onclick="addToCart(${product.id}, '${category}')">
-                            Agregar al carrito
-                        </button>
                     </div>
+                    <button class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold" onclick="addToCart(${product.id}, '${category}')">
+                        Agregar al carrito
+                    </button>
                 </div>
             </div>
-        `;
-    } else {
-        const discountedPrice = product.price * 0.9; // Apply 10% discount
-        const scentOptions = category === 'velas' ? products.esencias_velas : 
-                             category === 'aromas' ? products.esencias_spray_difusores : 
-                             null;
-
-        modalContent.innerHTML = `
-            <div class="flex flex-col md:flex-row md:space-x-6">
-                <div class="md:w-1/2">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-auto object-contain rounded-lg shadow-md">
-                </div>
-                <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col justify-between">
-                    <div>
-                        <p class="text-gray-600 mb-4">${product.description}</p>
-                        <p class="text-2xl font-bold mb-4">
-                            <span class="line-through text-gray-500 mr-2">$${product.price.toLocaleString()}</span>
-                            <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
-                        </p>
-                        ${scentOptions ? `
-                            <div class="mb-4">
-                                <label for="scent" class="block text-sm font-medium text-gray-700 mb-2">Aroma</label>
-                                <select id="scent" name="scent" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
-                                    <option value="">Seleccionar aroma</option>
-                                    ${scentOptions.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
-                                </select>
-                            </div>
-                        ` : ''}
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <label for="quantity" class="text-sm font-medium text-gray-700">Cantidad:</label>
-                            <div class="flex items-center">
-                                <button class="bg-gray-200 px-3 py-1 rounded-l" onclick="updateQuantity(-1)">-</button>
-                                <input id="quantity" type="number" class="w-16 text-center border-t border-b" value="1" min="1">
-                                <button class="bg-gray-200 px-3 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
-                            </div>
-                        </div>
-                        <button class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold" onclick="addToCart(${product.id}, '${category}')">
-                            Agregar al carrito
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
+        </div>
+    `;
 
     document.getElementById('productModal').classList.remove('hidden');
 }
+
 function closeProductModal() {
     document.getElementById('productModal').classList.add('hidden');
 }
@@ -256,41 +183,22 @@ function addToCart(productId, category) {
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);
-    let price = product.price;
-    let size = '';
-
-    if (category === 'cubre_sommier' || category === 'cortinas_interior') {
-        const sizeSelect = document.getElementById('size');
-        if (sizeSelect && sizeSelect.value) {
-            price = parseFloat(sizeSelect.value);
-            size = sizeSelect.options[sizeSelect.selectedIndex].text;
-        } else {
-            alert('Por favor, seleccione una medida');
-            return;
-        }
-    } else {
-        price = price * 0.9; // Apply 10% discount for non-cubre_sommier and non-cortinas_interior products
-    }
-
+    const discountedPrice = product.price * 0.9; // Apply 10% discount
     const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
-    const existingItem = cart.find(item => 
-        item.id === product.id && 
-        item.scent === scent &&
-        item.size === size
-    );
+    const existingItem = cart.find(item => item.id === product.id && item.scent === scent);
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, price, quantity, scent, size });
+        cart.push({ ...product, price: discountedPrice, quantity, scent });
     }
 
     updateCartUI();
     closeProductModal();
 }
 
-function removeFromCart(productId, scent, size) {
-    cart = cart.filter(item => !(item.id === productId && item.scent === scent && item.size === size));
+function removeFromCart(productId, scent) {
+    cart = cart.filter(item => !(item.id === productId && item.scent === scent));
     updateCartUI();
 }
 
@@ -318,17 +226,16 @@ function updateCartUI() {
                     <p class="font-medium font-serif">${item.name}</p>
                     <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
                     ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
-                    ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
                 </div>
             </div>
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}', '${item.size}')">
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}')">
                 <i class="fas fa-trash h-4 w-4"></i>
             </button>
         </div>
     `).join('');
 
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
     
     // Update shipping cost display
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
@@ -402,7 +309,8 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const
+itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
@@ -445,8 +353,7 @@ function prepareCartData() {
         price: item.price,
         quantity: item.quantity,
         total: item.price * item.quantity,
-        scent: item.scent,
-        size: item.size
+        scent: item.scent
     })));
 }
 
@@ -460,7 +367,6 @@ function validateForm() {
     }
     return true;
 }
-
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -477,11 +383,7 @@ function updateTransferModal() {
 
     cart.forEach(item => {
         content += `
-            <li class="text-gray-700">
-                ${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}
-                ${item.scent ? `<br>Aroma: ${item.scent}` : ''}
-                ${item.size ? `<br>Medida: ${item.size}` : ''}
-            </li>
+            <li class="text-gray-700">${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
         `;
     });
 
@@ -612,14 +514,6 @@ function generatePurchaseDetails() {
         cart.forEach(item => {
             doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
             yPos += 7;
-            if (item.scent) {
-                doc.text(`Aroma: ${item.scent}`, 25, yPos);
-                yPos += 7;
-            }
-            if (item.size) {
-                doc.text(`Medida: ${item.size}`, 25, yPos);
-                yPos += 7;
-            }
         });
 
         yPos += 10;
@@ -838,7 +732,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const accordionHeaders = document.querySelectorAll('.accordion-header');
     
     accordionHeaders.forEach(header => {
-        header.addEventListener('click',header.addEventListener('click', function() {
+        header.addEventListener('click', function() {
             const content = this.nextElementSibling;
             const icon = this.querySelector('.accordion-icon');
             
@@ -852,3 +746,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
+

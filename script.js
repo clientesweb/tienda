@@ -250,11 +250,21 @@ function addToCart(productId, category) {
     closeProductModal();
 }
 
-function removeFromCart(productId, scent) {
-    cart = cart.filter(item => !(item.id === productId && item.scent === scent));
+function removeFromCart(productId, scent, size) {
+    cart = cart.filter(item => !(item.id === productId && item.scent === scent && item.size === size));
     updateCartUI();
 }
 
+function applyDiscount() {
+    const discountCode = document.getElementById('discountCode').value;
+    if (discountCode === 'MonAmourOFF1') {
+        cart.discountApplied = true;
+        updateCartUI();
+        alert('¡Código de descuento aplicado con éxito!');
+    } else {
+        alert('Código de descuento inválido');
+    }
+}
 function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -266,7 +276,8 @@ function updateCartUI() {
         shippingCost = calculateShippingCost(selectedShipping.price, totalItems);
     }
     
-    const total = subtotal + shippingCost;
+    const discount = cart.discountApplied ? subtotal * 0.1 : 0;
+    const total = subtotal + shippingCost - discount;
 
     cartItemCountEl.textContent = totalItems;
     cartItemCountEl.classList.toggle('hidden', totalItems === 0);
@@ -279,18 +290,26 @@ function updateCartUI() {
                     <p class="font-medium font-serif">${item.name}</p>
                     <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
                     ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
+                    ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
                 </div>
             </div>
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}')">
+            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart(${item.id}, '${item.scent}', '${item.size}')">
                 <i class="fas fa-trash h-4 w-4"></i>
             </button>
         </div>
     `).join('');
 
+    if (cart.discountApplied) {
+        cartItemsEl.innerHTML += `
+            <div class="flex justify-between items-center text-green-600 mt-2">
+                <span>Descuento aplicado (10%):</span>
+                <span>-${formatPrice(discount)}</span>
+            </div>
+        `;
+    }
+
     cartTotalEl.textContent = formatPrice(total);
-    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9); // Update: Changed discount to 10%
-    
-    // Update shipping cost display
+    document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
     updateTotal();
     updateTransferModal();
@@ -352,18 +371,17 @@ function updateShippingOptions(shippingOptions) {
 }
 
 function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage = 28) {
-  if (itemCount <= 1) {
-    return baseShippingCost;
-  } else {
-    const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
-    return baseShippingCost + additionalCost;
-  }
+    if (itemCount <= 1) {
+        return baseShippingCost;
+    } else {
+        const additionalCost = baseShippingCost * (incrementPercentage / 100) * (itemCount - 1);
+        return baseShippingCost + additionalCost;
+    }
 }
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const
-itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
@@ -371,10 +389,24 @@ itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
         shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
     }
 
-    const total = subtotal + shippingCost;
+    const discount = cart.discountApplied ? subtotal * 0.1 : 0;
+    const total = subtotal + shippingCost - discount;
+
     document.getElementById('cartTotal').textContent = formatPrice(total);
     document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
     document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
+    
+    if (cart.discountApplied) {
+        const discountEl = document.getElementById('appliedDiscount') || document.createElement('div');
+        discountEl.id = 'appliedDiscount';
+        discountEl.className = 'text-green-600 mt-2';
+        discountEl.textContent = `Descuento aplicado: -${formatPrice(discount)}`;
+        document.getElementById('cartTotal').parentNode.insertBefore(discountEl, document.getElementById('cartTotal'));
+    } else {
+        const discountEl = document.getElementById('appliedDiscount');
+        if (discountEl) discountEl.remove();
+    }
+
     updateTransferModal();
 }
 
@@ -406,7 +438,8 @@ function prepareCartData() {
         price: item.price,
         quantity: item.quantity,
         total: item.price * item.quantity,
-        scent: item.scent
+        scent: item.scent,
+        size: item.size
     })));
 }
 
@@ -420,10 +453,11 @@ function validateForm() {
     }
     return true;
 }
+
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = subtotal * 0.1; // 10% discount
+    const discount = cart.discountApplied ? subtotal * 0.1 : 0;
     const total = subtotal + shippingCost - discount;
 
     let content = `
@@ -450,10 +484,18 @@ function updateTransferModal() {
                     <span>Costo de envío:</span>
                     <span>${formatPrice(shippingCost)}</span>
                 </div>
-                <div class="flex justify-between text-lg text-green-600">
-                    <span>Descuento (10%):</span>
-                    <span>-${formatPrice(discount)}</span>
-                </div>
+    `;
+
+    if (cart.discountApplied) {
+        content += `
+            <div class="flex justify-between text-lg text-green-600">
+                <span>Descuento (10%):</span>
+                <span>-${formatPrice(discount)}</span>
+            </div>
+        `;
+    }
+
+    content += `
                 <div class="flex justify-between font-bold text-xl text-primary">
                     <span>Total:</span>
                     <span>${formatPrice(total)}</span>
@@ -540,7 +582,7 @@ CUIT/CUIL: 27-37092938-1
 function generatePurchaseDetails() {
     try {
         const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        const discount = subtotal * 0.1; // 10% discount
+        const discount = cart.discountApplied ? subtotal * 0.1 : 0;
         const total = subtotal + shippingCost - discount;
 
         const { jsPDF } = window.jspdf;
@@ -574,9 +616,11 @@ function generatePurchaseDetails() {
         yPos += 7;
         doc.text(`Costo de envío: ${formatPrice(shippingCost)}`, 10, yPos);
         yPos += 7;
-        doc.setTextColor(0, 128, 0); // Green color for discount
-        doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
-        yPos += 7;
+        if (cart.discountApplied) {
+            doc.setTextColor(0, 128, 0); // Green color for discount
+            doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
+            yPos += 7;
+        }
         doc.setTextColor(33, 150, 243); // Primary color for total
         doc.setFontSize(14);
         doc.text(`Total: ${formatPrice(total)}`, 10, yPos);
@@ -799,4 +843,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
-

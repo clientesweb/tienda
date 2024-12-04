@@ -308,186 +308,158 @@
   ],
   "cubre_sommier": [
     {
-      "id": 34,
-      "name": "Cubresomier Maison Twin",
-      "price": 66500,
+      "id": 1,
+      "name": "Cubresomier Maison",
       "image": "img/cubresomier-maison.jpg",
-      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L."
+      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm.",
+      "sizes": [
+        {
+          "name": "Twin",
+          "price": 66500,
+          "dimensions": "1 M A x 2 M L"
+        },
+        {
+          "name": "King",
+          "price": 81300,
+          "dimensions": "1.80 M A x 2 M L"
+        },
+        {
+          "name": "Queen",
+          "price": 79900,
+          "dimensions": "1.60 M A x 2 M L"
+        },
+        {
+          "name": "1 Plaza",
+          "price": 62000,
+          "dimensions": "0.90 A x 1.90 L"
+        },
+        {
+          "name": "2 Plazas",
+          "price": 72000,
+          "dimensions": "1.40 x 1.90 M L"
+        },
+        {
+          "name": "Super King",
+          "price": 89000,
+          "dimensions": "2 M A x 2 M L"
+        }
+      ]
     },
     {
-      "id": 35,
-      "name": "Cubresomier Maison King",
-      "price": 81300,
-      "image": "img/cubresomier-maison.jpg",
-      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L."
-    },
-    {
-      "id": 36,
-      "name": "Cubresomier Maison Queen",
-      "price": 79900,
-      "image": "img/cubresomier-maison.jpg",
-      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L."
-    },
-    {
-      "id": 37,
-      "name": "Cubresomier Maison 1 Plaza",
-      "price": 62000,
-      "image": "img/cubresomier-maison.jpg",
-      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L."
-    },
-    {
-      "id": 38,
-      "name": "Cubresomier Maison 2 Plazas",
-      "price": 72000,
-      "image": "img/cubresomier-maison.jpg",
-      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L."
-    },
-    {
-      "id": 39,
-      "name": "Cubresomier Maison Super King",
-      "price": 89000,
-      "image": "img/cubresomier-maison.jpg",
-      "description": "Cubresomier clásico confeccionado en algodón y su base en poliéster. Tiene una base plana que queda entre el colchón y el somier lo cual lo sujeta. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L."
-    },
-    {
-      "id": 40,
-      "name": "Cubresomier LUXE Twin",
-      "price": 86500,
+      "id": 2,
+      "name": "Cubresomier LUXE",
       "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.",
-      "originalPrice": 86500
+      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm.",
+      "sizes": [
+        {
+          "name": "Twin",
+          "price": 86500,
+          "dimensions": "1 M A x 2 M L"
+        },
+        {
+          "name": "King",
+          "price": 101200,
+          "dimensions": "1.80 M A x 2 M L"
+        },
+        {
+          "name": "Queen",
+          "price": 99000,
+          "dimensions": "1.60 M A x 2 M L"
+        },
+        {
+          "name": "1 Plaza",
+          "price": 82000,
+          "dimensions": "0.90 A x 1.90 L"
+        },
+        {
+          "name": "2 Plazas",
+          "price": 92000,
+          "dimensions": "1.40 x 1.90 M L"
+        },
+        {
+          "name": "Super King",
+          "price": 109000,
+          "dimensions": "2 M A x 2 M L"
+        }
+      ]
     },
     {
-      "id": 41,
-      "name": "Cubresomier LUXE King",
-      "price": 101200,
-      "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.",
-      "originalPrice": 101200
-    },
-    {
-      "id": 42,
-      "name": "Cubresomier LUXE Queen",
-      "price": 99000,
-      "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.",
-      "originalPrice": 99000
-    },
-    {
-      "id": 43,
-      "name": "Cubresomier LUXE 1 Plaza",
-      "price": 82000,
-      "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.",
-      "originalPrice": 82000
-    },
-    {
-      "id": 44,
-      "name": "Cubresomier LUXE 2 Plazas",
-      "price": 92000,
-      "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.",
-      "originalPrice": 92000
-    },
-    {
-      "id": 45,
-      "name": "Cubresomier LUXE Super King",
-      "price": 109000,
-      "image": "img/cubresomier-luxe.jpg",
-      "description": "Cubresomier con su volado confeccionado en gasa de algodón, terminado en puntilla y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.",
-      "originalPrice": 109000
-    },
-    {
-      "id": 46,
-      "name": "Cubresomier TISSU Twin",
-      "price": 76500,
+      "id": 3,
+      "name": "Cubresomier TISSU",
       "image": "img/cubresomier-tissu.jpg",
-      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1 M A x 2 M L.",
-      "originalPrice": 76500
-    },
-    {
-      "id": 47,
-      "name": "Cubresomier TISSU King",
-      "price": 91200,
-      "image": "img/cubresomier-tissu.jpg",
-      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.80 M A x 2 M L.",
-      "originalPrice": 91200
-    },
-    {
-      "id": 48,
-      "name": "Cubresomier TISSU Queen",
-      "price": 89000,
-      "image": "img/cubresomier-tissu.jpg",
-      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.60 M A x 2 M L.",
-      "originalPrice": 89000
-    },
-    {
-      "id": 49,
-      "name": "Cubresomier TISSU 1 Plaza",
-      "price": 72000,
-      "image": "img/cubresomier-tissu.jpg",
-      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 0.90 A x 1.90 L.",
-      "originalPrice": 72000
-    },
-    {
-      "id": 50,
-      "name": "Cubresomier TISSU 2 Plazas",
-      "price": 82000,
-      "image": "img/cubresomier-tissu.jpg",
-      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 1.40 x 1.90 M L.",
-      "originalPrice": 82000
-    },
-    {
-      "id": 51,
-      "name": "Cubresomier TISSU Super King",
-      "price": 99000,
-      "image": "img/cubresomier-tissu.jpg",
-      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm. Medidas: 2 M A x 2 M L.",
-      "originalPrice": 99000
+      "description": "Cubresomier confeccionado en algodón con una tabla encontrada en ambos extremos reguladas con un moño y su base en poliéster. Color crudo. Medida de alto: 30 cm.",
+      "sizes": [
+        {
+          "name": "Twin",
+          "price": 76500,
+          "dimensions": "1 M A x 2 M L"
+        },
+        {
+          "name": "King",
+          "price": 91200,
+          "dimensions": "1.80 M A x 2 M L"
+        },
+        {
+          "name": "Queen",
+          "price": 89000,
+          "dimensions": "1.60 M A x 2 M L"
+        },
+        {
+          "name": "1 Plaza",
+          "price": 72000,
+          "dimensions": "0.90 A x 1.90 L"
+        },
+        {
+          "name": "2 Plazas",
+          "price": 82000,
+          "dimensions": "1.40 x 1.90 M L"
+        },
+        {
+          "name": "Super King",
+          "price": 99000,
+          "dimensions": "2 M A x 2 M L"
+        }
+      ]
     }
   ],
   "cortinas_interior": [
     {
-      "id": 52,
-      "name": "Cortinas de Gasa 140cm x 210cm",
-      "price": 53000,
+      "id": 1,
+      "name": "Cortinas de Gasa",
       "image": "img/cortinas-gasa.jpg",
-      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.10m de alto."
-    },
-    {
-      "id": 53,
-      "name": "Cortinas de Gasa 140cm x 230cm",
-      "price": 58300,
-      "image": "img/cortinas-gasa.jpg",
-      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.30m de alto."
-    },
-    {
-      "id": 54,
-      "name": "Cortinas de Gasa 140cm x 250cm",
-      "price": 64600,
-      "image": "img/cortinas-gasa.jpg",
-      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 140cm de ancho x 2.50m de alto."
-    },
-    {
-      "id": 55,
-      "name": "Cortinas de Gasa 2m x 2,10m",
-      "price": 62400,
-      "image": "img/cortinas-gasa.jpg",
-      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2,10m de alto."
-    },
-    {
-      "id": 56,
-      "name": "Cortinas de Gasa 2m x 2,30m",
-      "price": 68800,
-      "image": "img/cortinas-gasa.jpg",
-      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2,30m de alto."
-    },
-    {
-      "id": 57,
-      "name": "Cortinas de Gasa 2m x 2,50m",
-      "price": 75700,
-      "image": "img/cortinas-gasa.jpg",
-      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo. Juego de 2 paños de 2m de ancho x 2,50m de alto."
+      "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo.",
+      "sizes": [
+        {
+          "name": "140cm x 210cm",
+          "price": 53000,
+          "dimensions": "140cm de ancho x 2.10m de alto"
+        },
+        {
+          "name": "140cm x 230cm",
+          "price": 58300,
+          "dimensions": "140cm de ancho x 2.30m de alto"
+        },
+        {
+          "name": "140cm x 250cm",
+          "price": 64600,
+          "dimensions": "140cm de ancho x 2.50m de alto"
+        },
+        {
+          "name": "2m x 2,10m",
+          "price": 62400,
+          "dimensions": "2m de ancho x 2,10m de alto"
+        },
+        {
+          "name": "2m x 2,30m",
+          "price": 68800,
+          "dimensions": "2m de ancho x 2,30m de alto"
+        },
+        {
+          "name": "2m x 2,50m",
+          "price": 75700,
+          "dimensions": "2m de ancho x 2,50m de alto"
+        }
+      ]
     }
   ],
   "cortinas_gasa_info": {

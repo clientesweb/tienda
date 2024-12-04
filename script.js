@@ -48,7 +48,7 @@ async function loadProducts() {
     ]);
     const products1 = await response1.json();
     const products2 = await response2.json();
-    products = { ...products1, ...products2 };
+    products = { ...products1, ...products2.products };
     renderProducts();
   } catch (error) {
     console.error('Error loading products:', error);
@@ -76,7 +76,7 @@ function updateHero() {
 }
 
 function renderProducts() {
-    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'almohadones', 'caminos_de_mesa', 'manteles', 'box'];
+    const categories = Object.keys(products);
 
     categories.forEach(category => {
         const container = productContainers[category];
@@ -102,7 +102,7 @@ function renderProducts() {
                     sizeSelect = `
                         <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
                             <option value="">Seleccionar medida</option>
-                            ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
+                            ${product.sizes ? product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('') : ''}
                         </select>
                     `;
                 }
@@ -119,7 +119,7 @@ function renderProducts() {
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
                             ${category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles' ? 
-                                `<p class="mt-2 text-sm text-gray-500">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>` :
+                                `<p class="mt-2 text-sm text-gray-500">Desde $${Math.min(...(product.sizes ? product.sizes.map(s => s.price) : [product.price])).toLocaleString()}</p>` :
                                 `<p class="mt-2 text-lg font-bold">
                                     <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
                                     $${discountedPrice.toLocaleString()}
@@ -127,7 +127,7 @@ function renderProducts() {
                             }
                             ${scentSelect}
                             ${sizeSelect}
-                            <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
+                            <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal('${product.id}', '${category}')">
                                 Ver detalles
                             </button>
                         </div>
@@ -156,11 +156,11 @@ function openProductModal(productId, category) {
                 <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Medida</label>
                 <select id="size" name="size" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
                     <option value="">Seleccionar medida</option>
-                    ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
+                    ${product.sizes ? product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('') : ''}
                 </select>
             </div>
         `;
-        priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>`;
+        priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...(product.sizes ? product.sizes.map(s => s.price) : [product.price])).toLocaleString()}</p>`;
     } else {
         const discountedPrice = product.price * 0.9; // Apply 10% discount
         priceDisplay = `
@@ -204,7 +204,7 @@ function openProductModal(productId, category) {
                             <button class="bg-gray-200 px-3 py-1 rounded-r" onclick="updateQuantity(1)">+</button>
                         </div>
                     </div>
-                    <button class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold" onclick="addToCart(${product.id}, '${category}')">
+                    <button class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors text-lg font-semibold" onclick="addToCart('${product.id}', '${category}')">
                         Agregar al carrito
                     </button>
                 </div>
@@ -236,7 +236,7 @@ function addToCart(productId, category) {
 
     let price;
     if (category === 'cubre_sommier' || category === 'cortinas_interior' || category === 'almohadones' || category === 'caminos_de_mesa' || category === 'manteles') {
-        const selectedSize = product.sizes.find(s => s.name === size);
+        const selectedSize = product.sizes ? product.sizes.find(s => s.name === size) : null;
         if (!selectedSize) {
             alert('Por favor, selecciona una medida.');
             return;
@@ -375,8 +375,7 @@ function calculateShippingCost(baseShippingCost, itemCount, incrementPercentage 
 
 function updateTotal() {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const
-itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const shippingMethod = document.getElementById('shippingMethod').value;
     const selectedShipping = shippingOptions[shippingMethod];
     
@@ -434,6 +433,7 @@ function validateForm() {
     }
     return true;
 }
+
 function updateTransferModal() {
     const modalContent = document.getElementById('bankDetailsModal');
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -813,4 +813,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log("Script loaded successfully!");
-

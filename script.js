@@ -64,7 +64,7 @@ function updateHero() {
 }
 
 function renderProducts() {
-    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior', 'cortinas_gasa'];
+    const categories = ['velas', 'aromas', 'ceramica', 'textiles', 'accesorios', 'cubre_sommier', 'cortinas_interior'];
 
     categories.forEach(category => {
         const container = productContainers[category];
@@ -85,6 +85,16 @@ function renderProducts() {
                     `;
                 }
 
+                let sizeSelect = '';
+                if (category === 'cubre_sommier' || category === 'cortinas_interior') {
+                    sizeSelect = `
+                        <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
+                            <option value="">Seleccionar medida</option>
+                            ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
+                        </select>
+                    `;
+                }
+
                 return `
                     <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="p-4">
@@ -96,11 +106,15 @@ function renderProducts() {
                                 <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
                             </div>
                             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
-                            <p class="mt-2 text-lg font-bold">
-                                <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
-                                $${discountedPrice.toLocaleString()}
-                            </p>
+                            ${category === 'cubre_sommier' || category === 'cortinas_interior' ? 
+                                `<p class="mt-2 text-sm text-gray-500">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>` :
+                                `<p class="mt-2 text-lg font-bold">
+                                    <span class="line-through text-gray-500">$${product.price.toLocaleString()}</span>
+                                    $${discountedPrice.toLocaleString()}
+                                </p>`
+                            }
                             ${scentSelect}
+                            ${sizeSelect}
                             <button class="w-full mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition-colors" onclick="openProductModal(${product.id}, '${category}')">
                                 Ver detalles
                             </button>
@@ -116,15 +130,39 @@ function openProductModal(productId, category) {
     const product = products[category].find(p => p.id === productId);
     if (!product) return;
 
-    const discountedPrice = product.price * 0.9; // Apply 10% discount
-    const scentOptions = category === 'velas' ? products.esencias_velas : 
-                         category === 'aromas' ? products.esencias_spray_difusores : 
-                         null;
-
     const modalTitle = document.getElementById('productModalTitle');
     const modalContent = document.getElementById('productModalContent');
 
     modalTitle.textContent = product.name;
+
+    let sizeOptions = '';
+    let priceDisplay = '';
+
+    if (category === 'cubre_sommier' || category === 'cortinas_interior') {
+        sizeOptions = `
+            <div class="mb-4">
+                <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Medida</label>
+                <select id="size" name="size" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+                    <option value="">Seleccionar medida</option>
+                    ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
+                </select>
+            </div>
+        `;
+        priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>`;
+    } else {
+        const discountedPrice = product.price * 0.9; // Apply 10% discount
+        priceDisplay = `
+            <p class="text-2xl font-bold mb-4">
+                <span class="line-through text-gray-500 mr-2">$${product.price.toLocaleString()}</span>
+                <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
+            </p>
+        `;
+    }
+
+    const scentOptions = category === 'velas' ? products.esencias_velas : 
+                         category === 'aromas' ? products.esencias_spray_difusores : 
+                         null;
+
     modalContent.innerHTML = `
         <div class="flex flex-col md:flex-row md:space-x-6">
             <div class="md:w-1/2">
@@ -133,10 +171,8 @@ function openProductModal(productId, category) {
             <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col justify-between">
                 <div>
                     <p class="text-gray-600 mb-4">${product.description}</p>
-                    <p class="text-2xl font-bold mb-4">
-                        <span class="line-through text-gray-500 mr-2">$${product.price.toLocaleString()}</span>
-                        <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
-                    </p>
+                    ${priceDisplay}
+                    ${sizeOptions}
                     ${scentOptions ? `
                         <div class="mb-4">
                             <label for="scent" class="block text-sm font-medium text-gray-700 mb-2">Aroma</label>
@@ -183,14 +219,31 @@ function addToCart(productId, category) {
     if (!product) return;
 
     const quantity = parseInt(document.getElementById('quantity').value);
-    const discountedPrice = product.price * 0.9; // Apply 10% discount
     const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
-    const existingItem = cart.find(item => item.id === product.id && item.scent === scent);
+    const size = document.getElementById('size') ? document.getElementById('size').value : null;
+
+    let price;
+    if (category === 'cubre_sommier' || category === 'cortinas_interior') {
+        const selectedSize = product.sizes.find(s => s.name === size);
+        if (!selectedSize) {
+            alert('Por favor, selecciona una medida.');
+            return;
+        }
+        price = selectedSize.price * 0.9; // Apply 10% discount
+    } else {
+        price = product.price * 0.9; // Apply 10% discount
+    }
+
+    const existingItem = cart.find(item => 
+        item.id === product.id && 
+        item.scent === scent &&
+        item.size === size
+    );
 
     if (existingItem) {
         existingItem.quantity += quantity;
     } else {
-        cart.push({ ...product, price: discountedPrice, quantity, scent });
+        cart.push({ ...product, price, quantity, scent, size });
     }
 
     updateCartUI();

@@ -1,0 +1,94 @@
+{
+  "almohadones": [
+    {
+      "id": "alm001",
+      "name": "Almohadón Floral Vintage",
+      "description": "Almohadón decorativo con estampado floral vintage, perfecto para dar un toque de elegancia a tu sofá o cama.",
+      "price": 4500,
+      "image": "img/almohadones/floral-vintage.jpg"
+    },
+    {
+      "id": "alm002",
+      "name": "Almohadón Geométrico Moderno",
+      "description": "Almohadón con diseño geométrico moderno en tonos neutros, ideal para espacios contemporáneos.",
+      "price": 4200,
+      "image": "img/almohadones/geometrico-moderno.jpg"
+    },
+    {
+      "id": "alm003",
+      "name": "Almohadón de Terciopelo Liso",
+      "description": "Lujoso almohadón de terciopelo liso, disponible en varios colores para combinar con tu decoración.",
+      "price": 5000,
+      "image": "img/almohadones/terciopelo-liso.jpg"
+    }
+  ],
+  "caminos_de_mesa": [
+    {
+      "id": "cdm001",
+      "name": "Camino de Mesa Bordado",
+      "description": "Elegante camino de mesa con delicados bordados florales, perfecto para ocasiones especiales.",
+      "price": 3800,
+      "image": "img/caminos-de-mesa/bordado-floral.jpg"
+    },
+    {
+      "id": "cdm002",
+      "name": "Camino de Mesa de Lino Natural",
+      "description": "Camino de mesa de lino natural con bordes deshilachados para un look rústico y sofisticado.",
+      "price": 3500,
+      "image": "img/caminos-de-mesa/lino-natural.jpg"
+    },
+    {
+      "id": "cdm003",
+      "name": "Camino de Mesa Estampado Geométrico",
+      "description": "Moderno camino de mesa con estampado geométrico en tonos neutros, ideal para mesas contemporáneas.",
+      "price": 3200,
+      "image": "img/caminos-de-mesa/geometrico.jpg"
+    }
+  ],
+  "manteles": [
+    {
+      "id": "man001",
+      "name": "Mantel de Lino Blanco",
+      "description": "Clásico mantel de lino blanco, perfecto para cualquier ocasión y fácil de combinar con diferentes decoraciones.",
+      "price": 8500,
+      "image": "img/manteles/lino-blanco.jpg"
+    },
+    {
+      "id": "man002",
+      "name": "Mantel Estampado Provenzal",
+      "description": "Colorido mantel con estampado provenzal, ideal para dar un toque alegre y acogedor a tu mesa.",
+      "price": 7800,
+      "image": "img/manteles/provenzal.jpg"
+    },
+    {
+      "id": "man003",
+      "name": "Mantel Antimanchas Liso",
+      "description": "Práctico mantel antimanchas en varios colores lisos, perfecto para el uso diario y fácil de limpiar.",
+      "price": 6500,
+      "image": "img/manteles/antimanchas-liso.jpg"
+    }
+  ],
+  "box": [
+    {
+      "id": "box001",
+      "name": "Box Desayuno Romántico",
+      "description": "Set completo para un desayuno romántico, incluye mantel individual, servilletas, taza y plato decorativo.",
+      "price": 12000,
+      "image": "img/box/desayuno-romantico.jpg"
+    },
+    {
+      "id": "box002",
+      "name": "Box Textil Baño",
+      "description": "Conjunto de textiles para baño que incluye toallas, alfombra y cortina de ducha a juego.",
+      "price": 15000,
+      "image": "img/box/textil-bano.jpg"
+    },
+    {
+      "id": "box003",
+      "name": "Box Decoración Salón",
+      "description": "Set de decoración para salón con almohadones, manta y vela aromática coordinados.",
+      "price": 18000,
+      "image": "img/box/decoracion-salon.jpg"
+    }
+  ]
+}

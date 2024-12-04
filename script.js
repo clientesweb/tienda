@@ -50,11 +50,10 @@ async function loadProducts() {
     const products2 = await response2.json();
     products = { ...products1, ...products2 };
     renderProducts();
-    // Remove the preloader after products are loaded and rendered
-    document.getElementById('preloader').style.display = 'none';
   } catch (error) {
     console.error('Error loading products:', error);
-    // Remove the preloader even if there's an error, to prevent it from staying indefinitely
+  } finally {
+    // Asegúrate de que el preloader se oculte siempre, incluso si hay un error
     document.getElementById('preloader').style.display = 'none';
   }
 }
@@ -809,11 +808,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Remove preloader
-    document.getElementById('preloader').style.display = 'none';
-});
-
-console.log("Script loaded successfully!");
     // Remove preloader
     document.getElementById('preloader').style.display = 'none';
 });

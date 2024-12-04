@@ -41,18 +41,22 @@ const productContainers = {
 
 // Functions
 async function loadProducts() {
-    try {
-        const [response1, response2] = await Promise.all([
-            fetch('products.json'),
-            fetch('products2.json')
-        ]);
-        const products1 = await response1.json();
-        const products2 = await response2.json();
-        products = { ...products1, ...products2 };
-        renderProducts();
-    } catch (error) {
-        console.error('Error loading products:', error);
-    }
+  try {
+    const [response1, response2] = await Promise.all([
+      fetch('products.json'),
+      fetch('products2.json')
+    ]);
+    const products1 = await response1.json();
+    const products2 = await response2.json();
+    products = { ...products1, ...products2 };
+    renderProducts();
+    // Remove the preloader after products are loaded and rendered
+    document.getElementById('preloader').style.display = 'none';
+  } catch (error) {
+    console.error('Error loading products:', error);
+    // Remove the preloader even if there's an error, to prevent it from staying indefinitely
+    document.getElementById('preloader').style.display = 'none';
+  }
 }
 
 function updateBanner() {
@@ -592,8 +596,7 @@ function generatePurchaseDetails() {
 
         yPos += 20;
         doc.setFontSize(16);
-        doc.<continuation_point>
-setTextColor(0);
+        doc.setTextColor(0);
         doc.text('Datos bancarios para la transferencia:', 10, yPos);
         yPos += 10;
         doc.setFontSize(12);

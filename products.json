@@ -622,7 +622,7 @@
       "id": "man001",
       "name": "Mantel Utopie",
       "description": "Mantel confeccionado en lienzo, con volados doble en el mismo género y gasa. Color crudo. Hecho a mano con mucho cuidado en los detalles. No encoge: todos nuestros manteles son lavados antes y después de su confección. Se entregan planchados y perfumados listos para poner en tu mesa.",
-      "image": "img/manteles/utopie.jpg",
+      "image": "img/utopie.jpg",
       "sizes": [
         { "name": "Cuadrado 150x150m", "price": 42760 },
         { "name": "Cuadrado 180x180m", "price": 54740 },
@@ -639,7 +639,7 @@
       "id": "man002",
       "name": "Mantel Espoir",
       "description": "Mantel confeccionado en lienzo y volados en gasa. Hecho a mano con mucho cuidado en los detalles. No encoge: todos nuestros manteles son lavados antes y después de su confección. Se entregan planchados y perfumados listos para poner en tu mesa.",
-      "image": "img/manteles/espoir.jpg",
+      "image": "img/espoir.jpg",
       "sizes": [
         { "name": "Cuadrado 150x150m", "price": 41480 },
         { "name": "Cuadrado 180x180m", "price": 53100 },
@@ -659,7 +659,7 @@
       "name": "Funda de Almohadón Bonjour",
       "description": "Funda de almohadón de 45 x 45 cm. Tiene volados en gasa y detalles en lentejuelas. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno",
       "price": 15510,
-      "image": "img/almohadones/bonjour.jpg"
+      "image": "img/bonjour.jpg"
     },
     {
       "id": "alm002",
@@ -680,7 +680,7 @@
       "name": "Funda de Almohadón Etoile",
       "description": "Funda almohadón 50 x 50 cm. Funda clásica, con puntilla de borlas alrededor. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno.",
       "price": 17000,
-      "image": "img/almohadones/etoile.jpg"
+      "image": "img/etoile.jpg"
     }
   ],
   "caminos_de_mesa": [
@@ -696,7 +696,7 @@
       "name": "Camino de Mesa de Lino Natural",
       "description": "Camino de mesa de lino natural con bordes deshilachados para un look rústico y sofisticado.",
       "price": 3500,
-      "image": "img/caminos-de-mesa/lino-natural.jpg"
+      "image": "img/lino-natural.jpg"
     },
     {
       "id": "cdm003",

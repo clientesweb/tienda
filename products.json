@@ -460,6 +460,142 @@
           "dimensions": "2m de ancho x 2,50m de alto"
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "Cortinas con Volado Triple 140m",
+      "image": "img/cortinas-volado-triple-140m.jpg",
+      "description": "Cortinas con faldón confeccionadas en lienzo 100% algodón. El precio corresponde al juego de 2 paños de 1.40 ancho cada uno. Hechas a mano con mucho cuidado en los detalles. Pasa barral oculto o con tiras pasa barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar.",
+      "confection_time": "7 / 10 días",
+      "recommendations": [
+        "Medi el ancho de tu ventana y la altura desde el barral hasta el piso.",
+        "Estas medidas se adaptan a ventanas de hasta 1.60 m de ancho aprox. (para que tengan frunce y no queden tirantes).",
+        "¡Si necesitas info sobre confección a medida o tenes dudas, escribinos por instagram o whatsapp y te ayudamos!"
+      ],
+      "sizes": [
+        {
+          "name": "1.40m x 2.10m",
+          "price": 91100,
+          "dimensions": "1.40m de ancho x 2.10m de alto"
+        },
+        {
+          "name": "1.40m x 2.30m",
+          "price": 100430,
+          "dimensions": "1.40m de ancho x 2.30m de alto"
+        },
+        {
+          "name": "1.40m x 2.50m",
+          "price": 110473,
+          "dimensions": "1.40m de ancho x 2.50m de alto"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Cortinas con Volado Triple 2m",
+      "image": "img/cortinas-volado-triple-2m.jpg",
+      "description": "Cortinas con faldón confeccionadas en lienzo 100% algodón. El precio corresponde al juego de 2 paños de 2m ancho cada uno. Hechas a mano con mucho cuidado en los detalles. Pasa barral oculto o con tiras pasa barral. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar.",
+      "confection_time": "7 / 10 días",
+      "recommendations": [
+        "Medi el ancho de tu ventana y la altura desde el barral hasta el piso.",
+        "Estas medidas se adaptan a ventanas de hasta 1.60 m de ancho aprox. (para que tengan frunce y no queden tirantes).",
+        "¡Si necesitas info sobre confección a medida o tenes dudas, escribinos por instagram o whatsapp y te ayudamos!"
+      ],
+      "sizes": [
+        {
+          "name": "2m x 2.10m",
+          "price": 121352,
+          "dimensions": "2m de ancho x 2.10m de alto"
+        },
+        {
+          "name": "2m x 2.30m",
+          "price": 131184,
+          "dimensions": "2m de ancho x 2.30m de alto"
+        },
+        {
+          "name": "2m x 2.50m",
+          "price": 157420,
+          "dimensions": "2m de ancho x 2.50m de alto"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Cortinas para Riel de Gasa",
+      "image": "img/cortinas-riel-gasa.jpg",
+      "description": "Cortinas para riel confeccionadas en gasa de 100% algodón. Color crudo. Cabezal doble pellizcos (incluye los ganchos para colgar). Medidas: 2 paños de 0.75 metros de ancho x 2.10 de altura c/u. Sirven para cubrir un riel de 1.50 metros. Son livianas y tienen una hermosa caída. Visten tus ventanas y a la vez permiten el paso de la luz.",
+      "confection_time": "5 / 7 días hábiles",
+      "recommendations": [
+        "Medi tu riel de punta a punta + la altura desde el riel al piso.",
+        "Si el riel mide 1,50 y la altura desde el riel al piso es 2 m van a ir perfectas.",
+        "Si el riel es de 1,40 y la altura es 2 m, compralas y aclara en notas que tu riel mide 1,40.",
+        "¡Si tenes un riel más largo, la altura es mayor o tenes dudas escribirnos y te ayudamos!"
+      ],
+      "sizes": [
+        {
+          "name": "150cm x 210cm",
+          "price": 118000,
+          "dimensions": "150cm de ancho x 2.10m de alto"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Cortinas de Lienzo 140m",
+      "image": "img/cortinas-lienzo-140m.jpg",
+      "description": "Cortinas clásicas confeccionadas en lienzo 100% algodón. El precio corresponde al juego de 2 paños de 1.40 de ancho. Hechas a mano con mucho cuidado en los detalles. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar.",
+      "confection_time": "7 / 10 días",
+      "recommendations": [
+        "Medi el ancho de tu ventana y la altura desde el barral al piso.",
+        "Estas medidas se adaptan a ventanas de hasta 1.60 m de ancho aprox. (para que tengan frunce y no queden tirantes).",
+        "Si necesitas info sobre confección a medida o tenes dudas, escribinos por instagram o whatsapp y te ayudamos."
+      ],
+      "sizes": [
+        {
+          "name": "1.40m x 2.10m",
+          "price": 69000,
+          "dimensions": "1.40m de ancho x 2.10m de alto"
+        },
+        {
+          "name": "1.40m x 2.30m",
+          "price": 75900,
+          "dimensions": "1.40m de ancho x 2.30m de alto"
+        },
+        {
+          "name": "1.40m x 2.50m",
+          "price": 83490,
+          "dimensions": "1.40m de ancho x 2.50m de alto"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Cortinas de Lienzo 2m",
+      "image": "img/cortinas-lienzo-2m.jpg",
+      "description": "Cortinas clásicas confeccionadas en lienzo 100% algodón. El precio corresponde al juego de 2 paños de 2m de ancho. Hechas a mano con mucho cuidado en los detalles. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar.",
+      "confection_time": "7 / 10 días",
+      "recommendations": [
+        "Medi el ancho de tu ventana y la altura desde el barral al piso.",
+        "Estas medidas se adaptan a ventanas de hasta 2.20 m de ancho aprox. (para que tengan frunce y no queden tirantes).",
+        "Si necesitas info sobre confección a medida o tenes dudas, escribinos por instagram o whatsapp y te ayudamos."
+      ],
+      "sizes": [
+        {
+          "name": "2m x 2.10m",
+          "price": 89700,
+          "dimensions": "2m de ancho x 2.10m de alto"
+        },
+        {
+          "name": "2m x 2.30m",
+          "price": 107640,
+          "dimensions": "2m de ancho x 2.30m de alto"
+        },
+        {
+          "name": "2m x 2.50m",
+          "price": 129168,
+          "dimensions": "2m de ancho x 2.50m de alto"
+        }
+      ]
     }
   ],
   "cortinas_gasa_info": {
@@ -492,7 +628,7 @@
         { "name": "Cuadrado 180x180m", "price": 54740 },
         { "name": "Cuadrado 2x2m", "price": 67920 },
         { "name": "Redondo 150m diámetro", "price": 42760 },
-        { "name": "Redondo 180m diámetro", "price": 54740 },
+        { "name": "Redondo 180m diámetro", "price": 54740 },<continuation_point>
         { "name": "Rectangular 150x180m", "price": 50160 },
         { "name": "Rectangular 150x2m", "price": 54740 },
         { "name": "Rectangular 150x250m", "price": 61600 },

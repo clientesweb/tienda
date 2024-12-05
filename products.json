@@ -666,14 +666,14 @@
       "name": "Funda de Almohadón Oui",
       "description": "Funda de almohadón de 45 x 45 cm. Tiene volados en gasa y detalles en lentejuelas. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno",
       "price": 17710,
-      "image": "img/almohadones/oui.jpg"
+      "image": "img/oui.jpg"
     },
     {
       "id": "alm003",
       "name": "Funda de Almohadón De Rien",
       "description": "Funda de almohadón de 45 x 45 cm. Funda de almohadón clásica. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno",
       "price": 13400,
-      "image": "img/almohadones/de-rien.jpg"
+      "image": "img/de-rien.jpg"
     },
     {
       "id": "alm004",

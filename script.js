@@ -49,14 +49,7 @@ async function loadProducts() {
   } catch (error) {
     console.error('Error al cargar los productos:', error);
   } finally {
-    hidePreloader();
-  }
-}
-
-function hidePreloader() {
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    preloader.style.display = 'none';
+    document.getElementById('preloader').style.display = 'none';
   }
 }
 
@@ -123,38 +116,23 @@ function renderProductPrice(product, category) {
 }
 
 function renderProductOptions(product, category) {
-  let html = '';
   if (category === 'velas' || category === 'aromas') {
     const scents = category === 'velas' ? products.esencias_velas : products.esencias_spray_difusores;
-    html += `
-      <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm" id="${product.id}-scent">
+    return `
+      <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
         <option value="">Seleccionar aroma</option>
         ${scents.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
       </select>
     `;
   } else if (product.sizes) {
-    html += `
-      <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm" id="${product.id}-size">
+    return `
+      <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
         <option value="">Seleccionar medida</option>
         ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
       </select>
     `;
   }
-  if (product.options) {
-    product.options.forEach((option, index) => {
-      const optionId = `${product.id}-${option.name.replace(/\s+/g, '-').toLowerCase()}`;
-      html += `
-        <div class="mt-2">
-          <label for="${optionId}" class="block text-sm font-medium text-gray-700">${option.name}</label>
-          <select id="${optionId}" name="${option.name}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
-            <option value="">Seleccionar ${option.name}</option>
-            ${option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
-          </select>
-        </div>
-      `;
-    });
-  }
-  return html;
+  return '';
 }
 
 function openProductModal(productId, category) {
@@ -223,7 +201,6 @@ function openProductModal(productId, category) {
           ${priceDisplay}
           ${sizeOptions}
           ${scentOptions}
-          ${renderProductOptions(product, category)}
         </div>
         <div>
           <div class="flex items-center justify-between mb-4">
@@ -265,19 +242,6 @@ function addToCart(productId, category) {
   const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
   const size = document.getElementById('size') ? document.getElementById('size').value : null;
 
-  const options = {};
-  if (product.options) {
-    product.options.forEach(option => {
-      const optionId = `${product.id}-${option.name.replace(/\s+/g, '-').toLowerCase()}`;
-      const selectedOption = document.getElementById(optionId).value;
-      if (!selectedOption) {
-        alert(`Por favor, selecciona ${option.name}.`);
-        return;
-      }
-      options[option.name] = selectedOption;
-    });
-  }
-
   let price;
   if (product.sizes) {
     const selectedSize = product.sizes.find(s => s.name === size);
@@ -303,28 +267,21 @@ function addToCart(productId, category) {
   const existingItem = cart.find(item => 
     item.id === product.id && 
     item.scent === scent &&
-    item.size === size &&
-    JSON.stringify(item.options) === JSON.stringify(options)
+    item.size === size
   );
 
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ ...product, price, quantity, scent, size, options });
+    cart.push({ ...product, price, quantity, scent, size, category });
   }
 
   updateCartUI();
   closeProductModal();
 }
 
-function removeFromCart(productId, scent, size, options) {
-  options = JSON.parse(options);
-  cart = cart.filter(item => !(
-    item.id === productId && 
-    item.scent === scent && 
-    item.size === size &&
-    JSON.stringify(item.options) === JSON.stringify(options)
-  ));
+function removeFromCart(productId, scent, size) {
+  cart = cart.filter(item => !(item.id === productId && item.scent === scent && item.size === size));
   updateCartUI();
 }
 
@@ -347,18 +304,15 @@ function updateCartUI() {
   cartItemsEl.innerHTML = cart.map(item => `
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <img src="${item.images[0]}" alt="${item.name}" class="w-12 h-12 object-contain">
+        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
         <div>
           <p class="font-medium font-serif">${item.name}</p>
           <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
           ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
           ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
-          ${Object.entries(item.options || {}).map(([key, value]) => 
-            `<p class="text-xs text-gray-500">${key}: ${value}</p>`
-          ).join('')}
         </div>
       </div>
-      <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}', '${JSON.stringify(item.options)}')">
+      <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}')">
         <i class="fas fa-trash h-4 w-4"></i>
       </button>
     </div>
@@ -483,8 +437,7 @@ function prepareCartData() {
     quantity: item.quantity,
     total: item.price * item.quantity,
     scent: item.scent,
-    size: item.size,
-    options: item.options
+    size: item.size
   })));
 }
 
@@ -610,10 +563,75 @@ CUIT/CUIL: 27-37092938-1
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Error al generar el PDF:', error);
-      throw error;
+      console.error('Error al descargar los detalles de la compra:', error);
+      alert('Hubo un problema al generar los detalles de la compra. Por favor, intenta de nuevo.');
     }
   });
+}
+
+function generatePurchaseDetails() {
+  try {
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = subtotal * 0.1; // 10% discount
+    const total = subtotal + shippingCost - discount;
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(22);
+    doc.setTextColor(33, 150, 243); // Primary color
+    doc.text('Detalles de la compra', 105, 40, null, null, 'center');
+
+    // Add content
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    let yPos = 60;
+
+    doc.text('Productos:', 10, yPos);
+    yPos += 10;
+
+    cart.forEach(item => {
+      doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
+      yPos += 7;
+    });
+
+    yPos += 10;
+    doc.text(`Subtotal: ${formatPrice(subtotal)}`, 10, yPos);
+    yPos += 7;
+    doc.text(`Costo de envío: ${formatPrice(shippingCost)}`, 10, yPos);
+    yPos += 7;
+    doc.setTextColor(0, 128, 0); // Green color for discount
+    doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
+    yPos += 7;
+    doc.setTextColor(33, 150, 243); // Primary color for total
+    doc.setFontSize(14);
+    doc.text(`Total: ${formatPrice(total)}`, 10, yPos);
+
+    yPos += 20;
+    doc.setFontSize(16);
+    doc.setTextColor(0);
+    doc.text('Datos bancarios para la transferencia:', 10, yPos);
+    yPos += 10;
+    doc.setFontSize(12);
+    doc.text('Banco: Banco Supervielle', 10, yPos);
+    yPos += 7;
+    doc.text('Titular: Virginia Olivero', 10, yPos);
+    yPos += 7;
+    doc.text('CTA: CA ARS 131-4372490-5', 10, yPos);
+    yPos += 7;
+    doc.text('CBU: 0270131420043724900058', 10, yPos);
+    yPos += 7;
+    doc.text('ALIAS: MON.AMOUR.TEXTIL', 10, yPos);
+    yPos += 7;
+    doc.text('CUIT/CUIL: 27-37092938-1', 10, yPos);
+
+    return doc.output('blob');
+  } catch (error) {
+    console.error('Error al generar el PDF:', error);
+    throw error;
+  }
+}
 
 // Implementación del slider automático para el banner de publicidad
 let currentAdSlide = 0;
@@ -809,4 +827,3 @@ ${text}`);
 });
 
 console.log("Script loaded successfully!");
-

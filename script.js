@@ -116,23 +116,37 @@ function renderProductPrice(product, category) {
 }
 
 function renderProductOptions(product, category) {
+  let html = '';
   if (category === 'velas' || category === 'aromas') {
     const scents = category === 'velas' ? products.esencias_velas : products.esencias_spray_difusores;
-    return `
+    html += `
       <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
         <option value="">Seleccionar aroma</option>
         ${scents.map(scent => `<option value="${scent}">${scent}</option>`).join('')}
       </select>
     `;
   } else if (product.sizes) {
-    return `
+    html += `
       <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
         <option value="">Seleccionar medida</option>
         ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
       </select>
     `;
   }
-  return '';
+  if (product.options) {
+    product.options.forEach(option => {
+      html += `
+        <div class="mt-2">
+          <label for="${option.name}" class="block text-sm font-medium text-gray-700">${option.name}</label>
+          <select id="${option.name}" name="${option.name}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
+            <option value="">Seleccionar ${option.name}</option>
+            ${option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
+          </select>
+        </div>
+      `;
+    });
+  }
+  return html;
 }
 
 function openProductModal(productId, category) {
@@ -154,6 +168,7 @@ function openProductModal(productId, category) {
   let sizeOptions = '';
   let priceDisplay = '';
   let scentOptions = '';
+  let optionsHtml = '';
 
   if (product.sizes) {
     sizeOptions = `
@@ -190,6 +205,20 @@ function openProductModal(productId, category) {
     `;
   }
 
+  if (product.options) {
+    product.options.forEach(option => {
+      optionsHtml += `
+        <div class="mb-4">
+          <label for="${option.name}" class="block text-sm font-medium text-gray-700 mb-2">${option.name}</label>
+          <select id="${option.name}" name="${option.name}" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+            <option value="">Seleccionar ${option.name}</option>
+            ${option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
+          </select>
+        </div>
+      `;
+    });
+  }
+
   modalContent.innerHTML = `
     <div class="flex flex-col md:flex-row md:space-x-6">
       <div class="md:w-1/2">
@@ -201,6 +230,7 @@ function openProductModal(productId, category) {
           ${priceDisplay}
           ${sizeOptions}
           ${scentOptions}
+          ${optionsHtml}
         </div>
         <div>
           <div class="flex items-center justify-between mb-4">
@@ -242,6 +272,18 @@ function addToCart(productId, category) {
   const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
   const size = document.getElementById('size') ? document.getElementById('size').value : null;
 
+  const options = {};
+  if (product.options) {
+    product.options.forEach(option => {
+      const selectedOption = document.getElementById(option.name).value;
+      if (!selectedOption) {
+        alert(`Por favor, selecciona ${option.name}.`);
+        return;
+      }
+      options[option.name] = selectedOption;
+    });
+  }
+
   let price;
   if (product.sizes) {
     const selectedSize = product.sizes.find(s => s.name === size);
@@ -267,21 +309,28 @@ function addToCart(productId, category) {
   const existingItem = cart.find(item => 
     item.id === product.id && 
     item.scent === scent &&
-    item.size === size
+    item.size === size &&
+    JSON.stringify(item.options) === JSON.stringify(options)
   );
 
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ ...product, price, quantity, scent, size, category });
+    cart.push({ ...product, price, quantity, scent, size, options });
   }
 
   updateCartUI();
   closeProductModal();
 }
 
-function removeFromCart(productId, scent, size) {
-  cart = cart.filter(item => !(item.id === productId && item.scent === scent && item.size === size));
+function removeFromCart(productId, scent, size, options) {
+  options = JSON.parse(options);
+  cart = cart.filter(item => !(
+    item.id === productId && 
+    item.scent === scent && 
+    item.size === size &&
+    JSON.stringify(item.options) === JSON.stringify(options)
+  ));
   updateCartUI();
 }
 
@@ -310,9 +359,12 @@ function updateCartUI() {
           <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
           ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
           ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
+          ${Object.entries(item.options || {}).map(([key, value]) => 
+            `<p class="text-xs text-gray-500">${key}: ${value}</p>`
+          ).join('')}
         </div>
       </div>
-      <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}')">
+      <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}', '${JSON.stringify(item.options)}')">
         <i class="fas fa-trash h-4 w-4"></i>
       </button>
     </div>
@@ -437,7 +489,8 @@ function prepareCartData() {
     quantity: item.quantity,
     total: item.price * item.quantity,
     scent: item.scent,
-    size: item.size
+    size: item.size,
+    options: item.options
   })));
 }
 
@@ -594,6 +647,10 @@ function generatePurchaseDetails() {
     cart.forEach(item => {
       doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
       yPos += 7;
+      Object.entries(item.options || {}).forEach(([key, value]) => {
+        doc.text(`${key}: ${value}`, 20, yPos);
+        yPos += 7;
+      });
     });
 
     yPos += 10;

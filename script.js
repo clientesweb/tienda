@@ -70,7 +70,7 @@ function updateHero() {
   currentHeroImage = (currentHeroImage + 1) % heroImages.length;
 }
 
-function renderProducts() {
+function render. Products() {
   const categories = Object.keys(products).filter(key => Array.isArray(products[key]));
 
   categories.forEach(category => {

@@ -49,7 +49,14 @@ async function loadProducts() {
   } catch (error) {
     console.error('Error al cargar los productos:', error);
   } finally {
-    document.getElementById('preloader').style.display = 'none';
+    hidePreloader();
+  }
+}
+
+function hidePreloader() {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    preloader.style.display = 'none';
   }
 }
 
@@ -606,7 +613,7 @@ CUIT/CUIL: 27-37092938-1
       console.error('Error al generar el PDF:', error);
       throw error;
     }
-  }
+  });
 
 // Implementación del slider automático para el banner de publicidad
 let currentAdSlide = 0;

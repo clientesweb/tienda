@@ -459,6 +459,10 @@
           "price": 75700,
           "dimensions": "2m de ancho x 2,50m de alto"
         }
+      ],
+      "options": [
+        { "name": "Ojales pasa gancho", "price": 0 },
+        { "name": "Para atar", "price": 0 }
       ]
     },
     {
@@ -488,6 +492,10 @@
           "price": 110473,
           "dimensions": "1.40m de ancho x 2.50m de alto"
         }
+      ],
+      "options": [
+        { "name": "Ojales pasa gancho", "price": 0 },
+        { "name": "Para atar", "price": 0 }
       ]
     },
     {
@@ -517,6 +525,10 @@
           "price": 157420,
           "dimensions": "2m de ancho x 2.50m de alto"
         }
+      ],
+      "options": [
+        { "name": "Ojales pasa gancho", "price": 0 },
+        { "name": "Para atar", "price": 0 }
       ]
     },
     {
@@ -537,6 +549,10 @@
           "price": 118000,
           "dimensions": "150cm de ancho x 2.10m de alto"
         }
+      ],
+      "options": [
+        { "name": "Ojales pasa gancho", "price": 0 },
+        { "name": "Para atar", "price": 0 }
       ]
     },
     {
@@ -566,11 +582,15 @@
           "price": 83490,
           "dimensions": "1.40m de ancho x 2.50m de alto"
         }
+      ],
+      "options": [
+        { "name": "Ojales pasa gancho", "price": 0 },
+        { "name": "Para atar", "price": 0 }
       ]
     },
     {
       "id": 6,
-      "name": "Cortinas de Lienzo 2m",
+      "name": "Cortinas de Lienzo2m",
       "image": "img/cortinas-lienzo-2m.jpg",
       "description": "Cortinas clásicas confeccionadas en lienzo 100% algodón. El precio corresponde al juego de 2 paños de 2m de ancho. Hechas a mano con mucho cuidado en los detalles. No encogen: son lavadas antes y después de su confección. Se entregan planchadas y perfumadas listas para colgar.",
       "confection_time": "7 / 10 días",
@@ -595,6 +615,10 @@
           "price": 129168,
           "dimensions": "2m de ancho x 2.50m de alto"
         }
+      ],
+      "options": [
+        { "name": "Ojales pasa gancho", "price": 0 },
+        { "name": "Para atar", "price": 0 }
       ]
     }
   ],
@@ -681,29 +705,6 @@
       "description": "Funda almohadón 50 x 50 cm. Funda clásica, con puntilla de borlas alrededor. Es desmontable. Lleva abrojo en la parte de atrás. Color crudo. *No incluye el relleno.",
       "price": 17000,
       "image": "img/etoile.jpg"
-    }
-  ],
-  "caminos_de_mesa": [
-    {
-      "id": "cdm001",
-      "name": "Camino de Mesa Bordado",
-      "description": "Elegante camino de mesa con delicados bordados florales, perfecto para ocasiones especiales.",
-      "price": 3800,
-      "image": "img/caminos-de-mesa/bordado-floral.jpg"
-    },
-    {
-      "id": "cdm002",
-      "name": "Camino de Mesa de Lino Natural",
-      "description": "Camino de mesa de lino natural con bordes deshilachados para un look rústico y sofisticado.",
-      "price": 3500,
-      "image": "img/lino-natural.jpg"
-    },
-    {
-      "id": "cdm003",
-      "name": "Camino de Mesa Estampado Geométrico",
-      "description": "Moderno camino de mesa con estampado geométrico en tonos neutros, ideal para mesas contemporáneas.",
-      "price": 3200,
-      "image": "img/caminos-de-mesa/geometrico.jpg"
     }
   ],
   "box": [

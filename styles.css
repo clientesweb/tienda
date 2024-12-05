@@ -1,0 +1,191 @@
+/* Base styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F3ECD0;
+}
+
+/* Utility classes */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Preloader */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #D4C098;
+    border-right: 5px solid #EAE3C9;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Menu icon */
+.menu-icon {
+    transition: transform 0.3s ease;
+}
+
+.menu-icon.open {
+    transform: rotate(90deg);
+}
+
+/* Product card */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(212, 192, 152, 0.1);
+}
+
+/* WhatsApp logo */
+.whatsapp-logo {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Product slider */
+.product-slider {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Hero section */
+.hero-section {
+    width: 100%;
+    height: 0;
+    padding-top: 56.25%; /* Maintains 16:9 aspect ratio */
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Ad slider */
+.ad-slider {
+    overflow: hidden;
+}
+
+.ad-slide {
+    display: none;
+    animation: fadeInOut 5s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+}
+
+/* Responsive styles */
+@media (min-width: 768px) {
+    .product-slider::-webkit-scrollbar {
+        display: block;
+        height: 8px;
+    }
+
+    .product-slider {
+        -ms-overflow-style: auto;
+        scrollbar-width: thin;
+    }
+
+    .product-slider::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .product-slider::-webkit-scrollbar-thumb {
+        background: #D4C098;
+        border-radius: 4px;
+    }
+
+    .product-slider::-webkit-scrollbar-thumb:hover {
+        background: #A6A18F;
+    }
+}
+
+/* Image slider */
+#imageSlider {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#imageSlider::-webkit-scrollbar {
+    display: none;
+}
+
+#imageSlider img {
+    scroll-snap-align: center;
+}
+
+/* Additional responsive styles */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+
+    .text-2xl {
+        font-size: 1.25rem;
+    }
+
+    .text-xl {
+        font-size: 1.125rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Ensure modals are responsive */
+@media (max-width: 640px) {
+    #cartModal .max-w-md,
+    #checkoutModal .max-w-4xl,
+    #productModal .max-w-4xl {
+        width: 90%;
+        margin: 1rem auto;
+    }
+}

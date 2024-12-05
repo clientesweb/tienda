@@ -36,6 +36,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <script>
         tailwind.config = {
             theme: {
@@ -56,116 +57,6 @@
             }
         }
     </script>
-    <style>
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-    }
-    .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    #preloader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: white;
-        z-index: 9999;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .loader {
-        width: 50px;
-        height: 50px;
-        border: 5px solid #f3f3f3;
-        border-top: 5px solid #D4C098;
-        border-right: 5px solid #EAE3C9;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    .menu-icon {
-        transition: transform 0.3s ease;
-    }
-    .menu-icon.open {
-        transform: rotate(90deg);
-    }
-    .product-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(212, 192, 152, 0.1);
-    }
-    .whatsapp-logo {
-        animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-    .product-slider {
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-    }
-    .hero-section {
-        width: 100%;
-        height: 0;
-        padding-top: 56.25%; /* Mantiene la relación de aspecto 16:9 */
-        position: relative;
-        overflow: hidden;
-    }
-    .hero-section img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    @media (min-aspect-ratio: 16/9) {
-        .hero-section {
-            padding-top: 56.25vw; /* Mantiene la altura máxima en pantallas más anchas */
-        }
-    }
-    .ad-slider {
-        overflow: hidden;
-    }
-    .ad-slide {
-        display: none;
-        animation: fadeInOut 5s ease-in-out infinite;
-    }
-    @keyframes fadeInOut {
-        0%, 100% { opacity: 0; }
-        20%, 80% { opacity: 1; }
-    }
-    @media (min-width: 768px) {
-        .product-slider::-webkit-scrollbar {
-            display: block;
-            height: 8px;
-        }
-        .product-slider {
-            -ms-overflow-style: auto;
-            scrollbar-width: thin;
-        }
-        .product-slider::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        .product-slider::-webkit-scrollbar-thumb {
-            background: #D4C098;
-            border-radius: 4px;
-        }
-        .product-slider::-webkit-scrollbar-thumb:hover {
-            background: #A6A18F;
-        }
-    }
-    </style>
 </head>
 <body class="flex min-h-screen flex-col font-sans bg-cream">
     <!-- Preloader -->
@@ -205,7 +96,6 @@
                         <a href="#cubre-sommier" class="block px-4 py-2 text-sm hover:bg-secondary">Cubre sommier</a>
                         <a href="#accesorios" class="block px-4 py-2 text-sm hover:bg-secondary">Accesorios</a>
                         <a href="#almohadones" class="block px-4 py-2 text-sm hover:bg-secondary">Almohadones</a>
-                        <a href="#caminos-de-mesa" class="block px-4 py-2 text-sm hover:bg-secondary">Caminos de mesa</a>
                         <a href="#manteles" class="block px-4 py-2 text-sm hover:bg-secondary">Manteles</a>
                     </div>
                 </div>
@@ -214,7 +104,7 @@
             </nav>
 
             <a href="/" class="flex items-center justify-center flex-grow lg:flex-grow-0">
-                <img src="img/logo.png" alt="Mon Amour Textil" class="h-24 w-auto">
+                <img src="img/logo.png" alt="Mon Amour Textil" class="h-16 md:h-24 w-auto">
             </a>
 
             <div class="flex items-center space-x-4">
@@ -259,7 +149,6 @@
                                 <a href="#cubre-sommier" class="block py-2 hover:text-primary">Cubre sommier</a>
                                 <a href="#accesorios" class="block py-2 hover:text-primary">Accesorios</a>
                                 <a href="#almohadones" class="block py-2 hover:text-primary">Almohadones</a>
-                                <a href="#caminos-de-mesa" class="block py-2 hover:text-primary">Caminos de mesa</a>
                                 <a href="#manteles" class="block py-2 hover:text-primary">Manteles</a>
                             </div>
                         </div>
@@ -281,12 +170,12 @@
             <!-- Las imágenes se insertarán dinámicamente aquí -->
         </div>
         <!-- Featured Collection Section -->
-        <section class="bg-gradient-to-r from-cream to-ivory py-16 mb-16">
+        <section class="bg-gradient-to-r from-cream to-ivory py-8 md:py-16 mb-8 md:mb-16">
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-6">
-                        <h2 class="text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
-                        <p class="text-xl text-gray-600">Descubre los nuevos ingresos</p>
+                    <div class="space-y-4 md:space-y-6">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 font-serif">¡NUEVA COLECCIÓN DE TEXTILES!</h2>
+                        <p class="text-lg md:text-xl text-gray-600">Descubre los nuevos ingresos</p>
                     </div>
                     <div class="relative">
                         <img src="img/banner.png" alt="Colección Destacada" class="w-full rounded-lg shadow-xl">
@@ -296,131 +185,124 @@
         </section>
 
         <!-- Product Sections -->
-        <section id="velas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">VELAS</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="velasContainer">
+        <section id="velas" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">VELAS</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="velasContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="aromas" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">AROMAS</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="aromasContainer">
+        <section id="aromas" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">AROMAS</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="aromasContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
     
-        <section id="ceramica" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CERÁMICA</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="ceramicaContainer">
+        <section id="ceramica" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">CERÁMICA</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="ceramicaContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
         <!-- New Advertising Banner -->
-        <div id="advertisingBanner" class="p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
+        <div id="advertisingBanner" class="p-6 md:p-8 text-center relative" style="background-image: url('img/banner-bg.jpg'); background-size: cover; background-position: center;">
             <div class="absolute inset-0 bg-black opacity-50"></div>
-            <p id="advertisingMessage" class="text-3xl font-bold mb-4 relative z-10 text-white font-serif"></p>
+            <p id="advertisingMessage" class="text-2xl md:text-3xl font-bold mb-4 relative z-10 text-white font-serif"></p>
         </div>
 
-        <section id="textiles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">TEXTILES</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="textilesContainer">
+        <section id="textiles" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">TEXTILES</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="textilesContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="accesorios" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">ACCESORIOS</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="accesoriosContainer">
+        <section id="accesorios" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">ACCESORIOS</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="accesoriosContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="cubre_sommier" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CUBRE SOMMIER</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="cubre_sommierContainer">
+        <section id="cubre_sommier" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">CUBRE SOMMIER</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="cubre_sommierContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="cortinas_interior" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CORTINAS DE INTERIOR</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="cortinas_interiorContainer">
+        <section id="cortinas_interior" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">CORTINAS DE INTERIOR</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="cortinas_interiorContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="almohadones" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">ALMOHADONES</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="almohadonesContainer">
+        <section id="almohadones" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">ALMOHADONES</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="almohadonesContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="caminos-de-mesa" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">CAMINOS DE MESA</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="caminos_de_mesaContainer">
+        <section id="manteles" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">MANTELES</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="mantelesContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
 
-        <section id="manteles" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">MANTELES</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="mantelesContainer">
-                <!-- Products will be dynamically inserted here -->
-            </div>
-        </section>
-
-        <section id="box" class="container mx-auto px-4 py-12">
-            <h2 class="mb-8 text-center text-2xl font-bold text-primary font-serif">BOX</h2>
-            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-6" id="boxContainer">
+        <section id="box" class="container mx-auto px-4 py-8 md:py-12">
+            <h2 class="mb-6 md:mb-8 text-center text-2xl md:text-3xl font-bold text-primary font-serif">BOX</h2>
+            <div class="product-slider flex overflow-x-auto scrollbar-hide gap-4 md:gap-6" id="boxContainer">
                 <!-- Products will be dynamically inserted here -->
             </div>
         </section>
         
         <!-- New Advertising Banner with Slider -->
-        <div class="bg-primary p-6 text-center text-white ad-slider">
+        <div class="bg-primary p-4 md:p-6 text-center text-white ad-slider">
             <div class="ad-slide">
-                <h2 class="text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
-                <p class="text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
+                <h2 class="text-xl md:text-2xl font-bold mb-2 font-serif">¡Ofertas Especiales!</h2>
+                <p class="text-base md:text-lg mb-2">Descubre nuestra nueva colección de textiles y decoración.</p>
                 <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Ver Ofertas</a>
             </div>
             <div class="ad-slide">
-                <h2 class="text-2xl font-bold mb-2 font-serif">Envío Gratis</h2>
-                <p class="text-lg mb-2">En compras superiores a $150,000.</p>
+                <h2 class="text-xl md:text-2xl font-bold mb-2 font-serif">Envío Gratis</h2>
+                <p class="text-base md:text-lg mb-2">En compras superiores a $150,000.</p>
                 <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Comprar Ahora</a>
             </div>
             <div class="ad-slide">
-                <h2 class="text-2xl font-bold mb-2 font-serif">Nueva Colección</h2>
-                <p class="text-lg mb-2">Descubre nuestras últimas novedades en decoración.</p>
+                <h2 class="text-xl md:text-2xl font-bold mb-2 font-serif">Nueva Colección</h2>
+                <p class="text-base md:text-lg mb-2">Descubre nuestras últimas novedades en decoración.</p>
                 <a href="#" class="inline-block bg-white text-primary font-bold py-2 px-4 rounded-full hover:bg-gray-100 transition-colors">Explorar</a>
             </div>
         </div>
 
         <!-- Features Section with Icons -->
-        <section class="bg-white py-12 mb-16">
+        <section class="bg-white py-8 md:py-12 mb-8 md:mb-16">
             <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-truck text-4xl text-primary"></i>
+                            <i class="fas fa-truck text-3xl md:text-4xl text-primary"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 font-serif">ENVÍO RÁPIDO</h3>
+                        <h3 class="text-lg md:text-xl font-bold mb-2 font-serif">ENVÍO RÁPIDO</h3>
                         <p class="text-gray-600">A toda Argentina</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-shield-alt text-4xl text-primary"></i>
+                            <i class="fas fa-shield-alt text-3xl md:text-4xl text-primary"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 font-serif">COMPRA SEGURA</h3>
+                        <h3 class="text-lg md:text-xl font-bold mb-2 font-serif">COMPRA SEGURA</h3>
                         <p class="text-gray-600">Garantía 100%</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 mx-auto mb-4">
-                            <i class="fas fa-gift text-4xl text-primary"></i>
+                            <i class="fas fa-gift text-3xl md:text-4xl text-primary"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-2 font-serif">PROMOCIONES</h3>
+                        <h3 class="text-lg md:text-xl font-bold mb-2 font-serif">PROMOCIONES</h3>
                         <p class="text-gray-600">Aprovechá nuestras ofertas</p>
                     </div>
                 </div>
@@ -429,11 +311,11 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-primary text-white py-16">
+    <footer class="bg-primary text-white py-8 md:py-16">
         <div class="container mx-auto px-4">
-            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 <div>
-                    <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mb-4">
+                    <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-16 md:h-20 w-auto mb-4">
                     <p class="text-sm text-gray-200">
                         Textiles y decoración para tu hogar. Productos artesanales de alta calidad.
                     </p>
@@ -468,25 +350,6 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 font-serif">Síguenos</h3>
-                    <div class="flex space-x-4 mb-4">
-                        <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                            <i class="fab fa-facebook h-6 w-6"></i>
-                        </a>
-                        <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                            <i class="fab fa-instagram h-6 w-6"></i>
-                        </a>
-                        <a href="#" class="text-gray-200 hover:text-white transition-colors">
-                            <i class="fab fa-pinterest h-6 w-6"></i>
-                        </a>
-                    </div>
-                    <h4 class="text-sm font-semibold mb-2 font-serif">Suscríbete a nuestro newsletter</h4>
-                    <form class="flex flex-col sm:flex-row gap-2">
-                        <input type="email" placeholder="Tu email" class="flex-grow px-3 py-2 text-gray-900 rounded-md focus:outline-none">
-                        <button type="submit" class="bg-white text-primary px-4 py-2 rounded-md hover:bg-gray-100 transition-colors">Suscribir</button>
-                    </form>
-                </div>
             </div>
             <div class="mt-8 border-t border-gray-700 pt-8">
                 <h3 class="text-lg font-semibold mb-4 font-serif">Políticas</h3>
@@ -515,7 +378,7 @@
                     </button>
                 </div>
                 <div class="p-6">
-                    <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-20 w-auto mx-auto mb-6">
+                    <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-16 md:h-20 w-auto mx-auto mb-6">
                     <form id="checkoutForm" class="space-y-6" action="https://formspree.io/f/xovqkdaq" method="POST">
                         <div class="grid md:grid-cols-2 gap-6">
                             <!-- Contacto -->
@@ -565,7 +428,7 @@
                                 </div>
                             </div>
 
-                            <!-- Domicilio del destinatario -->
+                            <!-- Domicilio deldestinatario -->
                             <div>
                                 <h3 class="text-lg font-medium text-gray-700 mb-2 font-serif">Domicilio del destinatario</h3>
                                 <div>
@@ -631,7 +494,7 @@
                         <i class="fas fa-times h-6 w-6"></i>
                     </button>
                 </div>
-                <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-24 w-auto mx-auto mb-6">
+                <img src="img/logo.png" alt="Mon Amour Textil Logo" class="h-16 md:h-24 w-auto mx-auto mb-6">
                 <div id="cartItems" class="space-y-6">
                     <!-- Cart items will be dynamically inserted here -->
                 </div>

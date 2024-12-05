@@ -32,9 +32,7 @@ const productContainers = {
   accesorios: document.getElementById('accesoriosContainer'),
   cubre_sommier: document.getElementById('cubre_sommierContainer'),
   cortinas_interior: document.getElementById('cortinas_interiorContainer'),
-  cortinas_gasa: document.getElementById('cortinas_gasaContainer'),
   almohadones: document.getElementById('almohadonesContainer'),
-  caminos_de_mesa: document.getElementById('caminos_de_mesaContainer'),
   manteles: document.getElementById('mantelesContainer'),
   box: document.getElementById('boxContainer')
 };
@@ -84,7 +82,7 @@ function renderProducts() {
                 style="background-color: #D4C098; color: #848071;">
                 10% OFF
               </div>
-              <img src="${product.image}" alt="${product.name}" class="object-contain w-full h-full">
+              <img src="${product.images[0]}" alt="${product.name}" class="object-contain w-full h-full">
             </div>
             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
             ${renderProductPrice(product, category)}
@@ -99,7 +97,7 @@ function renderProducts() {
   });
 }
 
-function render.  ProductPrice(product, category) {
+function renderProductPrice(product, category) {
   if (product.sizes) {
     const minPrice = Math.min(...product.sizes.map(s => s.price));
     return `<p class="mt-2 text-sm text-gray-500">Desde $${minPrice.toLocaleString()}</p>`;
@@ -131,6 +129,13 @@ function renderProductOptions(product, category) {
         ${product.sizes.map(size => `<option value="${size.name}">${size.name} - $${size.price.toLocaleString()}</option>`).join('')}
       </select>
     `;
+  } else if (product.options) {
+    return product.options.map(option => `
+      <select class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
+        <option value="">${option.name}</option>
+        ${option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
+      </select>
+    `).join('');
   }
   return '';
 }
@@ -154,6 +159,7 @@ function openProductModal(productId, category) {
   let sizeOptions = '';
   let priceDisplay = '';
   let scentOptions = '';
+  let customOptions = '';
 
   if (product.sizes) {
     sizeOptions = `
@@ -190,10 +196,36 @@ function openProductModal(productId, category) {
     `;
   }
 
+  if (product.options) {
+    customOptions = product.options.map(option => `
+      <div class="mb-4">
+        <label for="${option.name}" class="block text-sm font-medium text-gray-700 mb-2">${option.name}</label>
+        <select id="${option.name}" name="${option.name}" class="w-full p-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary">
+          <option value="">Seleccionar ${option.name.toLowerCase()}</option>
+          ${option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
+        </select>
+      </div>
+    `).join('');
+  }
+
   modalContent.innerHTML = `
     <div class="flex flex-col md:flex-row md:space-x-6">
       <div class="md:w-1/2">
-        <img src="${product.image}" alt="${product.name}" class="w-full h-auto object-contain rounded-lg shadow-md">
+        <div class="relative">
+          <div class="flex overflow-x-auto snap-x snap-mandatory" id="imageSlider">
+            ${product.images.map((image, index) => `
+              <img src="${image}" alt="${product.name}" class="w-full h-auto object-contain rounded-lg shadow-md flex-shrink-0 snap-center">
+            `).join('')}
+          </div>
+          ${product.images.length > 1 ? `
+            <button class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2" onclick="changeSlide(-1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2" onclick="changeSlide(1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          ` : ''}
+        </div>
       </div>
       <div class="md:w-1/2 mt-4 md:mt-0 flex flex-col justify-between">
         <div>
@@ -201,6 +233,7 @@ function openProductModal(productId, category) {
           ${priceDisplay}
           ${sizeOptions}
           ${scentOptions}
+          ${customOptions}
         </div>
         <div>
           <div class="flex items-center justify-between mb-4">
@@ -223,6 +256,15 @@ function openProductModal(productId, category) {
   console.log('Modal mostrado');
 }
 
+function changeSlide(direction) {
+  const slider = document.getElementById('imageSlider');
+  const scrollAmount = slider.clientWidth;
+  slider.scrollBy({
+    left: direction * scrollAmount,
+    behavior: 'smooth'
+  });
+}
+
 function closeProductModal() {
   document.getElementById('productModal').classList.add('hidden');
 }
@@ -241,6 +283,10 @@ function addToCart(productId, category) {
   const quantity = parseInt(document.getElementById('quantity').value);
   const scent = document.getElementById('scent') ? document.getElementById('scent').value : null;
   const size = document.getElementById('size') ? document.getElementById('size').value : null;
+  const customOptions = product.options ? product.options.reduce((acc, option) => {
+    acc[option.name] = document.getElementById(option.name).value;
+    return acc;
+  }, {}) : {};
 
   let price;
   if (product.sizes) {
@@ -264,24 +310,35 @@ function addToCart(productId, category) {
     return;
   }
 
+  if (product.options && Object.values(customOptions).some(value => !value)) {
+    alert('Por favor, selecciona todas las opciones.');
+    return;
+  }
+
   const existingItem = cart.find(item => 
     item.id === product.id && 
     item.scent === scent &&
-    item.size === size
+    item.size === size &&
+    JSON.stringify(item.customOptions) === JSON.stringify(customOptions)
   );
 
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
-    cart.push({ ...product, price, quantity, scent, size, category });
+    cart.push({ ...product, price, quantity, scent, size, customOptions, category });
   }
 
   updateCartUI();
   closeProductModal();
 }
 
-function removeFromCart(productId, scent, size) {
-  cart = cart.filter(item => !(item.id === productId && item.scent === scent && item.size === size));
+function removeFromCart(productId, scent, size, customOptions) {
+  cart = cart.filter(item => !(
+    item.id === productId && 
+    item.scent === scent && 
+    item.size === size &&
+    JSON.stringify(item.customOptions) === JSON.stringify(customOptions)
+  ));
   updateCartUI();
 }
 
@@ -304,15 +361,18 @@ function updateCartUI() {
   cartItemsEl.innerHTML = cart.map(item => `
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+        <img src="${item.images[0]}" alt="${item.name}" class="w-12 h-12 object-contain">
         <div>
           <p class="font-medium font-serif">${item.name}</p>
           <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
           ${item.scent ? `<p class="text-xs text-gray-500">Aroma: ${item.scent}</p>` : ''}
           ${item.size ? `<p class="text-xs text-gray-500">Medida: ${item.size}</p>` : ''}
+          ${Object.entries(item.customOptions || {}).map(([key, value]) => 
+            `<p class="text-xs text-gray-500">${key}: ${value}</p>`
+          ).join('')}
         </div>
       </div>
-      <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}')">
+      <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${item.id}', '${item.scent}', '${item.size}', ${JSON.stringify(item.customOptions)})">
         <i class="fas fa-trash h-4 w-4"></i>
       </button>
     </div>
@@ -437,7 +497,8 @@ function prepareCartData() {
     quantity: item.quantity,
     total: item.price * item.quantity,
     scent: item.scent,
-    size: item.size
+    size: item.size,
+    customOptions: item.customOptions
   })));
 }
 
@@ -468,7 +529,14 @@ function updateTransferModal() {
 
   cart.forEach(item => {
     content += `
-      <li class="text-gray-700">${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}</li>
+      <li class="text-gray-700">
+        ${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}
+        ${item.scent ? `<br>Aroma: ${item.scent}` : ''}
+        ${item.size ? `<br>Medida: ${item.size}` : ''}
+        ${Object.entries(item.customOptions || {}).map(([key, value]) => 
+          `<br>${key}: ${value}`
+        ).join('')}
+      </li>
     `;
   });
 
@@ -594,6 +662,20 @@ function generatePurchaseDetails() {
     cart.forEach(item => {
       doc.text(`${item.name} - ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`, 20, yPos);
       yPos += 7;
+      if (item.scent) {
+        doc.text(`Aroma: ${item.scent}`, 25, yPos);
+        yPos += 7;
+      }
+      if (item.size) {
+        doc.text(`Medida: ${item.size}`, 25, yPos);
+        yPos += 7;
+      }
+      if (item.customOptions) {
+        Object.entries(item.customOptions).forEach(([key, value]) => {
+          doc.text(`${key}: ${value}`, 25, yPos);
+          yPos += 7;
+        });
+      }
     });
 
     yPos += 10;
@@ -827,3 +909,4 @@ ${text}`);
 });
 
 console.log("Script loaded successfully!");
+

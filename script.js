@@ -34,6 +34,7 @@ const productContainers = {
   cortinas_interior: document.getElementById('cortinas_interiorContainer'),
   cortinas_gasa: document.getElementById('cortinas_gasaContainer'),
   almohadones: document.getElementById('almohadonesContainer'),
+  caminos_de_mesa: document.getElementById('caminos_de_mesaContainer'),
   manteles: document.getElementById('mantelesContainer'),
   box: document.getElementById('boxContainer')
 };
@@ -140,14 +141,14 @@ function renderProductOptions(product, category) {
     `;
   }
   if (product.options) {
-    product.options.forEach(option => {
+    product.options.forEach((option, index) => {
       const optionId = `${product.id}-${option.name.replace(/\s+/g, '-').toLowerCase()}`;
       html += `
         <div class="mt-2">
           <label for="${optionId}" class="block text-sm font-medium text-gray-700">${option.name}</label>
           <select id="${optionId}" name="${option.name}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
             <option value="">Seleccionar ${option.name}</option>
-            ${option.choices ? option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('') : ''}
+            ${option.choices.map(choice => `<option value="${choice}">${choice}</option>`).join('')}
           </select>
         </div>
       `;
@@ -346,7 +347,7 @@ function updateCartUI() {
   cartItemsEl.innerHTML = cart.map(item => `
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain">
+        <img src="${item.images[0]}" alt="${item.name}" class="w-12 h-12 object-contain">
         <div>
           <p class="font-medium font-serif">${item.name}</p>
           <p class="text-sm text-gray-500">$${item.price.toLocaleString()} x ${item.quantity}</p>
@@ -613,7 +614,6 @@ CUIT/CUIL: 27-37092938-1
       throw error;
     }
   });
-}
 
 // Implementación del slider automático para el banner de publicidad
 let currentAdSlide = 0;
@@ -809,3 +809,4 @@ ${text}`);
 });
 
 console.log("Script loaded successfully!");
+

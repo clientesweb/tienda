@@ -99,7 +99,7 @@ function renderProducts() {
   });
 }
 
-function renderProductPrice(product, category) {
+function render.  ProductPrice(product, category) {
   if (product.sizes) {
     const minPrice = Math.min(...product.sizes.map(s => s.price));
     return `<p class="mt-2 text-sm text-gray-500">Desde $${minPrice.toLocaleString()}</p>`;

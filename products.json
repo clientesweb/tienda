@@ -450,7 +450,7 @@
     {
       "id": 1,
       "name": "Cortinas de Gasa",
-      "images": ["img/cortinas-gasa.jpg", "img/cortinas-gasa2.jpg"],
+      "images": ["img/cortina-gasa.jpg", "img/cortina-gasa2.jpg"],
       "description": "Cortinas confeccionadas en gasa de 100% algodón. Color crudo.",
       "sizes": [
         {

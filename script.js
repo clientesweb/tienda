@@ -421,7 +421,7 @@ function calculateShipping(postalCode) {
           price: 0,
           estimatedDelivery: 'Inmediato',
           logo: 'path/to/local-icon.png',
-          description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
+          description: 'Tienda Mon Amour - San Juan 1020, Villa Maria, Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
         }
       };
       resolve(shippingOptions);
@@ -579,7 +579,7 @@ function updateTransferModal() {
         </p>
         <p class="text-gray-700 mb-6">Envía el comprobante por uno de estos medios:</p>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <a href="mailto:info@monamourtextil.com" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors flex items-center">
+          <a href="mailto:monamourtextiloficial@gmail.com" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors flex items-center">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
             Enviar por Email
           </a>

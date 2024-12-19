@@ -5,6 +5,7 @@ let currentBanner = 0;
 let currentHeroImage = 0;
 let shippingCost = 0;
 let shippingOptions = {};
+let appliedDiscount = 0;
 
 const bannerMessages = [
   "¡Nueva colección de textiles disponible!",
@@ -17,6 +18,8 @@ const heroImages = [
   "img/hero2.png",
   "img/hero3.png"
 ];
+
+const validDiscountCodes = ['CPS10', 'ARQ10', 'SAD10', 'PSI10'];
 
 // DOM Elements
 const bannerMessageEl = document.getElementById('bannerMessage');
@@ -78,10 +81,6 @@ function renderProducts() {
         <div class="product-card flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden relative">
           <div class="p-4">
             <div class="relative mb-4 aspect-square">
-              <div class="absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-bold z-10"
-                style="background-color: #D4C098; color: #848071;">
-                10% OFF
-              </div>
               <img src="${product.images[0]}" alt="${product.name}" class="object-contain w-full h-full">
             </div>
             <h3 class="text-sm font-medium line-clamp-2 font-serif">${product.name}</h3>
@@ -103,11 +102,9 @@ function renderProductPrice(product, category) {
     return `<p class="mt-2 text-sm text-gray-500">Desde $${minPrice.toLocaleString()}</p>`;
   } else {
     const price = product.price;
-    const discountedPrice = price * 0.9;
     return `
       <p class="mt-2 text-lg font-bold">
-        <span class="line-through text-gray-500">$${price.toLocaleString()}</span>
-        $${discountedPrice.toLocaleString()}
+        $${price.toLocaleString()}
       </p>
     `;
   }
@@ -174,11 +171,9 @@ function openProductModal(productId, category) {
     priceDisplay = `<p class="text-2xl font-bold mb-4">Desde $${Math.min(...product.sizes.map(s => s.price)).toLocaleString()}</p>`;
   } else {
     const price = product.price;
-    const discountedPrice = price * 0.9;
     priceDisplay = `
       <p class="text-2xl font-bold mb-4">
-        <span class="line-through text-gray-500 mr-2">$${price.toLocaleString()}</span>
-        <span class="text-primary">$${discountedPrice.toLocaleString()}</span>
+        $${price.toLocaleString()}
       </p>
     `;
   }
@@ -295,9 +290,9 @@ function addToCart(productId, category) {
       alert('Por favor, selecciona una medida.');
       return;
     }
-    price = selectedSize.price * 0.9; // Apply 10% discount
+    price = selectedSize.price;
   } else {
-    price = product.price * 0.9; // Apply 10% discount
+    price = product.price;
   }
 
   if ((category === 'velas' || category === 'aromas') && !scent) {
@@ -353,7 +348,8 @@ function updateCartUI() {
     shippingCost = calculateShippingCost(selectedShipping.price, totalItems);
   }
   
-  const total = subtotal + shippingCost;
+  const discountAmount = subtotal * appliedDiscount;
+  const total = subtotal + shippingCost - discountAmount;
 
   cartItemCountEl.textContent = totalItems;
   cartItemCountEl.classList.toggle('hidden', totalItems === 0);
@@ -378,13 +374,19 @@ function updateCartUI() {
     </div>
   `).join('');
 
-  cartTotalEl.textContent = formatPrice(total);
-  document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
-  
-  // Update shipping cost display
+  document.getElementById('cartSubtotal').textContent = formatPrice(subtotal);
   document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
-  updateTotal();
-  updateTransferModal();
+  cartTotalEl.textContent = formatPrice(total);
+  
+  // Update discount display
+  const discountMessageEl = document.getElementById('discountMessage');
+  const discountAmountEl = document.getElementById('discountAmount');
+  if (appliedDiscount > 0) {
+    discountMessageEl.classList.remove('hidden');
+    discountAmountEl.textContent = formatPrice(discountAmount);
+  } else {
+    discountMessageEl.classList.add('hidden');
+  }
 }
 
 function formatPrice(price) {
@@ -421,7 +423,7 @@ function calculateShipping(postalCode) {
           price: 0,
           estimatedDelivery: 'Inmediato',
           logo: 'path/to/local-icon.png',
-          description: 'Tienda Mon Amour - San Juan 1020, Villa Maria, Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
+          description: 'Tienda Mon Amour - Rivera Indarte 160, centro. Córdoba - Atención de lunes a viernes de 9 a 19 hs y sábados de 9 a 14 hs.'
         }
       };
       resolve(shippingOptions);
@@ -461,11 +463,24 @@ function updateTotal() {
     shippingCost = calculateShippingCost(selectedShipping.price, itemCount);
   }
 
-  const total = subtotal + shippingCost;
+  const discountAmount = subtotal * appliedDiscount;
+  const total = subtotal + shippingCost - discountAmount;
+
   document.getElementById('cartTotal').textContent = formatPrice(total);
-  document.getElementById('discountedTotal').textContent = formatPrice(total * 0.9);
   document.getElementById('shippingCost').textContent = formatPrice(shippingCost);
   updateTransferModal();
+}
+
+function applyDiscount() {
+  const discountCode = document.getElementById('discountCode').value.toUpperCase();
+  if (validDiscountCodes.includes(discountCode)) {
+    appliedDiscount = 0.1; // 10% discount
+    alert('Código de descuento aplicado exitosamente.');
+  } else {
+    appliedDiscount = 0;
+    alert('Código de descuento inválido.');
+  }
+  updateCartUI();
 }
 
 function updateAdvertisingBanner() {
@@ -516,7 +531,7 @@ function validateForm() {
 function updateTransferModal() {
   const modalContent = document.getElementById('bankDetailsModal');
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discount = subtotal * 0.1; // 10% discount
+  const discount = subtotal * 0.1; // 10% discount for bank transfer
   const total = subtotal + shippingCost - discount;
 
   let content = `
@@ -551,7 +566,7 @@ function updateTransferModal() {
           <span>${formatPrice(shippingCost)}</span>
         </div>
         <div class="flex justify-between text-lg text-green-600">
-          <span>Descuento (10%):</span>
+          <span>Descuento por transferencia (10%):</span>
           <span>-${formatPrice(discount)}</span>
         </div>
         <div class="flex justify-between font-bold text-xl text-primary">
@@ -579,7 +594,7 @@ function updateTransferModal() {
         </p>
         <p class="text-gray-700 mb-6">Envía el comprobante por uno de estos medios:</p>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <a href="mailto:monamourtextiloficial@gmail.com" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors flex items-center">
+          <a href="mailto:info@monamourtextil.com" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors flex items-center">
             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
             Enviar por Email
           </a>
@@ -590,8 +605,7 @@ function updateTransferModal() {
         </div>
         <button id="downloadPurchaseDetails" class="mt-6 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary-dark transition-colors">
           Descargar detalles de la compra
-        </button>
-      </div>
+        </button>      </div>
     </div>
   `;
 
@@ -640,8 +654,10 @@ CUIT/CUIL: 27-37092938-1
 function generatePurchaseDetails() {
   try {
     const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = subtotal * 0.1; // 10% discount
-    const total = subtotal + shippingCost - discount;
+    const promoDiscountAmount = subtotal * appliedDiscount;
+    const transferDiscount = subtotal * 0.1; // 10% discount for bank transfer
+    const totalDiscount = promoDiscountAmount + transferDiscount;
+    const total = subtotal + shippingCost - totalDiscount;
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -684,7 +700,11 @@ function generatePurchaseDetails() {
     doc.text(`Costo de envío: ${formatPrice(shippingCost)}`, 10, yPos);
     yPos += 7;
     doc.setTextColor(0, 128, 0); // Green color for discount
-    doc.text(`Descuento (10%): -${formatPrice(discount)}`, 10, yPos);
+    if (appliedDiscount > 0) {
+      doc.text(`Descuento promocional (${appliedDiscount * 100}%): -${formatPrice(promoDiscountAmount)}`, 10, yPos);
+      yPos += 7;
+    }
+    doc.text(`Descuento por transferencia (10%): -${formatPrice(transferDiscount)}`, 10, yPos);
     yPos += 7;
     doc.setTextColor(33, 150, 243); // Primary color for total
     doc.setFontSize(14);
@@ -872,6 +892,9 @@ ${text}`);
       alert('Hubo un problema al procesar tu pedido. Por favor, revisa la consola para más detalles e intenta de nuevo.');
     });
   });
+
+  // Add event listener for the apply discount button
+  document.getElementById('applyDiscount').addEventListener('click', applyDiscount);
 
   loadProducts();
   updateBanner();
